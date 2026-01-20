@@ -1,0 +1,141 @@
+name: Generate SDK and Publish to npm
+
+on:
+  # Manual trigger with version input
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: "Version bump type"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      skip_publish:
+        description: "Skip npm publish (for testing)"
+        required: false
+        default: false
+        type: boolean
+
+  # Trigger from backend deployment (optional)
+  repository_dispatch:
+    types: [backend-deployed]
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout SDK repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate SDK from OpenAPI
+        run: |
+          echo "Generating TypeScript SDK from https://alpha.api.fiber.ai/openapi.json..."
+          npm run generate
+          echo "SDK generated successfully"
+
+      - name: Build SDK
+        run: |
+          echo "Building SDK..."
+          npm run build
+          echo "SDK built successfully"
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in generated SDK"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in generated SDK"
+          fi
+
+      - name: Bump version
+        if: steps.check_changes.outputs.has_changes == 'true'
+        id: version
+        run: |
+          VERSION_BUMP="${{ github.event.inputs.version_bump || 'patch' }}"
+          echo "Bumping version: $VERSION_BUMP"
+          NEW_VERSION=$(npm version $VERSION_BUMP --no-git-tag-version)
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+
+      - name: Commit and tag changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git add -A
+          git commit -m "chore: regenerate SDK ${{ steps.version.outputs.new_version }}"
+          git tag ${{ steps.version.outputs.new_version }}
+
+      - name: Push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git push origin HEAD
+          git push origin ${{ steps.version.outputs.new_version }}
+
+      - name: Publish to npm
+        if: steps.check_changes.outputs.has_changes == 'true' && github.event.inputs.skip_publish != 'true'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        if: steps.check_changes.outputs.has_changes == 'true' && github.event.inputs.skip_publish != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.new_version }}
+          name: Release ${{ steps.version.outputs.new_version }}
+          body: |
+            ## What's Changed
+            SDK regenerated from OpenAPI specification.
+
+            ### Installation
+            ```bash
+            npm install @fiberai/sdk@${{ steps.version.outputs.new_version }}
+            ```
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          if [ "${{ steps.check_changes.outputs.has_changes }}" == "true" ]; then
+            echo "### SDK Published Successfully! 🎉" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Version:** ${{ steps.version.outputs.new_version }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Install:** \`npm install @fiberai/sdk@${{ steps.version.outputs.new_version }}\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### No Changes Detected" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The OpenAPI spec has not changed since the last generation." >> $GITHUB_STEP_SUMMARY
+          fi

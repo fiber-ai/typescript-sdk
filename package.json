@@ -1,0 +1,70 @@
+{
+  "name": "@fiberai/sdk",
+  "version": "0.0.1",
+  "description": "Official TypeScript SDK for Fiber AI API",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "generate": "openapi-ts",
+    "build": "tsup",
+    "prepublishOnly": "npm run generate && npm run build",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "fiberai",
+    "fiber",
+    "sdk",
+    "api",
+    "typescript",
+    "sales",
+    "enrichment",
+    "prospecting"
+  ],
+  "author": "Fiber AI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fiber-ai/typescript-sdk.git"
+  },
+  "homepage": "https://fiber.ai",
+  "bugs": {
+    "url": "https://github.com/fiber-ai/typescript-sdk/issues"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.90.4",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
