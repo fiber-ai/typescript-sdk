@@ -10,5 +10,6 @@ export default defineConfig({
     "@hey-api/typescript", // Generate TypeScript types
     "@hey-api/sdk", // Generate SDK methods
     "@hey-api/client-fetch", // Use native fetch as HTTP client (bundled since v0.73+)
+    "zod", // Generate Zod schemas for runtime validation
   ],
 });

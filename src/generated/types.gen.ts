@@ -392,6 +392,19 @@ export type GetOrgCreditsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -2481,6 +2494,19 @@ export type PollCombinedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -2615,6 +2641,19 @@ export type PollContactEnrichmentResultResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -2803,6 +2842,19 @@ export type PollBatchContactEnrichmentResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -2955,6 +3007,19 @@ export type PollGoogleMapsResultsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -3076,6 +3141,19 @@ export type PollLocalBusinessSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -3206,6 +3284,19 @@ export type CheckGoogleMapsResultsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -3365,6 +3456,19 @@ export type DomainLookupPollingResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -3486,6 +3590,19 @@ export type GetCompanyExclusionListsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -3615,6 +3732,19 @@ export type CreateCompanyExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -3736,6 +3866,19 @@ export type DeleteCompanyExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -3874,6 +4017,19 @@ export type AddCompaniesToExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -4008,6 +4164,19 @@ export type RemoveCompanyFromExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -4162,6 +4331,19 @@ export type GetExcludedCompaniesForExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -4299,6 +4481,19 @@ export type CreateCompanyExclusionListFromAudienceResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -4420,6 +4615,19 @@ export type GetProspectExclusionListsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -4549,6 +4757,19 @@ export type CreateProspectExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -4670,6 +4891,19 @@ export type DeleteProspectExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -4804,6 +5038,19 @@ export type AddProspectsToExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -4934,6 +5181,19 @@ export type RemoveProspectFromExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -5080,6 +5340,19 @@ export type GetExcludedProspectsForExclusionListResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -5217,6 +5490,19 @@ export type CreateProspectExclusionListFromAudienceResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -5395,6 +5681,19 @@ export type GetRegionsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -5510,6 +5809,19 @@ export type GetLanguagesResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -5686,6 +5998,19 @@ export type GetTimeZonesResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -5811,6 +6136,19 @@ export type GetIndustriesResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -5942,6 +6280,19 @@ export type GetTagsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -6068,6 +6419,19 @@ export type GetNaicsCodesResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -6234,6 +6598,19 @@ export type GetAcceleratorsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -9152,6 +9529,19 @@ export type CompanySearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -10334,6 +10724,19 @@ export type CompanyCountResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -10700,6 +11103,19 @@ export type InvestorSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -11028,6 +11444,19 @@ export type InvestmentSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -11389,6 +11818,19 @@ export type JobPostingSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -11618,6 +12060,19 @@ export type JobPostingSearchCountResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -12605,10 +13060,792 @@ export type PeopleSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
 export type PeopleSearchResponse = PeopleSearchResponses[keyof PeopleSearchResponses];
+
+export type PeopleSearchCountData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Search parameters for people search.
+         */
+        searchParams?: {
+            country3LetterCode?: {
+                anyOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                noneOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+            } | null;
+            numConnections?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            numFollowers?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            approxAge?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            keywords?: {
+                containsAll?: Array<string> | null;
+                containsAny?: Array<string> | null;
+                containsNone?: Array<string> | null;
+            } | null;
+            keywordSearchOptions?: {
+                fieldsToSearchOver?: {
+                    summary?: boolean;
+                    headline?: boolean;
+                    pastJobTitles?: boolean;
+                    pastJobSummaries?: boolean;
+                    pastCompanyNames?: boolean;
+                    currentJobTitles?: boolean;
+                    currentJobSummaries?: boolean;
+                    currentCompanyNames?: boolean;
+                    interests?: boolean;
+                    skills?: boolean;
+                    industry?: boolean;
+                    education?: boolean;
+                    publications?: boolean;
+                    certifications?: boolean;
+                    articles?: boolean;
+                    courses?: boolean;
+                    projects?: boolean;
+                    patents?: boolean;
+                    volunteering?: boolean;
+                    languages?: boolean;
+                } | null;
+            } | null;
+            jobTitleV2?: {
+                anyOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+                noneOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+                allOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+            } | null;
+            exactProfile?: {
+                anyOf?: Array<{
+                    profile_id?: string | null;
+                    primary_slug?: string | null;
+                }> | null;
+                noneOf?: Array<{
+                    profile_id?: string | null;
+                    primary_slug?: string | null;
+                }> | null;
+            } | null;
+            startedInRole?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'lastN';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    quantity: number;
+                } | {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            startedAtCompany?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'lastN';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    quantity: number;
+                } | {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            location?: {
+                unionAll?: Array<{
+                    strategy: 'radial-distance';
+                    center: {
+                        name?: string | null;
+                        address?: string | null;
+                        latitude: number;
+                        longitude: number;
+                    };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                }> | null;
+                subtractAll?: Array<{
+                    strategy: 'radial-distance';
+                    center: {
+                        name?: string | null;
+                        address?: string | null;
+                        latitude: number;
+                        longitude: number;
+                    };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                }> | null;
+            } | null;
+            pastJobs?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
+            languages?: {
+                anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                noneOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+            } | null;
+            leftStealthAt?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'lastN';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    quantity: number;
+                } | {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            isInStealth?: boolean | null;
+            stealthV2?: {
+                status: 'currently-in-stealth';
+                enteredStealthAt?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
+                    } | null;
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    } | {
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    } | null;
+                } | null;
+            } | {
+                status: 'left-stealth';
+                leftStealthAt?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
+                    } | null;
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    } | {
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    } | null;
+                } | null;
+                enteredStealthAt?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
+                    } | null;
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    } | {
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    } | null;
+                } | null;
+                stealthDuration?: {
+                    range: {
+                        lowerBound: number;
+                        upperBound: number;
+                    };
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            jobStatus?: {
+                status: 'currently-employed';
+            } | {
+                status: 'previously-employed';
+                leftAt?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
+                    } | null;
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    } | {
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    } | null;
+                } | null;
+            } | {
+                status: 'ever-employed';
+            } | null;
+            timeZone?: {
+                anyOf: Array<{
+                    strategy: {
+                        mode: 'midpoint-with-buffer';
+                        midpointTimeZoneName: string;
+                        maxMinutesWestward: number;
+                        maxMinutesEastward: number;
+                        includePartialYearMatches: boolean;
+                    };
+                }>;
+            } | null;
+            pastJobText?: {
+                joiner: 'and' | 'or';
+                criteria: Array<{
+                    field: 'title' | 'summary' | 'anywhere';
+                    rule: 'includes' | 'excludes';
+                    text?: string | null;
+                }>;
+            } | null;
+            fuzzyName?: {
+                anyOf: Array<{
+                    name: string;
+                }>;
+            } | null;
+            companyMatchMode?: {
+                mode: 'strict';
+            } | {
+                mode: 'loose';
+            } | null;
+            yearsOfExperience?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            jobTitleV3?: {
+                anyOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+                allOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+                noneOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+            } | null;
+            openToWork?: boolean | null;
+            isHiring?: boolean | null;
+            /**
+             * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
+             */
+            getDetailedEducation?: boolean | null;
+            /**
+             * Whether to include deep details about each work experience item, like the company's LinkedIn URL, website, location, etc. That'll be put in the detailedWorkExperience array. This slows down the API call, so only enable this if you need it.
+             */
+            getDetailedWorkExperience?: boolean | null;
+            tags?: {
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+            } | null;
+            education?: {
+                anyOf?: Array<{
+                    school?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degree?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    schoolNameKeywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    finishedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    startedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    isCurrentlyStudent?: boolean | null;
+                }> | null;
+                allOf?: Array<{
+                    school?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degree?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    schoolNameKeywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    finishedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    startedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    isCurrentlyStudent?: boolean | null;
+                }> | null;
+            } | null;
+        };
+        /**
+         * Filter people by the companies they are currently working for. If you want to search over many companies, we suggest using the Combined Search API, which is optimized for this use case.
+         */
+        currentCompanies?: Array<{
+            /**
+             * Company domain, like 'google.com'. Don't include 'https://', path fragments like '/about', or URL query parameters. If provided, we will not strip them out. This may be useful if your company page is like `instagram.com/google`.
+             */
+            domain?: string | null;
+            /**
+             * The company's linkedin slug or URL
+             */
+            linkedinSlugOrURL?: string | null;
+            /**
+             * The company's name as present in LinkedIn. This would do partial matches as well, eg. `Fiber AI` matches with `Fiber AI (YC S23)`. Try not to rely on this field as it will simply be doing a loose name match. We recommend that you use the domain or LI slug if available.
+             */
+            name?: string | null;
+            /**
+             * The company's LinkedIn Organization ID, eg. 1441 for google
+             */
+            linkedinOrgID?: string | null;
+        }> | null;
+        /**
+         * Filter out people which belong to the given prospect exclusion lists
+         */
+        prospectExclusionListIDs?: Array<string> | null;
+        /**
+         * Filter out people who work at companies which belong to the given company exclusion lists
+         */
+        companyExclusionListIDs?: Array<string> | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/people-search/count';
+};
+
+export type PeopleSearchCountErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type PeopleSearchCountError = PeopleSearchCountErrors[keyof PeopleSearchCountErrors];
+
+export type PeopleSearchCountResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Total number of profiles matching the search criteria including exclusion lists
+             */
+            totalProfilesFound: number;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+        } | {
+            method: 'charging-later';
+            message: string;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+        } | {
+            method: 'free';
+            message: string;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type PeopleSearchCountResponse = PeopleSearchCountResponses[keyof PeopleSearchCountResponses];
 
 export type CombinedSearchData = {
     body: {
@@ -14409,6 +15646,19 @@ export type CombinedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -18160,6 +19410,19 @@ export type SyncCombinedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -18326,6 +19589,19 @@ export type BulkCompanyLogosResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -18457,6 +19733,19 @@ export type TriggerContactEnrichmentResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -18599,6 +19888,19 @@ export type SyncContactEnrichmentResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -18740,6 +20042,19 @@ export type StartBatchContactEnrichmentResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -19092,6 +20407,19 @@ export type ProfileLiveEnrichResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -19583,6 +20911,19 @@ export type CompanyLiveEnrichResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -19771,6 +21112,19 @@ export type ProfilePostsLiveFetchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -19953,6 +21307,19 @@ export type CompanyPostsLiveFetchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -20113,6 +21480,19 @@ export type PostCommentsLiveFetchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -20252,6 +21632,19 @@ export type PostReactionsLiveFetchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -20395,6 +21788,19 @@ export type ProfileCommentsLiveFetchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -20550,6 +21956,19 @@ export type ProfileReactionsLiveFetchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -20897,6 +22316,19 @@ export type ReverseEmailLookupResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -21094,6 +22526,19 @@ export type GoogleMapsSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -21554,6 +22999,19 @@ export type KitchenSinkProfileResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -23440,6 +24898,19 @@ export type KitchenSinkCompanyResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -23885,6 +25356,19 @@ export type KitchenSinkBulkProfileResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -25773,6 +27257,19 @@ export type KitchenSinkBulkCompanyResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -25896,6 +27393,19 @@ export type CompanyTypeaheadResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -26019,6 +27529,19 @@ export type LocationTypeaheadResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -26168,6 +27691,19 @@ export type EmailBounceDetectionResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -26812,6 +28348,19 @@ export type TextToCompanySearchParamsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -29196,6 +30745,19 @@ export type TextToCompanySearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -29837,6 +31399,19 @@ export type TextToProfileSearchParamsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -30721,6 +32296,19 @@ export type TextToProfileSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -33872,6 +35460,19 @@ export type TextToCombinedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -37355,6 +38956,19 @@ export type CreateSavedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -39214,6 +40828,19 @@ export type GetSavedSearchRunResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -39339,6 +40966,19 @@ export type ManuallySpawnSavedSearchRunResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -41159,6 +42799,19 @@ export type UpdateSavedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -41313,6 +42966,19 @@ export type ListSavedSearchRunsResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -41451,6 +43117,19 @@ export type ListSavedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -41631,6 +43310,19 @@ export type GetSavedSearchRunStatusResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -41994,6 +43686,19 @@ export type GetCurrentProfilesInSavedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -43862,6 +45567,19 @@ export type GetCurrentCompaniesInSavedSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -44224,6 +45942,19 @@ export type GetSavedSearchRunProfilesResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -46091,6 +47822,19 @@ export type GetSavedSearchRunCompaniesResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -47950,6 +49694,19 @@ export type GetLatestSavedSearchRunResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -48115,6 +49872,19 @@ export type StartLocalBusinessSearchResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
@@ -48269,6 +50039,19 @@ export type DomainLookupTriggerResponses = {
             method: 'free';
             message: string;
         };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
     };
 };
 
