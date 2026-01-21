@@ -26,6 +26,9 @@ on:
 jobs:
   generate-and-publish:
     runs-on: ubuntu-latest
+    concurrency:
+      group: sdk-publish
+      cancel-in-progress: false
     permissions:
       contents: write
       packages: write

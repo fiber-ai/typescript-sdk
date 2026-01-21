@@ -130,6 +130,7 @@ import type {
 The SDK provides methods for all Fiber AI API endpoints:
 
 ### Search
+
 - `combinedSearch` - Submit a combined search for companies and people
 - `pollCombinedSearch` - Poll for search results
 - `syncCombinedSearch` - Synchronous combined search
@@ -137,6 +138,7 @@ The SDK provides methods for all Fiber AI API endpoints:
 - `peopleSearch` - Search for people
 
 ### Contact Enrichment
+
 - `triggerContactEnrichment` - Start contact enrichment
 - `pollContactEnrichmentResult` - Poll for enrichment results
 - `syncContactEnrichment` - Synchronous contact enrichment
@@ -144,17 +146,20 @@ The SDK provides methods for all Fiber AI API endpoints:
 - `pollBulkContactEnrichmentResult` - Poll bulk results
 
 ### Live Enrichment
+
 - `profileLiveEnrich` - Real-time LinkedIn profile enrichment
 - `companyLiveEnrich` - Real-time company enrichment
 - `profilePostsLiveFetch` - Fetch LinkedIn profile posts
 - `companyPostsLiveFetch` - Fetch company posts
 
 ### Company Information
+
 - `companyTypeahead` - Company name autocomplete
 - `locationTypeahead` - Location autocomplete
 - `bulkCompanyLogos` - Get company logos in bulk
 
 ### Utilities
+
 - `healthCheck` - API health check
 - `getOrgCredits` - Get organization credit balance
 - `emailBounceDetection` - Check email deliverability

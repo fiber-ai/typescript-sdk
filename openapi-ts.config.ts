@@ -1,7 +1,10 @@
 import { defineConfig } from "@hey-api/openapi-ts";
 
+const specUrl =
+  process.env.FIBERAI_OPENAPI_URL ?? "https://alpha.api.fiber.ai/openapi.json";
+
 export default defineConfig({
-  input: "https://alpha.api.fiber.ai/openapi.json",
+  input: specUrl,
   output: {
     path: "src/generated",
     clean: false, // Preserve custom files when regenerating
