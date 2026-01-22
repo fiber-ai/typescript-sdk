@@ -831,7 +831,7 @@ try {
 | 403 | Forbidden | You don't have access to this resource |
 | 404 | Not Found | Resource doesn't exist |
 | 429 | Too Many Requests | Rate limit exceeded - slow down requests |
-| 500 | Internal Server Error | Contact support at adi@fiber.ai |
+| 500 | Internal Server Error | Contact support |
 
 ## TypeScript Support
 
