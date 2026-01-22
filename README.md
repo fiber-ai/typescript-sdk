@@ -939,29 +939,10 @@ console.log(`Resets on: ${credits.data.output.usagePeriodResetsOn}`);
 
 ## Support
 
-- **Documentation**: [alpha.api.fiber.ai/scalar](https://alpha.api.fiber.ai/scalar)
-- **Email**: adi@fiber.ai
+- **Documentation**: [alpha.api.fiber.ai/docs](https://alpha.api.fiber.ai/docs)
+- **Email**:team@fiber.ai
 - **Website**: [fiber.ai](https://fiber.ai)
 - **Get API Key**: [fiber.ai/app/api](https://fiber.ai/app/api)
-
-## Development
-
-### Regenerating the SDK
-
-```bash
-# Clean and regenerate
-rm -rf src/generated/ dist/
-npm install
-npm run generate
-npm run build
-npm run typecheck
-```
-
-### Deployment
-
-1. Update version in `package.json`
-2. Commit and push to `main` branch
-3. GitHub Action automatically publishes to npm
 
 ## License
 
