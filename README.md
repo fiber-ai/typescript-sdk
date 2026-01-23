@@ -234,7 +234,7 @@ Search for companies and their employees in one workflow.
 import { combinedSearch, pollCombinedSearch } from '@fiberai/sdk';
 
 // Start async search
-  const searchTask = await combinedSearch({
+const searchTask = await combinedSearch({
   body: {
     apiKey: process.env.FIBERAI_API_KEY,
     companySearchParams: {
@@ -882,13 +882,9 @@ const searchParams: CompanySearchData = {
 const result: CompanySearchResponse = await companySearch(searchParams);
 ```
 
-### Runtime Validation (Optional)
+### Runtime Validation
 
-The SDK includes Zod schemas for runtime validation. Install Zod separately to use them:
-
-```bash
-npm install zod
-```
+The SDK includes Zod schemas for runtime validation. Zod is included automatically with the SDK installation.
 
 ```typescript
 import { z } from 'zod';
@@ -909,7 +905,7 @@ const validatedData = zCompanySearchData.parse(requestData);
 
 ### Rate Limits
 
-Each endpoint has its own rate  limit. Common limits:
+Each endpoint has its own rate limit. Common limits:
 
 - **Company/People Search**: 180 requests/minute
 - **Contact Enrichment**: 120 requests/minute (single), 10 requests/minute (batch)
@@ -960,7 +956,7 @@ console.log(`Resets on: ${credits.data.output.usagePeriodResetsOn}`);
 ## Support
 
 - **Documentation**: [alpha.api.fiber.ai/docs](https://alpha.api.fiber.ai/docs)
-- **Email**:team@fiber.ai
+- **Email**: team@fiber.ai
 - **Website**: [fiber.ai](https://fiber.ai)
 - **Get API Key**: [fiber.ai/app/api](https://fiber.ai/app/api)
 
