@@ -1,0 +1,59 @@
+# This workflow will run tests using node and then publish a package to npm
+
+name: Generate SDK and Publish to npm
+
+on:
+  push:
+    branches:
+      - main
+      - release/*
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout SDK repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: useblacksmith/setup-node@v5
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate SDK from OpenAPI
+        run: |
+          echo "Generating TypeScript SDK from https://alpha.api.fiber.ai/openapi.json..."
+          npm run generate
+          echo "SDK generated successfully"
+
+      - name: Build SDK
+        run: |
+          echo "Building SDK..."
+          npm run build
+          echo "SDK built successfully"
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Check if version already published
+        id: version_check
+        run: |
+          PKG_NAME=$(node -p "require('./package.json').name")
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if npm view "$PKG_NAME@$PKG_VERSION" version >/dev/null 2>&1; then
+            echo "publish=false" >> $GITHUB_OUTPUT
+          else
+            echo "publish=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish to npm
+        if: steps.version_check.outputs.publish == 'true'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
