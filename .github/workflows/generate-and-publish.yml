@@ -1,5 +1,3 @@
-# This workflow will run tests using node and then publish a package to npm
-
 name: Generate SDK and Publish to npm
 
 on:
@@ -11,14 +9,18 @@ on:
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+
+    # Required for Trusted Publishing (OIDC)
     permissions:
       contents: read
+      id-token: write
+
     steps:
       - name: Checkout SDK repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: useblacksmith/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org/"
@@ -28,7 +30,7 @@ jobs:
 
       - name: Generate SDK from OpenAPI
         run: |
-          echo "Generating TypeScript SDK from https://alpha.api.fiber.ai/openapi.json..."
+          echo "Generating TypeScript SDK..."
           npm run generate
           echo "SDK generated successfully"
 
@@ -55,5 +57,3 @@ jobs:
       - name: Publish to npm
         if: steps.version_check.outputs.publish == 'true'
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
