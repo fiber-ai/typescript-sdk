@@ -53,10 +53,15 @@ const companies = await companySearch({
   body: {
     apiKey: 'your-api-key',
     searchParams: {
-      standardIndustries: ['Software', 'Information Technology'],
-      employeeCountRange: { gte: 100, lte: 1000 },
-      location: {
-        countries: ['USA']
+      industriesV2: {
+        anyOf: ['Software', 'Information Technology']
+      },
+      employeeCountV2: {
+        lowerBoundExclusive: 100,
+        upperBoundInclusive: 1000
+      },
+      headquartersCountryCode: {
+        anyOf: ['USA']
       }
     },
     pageSize: 25
@@ -126,25 +131,30 @@ const result = await companySearch({
     apiKey: process.env.FIBERAI_API_KEY,
     searchParams: {
       // Industry filters
-      standardIndustries: ['Software', 'Cloud'],
+      industriesV2: {
+        anyOf: ['Software', 'Cloud']
+      },
       
       // Size filters
-      employeeCountRange: { gte: 50, lte: 500 },
-      revenueRange: { gte: 1000000, lte: 50000000 },
+      employeeCountV2: {
+        lowerBoundExclusive: 50,
+        upperBoundInclusive: 500
+      },
       
       // Location filters
-      location: {
-        countries: ['USA'],
-        states: ['CA', 'NY', 'TX']
+      headquartersCountryCode: {
+        anyOf: ['USA']
       },
       
       // Funding filters
-      totalFundingRange: { gte: 1000000 },
-      tags: ['venture-backed-startup'],
+      totalFundingUSD: {
+        lowerBound: 1000000
+      },
       
-      // Technology filters (if available)
-      // Advanced criteria
-      foundedOnRange: { gte: '2015-01-01' }
+      // Keywords filter
+      keywords: {
+        containsAny: ['venture-backed-startup']
+      }
     },
     pageSize: 50,
     cursor: null // For pagination
@@ -224,12 +234,16 @@ Search for companies and their employees in one workflow.
 import { combinedSearch, pollCombinedSearch } from '@fiberai/sdk';
 
 // Start async search
-const searchTask = await combinedSearch({
+  const searchTask = await combinedSearch({
   body: {
     apiKey: process.env.FIBERAI_API_KEY,
     companySearchParams: {
-      standardIndustries: ['Software'],
-      employeeCountRange: { gte: 100 }
+      industriesV2: {
+        anyOf: ['Software']
+      },
+      employeeCountV2: {
+        lowerBoundExclusive: 100
+      }
     },
     personSearchParams: {
       title: ['VP of Sales', 'Sales Director'],
@@ -490,8 +504,9 @@ const savedSearch = await createSavedSearch({
     name: 'Tech Executives in SF',
     searchParams: {
       companySearchParams: {
-        standardIndustries: ['Software'],
-        location: { cities: ['San Francisco, CA'] }
+        industriesV2: {
+          anyOf: ['Software']
+        }
       },
       personSearchParams: {
         title: ['CEO', 'CTO'],
@@ -852,10 +867,14 @@ const searchParams: CompanySearchData = {
   body: {
     apiKey: process.env.FIBERAI_API_KEY!,
     searchParams: {
-        industriesV2: {
-          anyOf: ['Software']
-        }
+      industriesV2: {
+        anyOf: ['Software']
       },
+      employeeCountV2: {
+        lowerBoundExclusive: 100,
+        upperBoundInclusive: 1000
+      }
+    },
     pageSize: 25
   }
 };
