@@ -852,9 +852,10 @@ const searchParams: CompanySearchData = {
   body: {
     apiKey: process.env.FIBERAI_API_KEY!,
     searchParams: {
-      standardIndustries: ['Software'],
-      employeeCountRange: { gte: 100, lte: 1000 }
-    },
+        industriesV2: {
+          anyOf: ['Software']
+        }
+      },
     pageSize: 25
   }
 };

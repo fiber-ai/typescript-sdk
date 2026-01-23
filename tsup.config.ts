@@ -10,8 +10,6 @@ export default defineConfig({
   minify: false,
   target: "es2022",
   outDir: "dist",
-  // Bundle all generated code together
-  noExternal: [/.*/],
-  // Except for user's potential peer dependencies
-  external: [],
+  // Only externalize runtime dependencies
+  external: ["zod"],
 });

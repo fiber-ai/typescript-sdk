@@ -19,8 +19,7 @@
     }
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "generate": "openapi-ts",
@@ -54,7 +53,9 @@
     "@types/node": "^24.10.9",
     "eslint": "^9.0.0",
     "tsup": "^8.0.0",
-    "typescript": "^5.5.0",
+    "typescript": "^5.5.0"
+  },
+  "dependencies": {
     "zod": "^4.3.5"
   },
   "peerDependencies": {
