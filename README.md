@@ -1,6 +1,6 @@
 # @fiberai/sdk
 
-Official TypeScript/JavaScript SDK for the [Fiber AI](https://fiber.ai) API - Enterprise B2B data intelligence platform.
+Official TypeScript/JavaScript SDK for the [Fiber AI](https://fiber.ai) API - Reach anyone on the planet with verified contacts
 
 [![npm version](https://img.shields.io/npm/v/@fiberai/sdk.svg)](https://www.npmjs.com/package/@fiberai/sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
