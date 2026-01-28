@@ -424,14 +424,7 @@ export const zGetOrgCreditsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPollCombinedSearchData = z.object({
@@ -3806,6 +3799,10 @@ export const zPollCombinedSearchResponse = z.object({
                                     preferred_name: z.optional(z.union([
                                         z.string(),
                                         z.null()
+                                    ])),
+                                    crunchbase_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.null()
@@ -3956,14 +3953,7 @@ export const zPollCombinedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPollContactEnrichmentResultData = z.object({
@@ -4034,14 +4024,7 @@ export const zPollContactEnrichmentResultResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPollBatchContactEnrichmentData = z.object({
@@ -4130,14 +4113,7 @@ export const zPollBatchContactEnrichmentResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPollGoogleMapsResultsData = z.object({
@@ -4226,14 +4202,7 @@ export const zPollGoogleMapsResultsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPollLocalBusinessSearchData = z.object({
@@ -4270,14 +4239,7 @@ export const zPollLocalBusinessSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCheckGoogleMapsResultsData = z.object({
@@ -4322,14 +4284,7 @@ export const zCheckGoogleMapsResultsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zDomainLookupPollingData = z.object({
@@ -4394,14 +4349,7 @@ export const zDomainLookupPollingResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetCompanyExclusionListsData = z.object({
@@ -4438,14 +4386,7 @@ export const zGetCompanyExclusionListsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCreateCompanyExclusionListData = z.object({
@@ -4484,14 +4425,7 @@ export const zCreateCompanyExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zDeleteCompanyExclusionListData = z.object({
@@ -4528,14 +4462,7 @@ export const zDeleteCompanyExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zAddCompaniesToExclusionListData = z.object({
@@ -4548,7 +4475,7 @@ export const zAddCompaniesToExclusionListData = z.object({
                 z.null()
             ])),
             linkedinUrl: z.optional(z.union([
-                z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?<slug>[^\/\?#]+)\/?(\?.*)?(#.*)?$/),
+                z.string(),
                 z.null()
             ]))
         })).max(5000)
@@ -4583,14 +4510,7 @@ export const zAddCompaniesToExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zRemoveCompanyFromExclusionListData = z.object({
@@ -4637,14 +4557,7 @@ export const zRemoveCompanyFromExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetExcludedCompaniesForExclusionListData = z.object({
@@ -4705,14 +4618,7 @@ export const zGetExcludedCompaniesForExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCreateCompanyExclusionListFromAudienceData = z.object({
@@ -4756,14 +4662,7 @@ export const zCreateCompanyExclusionListFromAudienceResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetProspectExclusionListsData = z.object({
@@ -4800,14 +4699,7 @@ export const zGetProspectExclusionListsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCreateProspectExclusionListData = z.object({
@@ -4846,14 +4738,7 @@ export const zCreateProspectExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zDeleteProspectExclusionListData = z.object({
@@ -4890,14 +4775,7 @@ export const zDeleteProspectExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zAddProspectsToExclusionListData = z.object({
@@ -4906,7 +4784,7 @@ export const zAddProspectsToExclusionListData = z.object({
         listId: z.string(),
         prospects: z.array(z.object({
             linkedinUrl: z.optional(z.union([
-                z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/in\/(?<slug>[^\/\?#]+)\/?(\?.*)?(#.*)?$/),
+                z.string(),
                 z.null()
             ]))
         })).max(5000)
@@ -4941,14 +4819,7 @@ export const zAddProspectsToExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zRemoveProspectFromExclusionListData = z.object({
@@ -4988,14 +4859,7 @@ export const zRemoveProspectFromExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetExcludedProspectsForExclusionListData = z.object({
@@ -5048,14 +4912,7 @@ export const zGetExcludedProspectsForExclusionListResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCreateProspectExclusionListFromAudienceData = z.object({
@@ -5099,14 +4956,7 @@ export const zCreateProspectExclusionListFromAudienceResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetRegionsData = z.object({
@@ -5164,14 +5014,7 @@ export const zGetRegionsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetLanguagesData = z.object({
@@ -5205,14 +5048,7 @@ export const zGetLanguagesResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetTimeZonesData = z.object({
@@ -5274,14 +5110,7 @@ export const zGetTimeZonesResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetIndustriesData = z.object({
@@ -5319,14 +5148,7 @@ export const zGetIndustriesResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetTagsData = z.object({
@@ -5401,14 +5223,7 @@ export const zGetTagsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetNaicsCodesData = z.object({
@@ -5447,14 +5262,7 @@ export const zGetNaicsCodesResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetAcceleratorsData = z.object({
@@ -5518,14 +5326,7 @@ export const zGetAcceleratorsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCompanySearchData = z.object({
@@ -15140,14 +14941,7 @@ export const zCompanySearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCompanyCountData = z.object({
@@ -22253,14 +22047,7 @@ export const zCompanyCountResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zInvestorSearchData = z.object({
@@ -23535,14 +23322,7 @@ export const zInvestorSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zInvestmentSearchData = z.object({
@@ -25599,14 +25379,7 @@ export const zInvestmentSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zJobPostingSearchData = z.object({
@@ -26499,14 +26272,7 @@ export const zJobPostingSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zJobPostingSearchCountData = z.object({
@@ -27114,14 +26880,7 @@ export const zJobPostingSearchCountResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPeopleSearchData = z.object({
@@ -29400,6 +29159,10 @@ export const zPeopleSearchData = z.object({
                 z.boolean(),
                 z.null()
             ])),
+            hasProfilePicture: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
             getDetailedEducation: z.optional(z.union([
                 z.boolean().default(false),
                 z.null()
@@ -30805,6 +30568,10 @@ export const zPeopleSearchResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -30953,14 +30720,7 @@ export const zPeopleSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPeopleSearchCountData = z.object({
@@ -33239,6 +32999,10 @@ export const zPeopleSearchCountData = z.object({
                 z.boolean(),
                 z.null()
             ])),
+            hasProfilePicture: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
             getDetailedEducation: z.optional(z.union([
                 z.boolean().default(false),
                 z.null()
@@ -33814,14 +33578,7 @@ export const zPeopleSearchCountResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCombinedSearchData = z.object({
@@ -43169,6 +42926,10 @@ export const zCombinedSearchData = z.object({
                 z.boolean(),
                 z.null()
             ])),
+            hasProfilePicture: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
             getDetailedEducation: z.optional(z.union([
                 z.boolean().default(false),
                 z.null()
@@ -43725,14 +43486,7 @@ export const zCombinedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zSyncCombinedSearchData = z.object({
@@ -53080,6 +52834,10 @@ export const zSyncCombinedSearchData = z.object({
                 z.boolean(),
                 z.null()
             ])),
+            hasProfilePicture: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
             getDetailedEducation: z.optional(z.union([
                 z.boolean().default(false),
                 z.null()
@@ -56965,6 +56723,10 @@ export const zSyncCombinedSearchResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -57109,14 +56871,7 @@ export const zSyncCombinedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zBulkCompanyLogosData = z.object({
@@ -57188,14 +56943,7 @@ export const zBulkCompanyLogosResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zTriggerContactEnrichmentData = z.object({
@@ -57243,14 +56991,7 @@ export const zTriggerContactEnrichmentResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zSyncContactEnrichmentData = z.object({
@@ -57330,14 +57071,7 @@ export const zSyncContactEnrichmentResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zStartBatchContactEnrichmentData = z.object({
@@ -57392,14 +57126,7 @@ export const zStartBatchContactEnrichmentResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zProfileLiveEnrichData = z.object({
@@ -58271,6 +57998,10 @@ export const zProfileLiveEnrichResponse = z.object({
                                 preferred_name: z.optional(z.union([
                                     z.string(),
                                     z.null()
+                                ])),
+                                crunchbase_slug: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
                                 ]))
                             }),
                             z.null()
@@ -58420,14 +58151,7 @@ export const zProfileLiveEnrichResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCompanyLiveEnrichData = z.object({
@@ -59000,14 +58724,7 @@ export const zCompanyLiveEnrichResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zProfilePostsLiveFetchData = z.object({
@@ -59254,14 +58971,7 @@ export const zProfilePostsLiveFetchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCompanyPostsLiveFetchData = z.object({
@@ -59282,188 +58992,211 @@ export const zCompanyPostsLiveFetchData = z.object({
  */
 export const zCompanyPostsLiveFetchResponse = z.object({
     output: z.object({
+        data: z.array(z.object({
+            postId: z.string(),
+            author: z.optional(z.union([
+                z.object({
+                    linkedinUrl: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    profilePicture: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinSlug: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            postedAt: z.optional(z.union([
+                z.object({
+                    noLaterThan: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    noEarlierThan: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            engagement: z.optional(z.union([
+                z.object({
+                    numComments: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    numShares: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    numReactions: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    reactionsByType: z.optional(z.union([
+                        z.array(z.object({
+                            numReactions: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            reactionType: z.optional(z.nullable(z.enum([
+                                'LIKE',
+                                'LOVE',
+                                'INSIGHTFUL',
+                                'CELEBRATE',
+                                'SUPPORT',
+                                'FUNNY'
+                            ])))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            imageUrls: z.optional(z.union([
+                z.array(z.string()),
+                z.null()
+            ])),
+            postUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            video: z.optional(z.union([
+                z.object({
+                    videoUrl: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    thumbnailUrl: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            caption: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            subText: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            resharedPost: z.optional(z.union([
+                z.object({
+                    postId: z.string(),
+                    author: z.optional(z.union([
+                        z.object({
+                            linkedinUrl: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            profilePicture: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            linkedinSlug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    postedAt: z.optional(z.union([
+                        z.object({
+                            noLaterThan: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            noEarlierThan: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    engagement: z.optional(z.union([
+                        z.object({
+                            numComments: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            numShares: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            numReactions: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            reactionsByType: z.optional(z.union([
+                                z.array(z.object({
+                                    numReactions: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    reactionType: z.optional(z.nullable(z.enum([
+                                        'LIKE',
+                                        'LOVE',
+                                        'INSIGHTFUL',
+                                        'CELEBRATE',
+                                        'SUPPORT',
+                                        'FUNNY'
+                                    ])))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    imageUrls: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    postUrl: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    video: z.optional(z.union([
+                        z.object({
+                            videoUrl: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            thumbnailUrl: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    caption: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    subText: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ]))
+        })),
         cursor: z.optional(z.union([
             z.string(),
-            z.null()
-        ])),
-        contentType: z.enum(['posts']),
-        items: z.optional(z.union([
-            z.array(z.object({
-                contentId: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                content: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                commentsCount: z.optional(z.union([
-                    z.number(),
-                    z.null()
-                ])),
-                reactionsCount: z.optional(z.union([
-                    z.number(),
-                    z.null()
-                ])),
-                reactionsByType: z.optional(z.union([
-                    z.object({
-                        like: z.optional(z.number()),
-                        love: z.optional(z.number()),
-                        insightful: z.optional(z.number()),
-                        celebrate: z.optional(z.number()),
-                        support: z.optional(z.number()),
-                        funny: z.optional(z.number())
-                    }),
-                    z.null()
-                ])),
-                postUrl: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                postedAt: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                sharesCount: z.optional(z.union([
-                    z.number(),
-                    z.null()
-                ])),
-                header: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                media: z.optional(z.union([
-                    z.array(z.union([
-                        z.object({
-                            type: z.enum(['image']),
-                            urls: z.optional(z.union([
-                                z.array(z.string()),
-                                z.null()
-                            ]))
-                        }),
-                        z.object({
-                            type: z.enum(['poll']),
-                            questionText: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            timeRemaining: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            isEnded: z.optional(z.union([
-                                z.boolean(),
-                                z.null()
-                            ])),
-                            numVoters: z.optional(z.union([
-                                z.number(),
-                                z.null()
-                            ])),
-                            options: z.optional(z.union([
-                                z.array(z.object({
-                                    label: z.optional(z.union([
-                                        z.string(),
-                                        z.null()
-                                    ])),
-                                    votes: z.optional(z.union([
-                                        z.number(),
-                                        z.null()
-                                    ])),
-                                    isWinning: z.optional(z.union([
-                                        z.boolean(),
-                                        z.null()
-                                    ]))
-                                })),
-                                z.null()
-                            ]))
-                        }),
-                        z.object({
-                            type: z.enum(['video']),
-                            durationSeconds: z.optional(z.union([
-                                z.number(),
-                                z.null()
-                            ])),
-                            thumbnail: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            streamUrl: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ]))
-                        }),
-                        z.object({
-                            type: z.enum(['document']),
-                            title: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            textUrl: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            manifest: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            pageData: z.optional(z.union([
-                                z.array(z.object({
-                                    width: z.optional(z.union([
-                                        z.number(),
-                                        z.null()
-                                    ])),
-                                    height: z.optional(z.union([
-                                        z.number(),
-                                        z.null()
-                                    ])),
-                                    imageUrls: z.optional(z.union([
-                                        z.array(z.string()),
-                                        z.null()
-                                    ]))
-                                })),
-                                z.null()
-                            ]))
-                        }),
-                        z.object({
-                            type: z.enum(['article']),
-                            title: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            subtitle: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            externalUrl: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ])),
-                            summary: z.optional(z.union([
-                                z.string(),
-                                z.null()
-                            ]))
-                        })
-                    ])),
-                    z.null()
-                ])),
-                postedBy: z.optional(z.union([
-                    z.object({
-                        companyId: z.optional(z.union([
-                            z.number(),
-                            z.null()
-                        ])),
-                        companyName: z.optional(z.union([
-                            z.string(),
-                            z.null()
-                        ])),
-                        logo: z.optional(z.union([
-                            z.string(),
-                            z.null()
-                        ]))
-                    }),
-                    z.null()
-                ]))
-            })),
             z.null()
         ]))
     }),
@@ -59485,14 +59218,7 @@ export const zCompanyPostsLiveFetchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPostCommentsLiveFetchData = z.object({
@@ -59651,14 +59377,7 @@ export const zPostCommentsLiveFetchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zPostReactionsLiveFetchData = z.object({
@@ -59745,14 +59464,7 @@ export const zPostReactionsLiveFetchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zProfileCommentsLiveFetchData = z.object({
@@ -59798,10 +59510,6 @@ export const zProfileCommentsLiveFetchResponse = z.object({
                             z.null()
                         ])),
                         entityUrn: z.optional(z.union([
-                            z.string(),
-                            z.null()
-                        ])),
-                        headline: z.optional(z.union([
                             z.string(),
                             z.null()
                         ])),
@@ -59868,14 +59576,7 @@ export const zProfileCommentsLiveFetchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zProfileReactionsLiveFetchData = z.object({
@@ -59929,10 +59630,6 @@ export const zProfileReactionsLiveFetchResponse = z.object({
                             z.null()
                         ])),
                         entityUrn: z.optional(z.union([
-                            z.string(),
-                            z.null()
-                        ])),
-                        headline: z.optional(z.union([
                             z.string(),
                             z.null()
                         ]))
@@ -60025,14 +59722,7 @@ export const zProfileReactionsLiveFetchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zReverseEmailLookupData = z.object({
@@ -60898,6 +60588,10 @@ export const zReverseEmailLookupResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -61042,14 +60736,7 @@ export const zReverseEmailLookupResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGoogleMapsSearchData = z.object({
@@ -61117,14 +60804,7 @@ export const zGoogleMapsSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zKitchenSinkProfileData = z.object({
@@ -62094,6 +61774,10 @@ export const zKitchenSinkProfileResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -62242,14 +61926,7 @@ export const zKitchenSinkProfileResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zKitchenSinkCompanyData = z.object({
@@ -64823,14 +64500,7 @@ export const zKitchenSinkCompanyResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zKitchenSinkBulkProfileData = z.object({
@@ -65785,6 +65455,10 @@ export const zKitchenSinkBulkProfileResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -65933,14 +65607,7 @@ export const zKitchenSinkBulkProfileResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zKitchenSinkBulkCompanyData = z.object({
@@ -68516,14 +68183,7 @@ export const zKitchenSinkBulkCompanyResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCompanyTypeaheadData = z.object({
@@ -68580,14 +68240,7 @@ export const zCompanyTypeaheadResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zLocationTypeaheadData = z.object({
@@ -68635,14 +68288,7 @@ export const zLocationTypeaheadResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zEmailBounceDetectionData = z.object({
@@ -68691,14 +68337,7 @@ export const zEmailBounceDetectionResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zTextToCompanySearchParamsData = z.object({
@@ -73487,14 +73126,7 @@ export const zTextToCompanySearchParamsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zTextToCompanySearchData = z.object({
@@ -80793,14 +80425,7 @@ export const zTextToCompanySearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zTextToProfileSearchParamsData = z.object({
@@ -83516,14 +83141,7 @@ export const zTextToProfileSearchParamsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zTextToProfileSearchData = z.object({
@@ -84396,6 +84014,10 @@ export const zTextToProfileSearchResponse = z.object({
                                 z.null()
                             ])),
                             preferred_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
                                 z.string(),
                                 z.null()
                             ]))
@@ -87226,14 +86848,7 @@ export const zTextToProfileSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zTextToCombinedSearchData = z.object({
@@ -90616,6 +90231,10 @@ export const zTextToCombinedSearchResponse = z.object({
                                     z.null()
                                 ])),
                                 preferred_name: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
+                                crunchbase_slug: z.optional(z.union([
                                     z.string(),
                                     z.null()
                                 ]))
@@ -98202,14 +97821,7 @@ export const zTextToCombinedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zCreateSavedSearchData = z.object({
@@ -107558,6 +107170,10 @@ export const zCreateSavedSearchData = z.object({
                         z.null()
                     ])),
                     isHiring: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    hasProfilePicture: z.optional(z.union([
                         z.boolean(),
                         z.null()
                     ])),
@@ -117425,6 +117041,10 @@ export const zCreateSavedSearchData = z.object({
                         z.boolean(),
                         z.null()
                     ])),
+                    hasProfilePicture: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
                     getDetailedEducation: z.optional(z.union([
                         z.boolean().default(false),
                         z.null()
@@ -117974,14 +117594,7 @@ export const zCreateSavedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetSavedSearchRunData = z.object({
@@ -127375,6 +126988,10 @@ export const zGetSavedSearchRunResponse = z.object({
                         z.boolean(),
                         z.null()
                     ])),
+                    hasProfilePicture: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
                     getDetailedEducation: z.union([
                         z.boolean().default(false),
                         z.null()
@@ -127913,14 +127530,7 @@ export const zGetSavedSearchRunResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zManuallySpawnSavedSearchRunData = z.object({
@@ -127958,14 +127568,7 @@ export const zManuallySpawnSavedSearchRunResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zUpdateSavedSearchData = z.object({
@@ -137326,6 +136929,10 @@ export const zUpdateSavedSearchData = z.object({
                     z.boolean(),
                     z.null()
                 ])),
+                hasProfilePicture: z.optional(z.union([
+                    z.boolean(),
+                    z.null()
+                ])),
                 getDetailedEducation: z.optional(z.union([
                     z.boolean().default(false),
                     z.null()
@@ -137882,14 +137489,7 @@ export const zUpdateSavedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zListSavedSearchRunsData = z.object({
@@ -137947,14 +137547,7 @@ export const zListSavedSearchRunsResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zListSavedSearchData = z.object({
@@ -138002,14 +137595,7 @@ export const zListSavedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetSavedSearchRunStatusData = z.object({
@@ -138075,14 +137661,7 @@ export const zGetSavedSearchRunStatusResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetCurrentProfilesInSavedSearchData = z.object({
@@ -138958,6 +138537,10 @@ export const zGetCurrentProfilesInSavedSearchResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -139110,14 +138693,7 @@ export const zGetCurrentProfilesInSavedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetCurrentCompaniesInSavedSearchData = z.object({
@@ -141676,14 +141252,7 @@ export const zGetCurrentCompaniesInSavedSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetSavedSearchRunProfilesData = z.object({
@@ -142560,6 +142129,10 @@ export const zGetSavedSearchRunProfilesResponse = z.object({
                                 preferred_name: z.optional(z.union([
                                     z.string(),
                                     z.null()
+                                ])),
+                                crunchbase_slug: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
                                 ]))
                             }),
                             z.null()
@@ -142715,14 +142288,7 @@ export const zGetSavedSearchRunProfilesResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetSavedSearchRunCompaniesData = z.object({
@@ -145285,14 +144851,7 @@ export const zGetSavedSearchRunCompaniesResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zGetLatestSavedSearchRunData = z.object({
@@ -154686,6 +154245,10 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                         z.boolean(),
                         z.null()
                     ])),
+                    hasProfilePicture: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
                     getDetailedEducation: z.union([
                         z.boolean().default(false),
                         z.null()
@@ -155224,14 +154787,7 @@ export const zGetLatestSavedSearchRunResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zStartLocalBusinessSearchData = z.object({
@@ -155309,14 +154865,7 @@ export const zStartLocalBusinessSearchResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
 
 export const zDomainLookupTriggerData = z.object({
@@ -155380,12 +154929,5 @@ export const zDomainLookupTriggerResponse = z.object({
             method: z.enum(['free']),
             message: z.string()
         })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
+    ])
 });
