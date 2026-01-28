@@ -955,7 +955,7 @@ console.log(`Resets on: ${credits.data.output.usagePeriodResetsOn}`);
 
 ## Support
 
-- **Documentation**: [alpha.api.fiber.ai/docs](https://alpha.api.fiber.ai/docs)
+- **Documentation**: [api.fiber.ai/docs](https://api.fiber.ai/docs)
 - **Email**: team@fiber.ai
 - **Website**: [fiber.ai](https://fiber.ai)
 - **Get API Key**: [fiber.ai/app/api](https://fiber.ai/app/api)

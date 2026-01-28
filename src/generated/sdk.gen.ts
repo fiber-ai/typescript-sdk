@@ -793,7 +793,7 @@ export const profilePostsLiveFetch = <ThrowOnError extends boolean = false>(opti
 /**
  * Fetch LinkedIn company posts
  *
- * Fetches recent posts from a LinkedIn company page. Returns a paginated feed of company posts. Each page contains up to 10 posts.
+ * Fetches recent posts from a LinkedIn company page. Returns a paginated feed of company posts. Each page contains up to 50 posts.
  *
  * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
@@ -1175,7 +1175,7 @@ export const getSavedSearchRun = <ThrowOnError extends boolean = false>(options:
  *
  * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
  *
- * <span>💰 <strong>Cost:</strong> 2 credits per prospect/company found&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ * <span>💰 <strong>Cost:</strong> 2 credits per prospect/company found in search&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
 export const manuallySpawnSavedSearchRun = <ThrowOnError extends boolean = false>(options: Options<ManuallySpawnSavedSearchRunData, ThrowOnError>) => (options.client ?? client).post<ManuallySpawnSavedSearchRunResponses, ManuallySpawnSavedSearchRunErrors, ThrowOnError>({
     url: '/v1/saved-search/spawn',

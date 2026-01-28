@@ -1,6 +1,6 @@
 import { defineConfig } from "@hey-api/openapi-ts";
 
-const specUrl ="https://alpha.api.fiber.ai/openapi.json";
+const specUrl ="https://api.fiber.ai/openapi.json";
 
 export default defineConfig({
   input: specUrl,
