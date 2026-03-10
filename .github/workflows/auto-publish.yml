@@ -1,0 +1,79 @@
+name: Auto-generate SDK on backend deploy
+
+on:
+  repository_dispatch:
+    types: [backend-updated]
+  workflow_dispatch: # Manual trigger fallback
+
+concurrency:
+  group: sdk-generate
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Clear old generated code
+        run: rm -rf src/generated
+
+      - name: Generate SDK from OpenAPI spec
+        run: npm run generate
+
+      - name: Build
+        run: npm run build
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Check if generated code changed
+        id: diff
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in generated SDK"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in generated SDK"
+          fi
+
+      - name: Bump patch version
+        if: steps.diff.outputs.changed == 'true'
+        run: npm version patch --no-git-tag-version
+
+      - name: Commit and push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          BACKEND_SHA="${{ github.event.client_payload.sha }}"
+          git commit -m "chore: auto-generate SDK v${VERSION}${BACKEND_SHA:+ (backend ${BACKEND_SHA:0:7})}"
+          git push
+
+      - name: Summary
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "### Pushed @fiberai/sdk@${VERSION} — publish will be handled by generate-and-publish.yml" >> $GITHUB_STEP_SUMMARY
+
+      - name: Summary (no changes)
+        if: steps.diff.outputs.changed == 'false'
+        run: echo "### No spec changes detected - skipped" >> $GITHUB_STEP_SUMMARY
