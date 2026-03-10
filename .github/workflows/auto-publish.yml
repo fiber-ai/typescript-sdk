@@ -18,8 +18,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -63,6 +61,7 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}@github.com/fiber-ai/typescript-sdk.git
           git add -A
           BACKEND_SHA="${{ github.event.client_payload.sha }}"
           git commit -m "chore: auto-generate SDK v${VERSION}${BACKEND_SHA:+ (backend ${BACKEND_SHA:0:7})}"
