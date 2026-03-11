@@ -438,6 +438,24 @@ export const zGetOrgCreditsResponse = z.object({
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
                 }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                getProfileLatestLiPost: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 100 }] }),
+                getCompanyLatestLiPost: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 100 }] }),
                 savedSearchCompany: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
@@ -554,7 +572,43 @@ export const zGetOrgCreditsResponse = z.object({
                         ])),
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
-                }).default({ levels: [{ limit: null, centiCreditCost: 500 }] })
+                }).default({ levels: [{ limit: null, centiCreditCost: 400 }] }),
+                multiSourceCompanySearch: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                multiSourcePersonSearch: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                scoutingReportCompany: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 600 }] }),
+                scoutingReportPerson: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 600 }] })
             }),
             z.null()
         ]))
@@ -3691,7 +3745,6 @@ export const zPollCombinedSearchResponse = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -6789,7 +6842,6 @@ export const zGetTagsResponse = z.object({
                 'student',
                 'attended-top-us-university',
                 'attended-top-global-university',
-                'stealth-founder',
                 'second-time-founder',
                 'deep-technical-background',
                 'major-tech-company-experience',
@@ -17161,7 +17213,6 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -17182,7 +17233,6 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -17203,7 +17253,6 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -42464,7 +42513,6 @@ export const zPeopleSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -42485,7 +42533,6 @@ export const zPeopleSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -42506,7 +42553,6 @@ export const zPeopleSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -43549,7 +43595,6 @@ export const zPeopleSearchResponse = z.object({
                     'student',
                     'attended-top-us-university',
                     'attended-top-global-university',
-                    'stealth-founder',
                     'second-time-founder',
                     'deep-technical-background',
                     'major-tech-company-experience',
@@ -46360,7 +46405,6 @@ export const zPeopleSearchCountData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -46381,7 +46425,6 @@ export const zPeopleSearchCountData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -46402,7 +46445,6 @@ export const zPeopleSearchCountData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -56352,7 +56394,6 @@ export const zCombinedSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -56373,7 +56414,6 @@ export const zCombinedSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -56394,7 +56434,6 @@ export const zCombinedSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -66325,7 +66364,6 @@ export const zSyncCombinedSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -66346,7 +66384,6 @@ export const zSyncCombinedSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -66367,7 +66404,6 @@ export const zSyncCombinedSearchData = z.object({
                             'student',
                             'attended-top-us-university',
                             'attended-top-global-university',
-                            'stealth-founder',
                             'second-time-founder',
                             'deep-technical-background',
                             'major-tech-company-experience',
@@ -69895,7 +69931,6 @@ export const zSyncCombinedSearchResponse = z.object({
                     'student',
                     'attended-top-us-university',
                     'attended-top-global-university',
-                    'stealth-founder',
                     'second-time-founder',
                     'deep-technical-background',
                     'major-tech-company-experience',
@@ -71618,7 +71653,6 @@ export const zProfileLiveEnrichResponse = z.object({
                         'student',
                         'attended-top-us-university',
                         'attended-top-global-university',
-                        'stealth-founder',
                         'second-time-founder',
                         'deep-technical-background',
                         'major-tech-company-experience',
@@ -74825,7 +74859,6 @@ export const zReverseEmailLookupResponse = z.object({
                     'student',
                     'attended-top-us-university',
                     'attended-top-global-university',
-                    'stealth-founder',
                     'second-time-founder',
                     'deep-technical-background',
                     'major-tech-company-experience',
@@ -76780,7 +76813,6 @@ export const zKitchenSinkProfileResponse = z.object({
                     'student',
                     'attended-top-us-university',
                     'attended-top-global-university',
-                    'stealth-founder',
                     'second-time-founder',
                     'deep-technical-background',
                     'major-tech-company-experience',
@@ -80544,7 +80576,6 @@ export const zKitchenSinkBulkProfileResponse = z.object({
                     'student',
                     'attended-top-us-university',
                     'attended-top-global-university',
-                    'stealth-founder',
                     'second-time-founder',
                     'deep-technical-background',
                     'major-tech-company-experience',
@@ -96872,7 +96903,6 @@ export const zTextToProfileSearchParamsResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -96901,7 +96931,6 @@ export const zTextToProfileSearchParamsResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -96930,7 +96959,6 @@ export const zTextToProfileSearchParamsResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -99782,7 +99810,6 @@ export const zTextToProfileSearchResponse = z.object({
                     'student',
                     'attended-top-us-university',
                     'attended-top-global-university',
-                    'stealth-founder',
                     'second-time-founder',
                     'deep-technical-background',
                     'major-tech-company-experience',
@@ -100618,7 +100645,6 @@ export const zTextToProfileSearchResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -100647,7 +100673,6 @@ export const zTextToProfileSearchResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -100676,7 +100701,6 @@ export const zTextToProfileSearchResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -106043,7 +106067,6 @@ export const zTextToCombinedSearchResponse = z.object({
                         'student',
                         'attended-top-us-university',
                         'attended-top-global-university',
-                        'stealth-founder',
                         'second-time-founder',
                         'deep-technical-background',
                         'major-tech-company-experience',
@@ -111736,7 +111759,6 @@ export const zTextToCombinedSearchResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -111765,7 +111787,6 @@ export const zTextToCombinedSearchResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -111794,7 +111815,6 @@ export const zTextToCombinedSearchResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -123479,7 +123499,6 @@ export const zCreateSavedSearchData = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -123500,7 +123519,6 @@ export const zCreateSavedSearchData = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -123521,7 +123539,6 @@ export const zCreateSavedSearchData = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -133381,7 +133398,6 @@ export const zCreateSavedSearchData = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -133402,7 +133418,6 @@ export const zCreateSavedSearchData = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -133423,7 +133438,6 @@ export const zCreateSavedSearchData = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -143391,7 +143405,6 @@ export const zGetSavedSearchResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -143412,7 +143425,6 @@ export const zGetSavedSearchResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -143433,7 +143445,6 @@ export const zGetSavedSearchResponse = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -153395,7 +153406,6 @@ export const zGetSavedSearchRunResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -153416,7 +153426,6 @@ export const zGetSavedSearchRunResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -153437,7 +153446,6 @@ export const zGetSavedSearchRunResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -163440,7 +163448,6 @@ export const zUpdateSavedSearchData = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -163461,7 +163468,6 @@ export const zUpdateSavedSearchData = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -163482,7 +163488,6 @@ export const zUpdateSavedSearchData = z.object({
                                 'student',
                                 'attended-top-us-university',
                                 'attended-top-global-university',
-                                'stealth-founder',
                                 'second-time-founder',
                                 'deep-technical-background',
                                 'major-tech-company-experience',
@@ -164896,7 +164901,6 @@ export const zGetCurrentProfilesInSavedSearchResponse = z.object({
                     'student',
                     'attended-top-us-university',
                     'attended-top-global-university',
-                    'stealth-founder',
                     'second-time-founder',
                     'deep-technical-background',
                     'major-tech-company-experience',
@@ -168571,7 +168575,6 @@ export const zGetSavedSearchRunProfilesResponse = z.object({
                         'student',
                         'attended-top-us-university',
                         'attended-top-global-university',
-                        'stealth-founder',
                         'second-time-founder',
                         'deep-technical-background',
                         'major-tech-company-experience',
@@ -181120,7 +181123,6 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -181141,7 +181143,6 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',
@@ -181162,7 +181163,6 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                     'student',
                                     'attended-top-us-university',
                                     'attended-top-global-university',
-                                    'stealth-founder',
                                     'second-time-founder',
                                     'deep-technical-background',
                                     'major-tech-company-experience',

@@ -440,6 +440,18 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
+                getProfileLatestLiPost: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                getCompanyLatestLiPost: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
                 savedSearchCompany: {
                     levels: Array<{
                         limit?: number | null;
@@ -513,6 +525,30 @@ export type GetOrgCreditsResponses = {
                     }>;
                 };
                 getCompanyRevenue: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                multiSourceCompanySearch: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                multiSourcePersonSearch: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                scoutingReportCompany: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                scoutingReportPerson: {
                     levels: Array<{
                         limit?: number | null;
                         centiCreditCost: number;
@@ -2640,7 +2676,7 @@ export type PollCombinedSearchResponses = {
                         localities: Array<string>;
                     }> | null;
                     career_began_at?: string | null;
-                    tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                     entity_urn?: string | null;
                     open_to_work?: boolean | null;
                     premium?: boolean | null;
@@ -9870,7 +9906,7 @@ export type GetTagsResponses = {
              * List of all available profile tags
              */
             profileTags: Array<{
-                slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                 name: string;
                 description?: string | null;
                 emoji: string;
@@ -13921,9 +13957,9 @@ export type UpdateAudienceSearchParamsData = {
              */
             getDetailedWorkExperience?: boolean | null;
             tags?: {
-                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
             } | null;
             education?: {
                 anyOf?: Array<{
@@ -22042,9 +22078,9 @@ export type PeopleSearchData = {
              */
             getDetailedWorkExperience?: boolean | null;
             tags?: {
-                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
             } | null;
             education?: {
                 anyOf?: Array<{
@@ -22530,7 +22566,7 @@ export type PeopleSearchResponses = {
                     localities: Array<string>;
                 }> | null;
                 career_began_at?: string | null;
-                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 entity_urn?: string | null;
                 open_to_work?: boolean | null;
                 premium?: boolean | null;
@@ -23154,9 +23190,9 @@ export type PeopleSearchCountData = {
              */
             getDetailedWorkExperience?: boolean | null;
             tags?: {
-                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
             } | null;
             education?: {
                 anyOf?: Array<{
@@ -25101,9 +25137,9 @@ export type CombinedSearchData = {
              */
             getDetailedWorkExperience?: boolean | null;
             tags?: {
-                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
             } | null;
             education?: {
                 anyOf?: Array<{
@@ -27035,9 +27071,9 @@ export type SyncCombinedSearchData = {
              */
             getDetailedWorkExperience?: boolean | null;
             tags?: {
-                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
             } | null;
             education?: {
                 anyOf?: Array<{
@@ -29234,7 +29270,7 @@ export type SyncCombinedSearchResponses = {
                     localities: Array<string>;
                 }> | null;
                 career_began_at?: string | null;
-                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 entity_urn?: string | null;
                 open_to_work?: boolean | null;
                 premium?: boolean | null;
@@ -31304,7 +31340,7 @@ export type ProfileLiveEnrichResponses = {
                     localities: Array<string>;
                 }> | null;
                 career_began_at?: string | null;
-                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 entity_urn?: string | null;
                 open_to_work?: boolean | null;
                 premium?: boolean | null;
@@ -34415,7 +34451,7 @@ export type ReverseEmailLookupResponses = {
                     localities: Array<string>;
                 }> | null;
                 career_began_at?: string | null;
-                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 entity_urn?: string | null;
                 open_to_work?: boolean | null;
                 premium?: boolean | null;
@@ -35271,7 +35307,7 @@ export type KitchenSinkProfileResponses = {
                     localities: Array<string>;
                 }> | null;
                 career_began_at?: string | null;
-                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 entity_urn?: string | null;
                 open_to_work?: boolean | null;
                 premium?: boolean | null;
@@ -37750,7 +37786,7 @@ export type KitchenSinkBulkProfileResponses = {
                     localities: Array<string>;
                 }> | null;
                 career_began_at?: string | null;
-                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 entity_urn?: string | null;
                 open_to_work?: boolean | null;
                 premium?: boolean | null;
@@ -44629,19 +44665,19 @@ export type TextToProfileSearchParamsResponses = {
                 } | null;
                 tags?: {
                     anyOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
                     }> | null;
                     allOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
                     }> | null;
                     noneOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
@@ -45386,7 +45422,7 @@ export type TextToProfileSearchResponses = {
                     localities: Array<string>;
                 }> | null;
                 career_began_at?: string | null;
-                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 entity_urn?: string | null;
                 open_to_work?: boolean | null;
                 premium?: boolean | null;
@@ -45629,19 +45665,19 @@ export type TextToProfileSearchResponses = {
                 } | null;
                 tags?: {
                     anyOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
                     }> | null;
                     allOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
                     }> | null;
                     noneOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
@@ -48130,7 +48166,7 @@ export type TextToCombinedSearchResponses = {
                         localities: Array<string>;
                     }> | null;
                     career_began_at?: string | null;
-                    tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                     entity_urn?: string | null;
                     open_to_work?: boolean | null;
                     premium?: boolean | null;
@@ -48942,19 +48978,19 @@ export type TextToCombinedSearchResponses = {
                 } | null;
                 tags?: {
                     anyOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
                     }> | null;
                     allOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
                     }> | null;
                     noneOf?: Array<{
-                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
+                        slug: 'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member';
                         name: string;
                         description?: string | null;
                         emoji: string;
@@ -50924,9 +50960,9 @@ export type CreateSavedSearchData = {
                  */
                 getDetailedWorkExperience?: boolean | null;
                 tags?: {
-                    anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                    allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                    noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 } | null;
                 education?: {
                     anyOf?: Array<{
@@ -52622,9 +52658,9 @@ export type CreateSavedSearchData = {
                  */
                 getDetailedWorkExperience?: boolean | null;
                 tags?: {
-                    anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                    allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                    noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 } | null;
                 education?: {
                     anyOf?: Array<{
@@ -54716,9 +54752,9 @@ export type GetSavedSearchResponses = {
                  */
                 getDetailedWorkExperience: boolean | null;
                 tags?: {
-                    anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                    allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                    noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 } | null;
                 education?: {
                     anyOf?: Array<{
@@ -56708,9 +56744,9 @@ export type GetSavedSearchRunResponses = {
                      */
                     getDetailedWorkExperience: boolean | null;
                     tags?: {
-                        anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                        allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                        noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                        anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                        allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                        noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                     } | null;
                     education?: {
                         anyOf?: Array<{
@@ -58754,9 +58790,9 @@ export type UpdateSavedSearchData = {
              */
             getDetailedWorkExperience?: boolean | null;
             tags?: {
-                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
             } | null;
             education?: {
                 anyOf?: Array<{
@@ -60327,7 +60363,7 @@ export type GetCurrentProfilesInSavedSearchResponses = {
                     localities: Array<string>;
                 }> | null;
                 career_began_at?: string | null;
-                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                 entity_urn?: string | null;
                 open_to_work?: boolean | null;
                 premium?: boolean | null;
@@ -62800,7 +62836,7 @@ export type GetSavedSearchRunProfilesResponses = {
                         localities: Array<string>;
                     }> | null;
                     career_began_at?: string | null;
-                    tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                     entity_urn?: string | null;
                     open_to_work?: boolean | null;
                     premium?: boolean | null;
@@ -66680,9 +66716,9 @@ export type GetLatestSavedSearchRunResponses = {
                      */
                     getDetailedWorkExperience: boolean | null;
                     tags?: {
-                        anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                        allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                        noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'stealth-founder' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                        anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                        allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                        noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
                     } | null;
                     education?: {
                         anyOf?: Array<{
