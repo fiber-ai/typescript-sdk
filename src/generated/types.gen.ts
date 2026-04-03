@@ -392,6 +392,12 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
+                socialMediaFinderAgent: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
                 bulkCompanyLogoLookup: {
                     levels: Array<{
                         limit?: number | null;
@@ -549,6 +555,114 @@ export type GetOrgCreditsResponses = {
                     }>;
                 };
                 scoutingReportPerson: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                trackPersonsJobChanges: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                youtubeVideoTranscript: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                youtubeVideoDetails: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                youtubeVideoComments: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                youtubeSearch: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                youtubeChannelDetails: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialUserDetails: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialUserPosts: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialUserFollowers: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialUserFollowing: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialPostDetails: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialPostReplies: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialPostQuotes: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialPostReposts: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialPostReactions: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialUserMentions: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialUserSearch: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                socialPostSearch: {
                     levels: Array<{
                         limit?: number | null;
                         centiCreditCost: number;
@@ -2367,10 +2481,313 @@ export type PollCombinedSearchResponses = {
                         full_address?: string | null;
                         formatted_address?: string | null;
                     } | null;
+                    locations_stats?: {
+                        USA?: number;
+                        GBR?: number;
+                        FRA?: number;
+                        IND?: number;
+                        BRA?: number;
+                        DEU?: number;
+                        ESP?: number;
+                        CAN?: number;
+                        AUS?: number;
+                        NLD?: number;
+                        ITA?: number;
+                        ZAF?: number;
+                        BEL?: number;
+                        CHN?: number;
+                        TUR?: number;
+                        MEX?: number;
+                        CHE?: number;
+                        NOR?: number;
+                        ARE?: number;
+                        SWE?: number;
+                        POL?: number;
+                        IDN?: number;
+                        ARG?: number;
+                        PRT?: number;
+                        COL?: number;
+                        CHL?: number;
+                        PAK?: number;
+                        DNK?: number;
+                        JPN?: number;
+                        NGA?: number;
+                        SGP?: number;
+                        PER?: number;
+                        NZL?: number;
+                        AUT?: number;
+                        IRL?: number;
+                        MYS?: number;
+                        BGD?: number;
+                        EGY?: number;
+                        ISR?: number;
+                        SAU?: number;
+                        PHL?: number;
+                        FIN?: number;
+                        IRN?: number;
+                        ROU?: number;
+                        CZE?: number;
+                        GRC?: number;
+                        HKG?: number;
+                        HUN?: number;
+                        KEN?: number;
+                        MAR?: number;
+                        VNM?: number;
+                        RUS?: number;
+                        UKR?: number;
+                        ECU?: number;
+                        THA?: number;
+                        LKA?: number;
+                        KOR?: number;
+                        BGR?: number;
+                        GHA?: number;
+                        SRB?: number;
+                        TWN?: number;
+                        HRV?: number;
+                        LTU?: number;
+                        PRI?: number;
+                        SVK?: number;
+                        TUN?: number;
+                        EST?: number;
+                        VEN?: number;
+                        CRI?: number;
+                        PAN?: number;
+                        URY?: number;
+                        LBN?: number;
+                        LUX?: number;
+                        CYP?: number;
+                        NPL?: number;
+                        JOR?: number;
+                        SVN?: number;
+                        MTQ?: number;
+                        QAT?: number;
+                        GLP?: number;
+                        UGA?: number;
+                        DZA?: number;
+                        GTM?: number;
+                        CMR?: number;
+                        LVA?: number;
+                        DOM?: number;
+                        AZE?: number;
+                        GEO?: number;
+                        SEN?: number;
+                        TZA?: number;
+                        ZWE?: number;
+                        KWT?: number;
+                        MLT?: number;
+                        OMN?: number;
+                        BOL?: number;
+                        SLV?: number;
+                        ARM?: number;
+                        PRY?: number;
+                        IRQ?: number;
+                        KHM?: number;
+                        BIH?: number;
+                        AGO?: number;
+                        BHR?: number;
+                        ALB?: number;
+                        KAZ?: number;
+                        CIV?: number;
+                        ETH?: number;
+                        MUS?: number;
+                        ZMB?: number;
+                        MKD?: number;
+                        COD?: number;
+                        BLR?: number;
+                        MOZ?: number;
+                        REU?: number;
+                        TTO?: number;
+                        GUF?: number;
+                        ISL?: number;
+                        MMR?: number;
+                        HND?: number;
+                        RWA?: number;
+                        MDG?: number;
+                        BEN?: number;
+                        UZB?: number;
+                        NAM?: number;
+                        BWA?: number;
+                        MDA?: number;
+                        JEY?: number;
+                        NIC?: number;
+                        SDN?: number;
+                        JAM?: number;
+                        IMN?: number;
+                        BFA?: number;
+                        MNG?: number;
+                        MNE?: number;
+                        MCO?: number;
+                        TGO?: number;
+                        AFG?: number;
+                        LBY?: number;
+                        XKX?: number;
+                        CYM?: number;
+                        MWI?: number;
+                        SOM?: number;
+                        PNG?: number;
+                        MDV?: number;
+                        MLI?: number;
+                        GIN?: number;
+                        PSE?: number;
+                        GAB?: number;
+                        LIE?: number;
+                        HTI?: number;
+                        SYR?: number;
+                        BRB?: number;
+                        YEM?: number;
+                        GGY?: number;
+                        NCL?: number;
+                        AND?: number;
+                        SUR?: number;
+                        MYT?: number;
+                        KGZ?: number;
+                        BHS?: number;
+                        GIB?: number;
+                        COG?: number;
+                        FJI?: number;
+                        BLM?: number;
+                        CUW?: number;
+                        CUB?: number;
+                        SLE?: number;
+                        BLZ?: number;
+                        NER?: number;
+                        LBR?: number;
+                        VIR?: number;
+                        PYF?: number;
+                        GUM?: number;
+                        MRT?: number;
+                        ABW?: number;
+                        SYC?: number;
+                        GUY?: number;
+                        LSO?: number;
+                        SWZ?: number;
+                        SSD?: number;
+                        LCA?: number;
+                        MAC?: number;
+                        SMR?: number;
+                        LAO?: number;
+                        BRN?: number;
+                        TCD?: number;
+                        BMU?: number;
+                        VGB?: number;
+                        PRK?: number;
+                        BTN?: number;
+                        BDI?: number;
+                        FRO?: number;
+                        TJK?: number;
+                        GMB?: number;
+                        STP?: number;
+                        ANT?: number;
+                        VCT?: number;
+                        DJI?: number;
+                        CPV?: number;
+                        TKM?: number;
+                        ATG?: number;
+                        TCA?: number;
+                        KNA?: number;
+                        GRD?: number;
+                        ASM?: number;
+                        VUT?: number;
+                        GNQ?: number;
+                        GRL?: number;
+                        SXM?: number;
+                        MNP?: number;
+                        COM?: number;
+                        TLS?: number;
+                        SJM?: number;
+                        CAF?: number;
+                        DMA?: number;
+                        MAF?: number;
+                        WSM?: number;
+                        BES?: number;
+                        MHL?: number;
+                        AIA?: number;
+                        TON?: number;
+                        COK?: number;
+                        SLB?: number;
+                        SPM?: number;
+                        GNB?: number;
+                        ATA?: number;
+                        TUV?: number;
+                        ALA?: number;
+                        IOT?: number;
+                        ERI?: number;
+                        PLW?: number;
+                        FSM?: number;
+                        NRU?: number;
+                        PCN?: number;
+                        FLK?: number;
+                        MSR?: number;
+                        VAT?: number;
+                        KIR?: number;
+                        SHN?: number;
+                        NIU?: number;
+                        WLF?: number;
+                        HMD?: number;
+                        CXR?: number;
+                        NFK?: number;
+                        ATF?: number;
+                        CCK?: number;
+                        SGS?: number;
+                        BVT?: number;
+                        UMI?: number;
+                        ESH?: number;
+                        TKL?: number;
+                        'X-SOUTH_ASIA'?: number;
+                        'X-SOUTH_EAST_EUROPE'?: number;
+                        'X-NORTHERN_AFRICA'?: number;
+                        'X-PACIFIC'?: number;
+                        'X-SOUTH_WEST_EUROPE'?: number;
+                        'X-SOUTHERN_AFRICA'?: number;
+                        'X-WEST_INDIES'?: number;
+                        'X-SOUTH_AMERICA'?: number;
+                        'X-SOUTH_WEST_ASIA'?: number;
+                        'X-CENTRAL_EUROPE'?: number;
+                        'X-EASTERN_EUROPE'?: number;
+                        'X-WESTERN_EUROPE'?: number;
+                        'X-CENTRAL_AMERICA'?: number;
+                        'X-WESTERN_AFRICA'?: number;
+                        'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                        'X-SOUTH_EAST_ASIA'?: number;
+                        'X-CENTRAL_AFRICA'?: number;
+                        'X-NORTH_AMERICA'?: number;
+                        'X-EAST_ASIA'?: number;
+                        'X-NORTHERN_EUROPE'?: number;
+                        'X-EASTERN_AFRICA'?: number;
+                        'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                        'X-SOUTHERN_EUROPE'?: number;
+                        'X-CENTRAL_ASIA'?: number;
+                        'X-NORTHERN_ASIA'?: number;
+                        'X-ASIA'?: number;
+                        'X-EUROPE'?: number;
+                        'X-AFRICA'?: number;
+                        'X-OCEANIA'?: number;
+                        'X-AMERICAS'?: number;
+                        'X-ANTARCTICA'?: number;
+                        'X-ATLANTIC_OCEAN'?: number;
+                        'X-INDIAN_OCEAN'?: number;
+                        'X-MIDDLE_EAST'?: number;
+                        'X-MENA'?: number;
+                        'X-EMEA'?: number;
+                        'X-EUROPEAN_UNION'?: number;
+                        'X-EFTA'?: number;
+                        'X-APAC'?: number;
+                        'X-LATAM'?: number;
+                        'X-ANGLOSPHERE'?: number;
+                        'X-DACH'?: number;
+                        'X-NORDICS'?: number;
+                        'X-BENELUX'?: number;
+                        'X-GCC'?: number;
+                        'X-BRICS'?: number;
+                        'X-G20'?: number;
+                        'X-OECD'?: number;
+                        'X-SANCTIONED'?: number;
+                    } | null;
                     market_cap_usd?: number | null;
                     naics_codes?: Array<string> | null;
                     names?: Array<string> | null;
                     preferred_name?: string | null;
+                    preferred_name_word_count?: number | null;
                     revenue_usd?: number | null;
                     standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     status_consensus?: string | null;
@@ -2424,6 +2841,51 @@ export type PollCombinedSearchResponses = {
                     linkedin_ids?: Array<string> | null;
                     last_sort_key?: string | null;
                     relevance_score?: number | null;
+                    technology_spend_usd?: number | null;
+                    historical_headcount?: {
+                        latest_snapshot_date: string;
+                        snapshots: Array<{
+                            date: string;
+                            employees: number;
+                        }>;
+                        growth: {
+                            '1m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '2m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '3m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '6m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '12m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '18m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '24m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '36m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                        };
+                    } | null;
+                    cik_numbers?: Array<string> | null;
+                    cage_codes?: Array<string> | null;
+                    duns_numbers?: Array<string> | null;
                     num_li_locations?: number | null;
                     location_name?: string | null;
                     crunchbase_slug?: string | null;
@@ -2538,6 +3000,16 @@ export type PollCombinedSearchResponses = {
                     is_investor?: boolean | null;
                     investor_type?: string | null;
                     investor_categories?: Array<string> | null;
+                    technologies_used?: Array<{
+                        name: string;
+                    }> | null;
+                    platforms?: {
+                        ecommerce?: Array<string> | null;
+                        cms?: Array<string> | null;
+                        crm?: Array<string> | null;
+                        marketing?: Array<string> | null;
+                        payment?: Array<string> | null;
+                    } | null;
                 }>;
             } | {
                 type: 'profiles';
@@ -12798,6 +13270,36 @@ export type UpdateAudienceSearchParamsData = {
                             jobTitle?: Array<string> | null;
                         }> | null;
                     } | null;
+                    jobStatus?: {
+                        status: 'currently-employed';
+                    } | {
+                        status: 'previously-employed';
+                        leftAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                    } | {
+                        status: 'ever-employed';
+                    } | null;
                 }>;
                 joiner: 'AND' | 'OR';
             } | null;
@@ -13552,6 +14054,38 @@ export type UpdateAudienceSearchParamsData = {
                 containsAny?: Array<string> | null;
                 containsNone?: Array<string> | null;
             } | null;
+            keywordsV2?: {
+                operator?: 'AND' | 'OR';
+                clauses: Array<{
+                    operator?: 'AND' | 'OR';
+                    terms: Array<string>;
+                    negate?: boolean;
+                }>;
+                options?: {
+                    fieldsToSearchOver?: {
+                        summary?: boolean;
+                        headline?: boolean;
+                        pastJobTitles?: boolean;
+                        pastJobSummaries?: boolean;
+                        pastCompanyNames?: boolean;
+                        currentJobTitles?: boolean;
+                        currentJobSummaries?: boolean;
+                        currentCompanyNames?: boolean;
+                        interests?: boolean;
+                        skills?: boolean;
+                        industry?: boolean;
+                        education?: boolean;
+                        publications?: boolean;
+                        certifications?: boolean;
+                        articles?: boolean;
+                        courses?: boolean;
+                        projects?: boolean;
+                        patents?: boolean;
+                        volunteering?: boolean;
+                        languages?: boolean;
+                    } | null;
+                } | null;
+            } | null;
             keywordSearchOptions?: {
                 fieldsToSearchOver?: {
                     summary?: boolean;
@@ -13948,6 +14482,35 @@ export type UpdateAudienceSearchParamsData = {
                     stateName: string;
                 }> | null;
             } | null;
+            certifications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            publications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            hasNoEducation?: boolean | null;
             /**
              * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
              */
@@ -15865,6 +16428,36 @@ export type CompanySearchData = {
                             } | null;
                             jobTitle?: Array<string> | null;
                         }> | null;
+                    } | null;
+                    jobStatus?: {
+                        status: 'currently-employed';
+                    } | {
+                        status: 'previously-employed';
+                        leftAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                    } | {
+                        status: 'ever-employed';
                     } | null;
                 }>;
                 joiner: 'AND' | 'OR';
@@ -18294,10 +18887,313 @@ export type CompanySearchResponses = {
                     full_address?: string | null;
                     formatted_address?: string | null;
                 } | null;
+                locations_stats?: {
+                    USA?: number;
+                    GBR?: number;
+                    FRA?: number;
+                    IND?: number;
+                    BRA?: number;
+                    DEU?: number;
+                    ESP?: number;
+                    CAN?: number;
+                    AUS?: number;
+                    NLD?: number;
+                    ITA?: number;
+                    ZAF?: number;
+                    BEL?: number;
+                    CHN?: number;
+                    TUR?: number;
+                    MEX?: number;
+                    CHE?: number;
+                    NOR?: number;
+                    ARE?: number;
+                    SWE?: number;
+                    POL?: number;
+                    IDN?: number;
+                    ARG?: number;
+                    PRT?: number;
+                    COL?: number;
+                    CHL?: number;
+                    PAK?: number;
+                    DNK?: number;
+                    JPN?: number;
+                    NGA?: number;
+                    SGP?: number;
+                    PER?: number;
+                    NZL?: number;
+                    AUT?: number;
+                    IRL?: number;
+                    MYS?: number;
+                    BGD?: number;
+                    EGY?: number;
+                    ISR?: number;
+                    SAU?: number;
+                    PHL?: number;
+                    FIN?: number;
+                    IRN?: number;
+                    ROU?: number;
+                    CZE?: number;
+                    GRC?: number;
+                    HKG?: number;
+                    HUN?: number;
+                    KEN?: number;
+                    MAR?: number;
+                    VNM?: number;
+                    RUS?: number;
+                    UKR?: number;
+                    ECU?: number;
+                    THA?: number;
+                    LKA?: number;
+                    KOR?: number;
+                    BGR?: number;
+                    GHA?: number;
+                    SRB?: number;
+                    TWN?: number;
+                    HRV?: number;
+                    LTU?: number;
+                    PRI?: number;
+                    SVK?: number;
+                    TUN?: number;
+                    EST?: number;
+                    VEN?: number;
+                    CRI?: number;
+                    PAN?: number;
+                    URY?: number;
+                    LBN?: number;
+                    LUX?: number;
+                    CYP?: number;
+                    NPL?: number;
+                    JOR?: number;
+                    SVN?: number;
+                    MTQ?: number;
+                    QAT?: number;
+                    GLP?: number;
+                    UGA?: number;
+                    DZA?: number;
+                    GTM?: number;
+                    CMR?: number;
+                    LVA?: number;
+                    DOM?: number;
+                    AZE?: number;
+                    GEO?: number;
+                    SEN?: number;
+                    TZA?: number;
+                    ZWE?: number;
+                    KWT?: number;
+                    MLT?: number;
+                    OMN?: number;
+                    BOL?: number;
+                    SLV?: number;
+                    ARM?: number;
+                    PRY?: number;
+                    IRQ?: number;
+                    KHM?: number;
+                    BIH?: number;
+                    AGO?: number;
+                    BHR?: number;
+                    ALB?: number;
+                    KAZ?: number;
+                    CIV?: number;
+                    ETH?: number;
+                    MUS?: number;
+                    ZMB?: number;
+                    MKD?: number;
+                    COD?: number;
+                    BLR?: number;
+                    MOZ?: number;
+                    REU?: number;
+                    TTO?: number;
+                    GUF?: number;
+                    ISL?: number;
+                    MMR?: number;
+                    HND?: number;
+                    RWA?: number;
+                    MDG?: number;
+                    BEN?: number;
+                    UZB?: number;
+                    NAM?: number;
+                    BWA?: number;
+                    MDA?: number;
+                    JEY?: number;
+                    NIC?: number;
+                    SDN?: number;
+                    JAM?: number;
+                    IMN?: number;
+                    BFA?: number;
+                    MNG?: number;
+                    MNE?: number;
+                    MCO?: number;
+                    TGO?: number;
+                    AFG?: number;
+                    LBY?: number;
+                    XKX?: number;
+                    CYM?: number;
+                    MWI?: number;
+                    SOM?: number;
+                    PNG?: number;
+                    MDV?: number;
+                    MLI?: number;
+                    GIN?: number;
+                    PSE?: number;
+                    GAB?: number;
+                    LIE?: number;
+                    HTI?: number;
+                    SYR?: number;
+                    BRB?: number;
+                    YEM?: number;
+                    GGY?: number;
+                    NCL?: number;
+                    AND?: number;
+                    SUR?: number;
+                    MYT?: number;
+                    KGZ?: number;
+                    BHS?: number;
+                    GIB?: number;
+                    COG?: number;
+                    FJI?: number;
+                    BLM?: number;
+                    CUW?: number;
+                    CUB?: number;
+                    SLE?: number;
+                    BLZ?: number;
+                    NER?: number;
+                    LBR?: number;
+                    VIR?: number;
+                    PYF?: number;
+                    GUM?: number;
+                    MRT?: number;
+                    ABW?: number;
+                    SYC?: number;
+                    GUY?: number;
+                    LSO?: number;
+                    SWZ?: number;
+                    SSD?: number;
+                    LCA?: number;
+                    MAC?: number;
+                    SMR?: number;
+                    LAO?: number;
+                    BRN?: number;
+                    TCD?: number;
+                    BMU?: number;
+                    VGB?: number;
+                    PRK?: number;
+                    BTN?: number;
+                    BDI?: number;
+                    FRO?: number;
+                    TJK?: number;
+                    GMB?: number;
+                    STP?: number;
+                    ANT?: number;
+                    VCT?: number;
+                    DJI?: number;
+                    CPV?: number;
+                    TKM?: number;
+                    ATG?: number;
+                    TCA?: number;
+                    KNA?: number;
+                    GRD?: number;
+                    ASM?: number;
+                    VUT?: number;
+                    GNQ?: number;
+                    GRL?: number;
+                    SXM?: number;
+                    MNP?: number;
+                    COM?: number;
+                    TLS?: number;
+                    SJM?: number;
+                    CAF?: number;
+                    DMA?: number;
+                    MAF?: number;
+                    WSM?: number;
+                    BES?: number;
+                    MHL?: number;
+                    AIA?: number;
+                    TON?: number;
+                    COK?: number;
+                    SLB?: number;
+                    SPM?: number;
+                    GNB?: number;
+                    ATA?: number;
+                    TUV?: number;
+                    ALA?: number;
+                    IOT?: number;
+                    ERI?: number;
+                    PLW?: number;
+                    FSM?: number;
+                    NRU?: number;
+                    PCN?: number;
+                    FLK?: number;
+                    MSR?: number;
+                    VAT?: number;
+                    KIR?: number;
+                    SHN?: number;
+                    NIU?: number;
+                    WLF?: number;
+                    HMD?: number;
+                    CXR?: number;
+                    NFK?: number;
+                    ATF?: number;
+                    CCK?: number;
+                    SGS?: number;
+                    BVT?: number;
+                    UMI?: number;
+                    ESH?: number;
+                    TKL?: number;
+                    'X-SOUTH_ASIA'?: number;
+                    'X-SOUTH_EAST_EUROPE'?: number;
+                    'X-NORTHERN_AFRICA'?: number;
+                    'X-PACIFIC'?: number;
+                    'X-SOUTH_WEST_EUROPE'?: number;
+                    'X-SOUTHERN_AFRICA'?: number;
+                    'X-WEST_INDIES'?: number;
+                    'X-SOUTH_AMERICA'?: number;
+                    'X-SOUTH_WEST_ASIA'?: number;
+                    'X-CENTRAL_EUROPE'?: number;
+                    'X-EASTERN_EUROPE'?: number;
+                    'X-WESTERN_EUROPE'?: number;
+                    'X-CENTRAL_AMERICA'?: number;
+                    'X-WESTERN_AFRICA'?: number;
+                    'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                    'X-SOUTH_EAST_ASIA'?: number;
+                    'X-CENTRAL_AFRICA'?: number;
+                    'X-NORTH_AMERICA'?: number;
+                    'X-EAST_ASIA'?: number;
+                    'X-NORTHERN_EUROPE'?: number;
+                    'X-EASTERN_AFRICA'?: number;
+                    'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                    'X-SOUTHERN_EUROPE'?: number;
+                    'X-CENTRAL_ASIA'?: number;
+                    'X-NORTHERN_ASIA'?: number;
+                    'X-ASIA'?: number;
+                    'X-EUROPE'?: number;
+                    'X-AFRICA'?: number;
+                    'X-OCEANIA'?: number;
+                    'X-AMERICAS'?: number;
+                    'X-ANTARCTICA'?: number;
+                    'X-ATLANTIC_OCEAN'?: number;
+                    'X-INDIAN_OCEAN'?: number;
+                    'X-MIDDLE_EAST'?: number;
+                    'X-MENA'?: number;
+                    'X-EMEA'?: number;
+                    'X-EUROPEAN_UNION'?: number;
+                    'X-EFTA'?: number;
+                    'X-APAC'?: number;
+                    'X-LATAM'?: number;
+                    'X-ANGLOSPHERE'?: number;
+                    'X-DACH'?: number;
+                    'X-NORDICS'?: number;
+                    'X-BENELUX'?: number;
+                    'X-GCC'?: number;
+                    'X-BRICS'?: number;
+                    'X-G20'?: number;
+                    'X-OECD'?: number;
+                    'X-SANCTIONED'?: number;
+                } | null;
                 market_cap_usd?: number | null;
                 naics_codes?: Array<string> | null;
                 names?: Array<string> | null;
                 preferred_name?: string | null;
+                preferred_name_word_count?: number | null;
                 revenue_usd?: number | null;
                 standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                 status_consensus?: string | null;
@@ -18351,6 +19247,51 @@ export type CompanySearchResponses = {
                 linkedin_ids?: Array<string> | null;
                 last_sort_key?: string | null;
                 relevance_score?: number | null;
+                technology_spend_usd?: number | null;
+                historical_headcount?: {
+                    latest_snapshot_date: string;
+                    snapshots: Array<{
+                        date: string;
+                        employees: number;
+                    }>;
+                    growth: {
+                        '1m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '2m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '3m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '6m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '12m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '18m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '24m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '36m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                    };
+                } | null;
+                cik_numbers?: Array<string> | null;
+                cage_codes?: Array<string> | null;
+                duns_numbers?: Array<string> | null;
                 num_li_locations?: number | null;
                 location_name?: string | null;
                 crunchbase_slug?: string | null;
@@ -18465,6 +19406,16 @@ export type CompanySearchResponses = {
                 is_investor?: boolean | null;
                 investor_type?: string | null;
                 investor_categories?: Array<string> | null;
+                technologies_used?: Array<{
+                    name: string;
+                }> | null;
+                platforms?: {
+                    ecommerce?: Array<string> | null;
+                    cms?: Array<string> | null;
+                    crm?: Array<string> | null;
+                    marketing?: Array<string> | null;
+                    payment?: Array<string> | null;
+                } | null;
             }>;
             /**
              * The cursor for paginating to next page. Provide this in next search call and we will paginate from that point onward.
@@ -18908,6 +19859,36 @@ export type CompanyCountData = {
                             } | null;
                             jobTitle?: Array<string> | null;
                         }> | null;
+                    } | null;
+                    jobStatus?: {
+                        status: 'currently-employed';
+                    } | {
+                        status: 'previously-employed';
+                        leftAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                    } | {
+                        status: 'ever-employed';
                     } | null;
                 }>;
                 joiner: 'AND' | 'OR';
@@ -21673,6 +22654,38 @@ export type PeopleSearchData = {
                 containsAny?: Array<string> | null;
                 containsNone?: Array<string> | null;
             } | null;
+            keywordsV2?: {
+                operator?: 'AND' | 'OR';
+                clauses: Array<{
+                    operator?: 'AND' | 'OR';
+                    terms: Array<string>;
+                    negate?: boolean;
+                }>;
+                options?: {
+                    fieldsToSearchOver?: {
+                        summary?: boolean;
+                        headline?: boolean;
+                        pastJobTitles?: boolean;
+                        pastJobSummaries?: boolean;
+                        pastCompanyNames?: boolean;
+                        currentJobTitles?: boolean;
+                        currentJobSummaries?: boolean;
+                        currentCompanyNames?: boolean;
+                        interests?: boolean;
+                        skills?: boolean;
+                        industry?: boolean;
+                        education?: boolean;
+                        publications?: boolean;
+                        certifications?: boolean;
+                        articles?: boolean;
+                        courses?: boolean;
+                        projects?: boolean;
+                        patents?: boolean;
+                        volunteering?: boolean;
+                        languages?: boolean;
+                    } | null;
+                } | null;
+            } | null;
             keywordSearchOptions?: {
                 fieldsToSearchOver?: {
                     summary?: boolean;
@@ -22069,6 +23082,35 @@ export type PeopleSearchData = {
                     stateName: string;
                 }> | null;
             } | null;
+            certifications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            publications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            hasNoEducation?: boolean | null;
             /**
              * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
              */
@@ -22785,6 +23827,38 @@ export type PeopleSearchCountData = {
                 containsAny?: Array<string> | null;
                 containsNone?: Array<string> | null;
             } | null;
+            keywordsV2?: {
+                operator?: 'AND' | 'OR';
+                clauses: Array<{
+                    operator?: 'AND' | 'OR';
+                    terms: Array<string>;
+                    negate?: boolean;
+                }>;
+                options?: {
+                    fieldsToSearchOver?: {
+                        summary?: boolean;
+                        headline?: boolean;
+                        pastJobTitles?: boolean;
+                        pastJobSummaries?: boolean;
+                        pastCompanyNames?: boolean;
+                        currentJobTitles?: boolean;
+                        currentJobSummaries?: boolean;
+                        currentCompanyNames?: boolean;
+                        interests?: boolean;
+                        skills?: boolean;
+                        industry?: boolean;
+                        education?: boolean;
+                        publications?: boolean;
+                        certifications?: boolean;
+                        articles?: boolean;
+                        courses?: boolean;
+                        projects?: boolean;
+                        patents?: boolean;
+                        volunteering?: boolean;
+                        languages?: boolean;
+                    } | null;
+                } | null;
+            } | null;
             keywordSearchOptions?: {
                 fieldsToSearchOver?: {
                     summary?: boolean;
@@ -23181,6 +24255,35 @@ export type PeopleSearchCountData = {
                     stateName: string;
                 }> | null;
             } | null;
+            certifications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            publications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            hasNoEducation?: boolean | null;
             /**
              * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
              */
@@ -23978,6 +25081,36 @@ export type CombinedSearchData = {
                             jobTitle?: Array<string> | null;
                         }> | null;
                     } | null;
+                    jobStatus?: {
+                        status: 'currently-employed';
+                    } | {
+                        status: 'previously-employed';
+                        leftAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                    } | {
+                        status: 'ever-employed';
+                    } | null;
                 }>;
                 joiner: 'AND' | 'OR';
             } | null;
@@ -24732,6 +25865,38 @@ export type CombinedSearchData = {
                 containsAny?: Array<string> | null;
                 containsNone?: Array<string> | null;
             } | null;
+            keywordsV2?: {
+                operator?: 'AND' | 'OR';
+                clauses: Array<{
+                    operator?: 'AND' | 'OR';
+                    terms: Array<string>;
+                    negate?: boolean;
+                }>;
+                options?: {
+                    fieldsToSearchOver?: {
+                        summary?: boolean;
+                        headline?: boolean;
+                        pastJobTitles?: boolean;
+                        pastJobSummaries?: boolean;
+                        pastCompanyNames?: boolean;
+                        currentJobTitles?: boolean;
+                        currentJobSummaries?: boolean;
+                        currentCompanyNames?: boolean;
+                        interests?: boolean;
+                        skills?: boolean;
+                        industry?: boolean;
+                        education?: boolean;
+                        publications?: boolean;
+                        certifications?: boolean;
+                        articles?: boolean;
+                        courses?: boolean;
+                        projects?: boolean;
+                        patents?: boolean;
+                        volunteering?: boolean;
+                        languages?: boolean;
+                    } | null;
+                } | null;
+            } | null;
             keywordSearchOptions?: {
                 fieldsToSearchOver?: {
                     summary?: boolean;
@@ -25128,6 +26293,35 @@ export type CombinedSearchData = {
                     stateName: string;
                 }> | null;
             } | null;
+            certifications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            publications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            hasNoEducation?: boolean | null;
             /**
              * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
              */
@@ -25912,6 +27106,36 @@ export type SyncCombinedSearchData = {
                             jobTitle?: Array<string> | null;
                         }> | null;
                     } | null;
+                    jobStatus?: {
+                        status: 'currently-employed';
+                    } | {
+                        status: 'previously-employed';
+                        leftAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                    } | {
+                        status: 'ever-employed';
+                    } | null;
                 }>;
                 joiner: 'AND' | 'OR';
             } | null;
@@ -26666,6 +27890,38 @@ export type SyncCombinedSearchData = {
                 containsAny?: Array<string> | null;
                 containsNone?: Array<string> | null;
             } | null;
+            keywordsV2?: {
+                operator?: 'AND' | 'OR';
+                clauses: Array<{
+                    operator?: 'AND' | 'OR';
+                    terms: Array<string>;
+                    negate?: boolean;
+                }>;
+                options?: {
+                    fieldsToSearchOver?: {
+                        summary?: boolean;
+                        headline?: boolean;
+                        pastJobTitles?: boolean;
+                        pastJobSummaries?: boolean;
+                        pastCompanyNames?: boolean;
+                        currentJobTitles?: boolean;
+                        currentJobSummaries?: boolean;
+                        currentCompanyNames?: boolean;
+                        interests?: boolean;
+                        skills?: boolean;
+                        industry?: boolean;
+                        education?: boolean;
+                        publications?: boolean;
+                        certifications?: boolean;
+                        articles?: boolean;
+                        courses?: boolean;
+                        projects?: boolean;
+                        patents?: boolean;
+                        volunteering?: boolean;
+                        languages?: boolean;
+                    } | null;
+                } | null;
+            } | null;
             keywordSearchOptions?: {
                 fieldsToSearchOver?: {
                     summary?: boolean;
@@ -27062,6 +28318,35 @@ export type SyncCombinedSearchData = {
                     stateName: string;
                 }> | null;
             } | null;
+            certifications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            publications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            hasNoEducation?: boolean | null;
             /**
              * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
              */
@@ -28963,10 +30248,313 @@ export type SyncCombinedSearchResponses = {
                     full_address?: string | null;
                     formatted_address?: string | null;
                 } | null;
+                locations_stats?: {
+                    USA?: number;
+                    GBR?: number;
+                    FRA?: number;
+                    IND?: number;
+                    BRA?: number;
+                    DEU?: number;
+                    ESP?: number;
+                    CAN?: number;
+                    AUS?: number;
+                    NLD?: number;
+                    ITA?: number;
+                    ZAF?: number;
+                    BEL?: number;
+                    CHN?: number;
+                    TUR?: number;
+                    MEX?: number;
+                    CHE?: number;
+                    NOR?: number;
+                    ARE?: number;
+                    SWE?: number;
+                    POL?: number;
+                    IDN?: number;
+                    ARG?: number;
+                    PRT?: number;
+                    COL?: number;
+                    CHL?: number;
+                    PAK?: number;
+                    DNK?: number;
+                    JPN?: number;
+                    NGA?: number;
+                    SGP?: number;
+                    PER?: number;
+                    NZL?: number;
+                    AUT?: number;
+                    IRL?: number;
+                    MYS?: number;
+                    BGD?: number;
+                    EGY?: number;
+                    ISR?: number;
+                    SAU?: number;
+                    PHL?: number;
+                    FIN?: number;
+                    IRN?: number;
+                    ROU?: number;
+                    CZE?: number;
+                    GRC?: number;
+                    HKG?: number;
+                    HUN?: number;
+                    KEN?: number;
+                    MAR?: number;
+                    VNM?: number;
+                    RUS?: number;
+                    UKR?: number;
+                    ECU?: number;
+                    THA?: number;
+                    LKA?: number;
+                    KOR?: number;
+                    BGR?: number;
+                    GHA?: number;
+                    SRB?: number;
+                    TWN?: number;
+                    HRV?: number;
+                    LTU?: number;
+                    PRI?: number;
+                    SVK?: number;
+                    TUN?: number;
+                    EST?: number;
+                    VEN?: number;
+                    CRI?: number;
+                    PAN?: number;
+                    URY?: number;
+                    LBN?: number;
+                    LUX?: number;
+                    CYP?: number;
+                    NPL?: number;
+                    JOR?: number;
+                    SVN?: number;
+                    MTQ?: number;
+                    QAT?: number;
+                    GLP?: number;
+                    UGA?: number;
+                    DZA?: number;
+                    GTM?: number;
+                    CMR?: number;
+                    LVA?: number;
+                    DOM?: number;
+                    AZE?: number;
+                    GEO?: number;
+                    SEN?: number;
+                    TZA?: number;
+                    ZWE?: number;
+                    KWT?: number;
+                    MLT?: number;
+                    OMN?: number;
+                    BOL?: number;
+                    SLV?: number;
+                    ARM?: number;
+                    PRY?: number;
+                    IRQ?: number;
+                    KHM?: number;
+                    BIH?: number;
+                    AGO?: number;
+                    BHR?: number;
+                    ALB?: number;
+                    KAZ?: number;
+                    CIV?: number;
+                    ETH?: number;
+                    MUS?: number;
+                    ZMB?: number;
+                    MKD?: number;
+                    COD?: number;
+                    BLR?: number;
+                    MOZ?: number;
+                    REU?: number;
+                    TTO?: number;
+                    GUF?: number;
+                    ISL?: number;
+                    MMR?: number;
+                    HND?: number;
+                    RWA?: number;
+                    MDG?: number;
+                    BEN?: number;
+                    UZB?: number;
+                    NAM?: number;
+                    BWA?: number;
+                    MDA?: number;
+                    JEY?: number;
+                    NIC?: number;
+                    SDN?: number;
+                    JAM?: number;
+                    IMN?: number;
+                    BFA?: number;
+                    MNG?: number;
+                    MNE?: number;
+                    MCO?: number;
+                    TGO?: number;
+                    AFG?: number;
+                    LBY?: number;
+                    XKX?: number;
+                    CYM?: number;
+                    MWI?: number;
+                    SOM?: number;
+                    PNG?: number;
+                    MDV?: number;
+                    MLI?: number;
+                    GIN?: number;
+                    PSE?: number;
+                    GAB?: number;
+                    LIE?: number;
+                    HTI?: number;
+                    SYR?: number;
+                    BRB?: number;
+                    YEM?: number;
+                    GGY?: number;
+                    NCL?: number;
+                    AND?: number;
+                    SUR?: number;
+                    MYT?: number;
+                    KGZ?: number;
+                    BHS?: number;
+                    GIB?: number;
+                    COG?: number;
+                    FJI?: number;
+                    BLM?: number;
+                    CUW?: number;
+                    CUB?: number;
+                    SLE?: number;
+                    BLZ?: number;
+                    NER?: number;
+                    LBR?: number;
+                    VIR?: number;
+                    PYF?: number;
+                    GUM?: number;
+                    MRT?: number;
+                    ABW?: number;
+                    SYC?: number;
+                    GUY?: number;
+                    LSO?: number;
+                    SWZ?: number;
+                    SSD?: number;
+                    LCA?: number;
+                    MAC?: number;
+                    SMR?: number;
+                    LAO?: number;
+                    BRN?: number;
+                    TCD?: number;
+                    BMU?: number;
+                    VGB?: number;
+                    PRK?: number;
+                    BTN?: number;
+                    BDI?: number;
+                    FRO?: number;
+                    TJK?: number;
+                    GMB?: number;
+                    STP?: number;
+                    ANT?: number;
+                    VCT?: number;
+                    DJI?: number;
+                    CPV?: number;
+                    TKM?: number;
+                    ATG?: number;
+                    TCA?: number;
+                    KNA?: number;
+                    GRD?: number;
+                    ASM?: number;
+                    VUT?: number;
+                    GNQ?: number;
+                    GRL?: number;
+                    SXM?: number;
+                    MNP?: number;
+                    COM?: number;
+                    TLS?: number;
+                    SJM?: number;
+                    CAF?: number;
+                    DMA?: number;
+                    MAF?: number;
+                    WSM?: number;
+                    BES?: number;
+                    MHL?: number;
+                    AIA?: number;
+                    TON?: number;
+                    COK?: number;
+                    SLB?: number;
+                    SPM?: number;
+                    GNB?: number;
+                    ATA?: number;
+                    TUV?: number;
+                    ALA?: number;
+                    IOT?: number;
+                    ERI?: number;
+                    PLW?: number;
+                    FSM?: number;
+                    NRU?: number;
+                    PCN?: number;
+                    FLK?: number;
+                    MSR?: number;
+                    VAT?: number;
+                    KIR?: number;
+                    SHN?: number;
+                    NIU?: number;
+                    WLF?: number;
+                    HMD?: number;
+                    CXR?: number;
+                    NFK?: number;
+                    ATF?: number;
+                    CCK?: number;
+                    SGS?: number;
+                    BVT?: number;
+                    UMI?: number;
+                    ESH?: number;
+                    TKL?: number;
+                    'X-SOUTH_ASIA'?: number;
+                    'X-SOUTH_EAST_EUROPE'?: number;
+                    'X-NORTHERN_AFRICA'?: number;
+                    'X-PACIFIC'?: number;
+                    'X-SOUTH_WEST_EUROPE'?: number;
+                    'X-SOUTHERN_AFRICA'?: number;
+                    'X-WEST_INDIES'?: number;
+                    'X-SOUTH_AMERICA'?: number;
+                    'X-SOUTH_WEST_ASIA'?: number;
+                    'X-CENTRAL_EUROPE'?: number;
+                    'X-EASTERN_EUROPE'?: number;
+                    'X-WESTERN_EUROPE'?: number;
+                    'X-CENTRAL_AMERICA'?: number;
+                    'X-WESTERN_AFRICA'?: number;
+                    'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                    'X-SOUTH_EAST_ASIA'?: number;
+                    'X-CENTRAL_AFRICA'?: number;
+                    'X-NORTH_AMERICA'?: number;
+                    'X-EAST_ASIA'?: number;
+                    'X-NORTHERN_EUROPE'?: number;
+                    'X-EASTERN_AFRICA'?: number;
+                    'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                    'X-SOUTHERN_EUROPE'?: number;
+                    'X-CENTRAL_ASIA'?: number;
+                    'X-NORTHERN_ASIA'?: number;
+                    'X-ASIA'?: number;
+                    'X-EUROPE'?: number;
+                    'X-AFRICA'?: number;
+                    'X-OCEANIA'?: number;
+                    'X-AMERICAS'?: number;
+                    'X-ANTARCTICA'?: number;
+                    'X-ATLANTIC_OCEAN'?: number;
+                    'X-INDIAN_OCEAN'?: number;
+                    'X-MIDDLE_EAST'?: number;
+                    'X-MENA'?: number;
+                    'X-EMEA'?: number;
+                    'X-EUROPEAN_UNION'?: number;
+                    'X-EFTA'?: number;
+                    'X-APAC'?: number;
+                    'X-LATAM'?: number;
+                    'X-ANGLOSPHERE'?: number;
+                    'X-DACH'?: number;
+                    'X-NORDICS'?: number;
+                    'X-BENELUX'?: number;
+                    'X-GCC'?: number;
+                    'X-BRICS'?: number;
+                    'X-G20'?: number;
+                    'X-OECD'?: number;
+                    'X-SANCTIONED'?: number;
+                } | null;
                 market_cap_usd?: number | null;
                 naics_codes?: Array<string> | null;
                 names?: Array<string> | null;
                 preferred_name?: string | null;
+                preferred_name_word_count?: number | null;
                 revenue_usd?: number | null;
                 standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                 status_consensus?: string | null;
@@ -29020,6 +30608,51 @@ export type SyncCombinedSearchResponses = {
                 linkedin_ids?: Array<string> | null;
                 last_sort_key?: string | null;
                 relevance_score?: number | null;
+                technology_spend_usd?: number | null;
+                historical_headcount?: {
+                    latest_snapshot_date: string;
+                    snapshots: Array<{
+                        date: string;
+                        employees: number;
+                    }>;
+                    growth: {
+                        '1m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '2m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '3m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '6m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '12m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '18m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '24m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '36m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                    };
+                } | null;
+                cik_numbers?: Array<string> | null;
+                cage_codes?: Array<string> | null;
+                duns_numbers?: Array<string> | null;
                 num_li_locations?: number | null;
                 location_name?: string | null;
                 crunchbase_slug?: string | null;
@@ -29134,6 +30767,16 @@ export type SyncCombinedSearchResponses = {
                 is_investor?: boolean | null;
                 investor_type?: string | null;
                 investor_categories?: Array<string> | null;
+                technologies_used?: Array<{
+                    name: string;
+                }> | null;
+                platforms?: {
+                    ecommerce?: Array<string> | null;
+                    cms?: Array<string> | null;
+                    crm?: Array<string> | null;
+                    marketing?: Array<string> | null;
+                    payment?: Array<string> | null;
+                } | null;
             }>;
             profiles: Array<{
                 articles?: Array<{
@@ -34541,7 +36184,7 @@ export type ReverseEmailLookupResponses = {
                 /**
                  * Machine-readable rejection reason
                  */
-                reason: 'disposable_or_anonymous_email' | 'invalid_tld' | 'autogenerated_icloud_email' | 'digits_only_username' | 'role_based_mailbox' | 'junk_username' | 'spam_domain';
+                reason: 'disposable_or_anonymous_email' | 'invalid_tld' | 'autogenerated_icloud_email' | 'digits_only_username' | 'role_based_mailbox' | 'junk_username' | 'spam_domain' | 'bot_farm_email';
                 /**
                  * Human-readable explanation
                  */
@@ -37202,10 +38845,313 @@ export type KitchenSinkCompanyResponses = {
                     full_address?: string | null;
                     formatted_address?: string | null;
                 } | null;
+                locations_stats?: {
+                    USA?: number;
+                    GBR?: number;
+                    FRA?: number;
+                    IND?: number;
+                    BRA?: number;
+                    DEU?: number;
+                    ESP?: number;
+                    CAN?: number;
+                    AUS?: number;
+                    NLD?: number;
+                    ITA?: number;
+                    ZAF?: number;
+                    BEL?: number;
+                    CHN?: number;
+                    TUR?: number;
+                    MEX?: number;
+                    CHE?: number;
+                    NOR?: number;
+                    ARE?: number;
+                    SWE?: number;
+                    POL?: number;
+                    IDN?: number;
+                    ARG?: number;
+                    PRT?: number;
+                    COL?: number;
+                    CHL?: number;
+                    PAK?: number;
+                    DNK?: number;
+                    JPN?: number;
+                    NGA?: number;
+                    SGP?: number;
+                    PER?: number;
+                    NZL?: number;
+                    AUT?: number;
+                    IRL?: number;
+                    MYS?: number;
+                    BGD?: number;
+                    EGY?: number;
+                    ISR?: number;
+                    SAU?: number;
+                    PHL?: number;
+                    FIN?: number;
+                    IRN?: number;
+                    ROU?: number;
+                    CZE?: number;
+                    GRC?: number;
+                    HKG?: number;
+                    HUN?: number;
+                    KEN?: number;
+                    MAR?: number;
+                    VNM?: number;
+                    RUS?: number;
+                    UKR?: number;
+                    ECU?: number;
+                    THA?: number;
+                    LKA?: number;
+                    KOR?: number;
+                    BGR?: number;
+                    GHA?: number;
+                    SRB?: number;
+                    TWN?: number;
+                    HRV?: number;
+                    LTU?: number;
+                    PRI?: number;
+                    SVK?: number;
+                    TUN?: number;
+                    EST?: number;
+                    VEN?: number;
+                    CRI?: number;
+                    PAN?: number;
+                    URY?: number;
+                    LBN?: number;
+                    LUX?: number;
+                    CYP?: number;
+                    NPL?: number;
+                    JOR?: number;
+                    SVN?: number;
+                    MTQ?: number;
+                    QAT?: number;
+                    GLP?: number;
+                    UGA?: number;
+                    DZA?: number;
+                    GTM?: number;
+                    CMR?: number;
+                    LVA?: number;
+                    DOM?: number;
+                    AZE?: number;
+                    GEO?: number;
+                    SEN?: number;
+                    TZA?: number;
+                    ZWE?: number;
+                    KWT?: number;
+                    MLT?: number;
+                    OMN?: number;
+                    BOL?: number;
+                    SLV?: number;
+                    ARM?: number;
+                    PRY?: number;
+                    IRQ?: number;
+                    KHM?: number;
+                    BIH?: number;
+                    AGO?: number;
+                    BHR?: number;
+                    ALB?: number;
+                    KAZ?: number;
+                    CIV?: number;
+                    ETH?: number;
+                    MUS?: number;
+                    ZMB?: number;
+                    MKD?: number;
+                    COD?: number;
+                    BLR?: number;
+                    MOZ?: number;
+                    REU?: number;
+                    TTO?: number;
+                    GUF?: number;
+                    ISL?: number;
+                    MMR?: number;
+                    HND?: number;
+                    RWA?: number;
+                    MDG?: number;
+                    BEN?: number;
+                    UZB?: number;
+                    NAM?: number;
+                    BWA?: number;
+                    MDA?: number;
+                    JEY?: number;
+                    NIC?: number;
+                    SDN?: number;
+                    JAM?: number;
+                    IMN?: number;
+                    BFA?: number;
+                    MNG?: number;
+                    MNE?: number;
+                    MCO?: number;
+                    TGO?: number;
+                    AFG?: number;
+                    LBY?: number;
+                    XKX?: number;
+                    CYM?: number;
+                    MWI?: number;
+                    SOM?: number;
+                    PNG?: number;
+                    MDV?: number;
+                    MLI?: number;
+                    GIN?: number;
+                    PSE?: number;
+                    GAB?: number;
+                    LIE?: number;
+                    HTI?: number;
+                    SYR?: number;
+                    BRB?: number;
+                    YEM?: number;
+                    GGY?: number;
+                    NCL?: number;
+                    AND?: number;
+                    SUR?: number;
+                    MYT?: number;
+                    KGZ?: number;
+                    BHS?: number;
+                    GIB?: number;
+                    COG?: number;
+                    FJI?: number;
+                    BLM?: number;
+                    CUW?: number;
+                    CUB?: number;
+                    SLE?: number;
+                    BLZ?: number;
+                    NER?: number;
+                    LBR?: number;
+                    VIR?: number;
+                    PYF?: number;
+                    GUM?: number;
+                    MRT?: number;
+                    ABW?: number;
+                    SYC?: number;
+                    GUY?: number;
+                    LSO?: number;
+                    SWZ?: number;
+                    SSD?: number;
+                    LCA?: number;
+                    MAC?: number;
+                    SMR?: number;
+                    LAO?: number;
+                    BRN?: number;
+                    TCD?: number;
+                    BMU?: number;
+                    VGB?: number;
+                    PRK?: number;
+                    BTN?: number;
+                    BDI?: number;
+                    FRO?: number;
+                    TJK?: number;
+                    GMB?: number;
+                    STP?: number;
+                    ANT?: number;
+                    VCT?: number;
+                    DJI?: number;
+                    CPV?: number;
+                    TKM?: number;
+                    ATG?: number;
+                    TCA?: number;
+                    KNA?: number;
+                    GRD?: number;
+                    ASM?: number;
+                    VUT?: number;
+                    GNQ?: number;
+                    GRL?: number;
+                    SXM?: number;
+                    MNP?: number;
+                    COM?: number;
+                    TLS?: number;
+                    SJM?: number;
+                    CAF?: number;
+                    DMA?: number;
+                    MAF?: number;
+                    WSM?: number;
+                    BES?: number;
+                    MHL?: number;
+                    AIA?: number;
+                    TON?: number;
+                    COK?: number;
+                    SLB?: number;
+                    SPM?: number;
+                    GNB?: number;
+                    ATA?: number;
+                    TUV?: number;
+                    ALA?: number;
+                    IOT?: number;
+                    ERI?: number;
+                    PLW?: number;
+                    FSM?: number;
+                    NRU?: number;
+                    PCN?: number;
+                    FLK?: number;
+                    MSR?: number;
+                    VAT?: number;
+                    KIR?: number;
+                    SHN?: number;
+                    NIU?: number;
+                    WLF?: number;
+                    HMD?: number;
+                    CXR?: number;
+                    NFK?: number;
+                    ATF?: number;
+                    CCK?: number;
+                    SGS?: number;
+                    BVT?: number;
+                    UMI?: number;
+                    ESH?: number;
+                    TKL?: number;
+                    'X-SOUTH_ASIA'?: number;
+                    'X-SOUTH_EAST_EUROPE'?: number;
+                    'X-NORTHERN_AFRICA'?: number;
+                    'X-PACIFIC'?: number;
+                    'X-SOUTH_WEST_EUROPE'?: number;
+                    'X-SOUTHERN_AFRICA'?: number;
+                    'X-WEST_INDIES'?: number;
+                    'X-SOUTH_AMERICA'?: number;
+                    'X-SOUTH_WEST_ASIA'?: number;
+                    'X-CENTRAL_EUROPE'?: number;
+                    'X-EASTERN_EUROPE'?: number;
+                    'X-WESTERN_EUROPE'?: number;
+                    'X-CENTRAL_AMERICA'?: number;
+                    'X-WESTERN_AFRICA'?: number;
+                    'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                    'X-SOUTH_EAST_ASIA'?: number;
+                    'X-CENTRAL_AFRICA'?: number;
+                    'X-NORTH_AMERICA'?: number;
+                    'X-EAST_ASIA'?: number;
+                    'X-NORTHERN_EUROPE'?: number;
+                    'X-EASTERN_AFRICA'?: number;
+                    'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                    'X-SOUTHERN_EUROPE'?: number;
+                    'X-CENTRAL_ASIA'?: number;
+                    'X-NORTHERN_ASIA'?: number;
+                    'X-ASIA'?: number;
+                    'X-EUROPE'?: number;
+                    'X-AFRICA'?: number;
+                    'X-OCEANIA'?: number;
+                    'X-AMERICAS'?: number;
+                    'X-ANTARCTICA'?: number;
+                    'X-ATLANTIC_OCEAN'?: number;
+                    'X-INDIAN_OCEAN'?: number;
+                    'X-MIDDLE_EAST'?: number;
+                    'X-MENA'?: number;
+                    'X-EMEA'?: number;
+                    'X-EUROPEAN_UNION'?: number;
+                    'X-EFTA'?: number;
+                    'X-APAC'?: number;
+                    'X-LATAM'?: number;
+                    'X-ANGLOSPHERE'?: number;
+                    'X-DACH'?: number;
+                    'X-NORDICS'?: number;
+                    'X-BENELUX'?: number;
+                    'X-GCC'?: number;
+                    'X-BRICS'?: number;
+                    'X-G20'?: number;
+                    'X-OECD'?: number;
+                    'X-SANCTIONED'?: number;
+                } | null;
                 market_cap_usd?: number | null;
                 naics_codes?: Array<string> | null;
                 names?: Array<string> | null;
                 preferred_name?: string | null;
+                preferred_name_word_count?: number | null;
                 revenue_usd?: number | null;
                 standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                 status_consensus?: string | null;
@@ -37259,6 +39205,51 @@ export type KitchenSinkCompanyResponses = {
                 linkedin_ids?: Array<string> | null;
                 last_sort_key?: string | null;
                 relevance_score?: number | null;
+                technology_spend_usd?: number | null;
+                historical_headcount?: {
+                    latest_snapshot_date: string;
+                    snapshots: Array<{
+                        date: string;
+                        employees: number;
+                    }>;
+                    growth: {
+                        '1m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '2m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '3m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '6m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '12m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '18m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '24m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '36m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                    };
+                } | null;
+                cik_numbers?: Array<string> | null;
+                cage_codes?: Array<string> | null;
+                duns_numbers?: Array<string> | null;
                 num_li_locations?: number | null;
                 location_name?: string | null;
                 crunchbase_slug?: string | null;
@@ -37373,6 +39364,16 @@ export type KitchenSinkCompanyResponses = {
                 is_investor?: boolean | null;
                 investor_type?: string | null;
                 investor_categories?: Array<string> | null;
+                technologies_used?: Array<{
+                    name: string;
+                }> | null;
+                platforms?: {
+                    ecommerce?: Array<string> | null;
+                    cms?: Array<string> | null;
+                    crm?: Array<string> | null;
+                    marketing?: Array<string> | null;
+                    payment?: Array<string> | null;
+                } | null;
             }>;
             message?: string | null;
         };
@@ -39683,10 +41684,313 @@ export type KitchenSinkBulkCompanyResponses = {
                     full_address?: string | null;
                     formatted_address?: string | null;
                 } | null;
+                locations_stats?: {
+                    USA?: number;
+                    GBR?: number;
+                    FRA?: number;
+                    IND?: number;
+                    BRA?: number;
+                    DEU?: number;
+                    ESP?: number;
+                    CAN?: number;
+                    AUS?: number;
+                    NLD?: number;
+                    ITA?: number;
+                    ZAF?: number;
+                    BEL?: number;
+                    CHN?: number;
+                    TUR?: number;
+                    MEX?: number;
+                    CHE?: number;
+                    NOR?: number;
+                    ARE?: number;
+                    SWE?: number;
+                    POL?: number;
+                    IDN?: number;
+                    ARG?: number;
+                    PRT?: number;
+                    COL?: number;
+                    CHL?: number;
+                    PAK?: number;
+                    DNK?: number;
+                    JPN?: number;
+                    NGA?: number;
+                    SGP?: number;
+                    PER?: number;
+                    NZL?: number;
+                    AUT?: number;
+                    IRL?: number;
+                    MYS?: number;
+                    BGD?: number;
+                    EGY?: number;
+                    ISR?: number;
+                    SAU?: number;
+                    PHL?: number;
+                    FIN?: number;
+                    IRN?: number;
+                    ROU?: number;
+                    CZE?: number;
+                    GRC?: number;
+                    HKG?: number;
+                    HUN?: number;
+                    KEN?: number;
+                    MAR?: number;
+                    VNM?: number;
+                    RUS?: number;
+                    UKR?: number;
+                    ECU?: number;
+                    THA?: number;
+                    LKA?: number;
+                    KOR?: number;
+                    BGR?: number;
+                    GHA?: number;
+                    SRB?: number;
+                    TWN?: number;
+                    HRV?: number;
+                    LTU?: number;
+                    PRI?: number;
+                    SVK?: number;
+                    TUN?: number;
+                    EST?: number;
+                    VEN?: number;
+                    CRI?: number;
+                    PAN?: number;
+                    URY?: number;
+                    LBN?: number;
+                    LUX?: number;
+                    CYP?: number;
+                    NPL?: number;
+                    JOR?: number;
+                    SVN?: number;
+                    MTQ?: number;
+                    QAT?: number;
+                    GLP?: number;
+                    UGA?: number;
+                    DZA?: number;
+                    GTM?: number;
+                    CMR?: number;
+                    LVA?: number;
+                    DOM?: number;
+                    AZE?: number;
+                    GEO?: number;
+                    SEN?: number;
+                    TZA?: number;
+                    ZWE?: number;
+                    KWT?: number;
+                    MLT?: number;
+                    OMN?: number;
+                    BOL?: number;
+                    SLV?: number;
+                    ARM?: number;
+                    PRY?: number;
+                    IRQ?: number;
+                    KHM?: number;
+                    BIH?: number;
+                    AGO?: number;
+                    BHR?: number;
+                    ALB?: number;
+                    KAZ?: number;
+                    CIV?: number;
+                    ETH?: number;
+                    MUS?: number;
+                    ZMB?: number;
+                    MKD?: number;
+                    COD?: number;
+                    BLR?: number;
+                    MOZ?: number;
+                    REU?: number;
+                    TTO?: number;
+                    GUF?: number;
+                    ISL?: number;
+                    MMR?: number;
+                    HND?: number;
+                    RWA?: number;
+                    MDG?: number;
+                    BEN?: number;
+                    UZB?: number;
+                    NAM?: number;
+                    BWA?: number;
+                    MDA?: number;
+                    JEY?: number;
+                    NIC?: number;
+                    SDN?: number;
+                    JAM?: number;
+                    IMN?: number;
+                    BFA?: number;
+                    MNG?: number;
+                    MNE?: number;
+                    MCO?: number;
+                    TGO?: number;
+                    AFG?: number;
+                    LBY?: number;
+                    XKX?: number;
+                    CYM?: number;
+                    MWI?: number;
+                    SOM?: number;
+                    PNG?: number;
+                    MDV?: number;
+                    MLI?: number;
+                    GIN?: number;
+                    PSE?: number;
+                    GAB?: number;
+                    LIE?: number;
+                    HTI?: number;
+                    SYR?: number;
+                    BRB?: number;
+                    YEM?: number;
+                    GGY?: number;
+                    NCL?: number;
+                    AND?: number;
+                    SUR?: number;
+                    MYT?: number;
+                    KGZ?: number;
+                    BHS?: number;
+                    GIB?: number;
+                    COG?: number;
+                    FJI?: number;
+                    BLM?: number;
+                    CUW?: number;
+                    CUB?: number;
+                    SLE?: number;
+                    BLZ?: number;
+                    NER?: number;
+                    LBR?: number;
+                    VIR?: number;
+                    PYF?: number;
+                    GUM?: number;
+                    MRT?: number;
+                    ABW?: number;
+                    SYC?: number;
+                    GUY?: number;
+                    LSO?: number;
+                    SWZ?: number;
+                    SSD?: number;
+                    LCA?: number;
+                    MAC?: number;
+                    SMR?: number;
+                    LAO?: number;
+                    BRN?: number;
+                    TCD?: number;
+                    BMU?: number;
+                    VGB?: number;
+                    PRK?: number;
+                    BTN?: number;
+                    BDI?: number;
+                    FRO?: number;
+                    TJK?: number;
+                    GMB?: number;
+                    STP?: number;
+                    ANT?: number;
+                    VCT?: number;
+                    DJI?: number;
+                    CPV?: number;
+                    TKM?: number;
+                    ATG?: number;
+                    TCA?: number;
+                    KNA?: number;
+                    GRD?: number;
+                    ASM?: number;
+                    VUT?: number;
+                    GNQ?: number;
+                    GRL?: number;
+                    SXM?: number;
+                    MNP?: number;
+                    COM?: number;
+                    TLS?: number;
+                    SJM?: number;
+                    CAF?: number;
+                    DMA?: number;
+                    MAF?: number;
+                    WSM?: number;
+                    BES?: number;
+                    MHL?: number;
+                    AIA?: number;
+                    TON?: number;
+                    COK?: number;
+                    SLB?: number;
+                    SPM?: number;
+                    GNB?: number;
+                    ATA?: number;
+                    TUV?: number;
+                    ALA?: number;
+                    IOT?: number;
+                    ERI?: number;
+                    PLW?: number;
+                    FSM?: number;
+                    NRU?: number;
+                    PCN?: number;
+                    FLK?: number;
+                    MSR?: number;
+                    VAT?: number;
+                    KIR?: number;
+                    SHN?: number;
+                    NIU?: number;
+                    WLF?: number;
+                    HMD?: number;
+                    CXR?: number;
+                    NFK?: number;
+                    ATF?: number;
+                    CCK?: number;
+                    SGS?: number;
+                    BVT?: number;
+                    UMI?: number;
+                    ESH?: number;
+                    TKL?: number;
+                    'X-SOUTH_ASIA'?: number;
+                    'X-SOUTH_EAST_EUROPE'?: number;
+                    'X-NORTHERN_AFRICA'?: number;
+                    'X-PACIFIC'?: number;
+                    'X-SOUTH_WEST_EUROPE'?: number;
+                    'X-SOUTHERN_AFRICA'?: number;
+                    'X-WEST_INDIES'?: number;
+                    'X-SOUTH_AMERICA'?: number;
+                    'X-SOUTH_WEST_ASIA'?: number;
+                    'X-CENTRAL_EUROPE'?: number;
+                    'X-EASTERN_EUROPE'?: number;
+                    'X-WESTERN_EUROPE'?: number;
+                    'X-CENTRAL_AMERICA'?: number;
+                    'X-WESTERN_AFRICA'?: number;
+                    'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                    'X-SOUTH_EAST_ASIA'?: number;
+                    'X-CENTRAL_AFRICA'?: number;
+                    'X-NORTH_AMERICA'?: number;
+                    'X-EAST_ASIA'?: number;
+                    'X-NORTHERN_EUROPE'?: number;
+                    'X-EASTERN_AFRICA'?: number;
+                    'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                    'X-SOUTHERN_EUROPE'?: number;
+                    'X-CENTRAL_ASIA'?: number;
+                    'X-NORTHERN_ASIA'?: number;
+                    'X-ASIA'?: number;
+                    'X-EUROPE'?: number;
+                    'X-AFRICA'?: number;
+                    'X-OCEANIA'?: number;
+                    'X-AMERICAS'?: number;
+                    'X-ANTARCTICA'?: number;
+                    'X-ATLANTIC_OCEAN'?: number;
+                    'X-INDIAN_OCEAN'?: number;
+                    'X-MIDDLE_EAST'?: number;
+                    'X-MENA'?: number;
+                    'X-EMEA'?: number;
+                    'X-EUROPEAN_UNION'?: number;
+                    'X-EFTA'?: number;
+                    'X-APAC'?: number;
+                    'X-LATAM'?: number;
+                    'X-ANGLOSPHERE'?: number;
+                    'X-DACH'?: number;
+                    'X-NORDICS'?: number;
+                    'X-BENELUX'?: number;
+                    'X-GCC'?: number;
+                    'X-BRICS'?: number;
+                    'X-G20'?: number;
+                    'X-OECD'?: number;
+                    'X-SANCTIONED'?: number;
+                } | null;
                 market_cap_usd?: number | null;
                 naics_codes?: Array<string> | null;
                 names?: Array<string> | null;
                 preferred_name?: string | null;
+                preferred_name_word_count?: number | null;
                 revenue_usd?: number | null;
                 standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                 status_consensus?: string | null;
@@ -39740,6 +42044,51 @@ export type KitchenSinkBulkCompanyResponses = {
                 linkedin_ids?: Array<string> | null;
                 last_sort_key?: string | null;
                 relevance_score?: number | null;
+                technology_spend_usd?: number | null;
+                historical_headcount?: {
+                    latest_snapshot_date: string;
+                    snapshots: Array<{
+                        date: string;
+                        employees: number;
+                    }>;
+                    growth: {
+                        '1m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '2m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '3m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '6m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '12m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '18m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '24m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '36m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                    };
+                } | null;
+                cik_numbers?: Array<string> | null;
+                cage_codes?: Array<string> | null;
+                duns_numbers?: Array<string> | null;
                 num_li_locations?: number | null;
                 location_name?: string | null;
                 crunchbase_slug?: string | null;
@@ -39854,6 +42203,16 @@ export type KitchenSinkBulkCompanyResponses = {
                 is_investor?: boolean | null;
                 investor_type?: string | null;
                 investor_categories?: Array<string> | null;
+                technologies_used?: Array<{
+                    name: string;
+                }> | null;
+                platforms?: {
+                    ecommerce?: Array<string> | null;
+                    cms?: Array<string> | null;
+                    crm?: Array<string> | null;
+                    marketing?: Array<string> | null;
+                    payment?: Array<string> | null;
+                } | null;
             }>>;
             message?: string | null;
         };
@@ -43526,10 +45885,313 @@ export type TextToCompanySearchResponses = {
                     full_address?: string | null;
                     formatted_address?: string | null;
                 } | null;
+                locations_stats?: {
+                    USA?: number;
+                    GBR?: number;
+                    FRA?: number;
+                    IND?: number;
+                    BRA?: number;
+                    DEU?: number;
+                    ESP?: number;
+                    CAN?: number;
+                    AUS?: number;
+                    NLD?: number;
+                    ITA?: number;
+                    ZAF?: number;
+                    BEL?: number;
+                    CHN?: number;
+                    TUR?: number;
+                    MEX?: number;
+                    CHE?: number;
+                    NOR?: number;
+                    ARE?: number;
+                    SWE?: number;
+                    POL?: number;
+                    IDN?: number;
+                    ARG?: number;
+                    PRT?: number;
+                    COL?: number;
+                    CHL?: number;
+                    PAK?: number;
+                    DNK?: number;
+                    JPN?: number;
+                    NGA?: number;
+                    SGP?: number;
+                    PER?: number;
+                    NZL?: number;
+                    AUT?: number;
+                    IRL?: number;
+                    MYS?: number;
+                    BGD?: number;
+                    EGY?: number;
+                    ISR?: number;
+                    SAU?: number;
+                    PHL?: number;
+                    FIN?: number;
+                    IRN?: number;
+                    ROU?: number;
+                    CZE?: number;
+                    GRC?: number;
+                    HKG?: number;
+                    HUN?: number;
+                    KEN?: number;
+                    MAR?: number;
+                    VNM?: number;
+                    RUS?: number;
+                    UKR?: number;
+                    ECU?: number;
+                    THA?: number;
+                    LKA?: number;
+                    KOR?: number;
+                    BGR?: number;
+                    GHA?: number;
+                    SRB?: number;
+                    TWN?: number;
+                    HRV?: number;
+                    LTU?: number;
+                    PRI?: number;
+                    SVK?: number;
+                    TUN?: number;
+                    EST?: number;
+                    VEN?: number;
+                    CRI?: number;
+                    PAN?: number;
+                    URY?: number;
+                    LBN?: number;
+                    LUX?: number;
+                    CYP?: number;
+                    NPL?: number;
+                    JOR?: number;
+                    SVN?: number;
+                    MTQ?: number;
+                    QAT?: number;
+                    GLP?: number;
+                    UGA?: number;
+                    DZA?: number;
+                    GTM?: number;
+                    CMR?: number;
+                    LVA?: number;
+                    DOM?: number;
+                    AZE?: number;
+                    GEO?: number;
+                    SEN?: number;
+                    TZA?: number;
+                    ZWE?: number;
+                    KWT?: number;
+                    MLT?: number;
+                    OMN?: number;
+                    BOL?: number;
+                    SLV?: number;
+                    ARM?: number;
+                    PRY?: number;
+                    IRQ?: number;
+                    KHM?: number;
+                    BIH?: number;
+                    AGO?: number;
+                    BHR?: number;
+                    ALB?: number;
+                    KAZ?: number;
+                    CIV?: number;
+                    ETH?: number;
+                    MUS?: number;
+                    ZMB?: number;
+                    MKD?: number;
+                    COD?: number;
+                    BLR?: number;
+                    MOZ?: number;
+                    REU?: number;
+                    TTO?: number;
+                    GUF?: number;
+                    ISL?: number;
+                    MMR?: number;
+                    HND?: number;
+                    RWA?: number;
+                    MDG?: number;
+                    BEN?: number;
+                    UZB?: number;
+                    NAM?: number;
+                    BWA?: number;
+                    MDA?: number;
+                    JEY?: number;
+                    NIC?: number;
+                    SDN?: number;
+                    JAM?: number;
+                    IMN?: number;
+                    BFA?: number;
+                    MNG?: number;
+                    MNE?: number;
+                    MCO?: number;
+                    TGO?: number;
+                    AFG?: number;
+                    LBY?: number;
+                    XKX?: number;
+                    CYM?: number;
+                    MWI?: number;
+                    SOM?: number;
+                    PNG?: number;
+                    MDV?: number;
+                    MLI?: number;
+                    GIN?: number;
+                    PSE?: number;
+                    GAB?: number;
+                    LIE?: number;
+                    HTI?: number;
+                    SYR?: number;
+                    BRB?: number;
+                    YEM?: number;
+                    GGY?: number;
+                    NCL?: number;
+                    AND?: number;
+                    SUR?: number;
+                    MYT?: number;
+                    KGZ?: number;
+                    BHS?: number;
+                    GIB?: number;
+                    COG?: number;
+                    FJI?: number;
+                    BLM?: number;
+                    CUW?: number;
+                    CUB?: number;
+                    SLE?: number;
+                    BLZ?: number;
+                    NER?: number;
+                    LBR?: number;
+                    VIR?: number;
+                    PYF?: number;
+                    GUM?: number;
+                    MRT?: number;
+                    ABW?: number;
+                    SYC?: number;
+                    GUY?: number;
+                    LSO?: number;
+                    SWZ?: number;
+                    SSD?: number;
+                    LCA?: number;
+                    MAC?: number;
+                    SMR?: number;
+                    LAO?: number;
+                    BRN?: number;
+                    TCD?: number;
+                    BMU?: number;
+                    VGB?: number;
+                    PRK?: number;
+                    BTN?: number;
+                    BDI?: number;
+                    FRO?: number;
+                    TJK?: number;
+                    GMB?: number;
+                    STP?: number;
+                    ANT?: number;
+                    VCT?: number;
+                    DJI?: number;
+                    CPV?: number;
+                    TKM?: number;
+                    ATG?: number;
+                    TCA?: number;
+                    KNA?: number;
+                    GRD?: number;
+                    ASM?: number;
+                    VUT?: number;
+                    GNQ?: number;
+                    GRL?: number;
+                    SXM?: number;
+                    MNP?: number;
+                    COM?: number;
+                    TLS?: number;
+                    SJM?: number;
+                    CAF?: number;
+                    DMA?: number;
+                    MAF?: number;
+                    WSM?: number;
+                    BES?: number;
+                    MHL?: number;
+                    AIA?: number;
+                    TON?: number;
+                    COK?: number;
+                    SLB?: number;
+                    SPM?: number;
+                    GNB?: number;
+                    ATA?: number;
+                    TUV?: number;
+                    ALA?: number;
+                    IOT?: number;
+                    ERI?: number;
+                    PLW?: number;
+                    FSM?: number;
+                    NRU?: number;
+                    PCN?: number;
+                    FLK?: number;
+                    MSR?: number;
+                    VAT?: number;
+                    KIR?: number;
+                    SHN?: number;
+                    NIU?: number;
+                    WLF?: number;
+                    HMD?: number;
+                    CXR?: number;
+                    NFK?: number;
+                    ATF?: number;
+                    CCK?: number;
+                    SGS?: number;
+                    BVT?: number;
+                    UMI?: number;
+                    ESH?: number;
+                    TKL?: number;
+                    'X-SOUTH_ASIA'?: number;
+                    'X-SOUTH_EAST_EUROPE'?: number;
+                    'X-NORTHERN_AFRICA'?: number;
+                    'X-PACIFIC'?: number;
+                    'X-SOUTH_WEST_EUROPE'?: number;
+                    'X-SOUTHERN_AFRICA'?: number;
+                    'X-WEST_INDIES'?: number;
+                    'X-SOUTH_AMERICA'?: number;
+                    'X-SOUTH_WEST_ASIA'?: number;
+                    'X-CENTRAL_EUROPE'?: number;
+                    'X-EASTERN_EUROPE'?: number;
+                    'X-WESTERN_EUROPE'?: number;
+                    'X-CENTRAL_AMERICA'?: number;
+                    'X-WESTERN_AFRICA'?: number;
+                    'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                    'X-SOUTH_EAST_ASIA'?: number;
+                    'X-CENTRAL_AFRICA'?: number;
+                    'X-NORTH_AMERICA'?: number;
+                    'X-EAST_ASIA'?: number;
+                    'X-NORTHERN_EUROPE'?: number;
+                    'X-EASTERN_AFRICA'?: number;
+                    'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                    'X-SOUTHERN_EUROPE'?: number;
+                    'X-CENTRAL_ASIA'?: number;
+                    'X-NORTHERN_ASIA'?: number;
+                    'X-ASIA'?: number;
+                    'X-EUROPE'?: number;
+                    'X-AFRICA'?: number;
+                    'X-OCEANIA'?: number;
+                    'X-AMERICAS'?: number;
+                    'X-ANTARCTICA'?: number;
+                    'X-ATLANTIC_OCEAN'?: number;
+                    'X-INDIAN_OCEAN'?: number;
+                    'X-MIDDLE_EAST'?: number;
+                    'X-MENA'?: number;
+                    'X-EMEA'?: number;
+                    'X-EUROPEAN_UNION'?: number;
+                    'X-EFTA'?: number;
+                    'X-APAC'?: number;
+                    'X-LATAM'?: number;
+                    'X-ANGLOSPHERE'?: number;
+                    'X-DACH'?: number;
+                    'X-NORDICS'?: number;
+                    'X-BENELUX'?: number;
+                    'X-GCC'?: number;
+                    'X-BRICS'?: number;
+                    'X-G20'?: number;
+                    'X-OECD'?: number;
+                    'X-SANCTIONED'?: number;
+                } | null;
                 market_cap_usd?: number | null;
                 naics_codes?: Array<string> | null;
                 names?: Array<string> | null;
                 preferred_name?: string | null;
+                preferred_name_word_count?: number | null;
                 revenue_usd?: number | null;
                 standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                 status_consensus?: string | null;
@@ -43583,6 +46245,51 @@ export type TextToCompanySearchResponses = {
                 linkedin_ids?: Array<string> | null;
                 last_sort_key?: string | null;
                 relevance_score?: number | null;
+                technology_spend_usd?: number | null;
+                historical_headcount?: {
+                    latest_snapshot_date: string;
+                    snapshots: Array<{
+                        date: string;
+                        employees: number;
+                    }>;
+                    growth: {
+                        '1m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '2m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '3m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '6m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '12m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '18m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '24m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '36m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                    };
+                } | null;
+                cik_numbers?: Array<string> | null;
+                cage_codes?: Array<string> | null;
+                duns_numbers?: Array<string> | null;
                 num_li_locations?: number | null;
                 location_name?: string | null;
                 crunchbase_slug?: string | null;
@@ -43697,6 +46404,16 @@ export type TextToCompanySearchResponses = {
                 is_investor?: boolean | null;
                 investor_type?: string | null;
                 investor_categories?: Array<string> | null;
+                technologies_used?: Array<{
+                    name: string;
+                }> | null;
+                platforms?: {
+                    ecommerce?: Array<string> | null;
+                    cms?: Array<string> | null;
+                    crm?: Array<string> | null;
+                    marketing?: Array<string> | null;
+                    payment?: Array<string> | null;
+                } | null;
             }>;
             /**
              * The cursor for paginating to next page. Provide this in next search call and we will paginate from that point onward.
@@ -44851,9 +47568,64 @@ export type TextToProfileSearchParamsResponses = {
                                 source?: 'csv' | null;
                             }> | null;
                         } | null;
+                        schoolV4?: {
+                            anyOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                        } | null;
                         schoolNameKeywords?: {
                             anyOf?: Array<string> | null;
                             noneOf?: Array<string> | null;
+                        } | null;
+                        degreeV3?: {
+                            method: 'text';
+                            criteria: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            };
+                        } | {
+                            method: 'level';
+                            criteria: {
+                                anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                                noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            };
                         } | null;
                         finishedSchoolAt?: {
                             strategy: 'absolute';
@@ -44940,9 +47712,64 @@ export type TextToProfileSearchParamsResponses = {
                                 source?: 'csv' | null;
                             }> | null;
                         } | null;
+                        schoolV4?: {
+                            anyOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                        } | null;
                         schoolNameKeywords?: {
                             anyOf?: Array<string> | null;
                             noneOf?: Array<string> | null;
+                        } | null;
+                        degreeV3?: {
+                            method: 'text';
+                            criteria: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            };
+                        } | {
+                            method: 'level';
+                            criteria: {
+                                anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                                noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            };
                         } | null;
                         finishedSchoolAt?: {
                             strategy: 'absolute';
@@ -45851,9 +48678,64 @@ export type TextToProfileSearchResponses = {
                                 source?: 'csv' | null;
                             }> | null;
                         } | null;
+                        schoolV4?: {
+                            anyOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                        } | null;
                         schoolNameKeywords?: {
                             anyOf?: Array<string> | null;
                             noneOf?: Array<string> | null;
+                        } | null;
+                        degreeV3?: {
+                            method: 'text';
+                            criteria: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            };
+                        } | {
+                            method: 'level';
+                            criteria: {
+                                anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                                noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            };
                         } | null;
                         finishedSchoolAt?: {
                             strategy: 'absolute';
@@ -45940,9 +48822,64 @@ export type TextToProfileSearchResponses = {
                                 source?: 'csv' | null;
                             }> | null;
                         } | null;
+                        schoolV4?: {
+                            anyOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                        } | null;
                         schoolNameKeywords?: {
                             anyOf?: Array<string> | null;
                             noneOf?: Array<string> | null;
+                        } | null;
+                        degreeV3?: {
+                            method: 'text';
+                            criteria: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            };
+                        } | {
+                            method: 'level';
+                            criteria: {
+                                anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                                noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            };
                         } | null;
                         finishedSchoolAt?: {
                             strategy: 'absolute';
@@ -47859,10 +50796,313 @@ export type TextToCombinedSearchResponses = {
                         full_address?: string | null;
                         formatted_address?: string | null;
                     } | null;
+                    locations_stats?: {
+                        USA?: number;
+                        GBR?: number;
+                        FRA?: number;
+                        IND?: number;
+                        BRA?: number;
+                        DEU?: number;
+                        ESP?: number;
+                        CAN?: number;
+                        AUS?: number;
+                        NLD?: number;
+                        ITA?: number;
+                        ZAF?: number;
+                        BEL?: number;
+                        CHN?: number;
+                        TUR?: number;
+                        MEX?: number;
+                        CHE?: number;
+                        NOR?: number;
+                        ARE?: number;
+                        SWE?: number;
+                        POL?: number;
+                        IDN?: number;
+                        ARG?: number;
+                        PRT?: number;
+                        COL?: number;
+                        CHL?: number;
+                        PAK?: number;
+                        DNK?: number;
+                        JPN?: number;
+                        NGA?: number;
+                        SGP?: number;
+                        PER?: number;
+                        NZL?: number;
+                        AUT?: number;
+                        IRL?: number;
+                        MYS?: number;
+                        BGD?: number;
+                        EGY?: number;
+                        ISR?: number;
+                        SAU?: number;
+                        PHL?: number;
+                        FIN?: number;
+                        IRN?: number;
+                        ROU?: number;
+                        CZE?: number;
+                        GRC?: number;
+                        HKG?: number;
+                        HUN?: number;
+                        KEN?: number;
+                        MAR?: number;
+                        VNM?: number;
+                        RUS?: number;
+                        UKR?: number;
+                        ECU?: number;
+                        THA?: number;
+                        LKA?: number;
+                        KOR?: number;
+                        BGR?: number;
+                        GHA?: number;
+                        SRB?: number;
+                        TWN?: number;
+                        HRV?: number;
+                        LTU?: number;
+                        PRI?: number;
+                        SVK?: number;
+                        TUN?: number;
+                        EST?: number;
+                        VEN?: number;
+                        CRI?: number;
+                        PAN?: number;
+                        URY?: number;
+                        LBN?: number;
+                        LUX?: number;
+                        CYP?: number;
+                        NPL?: number;
+                        JOR?: number;
+                        SVN?: number;
+                        MTQ?: number;
+                        QAT?: number;
+                        GLP?: number;
+                        UGA?: number;
+                        DZA?: number;
+                        GTM?: number;
+                        CMR?: number;
+                        LVA?: number;
+                        DOM?: number;
+                        AZE?: number;
+                        GEO?: number;
+                        SEN?: number;
+                        TZA?: number;
+                        ZWE?: number;
+                        KWT?: number;
+                        MLT?: number;
+                        OMN?: number;
+                        BOL?: number;
+                        SLV?: number;
+                        ARM?: number;
+                        PRY?: number;
+                        IRQ?: number;
+                        KHM?: number;
+                        BIH?: number;
+                        AGO?: number;
+                        BHR?: number;
+                        ALB?: number;
+                        KAZ?: number;
+                        CIV?: number;
+                        ETH?: number;
+                        MUS?: number;
+                        ZMB?: number;
+                        MKD?: number;
+                        COD?: number;
+                        BLR?: number;
+                        MOZ?: number;
+                        REU?: number;
+                        TTO?: number;
+                        GUF?: number;
+                        ISL?: number;
+                        MMR?: number;
+                        HND?: number;
+                        RWA?: number;
+                        MDG?: number;
+                        BEN?: number;
+                        UZB?: number;
+                        NAM?: number;
+                        BWA?: number;
+                        MDA?: number;
+                        JEY?: number;
+                        NIC?: number;
+                        SDN?: number;
+                        JAM?: number;
+                        IMN?: number;
+                        BFA?: number;
+                        MNG?: number;
+                        MNE?: number;
+                        MCO?: number;
+                        TGO?: number;
+                        AFG?: number;
+                        LBY?: number;
+                        XKX?: number;
+                        CYM?: number;
+                        MWI?: number;
+                        SOM?: number;
+                        PNG?: number;
+                        MDV?: number;
+                        MLI?: number;
+                        GIN?: number;
+                        PSE?: number;
+                        GAB?: number;
+                        LIE?: number;
+                        HTI?: number;
+                        SYR?: number;
+                        BRB?: number;
+                        YEM?: number;
+                        GGY?: number;
+                        NCL?: number;
+                        AND?: number;
+                        SUR?: number;
+                        MYT?: number;
+                        KGZ?: number;
+                        BHS?: number;
+                        GIB?: number;
+                        COG?: number;
+                        FJI?: number;
+                        BLM?: number;
+                        CUW?: number;
+                        CUB?: number;
+                        SLE?: number;
+                        BLZ?: number;
+                        NER?: number;
+                        LBR?: number;
+                        VIR?: number;
+                        PYF?: number;
+                        GUM?: number;
+                        MRT?: number;
+                        ABW?: number;
+                        SYC?: number;
+                        GUY?: number;
+                        LSO?: number;
+                        SWZ?: number;
+                        SSD?: number;
+                        LCA?: number;
+                        MAC?: number;
+                        SMR?: number;
+                        LAO?: number;
+                        BRN?: number;
+                        TCD?: number;
+                        BMU?: number;
+                        VGB?: number;
+                        PRK?: number;
+                        BTN?: number;
+                        BDI?: number;
+                        FRO?: number;
+                        TJK?: number;
+                        GMB?: number;
+                        STP?: number;
+                        ANT?: number;
+                        VCT?: number;
+                        DJI?: number;
+                        CPV?: number;
+                        TKM?: number;
+                        ATG?: number;
+                        TCA?: number;
+                        KNA?: number;
+                        GRD?: number;
+                        ASM?: number;
+                        VUT?: number;
+                        GNQ?: number;
+                        GRL?: number;
+                        SXM?: number;
+                        MNP?: number;
+                        COM?: number;
+                        TLS?: number;
+                        SJM?: number;
+                        CAF?: number;
+                        DMA?: number;
+                        MAF?: number;
+                        WSM?: number;
+                        BES?: number;
+                        MHL?: number;
+                        AIA?: number;
+                        TON?: number;
+                        COK?: number;
+                        SLB?: number;
+                        SPM?: number;
+                        GNB?: number;
+                        ATA?: number;
+                        TUV?: number;
+                        ALA?: number;
+                        IOT?: number;
+                        ERI?: number;
+                        PLW?: number;
+                        FSM?: number;
+                        NRU?: number;
+                        PCN?: number;
+                        FLK?: number;
+                        MSR?: number;
+                        VAT?: number;
+                        KIR?: number;
+                        SHN?: number;
+                        NIU?: number;
+                        WLF?: number;
+                        HMD?: number;
+                        CXR?: number;
+                        NFK?: number;
+                        ATF?: number;
+                        CCK?: number;
+                        SGS?: number;
+                        BVT?: number;
+                        UMI?: number;
+                        ESH?: number;
+                        TKL?: number;
+                        'X-SOUTH_ASIA'?: number;
+                        'X-SOUTH_EAST_EUROPE'?: number;
+                        'X-NORTHERN_AFRICA'?: number;
+                        'X-PACIFIC'?: number;
+                        'X-SOUTH_WEST_EUROPE'?: number;
+                        'X-SOUTHERN_AFRICA'?: number;
+                        'X-WEST_INDIES'?: number;
+                        'X-SOUTH_AMERICA'?: number;
+                        'X-SOUTH_WEST_ASIA'?: number;
+                        'X-CENTRAL_EUROPE'?: number;
+                        'X-EASTERN_EUROPE'?: number;
+                        'X-WESTERN_EUROPE'?: number;
+                        'X-CENTRAL_AMERICA'?: number;
+                        'X-WESTERN_AFRICA'?: number;
+                        'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                        'X-SOUTH_EAST_ASIA'?: number;
+                        'X-CENTRAL_AFRICA'?: number;
+                        'X-NORTH_AMERICA'?: number;
+                        'X-EAST_ASIA'?: number;
+                        'X-NORTHERN_EUROPE'?: number;
+                        'X-EASTERN_AFRICA'?: number;
+                        'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                        'X-SOUTHERN_EUROPE'?: number;
+                        'X-CENTRAL_ASIA'?: number;
+                        'X-NORTHERN_ASIA'?: number;
+                        'X-ASIA'?: number;
+                        'X-EUROPE'?: number;
+                        'X-AFRICA'?: number;
+                        'X-OCEANIA'?: number;
+                        'X-AMERICAS'?: number;
+                        'X-ANTARCTICA'?: number;
+                        'X-ATLANTIC_OCEAN'?: number;
+                        'X-INDIAN_OCEAN'?: number;
+                        'X-MIDDLE_EAST'?: number;
+                        'X-MENA'?: number;
+                        'X-EMEA'?: number;
+                        'X-EUROPEAN_UNION'?: number;
+                        'X-EFTA'?: number;
+                        'X-APAC'?: number;
+                        'X-LATAM'?: number;
+                        'X-ANGLOSPHERE'?: number;
+                        'X-DACH'?: number;
+                        'X-NORDICS'?: number;
+                        'X-BENELUX'?: number;
+                        'X-GCC'?: number;
+                        'X-BRICS'?: number;
+                        'X-G20'?: number;
+                        'X-OECD'?: number;
+                        'X-SANCTIONED'?: number;
+                    } | null;
                     market_cap_usd?: number | null;
                     naics_codes?: Array<string> | null;
                     names?: Array<string> | null;
                     preferred_name?: string | null;
+                    preferred_name_word_count?: number | null;
                     revenue_usd?: number | null;
                     standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     status_consensus?: string | null;
@@ -47916,6 +51156,51 @@ export type TextToCombinedSearchResponses = {
                     linkedin_ids?: Array<string> | null;
                     last_sort_key?: string | null;
                     relevance_score?: number | null;
+                    technology_spend_usd?: number | null;
+                    historical_headcount?: {
+                        latest_snapshot_date: string;
+                        snapshots: Array<{
+                            date: string;
+                            employees: number;
+                        }>;
+                        growth: {
+                            '1m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '2m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '3m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '6m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '12m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '18m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '24m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '36m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                        };
+                    } | null;
+                    cik_numbers?: Array<string> | null;
+                    cage_codes?: Array<string> | null;
+                    duns_numbers?: Array<string> | null;
                     num_li_locations?: number | null;
                     location_name?: string | null;
                     crunchbase_slug?: string | null;
@@ -48030,6 +51315,16 @@ export type TextToCombinedSearchResponses = {
                     is_investor?: boolean | null;
                     investor_type?: string | null;
                     investor_categories?: Array<string> | null;
+                    technologies_used?: Array<{
+                        name: string;
+                    }> | null;
+                    platforms?: {
+                        ecommerce?: Array<string> | null;
+                        cms?: Array<string> | null;
+                        crm?: Array<string> | null;
+                        marketing?: Array<string> | null;
+                        payment?: Array<string> | null;
+                    } | null;
                 }>;
                 profiles: Array<{
                     articles?: Array<{
@@ -49164,9 +52459,64 @@ export type TextToCombinedSearchResponses = {
                                 source?: 'csv' | null;
                             }> | null;
                         } | null;
+                        schoolV4?: {
+                            anyOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                        } | null;
                         schoolNameKeywords?: {
                             anyOf?: Array<string> | null;
                             noneOf?: Array<string> | null;
+                        } | null;
+                        degreeV3?: {
+                            method: 'text';
+                            criteria: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            };
+                        } | {
+                            method: 'level';
+                            criteria: {
+                                anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                                noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            };
                         } | null;
                         finishedSchoolAt?: {
                             strategy: 'absolute';
@@ -49253,9 +52603,64 @@ export type TextToCombinedSearchResponses = {
                                 source?: 'csv' | null;
                             }> | null;
                         } | null;
+                        schoolV4?: {
+                            anyOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                identifier: 'domain';
+                                domain: string;
+                            } | {
+                                identifier: 'linkedin-url';
+                                linkedin_url: string;
+                            } | {
+                                identifier: 'linkedin-org-id';
+                                org_id: string;
+                            } | {
+                                identifier: 'advanced';
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            }> | null;
+                        } | null;
                         schoolNameKeywords?: {
                             anyOf?: Array<string> | null;
                             noneOf?: Array<string> | null;
+                        } | null;
+                        degreeV3?: {
+                            method: 'text';
+                            criteria: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            };
+                        } | {
+                            method: 'level';
+                            criteria: {
+                                anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                                noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            };
                         } | null;
                         finishedSchoolAt?: {
                             strategy: 'absolute';
@@ -49796,6 +53201,36 @@ export type CreateSavedSearchData = {
                                 } | null;
                                 jobTitle?: Array<string> | null;
                             }> | null;
+                        } | null;
+                        jobStatus?: {
+                            status: 'currently-employed';
+                        } | {
+                            status: 'previously-employed';
+                            leftAt?: {
+                                strategy: 'absolute';
+                                range?: {
+                                    lowerBound?: string | null;
+                                    upperBound?: string | null;
+                                } | null;
+                            } | {
+                                strategy: 'relative';
+                                window?: {
+                                    method: 'lastN';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    quantity: number;
+                                } | {
+                                    method: 'within';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                } | {
+                                    method: 'calendar';
+                                    which: 'current' | 'previous';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                } | null;
+                            } | null;
+                        } | {
+                            status: 'ever-employed';
                         } | null;
                     }>;
                     joiner: 'AND' | 'OR';
@@ -50555,6 +53990,38 @@ export type CreateSavedSearchData = {
                     containsAny?: Array<string> | null;
                     containsNone?: Array<string> | null;
                 } | null;
+                keywordsV2?: {
+                    operator?: 'AND' | 'OR';
+                    clauses: Array<{
+                        operator?: 'AND' | 'OR';
+                        terms: Array<string>;
+                        negate?: boolean;
+                    }>;
+                    options?: {
+                        fieldsToSearchOver?: {
+                            summary?: boolean;
+                            headline?: boolean;
+                            pastJobTitles?: boolean;
+                            pastJobSummaries?: boolean;
+                            pastCompanyNames?: boolean;
+                            currentJobTitles?: boolean;
+                            currentJobSummaries?: boolean;
+                            currentCompanyNames?: boolean;
+                            interests?: boolean;
+                            skills?: boolean;
+                            industry?: boolean;
+                            education?: boolean;
+                            publications?: boolean;
+                            certifications?: boolean;
+                            articles?: boolean;
+                            courses?: boolean;
+                            projects?: boolean;
+                            patents?: boolean;
+                            volunteering?: boolean;
+                            languages?: boolean;
+                        } | null;
+                    } | null;
+                } | null;
                 keywordSearchOptions?: {
                     fieldsToSearchOver?: {
                         summary?: boolean;
@@ -50951,6 +54418,35 @@ export type CreateSavedSearchData = {
                         stateName: string;
                     }> | null;
                 } | null;
+                certifications?: {
+                    anyOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                publications?: {
+                    anyOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                hasNoEducation?: boolean | null;
                 /**
                  * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
                  */
@@ -51489,6 +54985,36 @@ export type CreateSavedSearchData = {
                                 } | null;
                                 jobTitle?: Array<string> | null;
                             }> | null;
+                        } | null;
+                        jobStatus?: {
+                            status: 'currently-employed';
+                        } | {
+                            status: 'previously-employed';
+                            leftAt?: {
+                                strategy: 'absolute';
+                                range?: {
+                                    lowerBound?: string | null;
+                                    upperBound?: string | null;
+                                } | null;
+                            } | {
+                                strategy: 'relative';
+                                window?: {
+                                    method: 'lastN';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    quantity: number;
+                                } | {
+                                    method: 'within';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                } | {
+                                    method: 'calendar';
+                                    which: 'current' | 'previous';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                } | null;
+                            } | null;
+                        } | {
+                            status: 'ever-employed';
                         } | null;
                     }>;
                     joiner: 'AND' | 'OR';
@@ -52253,6 +55779,38 @@ export type CreateSavedSearchData = {
                     containsAny?: Array<string> | null;
                     containsNone?: Array<string> | null;
                 } | null;
+                keywordsV2?: {
+                    operator?: 'AND' | 'OR';
+                    clauses: Array<{
+                        operator?: 'AND' | 'OR';
+                        terms: Array<string>;
+                        negate?: boolean;
+                    }>;
+                    options?: {
+                        fieldsToSearchOver?: {
+                            summary?: boolean;
+                            headline?: boolean;
+                            pastJobTitles?: boolean;
+                            pastJobSummaries?: boolean;
+                            pastCompanyNames?: boolean;
+                            currentJobTitles?: boolean;
+                            currentJobSummaries?: boolean;
+                            currentCompanyNames?: boolean;
+                            interests?: boolean;
+                            skills?: boolean;
+                            industry?: boolean;
+                            education?: boolean;
+                            publications?: boolean;
+                            certifications?: boolean;
+                            articles?: boolean;
+                            courses?: boolean;
+                            projects?: boolean;
+                            patents?: boolean;
+                            volunteering?: boolean;
+                            languages?: boolean;
+                        } | null;
+                    } | null;
+                } | null;
                 keywordSearchOptions?: {
                     fieldsToSearchOver?: {
                         summary?: boolean;
@@ -52649,6 +56207,35 @@ export type CreateSavedSearchData = {
                         stateName: string;
                     }> | null;
                 } | null;
+                certifications?: {
+                    anyOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                publications?: {
+                    anyOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                hasNoEducation?: boolean | null;
                 /**
                  * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
                  */
@@ -53589,6 +57176,36 @@ export type GetSavedSearchResponses = {
                                 jobTitle?: Array<string> | null;
                             }> | null;
                         } | null;
+                        jobStatus?: {
+                            status: 'currently-employed';
+                        } | {
+                            status: 'previously-employed';
+                            leftAt?: {
+                                strategy: 'absolute';
+                                range?: {
+                                    lowerBound?: string | null;
+                                    upperBound?: string | null;
+                                } | null;
+                            } | {
+                                strategy: 'relative';
+                                window?: {
+                                    method: 'lastN';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    quantity: number;
+                                } | {
+                                    method: 'within';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                } | {
+                                    method: 'calendar';
+                                    which: 'current' | 'previous';
+                                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                } | null;
+                            } | null;
+                        } | {
+                            status: 'ever-employed';
+                        } | null;
                     }>;
                     joiner: 'AND' | 'OR';
                 } | null;
@@ -54347,6 +57964,38 @@ export type GetSavedSearchResponses = {
                     containsAny?: Array<string> | null;
                     containsNone?: Array<string> | null;
                 } | null;
+                keywordsV2?: {
+                    operator: 'AND' | 'OR';
+                    clauses: Array<{
+                        operator: 'AND' | 'OR';
+                        terms: Array<string>;
+                        negate: boolean;
+                    }>;
+                    options?: {
+                        fieldsToSearchOver?: {
+                            summary: boolean;
+                            headline: boolean;
+                            pastJobTitles: boolean;
+                            pastJobSummaries: boolean;
+                            pastCompanyNames: boolean;
+                            currentJobTitles: boolean;
+                            currentJobSummaries: boolean;
+                            currentCompanyNames: boolean;
+                            interests: boolean;
+                            skills: boolean;
+                            industry: boolean;
+                            education: boolean;
+                            publications: boolean;
+                            certifications: boolean;
+                            articles: boolean;
+                            courses: boolean;
+                            projects: boolean;
+                            patents: boolean;
+                            volunteering: boolean;
+                            languages: boolean;
+                        } | null;
+                    } | null;
+                } | null;
                 keywordSearchOptions?: {
                     fieldsToSearchOver?: {
                         summary: boolean;
@@ -54743,6 +58392,35 @@ export type GetSavedSearchResponses = {
                         stateName: string;
                     }> | null;
                 } | null;
+                certifications?: {
+                    anyOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                publications?: {
+                    anyOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                hasNoEducation?: boolean | null;
                 /**
                  * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
                  */
@@ -55585,6 +59263,36 @@ export type GetSavedSearchRunResponses = {
                                     jobTitle?: Array<string> | null;
                                 }> | null;
                             } | null;
+                            jobStatus?: {
+                                status: 'currently-employed';
+                            } | {
+                                status: 'previously-employed';
+                                leftAt?: {
+                                    strategy: 'absolute';
+                                    range?: {
+                                        lowerBound?: string | null;
+                                        upperBound?: string | null;
+                                    } | null;
+                                } | {
+                                    strategy: 'relative';
+                                    window?: {
+                                        method: 'lastN';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                        quantity: number;
+                                    } | {
+                                        method: 'within';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                        lowerBound?: number | null;
+                                        upperBound?: number | null;
+                                    } | {
+                                        method: 'calendar';
+                                        which: 'current' | 'previous';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    } | null;
+                                } | null;
+                            } | {
+                                status: 'ever-employed';
+                            } | null;
                         }>;
                         joiner: 'AND' | 'OR';
                     } | null;
@@ -56339,6 +60047,38 @@ export type GetSavedSearchRunResponses = {
                         containsAny?: Array<string> | null;
                         containsNone?: Array<string> | null;
                     } | null;
+                    keywordsV2?: {
+                        operator: 'AND' | 'OR';
+                        clauses: Array<{
+                            operator: 'AND' | 'OR';
+                            terms: Array<string>;
+                            negate: boolean;
+                        }>;
+                        options?: {
+                            fieldsToSearchOver?: {
+                                summary: boolean;
+                                headline: boolean;
+                                pastJobTitles: boolean;
+                                pastJobSummaries: boolean;
+                                pastCompanyNames: boolean;
+                                currentJobTitles: boolean;
+                                currentJobSummaries: boolean;
+                                currentCompanyNames: boolean;
+                                interests: boolean;
+                                skills: boolean;
+                                industry: boolean;
+                                education: boolean;
+                                publications: boolean;
+                                certifications: boolean;
+                                articles: boolean;
+                                courses: boolean;
+                                projects: boolean;
+                                patents: boolean;
+                                volunteering: boolean;
+                                languages: boolean;
+                            } | null;
+                        } | null;
+                    } | null;
                     keywordSearchOptions?: {
                         fieldsToSearchOver?: {
                             summary: boolean;
@@ -56735,6 +60475,35 @@ export type GetSavedSearchRunResponses = {
                             stateName: string;
                         }> | null;
                     } | null;
+                    certifications?: {
+                        anyOf?: Array<{
+                            keywords?: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            } | null;
+                        }> | null;
+                        allOf?: Array<{
+                            keywords?: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            } | null;
+                        }> | null;
+                    } | null;
+                    publications?: {
+                        anyOf?: Array<{
+                            keywords?: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            } | null;
+                        }> | null;
+                        allOf?: Array<{
+                            keywords?: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            } | null;
+                        }> | null;
+                    } | null;
+                    hasNoEducation?: boolean | null;
                     /**
                      * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
                      */
@@ -57631,6 +61400,36 @@ export type UpdateSavedSearchData = {
                             jobTitle?: Array<string> | null;
                         }> | null;
                     } | null;
+                    jobStatus?: {
+                        status: 'currently-employed';
+                    } | {
+                        status: 'previously-employed';
+                        leftAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                    } | {
+                        status: 'ever-employed';
+                    } | null;
                 }>;
                 joiner: 'AND' | 'OR';
             } | null;
@@ -58385,6 +62184,38 @@ export type UpdateSavedSearchData = {
                 containsAny?: Array<string> | null;
                 containsNone?: Array<string> | null;
             } | null;
+            keywordsV2?: {
+                operator?: 'AND' | 'OR';
+                clauses: Array<{
+                    operator?: 'AND' | 'OR';
+                    terms: Array<string>;
+                    negate?: boolean;
+                }>;
+                options?: {
+                    fieldsToSearchOver?: {
+                        summary?: boolean;
+                        headline?: boolean;
+                        pastJobTitles?: boolean;
+                        pastJobSummaries?: boolean;
+                        pastCompanyNames?: boolean;
+                        currentJobTitles?: boolean;
+                        currentJobSummaries?: boolean;
+                        currentCompanyNames?: boolean;
+                        interests?: boolean;
+                        skills?: boolean;
+                        industry?: boolean;
+                        education?: boolean;
+                        publications?: boolean;
+                        certifications?: boolean;
+                        articles?: boolean;
+                        courses?: boolean;
+                        projects?: boolean;
+                        patents?: boolean;
+                        volunteering?: boolean;
+                        languages?: boolean;
+                    } | null;
+                } | null;
+            } | null;
             keywordSearchOptions?: {
                 fieldsToSearchOver?: {
                     summary?: boolean;
@@ -58781,6 +62612,35 @@ export type UpdateSavedSearchData = {
                     stateName: string;
                 }> | null;
             } | null;
+            certifications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            publications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            hasNoEducation?: boolean | null;
             /**
              * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
              */
@@ -62267,10 +66127,313 @@ export type GetCurrentCompaniesInSavedSearchResponses = {
                     full_address?: string | null;
                     formatted_address?: string | null;
                 } | null;
+                locations_stats?: {
+                    USA?: number;
+                    GBR?: number;
+                    FRA?: number;
+                    IND?: number;
+                    BRA?: number;
+                    DEU?: number;
+                    ESP?: number;
+                    CAN?: number;
+                    AUS?: number;
+                    NLD?: number;
+                    ITA?: number;
+                    ZAF?: number;
+                    BEL?: number;
+                    CHN?: number;
+                    TUR?: number;
+                    MEX?: number;
+                    CHE?: number;
+                    NOR?: number;
+                    ARE?: number;
+                    SWE?: number;
+                    POL?: number;
+                    IDN?: number;
+                    ARG?: number;
+                    PRT?: number;
+                    COL?: number;
+                    CHL?: number;
+                    PAK?: number;
+                    DNK?: number;
+                    JPN?: number;
+                    NGA?: number;
+                    SGP?: number;
+                    PER?: number;
+                    NZL?: number;
+                    AUT?: number;
+                    IRL?: number;
+                    MYS?: number;
+                    BGD?: number;
+                    EGY?: number;
+                    ISR?: number;
+                    SAU?: number;
+                    PHL?: number;
+                    FIN?: number;
+                    IRN?: number;
+                    ROU?: number;
+                    CZE?: number;
+                    GRC?: number;
+                    HKG?: number;
+                    HUN?: number;
+                    KEN?: number;
+                    MAR?: number;
+                    VNM?: number;
+                    RUS?: number;
+                    UKR?: number;
+                    ECU?: number;
+                    THA?: number;
+                    LKA?: number;
+                    KOR?: number;
+                    BGR?: number;
+                    GHA?: number;
+                    SRB?: number;
+                    TWN?: number;
+                    HRV?: number;
+                    LTU?: number;
+                    PRI?: number;
+                    SVK?: number;
+                    TUN?: number;
+                    EST?: number;
+                    VEN?: number;
+                    CRI?: number;
+                    PAN?: number;
+                    URY?: number;
+                    LBN?: number;
+                    LUX?: number;
+                    CYP?: number;
+                    NPL?: number;
+                    JOR?: number;
+                    SVN?: number;
+                    MTQ?: number;
+                    QAT?: number;
+                    GLP?: number;
+                    UGA?: number;
+                    DZA?: number;
+                    GTM?: number;
+                    CMR?: number;
+                    LVA?: number;
+                    DOM?: number;
+                    AZE?: number;
+                    GEO?: number;
+                    SEN?: number;
+                    TZA?: number;
+                    ZWE?: number;
+                    KWT?: number;
+                    MLT?: number;
+                    OMN?: number;
+                    BOL?: number;
+                    SLV?: number;
+                    ARM?: number;
+                    PRY?: number;
+                    IRQ?: number;
+                    KHM?: number;
+                    BIH?: number;
+                    AGO?: number;
+                    BHR?: number;
+                    ALB?: number;
+                    KAZ?: number;
+                    CIV?: number;
+                    ETH?: number;
+                    MUS?: number;
+                    ZMB?: number;
+                    MKD?: number;
+                    COD?: number;
+                    BLR?: number;
+                    MOZ?: number;
+                    REU?: number;
+                    TTO?: number;
+                    GUF?: number;
+                    ISL?: number;
+                    MMR?: number;
+                    HND?: number;
+                    RWA?: number;
+                    MDG?: number;
+                    BEN?: number;
+                    UZB?: number;
+                    NAM?: number;
+                    BWA?: number;
+                    MDA?: number;
+                    JEY?: number;
+                    NIC?: number;
+                    SDN?: number;
+                    JAM?: number;
+                    IMN?: number;
+                    BFA?: number;
+                    MNG?: number;
+                    MNE?: number;
+                    MCO?: number;
+                    TGO?: number;
+                    AFG?: number;
+                    LBY?: number;
+                    XKX?: number;
+                    CYM?: number;
+                    MWI?: number;
+                    SOM?: number;
+                    PNG?: number;
+                    MDV?: number;
+                    MLI?: number;
+                    GIN?: number;
+                    PSE?: number;
+                    GAB?: number;
+                    LIE?: number;
+                    HTI?: number;
+                    SYR?: number;
+                    BRB?: number;
+                    YEM?: number;
+                    GGY?: number;
+                    NCL?: number;
+                    AND?: number;
+                    SUR?: number;
+                    MYT?: number;
+                    KGZ?: number;
+                    BHS?: number;
+                    GIB?: number;
+                    COG?: number;
+                    FJI?: number;
+                    BLM?: number;
+                    CUW?: number;
+                    CUB?: number;
+                    SLE?: number;
+                    BLZ?: number;
+                    NER?: number;
+                    LBR?: number;
+                    VIR?: number;
+                    PYF?: number;
+                    GUM?: number;
+                    MRT?: number;
+                    ABW?: number;
+                    SYC?: number;
+                    GUY?: number;
+                    LSO?: number;
+                    SWZ?: number;
+                    SSD?: number;
+                    LCA?: number;
+                    MAC?: number;
+                    SMR?: number;
+                    LAO?: number;
+                    BRN?: number;
+                    TCD?: number;
+                    BMU?: number;
+                    VGB?: number;
+                    PRK?: number;
+                    BTN?: number;
+                    BDI?: number;
+                    FRO?: number;
+                    TJK?: number;
+                    GMB?: number;
+                    STP?: number;
+                    ANT?: number;
+                    VCT?: number;
+                    DJI?: number;
+                    CPV?: number;
+                    TKM?: number;
+                    ATG?: number;
+                    TCA?: number;
+                    KNA?: number;
+                    GRD?: number;
+                    ASM?: number;
+                    VUT?: number;
+                    GNQ?: number;
+                    GRL?: number;
+                    SXM?: number;
+                    MNP?: number;
+                    COM?: number;
+                    TLS?: number;
+                    SJM?: number;
+                    CAF?: number;
+                    DMA?: number;
+                    MAF?: number;
+                    WSM?: number;
+                    BES?: number;
+                    MHL?: number;
+                    AIA?: number;
+                    TON?: number;
+                    COK?: number;
+                    SLB?: number;
+                    SPM?: number;
+                    GNB?: number;
+                    ATA?: number;
+                    TUV?: number;
+                    ALA?: number;
+                    IOT?: number;
+                    ERI?: number;
+                    PLW?: number;
+                    FSM?: number;
+                    NRU?: number;
+                    PCN?: number;
+                    FLK?: number;
+                    MSR?: number;
+                    VAT?: number;
+                    KIR?: number;
+                    SHN?: number;
+                    NIU?: number;
+                    WLF?: number;
+                    HMD?: number;
+                    CXR?: number;
+                    NFK?: number;
+                    ATF?: number;
+                    CCK?: number;
+                    SGS?: number;
+                    BVT?: number;
+                    UMI?: number;
+                    ESH?: number;
+                    TKL?: number;
+                    'X-SOUTH_ASIA'?: number;
+                    'X-SOUTH_EAST_EUROPE'?: number;
+                    'X-NORTHERN_AFRICA'?: number;
+                    'X-PACIFIC'?: number;
+                    'X-SOUTH_WEST_EUROPE'?: number;
+                    'X-SOUTHERN_AFRICA'?: number;
+                    'X-WEST_INDIES'?: number;
+                    'X-SOUTH_AMERICA'?: number;
+                    'X-SOUTH_WEST_ASIA'?: number;
+                    'X-CENTRAL_EUROPE'?: number;
+                    'X-EASTERN_EUROPE'?: number;
+                    'X-WESTERN_EUROPE'?: number;
+                    'X-CENTRAL_AMERICA'?: number;
+                    'X-WESTERN_AFRICA'?: number;
+                    'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                    'X-SOUTH_EAST_ASIA'?: number;
+                    'X-CENTRAL_AFRICA'?: number;
+                    'X-NORTH_AMERICA'?: number;
+                    'X-EAST_ASIA'?: number;
+                    'X-NORTHERN_EUROPE'?: number;
+                    'X-EASTERN_AFRICA'?: number;
+                    'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                    'X-SOUTHERN_EUROPE'?: number;
+                    'X-CENTRAL_ASIA'?: number;
+                    'X-NORTHERN_ASIA'?: number;
+                    'X-ASIA'?: number;
+                    'X-EUROPE'?: number;
+                    'X-AFRICA'?: number;
+                    'X-OCEANIA'?: number;
+                    'X-AMERICAS'?: number;
+                    'X-ANTARCTICA'?: number;
+                    'X-ATLANTIC_OCEAN'?: number;
+                    'X-INDIAN_OCEAN'?: number;
+                    'X-MIDDLE_EAST'?: number;
+                    'X-MENA'?: number;
+                    'X-EMEA'?: number;
+                    'X-EUROPEAN_UNION'?: number;
+                    'X-EFTA'?: number;
+                    'X-APAC'?: number;
+                    'X-LATAM'?: number;
+                    'X-ANGLOSPHERE'?: number;
+                    'X-DACH'?: number;
+                    'X-NORDICS'?: number;
+                    'X-BENELUX'?: number;
+                    'X-GCC'?: number;
+                    'X-BRICS'?: number;
+                    'X-G20'?: number;
+                    'X-OECD'?: number;
+                    'X-SANCTIONED'?: number;
+                } | null;
                 market_cap_usd?: number | null;
                 naics_codes?: Array<string> | null;
                 names?: Array<string> | null;
                 preferred_name?: string | null;
+                preferred_name_word_count?: number | null;
                 revenue_usd?: number | null;
                 standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                 status_consensus?: string | null;
@@ -62324,6 +66487,51 @@ export type GetCurrentCompaniesInSavedSearchResponses = {
                 linkedin_ids?: Array<string> | null;
                 last_sort_key?: string | null;
                 relevance_score?: number | null;
+                technology_spend_usd?: number | null;
+                historical_headcount?: {
+                    latest_snapshot_date: string;
+                    snapshots: Array<{
+                        date: string;
+                        employees: number;
+                    }>;
+                    growth: {
+                        '1m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '2m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '3m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '6m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '12m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '18m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '24m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                        '36m'?: {
+                            percent: number;
+                            quantity: number;
+                        } | null;
+                    };
+                } | null;
+                cik_numbers?: Array<string> | null;
+                cage_codes?: Array<string> | null;
+                duns_numbers?: Array<string> | null;
                 num_li_locations?: number | null;
                 location_name?: string | null;
                 crunchbase_slug?: string | null;
@@ -62438,6 +66646,16 @@ export type GetCurrentCompaniesInSavedSearchResponses = {
                 is_investor?: boolean | null;
                 investor_type?: string | null;
                 investor_categories?: Array<string> | null;
+                technologies_used?: Array<{
+                    name: string;
+                }> | null;
+                platforms?: {
+                    ecommerce?: Array<string> | null;
+                    cms?: Array<string> | null;
+                    crm?: Array<string> | null;
+                    marketing?: Array<string> | null;
+                    payment?: Array<string> | null;
+                } | null;
             }>;
             /**
              * The next cursor
@@ -64739,10 +68957,313 @@ export type GetSavedSearchRunCompaniesResponses = {
                         full_address?: string | null;
                         formatted_address?: string | null;
                     } | null;
+                    locations_stats?: {
+                        USA?: number;
+                        GBR?: number;
+                        FRA?: number;
+                        IND?: number;
+                        BRA?: number;
+                        DEU?: number;
+                        ESP?: number;
+                        CAN?: number;
+                        AUS?: number;
+                        NLD?: number;
+                        ITA?: number;
+                        ZAF?: number;
+                        BEL?: number;
+                        CHN?: number;
+                        TUR?: number;
+                        MEX?: number;
+                        CHE?: number;
+                        NOR?: number;
+                        ARE?: number;
+                        SWE?: number;
+                        POL?: number;
+                        IDN?: number;
+                        ARG?: number;
+                        PRT?: number;
+                        COL?: number;
+                        CHL?: number;
+                        PAK?: number;
+                        DNK?: number;
+                        JPN?: number;
+                        NGA?: number;
+                        SGP?: number;
+                        PER?: number;
+                        NZL?: number;
+                        AUT?: number;
+                        IRL?: number;
+                        MYS?: number;
+                        BGD?: number;
+                        EGY?: number;
+                        ISR?: number;
+                        SAU?: number;
+                        PHL?: number;
+                        FIN?: number;
+                        IRN?: number;
+                        ROU?: number;
+                        CZE?: number;
+                        GRC?: number;
+                        HKG?: number;
+                        HUN?: number;
+                        KEN?: number;
+                        MAR?: number;
+                        VNM?: number;
+                        RUS?: number;
+                        UKR?: number;
+                        ECU?: number;
+                        THA?: number;
+                        LKA?: number;
+                        KOR?: number;
+                        BGR?: number;
+                        GHA?: number;
+                        SRB?: number;
+                        TWN?: number;
+                        HRV?: number;
+                        LTU?: number;
+                        PRI?: number;
+                        SVK?: number;
+                        TUN?: number;
+                        EST?: number;
+                        VEN?: number;
+                        CRI?: number;
+                        PAN?: number;
+                        URY?: number;
+                        LBN?: number;
+                        LUX?: number;
+                        CYP?: number;
+                        NPL?: number;
+                        JOR?: number;
+                        SVN?: number;
+                        MTQ?: number;
+                        QAT?: number;
+                        GLP?: number;
+                        UGA?: number;
+                        DZA?: number;
+                        GTM?: number;
+                        CMR?: number;
+                        LVA?: number;
+                        DOM?: number;
+                        AZE?: number;
+                        GEO?: number;
+                        SEN?: number;
+                        TZA?: number;
+                        ZWE?: number;
+                        KWT?: number;
+                        MLT?: number;
+                        OMN?: number;
+                        BOL?: number;
+                        SLV?: number;
+                        ARM?: number;
+                        PRY?: number;
+                        IRQ?: number;
+                        KHM?: number;
+                        BIH?: number;
+                        AGO?: number;
+                        BHR?: number;
+                        ALB?: number;
+                        KAZ?: number;
+                        CIV?: number;
+                        ETH?: number;
+                        MUS?: number;
+                        ZMB?: number;
+                        MKD?: number;
+                        COD?: number;
+                        BLR?: number;
+                        MOZ?: number;
+                        REU?: number;
+                        TTO?: number;
+                        GUF?: number;
+                        ISL?: number;
+                        MMR?: number;
+                        HND?: number;
+                        RWA?: number;
+                        MDG?: number;
+                        BEN?: number;
+                        UZB?: number;
+                        NAM?: number;
+                        BWA?: number;
+                        MDA?: number;
+                        JEY?: number;
+                        NIC?: number;
+                        SDN?: number;
+                        JAM?: number;
+                        IMN?: number;
+                        BFA?: number;
+                        MNG?: number;
+                        MNE?: number;
+                        MCO?: number;
+                        TGO?: number;
+                        AFG?: number;
+                        LBY?: number;
+                        XKX?: number;
+                        CYM?: number;
+                        MWI?: number;
+                        SOM?: number;
+                        PNG?: number;
+                        MDV?: number;
+                        MLI?: number;
+                        GIN?: number;
+                        PSE?: number;
+                        GAB?: number;
+                        LIE?: number;
+                        HTI?: number;
+                        SYR?: number;
+                        BRB?: number;
+                        YEM?: number;
+                        GGY?: number;
+                        NCL?: number;
+                        AND?: number;
+                        SUR?: number;
+                        MYT?: number;
+                        KGZ?: number;
+                        BHS?: number;
+                        GIB?: number;
+                        COG?: number;
+                        FJI?: number;
+                        BLM?: number;
+                        CUW?: number;
+                        CUB?: number;
+                        SLE?: number;
+                        BLZ?: number;
+                        NER?: number;
+                        LBR?: number;
+                        VIR?: number;
+                        PYF?: number;
+                        GUM?: number;
+                        MRT?: number;
+                        ABW?: number;
+                        SYC?: number;
+                        GUY?: number;
+                        LSO?: number;
+                        SWZ?: number;
+                        SSD?: number;
+                        LCA?: number;
+                        MAC?: number;
+                        SMR?: number;
+                        LAO?: number;
+                        BRN?: number;
+                        TCD?: number;
+                        BMU?: number;
+                        VGB?: number;
+                        PRK?: number;
+                        BTN?: number;
+                        BDI?: number;
+                        FRO?: number;
+                        TJK?: number;
+                        GMB?: number;
+                        STP?: number;
+                        ANT?: number;
+                        VCT?: number;
+                        DJI?: number;
+                        CPV?: number;
+                        TKM?: number;
+                        ATG?: number;
+                        TCA?: number;
+                        KNA?: number;
+                        GRD?: number;
+                        ASM?: number;
+                        VUT?: number;
+                        GNQ?: number;
+                        GRL?: number;
+                        SXM?: number;
+                        MNP?: number;
+                        COM?: number;
+                        TLS?: number;
+                        SJM?: number;
+                        CAF?: number;
+                        DMA?: number;
+                        MAF?: number;
+                        WSM?: number;
+                        BES?: number;
+                        MHL?: number;
+                        AIA?: number;
+                        TON?: number;
+                        COK?: number;
+                        SLB?: number;
+                        SPM?: number;
+                        GNB?: number;
+                        ATA?: number;
+                        TUV?: number;
+                        ALA?: number;
+                        IOT?: number;
+                        ERI?: number;
+                        PLW?: number;
+                        FSM?: number;
+                        NRU?: number;
+                        PCN?: number;
+                        FLK?: number;
+                        MSR?: number;
+                        VAT?: number;
+                        KIR?: number;
+                        SHN?: number;
+                        NIU?: number;
+                        WLF?: number;
+                        HMD?: number;
+                        CXR?: number;
+                        NFK?: number;
+                        ATF?: number;
+                        CCK?: number;
+                        SGS?: number;
+                        BVT?: number;
+                        UMI?: number;
+                        ESH?: number;
+                        TKL?: number;
+                        'X-SOUTH_ASIA'?: number;
+                        'X-SOUTH_EAST_EUROPE'?: number;
+                        'X-NORTHERN_AFRICA'?: number;
+                        'X-PACIFIC'?: number;
+                        'X-SOUTH_WEST_EUROPE'?: number;
+                        'X-SOUTHERN_AFRICA'?: number;
+                        'X-WEST_INDIES'?: number;
+                        'X-SOUTH_AMERICA'?: number;
+                        'X-SOUTH_WEST_ASIA'?: number;
+                        'X-CENTRAL_EUROPE'?: number;
+                        'X-EASTERN_EUROPE'?: number;
+                        'X-WESTERN_EUROPE'?: number;
+                        'X-CENTRAL_AMERICA'?: number;
+                        'X-WESTERN_AFRICA'?: number;
+                        'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                        'X-SOUTH_EAST_ASIA'?: number;
+                        'X-CENTRAL_AFRICA'?: number;
+                        'X-NORTH_AMERICA'?: number;
+                        'X-EAST_ASIA'?: number;
+                        'X-NORTHERN_EUROPE'?: number;
+                        'X-EASTERN_AFRICA'?: number;
+                        'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                        'X-SOUTHERN_EUROPE'?: number;
+                        'X-CENTRAL_ASIA'?: number;
+                        'X-NORTHERN_ASIA'?: number;
+                        'X-ASIA'?: number;
+                        'X-EUROPE'?: number;
+                        'X-AFRICA'?: number;
+                        'X-OCEANIA'?: number;
+                        'X-AMERICAS'?: number;
+                        'X-ANTARCTICA'?: number;
+                        'X-ATLANTIC_OCEAN'?: number;
+                        'X-INDIAN_OCEAN'?: number;
+                        'X-MIDDLE_EAST'?: number;
+                        'X-MENA'?: number;
+                        'X-EMEA'?: number;
+                        'X-EUROPEAN_UNION'?: number;
+                        'X-EFTA'?: number;
+                        'X-APAC'?: number;
+                        'X-LATAM'?: number;
+                        'X-ANGLOSPHERE'?: number;
+                        'X-DACH'?: number;
+                        'X-NORDICS'?: number;
+                        'X-BENELUX'?: number;
+                        'X-GCC'?: number;
+                        'X-BRICS'?: number;
+                        'X-G20'?: number;
+                        'X-OECD'?: number;
+                        'X-SANCTIONED'?: number;
+                    } | null;
                     market_cap_usd?: number | null;
                     naics_codes?: Array<string> | null;
                     names?: Array<string> | null;
                     preferred_name?: string | null;
+                    preferred_name_word_count?: number | null;
                     revenue_usd?: number | null;
                     standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     status_consensus?: string | null;
@@ -64796,6 +69317,51 @@ export type GetSavedSearchRunCompaniesResponses = {
                     linkedin_ids?: Array<string> | null;
                     last_sort_key?: string | null;
                     relevance_score?: number | null;
+                    technology_spend_usd?: number | null;
+                    historical_headcount?: {
+                        latest_snapshot_date: string;
+                        snapshots: Array<{
+                            date: string;
+                            employees: number;
+                        }>;
+                        growth: {
+                            '1m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '2m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '3m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '6m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '12m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '18m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '24m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '36m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                        };
+                    } | null;
+                    cik_numbers?: Array<string> | null;
+                    cage_codes?: Array<string> | null;
+                    duns_numbers?: Array<string> | null;
                     num_li_locations?: number | null;
                     location_name?: string | null;
                     crunchbase_slug?: string | null;
@@ -64910,6 +69476,16 @@ export type GetSavedSearchRunCompaniesResponses = {
                     is_investor?: boolean | null;
                     investor_type?: string | null;
                     investor_categories?: Array<string> | null;
+                    technologies_used?: Array<{
+                        name: string;
+                    }> | null;
+                    platforms?: {
+                        ecommerce?: Array<string> | null;
+                        cms?: Array<string> | null;
+                        crm?: Array<string> | null;
+                        marketing?: Array<string> | null;
+                        payment?: Array<string> | null;
+                    } | null;
                 };
                 movementType: 'joined' | 'returned' | 'departed' | 'stayed';
             }>;
@@ -65556,6 +70132,36 @@ export type GetLatestSavedSearchRunResponses = {
                                     } | null;
                                     jobTitle?: Array<string> | null;
                                 }> | null;
+                            } | null;
+                            jobStatus?: {
+                                status: 'currently-employed';
+                            } | {
+                                status: 'previously-employed';
+                                leftAt?: {
+                                    strategy: 'absolute';
+                                    range?: {
+                                        lowerBound?: string | null;
+                                        upperBound?: string | null;
+                                    } | null;
+                                } | {
+                                    strategy: 'relative';
+                                    window?: {
+                                        method: 'lastN';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                        quantity: number;
+                                    } | {
+                                        method: 'within';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                        lowerBound?: number | null;
+                                        upperBound?: number | null;
+                                    } | {
+                                        method: 'calendar';
+                                        which: 'current' | 'previous';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    } | null;
+                                } | null;
+                            } | {
+                                status: 'ever-employed';
                             } | null;
                         }>;
                         joiner: 'AND' | 'OR';
@@ -66311,6 +70917,38 @@ export type GetLatestSavedSearchRunResponses = {
                         containsAny?: Array<string> | null;
                         containsNone?: Array<string> | null;
                     } | null;
+                    keywordsV2?: {
+                        operator: 'AND' | 'OR';
+                        clauses: Array<{
+                            operator: 'AND' | 'OR';
+                            terms: Array<string>;
+                            negate: boolean;
+                        }>;
+                        options?: {
+                            fieldsToSearchOver?: {
+                                summary: boolean;
+                                headline: boolean;
+                                pastJobTitles: boolean;
+                                pastJobSummaries: boolean;
+                                pastCompanyNames: boolean;
+                                currentJobTitles: boolean;
+                                currentJobSummaries: boolean;
+                                currentCompanyNames: boolean;
+                                interests: boolean;
+                                skills: boolean;
+                                industry: boolean;
+                                education: boolean;
+                                publications: boolean;
+                                certifications: boolean;
+                                articles: boolean;
+                                courses: boolean;
+                                projects: boolean;
+                                patents: boolean;
+                                volunteering: boolean;
+                                languages: boolean;
+                            } | null;
+                        } | null;
+                    } | null;
                     keywordSearchOptions?: {
                         fieldsToSearchOver?: {
                             summary: boolean;
@@ -66707,6 +71345,35 @@ export type GetLatestSavedSearchRunResponses = {
                             stateName: string;
                         }> | null;
                     } | null;
+                    certifications?: {
+                        anyOf?: Array<{
+                            keywords?: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            } | null;
+                        }> | null;
+                        allOf?: Array<{
+                            keywords?: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            } | null;
+                        }> | null;
+                    } | null;
+                    publications?: {
+                        anyOf?: Array<{
+                            keywords?: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            } | null;
+                        }> | null;
+                        allOf?: Array<{
+                            keywords?: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            } | null;
+                        }> | null;
+                    } | null;
+                    hasNoEducation?: boolean | null;
                     /**
                      * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
                      */

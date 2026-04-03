@@ -760,7 +760,7 @@ export const investmentSearch = <ThrowOnError extends boolean = false>(options: 
  *
  * Search for job postings with flexible filtering capabilities
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per job posting found&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -888,7 +888,7 @@ export const bulkCompanyLogos = <ThrowOnError extends boolean = false>(options: 
  *
  * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
- * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 5 credits for all phone numbers AND all emails (12 credits if exhaustive)<br />• 2 credits for work email only (5 credits if exhaustive)<br />• 2 credits for personal email only (5 credits if exhaustive)<br />• 3 credits for phone only (4 credits if exhaustive)<br />• 0 credits for all emails (9 credits if exhaustive)&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Credits are charged after the reveal completes so partial reveals only bill for delivered data.">ⓘ</span></span>
+ * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 5 credits for all phone numbers AND all emails (12 credits if exhaustive)<br />• 2 credits for work email only (5 credits if exhaustive)<br />• 2 credits for personal email only (5 credits if exhaustive)<br />• 3 credits for phone only (4 credits if exhaustive)<br />• 3 credits for all emails (9 credits if exhaustive)&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Credits are charged after the reveal completes so partial reveals only bill for delivered data.">ⓘ</span></span>
  */
 export const triggerContactEnrichment = <ThrowOnError extends boolean = false>(options: Options<TriggerContactEnrichmentData, ThrowOnError>) => (options.client ?? client).post<TriggerContactEnrichmentResponses, TriggerContactEnrichmentErrors, ThrowOnError>({
     url: '/v1/contact-details/start',
@@ -902,11 +902,11 @@ export const triggerContactEnrichment = <ThrowOnError extends boolean = false>(o
 /**
  * Synchronously fetch contact details
  *
- * Fetches a single person's work email, personal email, and/or phone number synchronously, meaning that you don't need to poll separately. This endpoint is slow, though, since it waits for the task to finish before returning.
+ * Fetches a single person's work email, personal email, and/or phone number synchronously, meaning that you don't need to poll separately. This endpoint can be slow, though — we suggest using the 'new, synchronous' version instead.
  *
  * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
- * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 5 credits for all phone numbers AND all emails (12 credits if exhaustive)<br />• 2 credits for work email only (5 credits if exhaustive)<br />• 2 credits for personal email only (5 credits if exhaustive)<br />• 3 credits for phone only (4 credits if exhaustive)<br />• 0 credits for all emails (9 credits if exhaustive)&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Partial reveals only bill for delivered data.">ⓘ</span></span>
+ * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 5 credits for all phone numbers AND all emails (12 credits if exhaustive)<br />• 2 credits for work email only (5 credits if exhaustive)<br />• 2 credits for personal email only (5 credits if exhaustive)<br />• 3 credits for phone only (4 credits if exhaustive)<br />• 3 credits for all emails (9 credits if exhaustive)&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Partial reveals only bill for delivered data.">ⓘ</span></span>
  */
 export const syncContactEnrichment = <ThrowOnError extends boolean = false>(options: Options<SyncContactEnrichmentData, ThrowOnError>) => (options.client ?? client).post<SyncContactEnrichmentResponses, SyncContactEnrichmentErrors, ThrowOnError>({
     url: '/v1/contact-details/sync',
@@ -924,7 +924,7 @@ export const syncContactEnrichment = <ThrowOnError extends boolean = false>(opti
  *
  * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
- * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 7 credits for all phone numbers AND all emails<br />• 3 credits for work email only<br />• 3 credits for personal email only<br />• 5 credits for phone only&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Partial reveals only bill for delivered data.">ⓘ</span></span>
+ * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 7 credits for all phone numbers AND all emails<br />• 3 credits for work email only<br />• 3 credits for personal email only<br />• 5 credits for phone only<br />• 5 credits for all emails&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Partial reveals only bill for delivered data.">ⓘ</span></span>
  */
 export const syncTurboContactEnrichment = <ThrowOnError extends boolean = false>(options: Options<SyncTurboContactEnrichmentData, ThrowOnError>) => (options.client ?? client).post<SyncTurboContactEnrichmentResponses, SyncTurboContactEnrichmentErrors, ThrowOnError>({
     url: '/v1/contact-details/turbo/sync',
@@ -942,7 +942,7 @@ export const syncTurboContactEnrichment = <ThrowOnError extends boolean = false>
  *
  * <span>⚡ <strong>Rate limit:</strong> 200 requests per 1 minute</span>
  *
- * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 5 credits for all phone numbers AND all emails<br />• 2 credits for work email only<br />• 2 credits for personal email only<br />• 3 credits for phone only&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Partial reveals only bill for delivered data.">ⓘ</span></span>
+ * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 5 credits for all phone numbers AND all emails<br />• 2 credits for work email only<br />• 2 credits for personal email only<br />• 3 credits for phone only<br />• 3 credits for all emails&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Partial reveals only bill for delivered data.">ⓘ</span></span>
  */
 export const syncQuickContactReveal = <ThrowOnError extends boolean = false>(options: Options<SyncQuickContactRevealData, ThrowOnError>) => (options.client ?? client).post<SyncQuickContactRevealResponses, SyncQuickContactRevealErrors, ThrowOnError>({
     url: '/v1/contact-details/single',
@@ -976,7 +976,7 @@ export const startBatchContactEnrichment = <ThrowOnError extends boolean = false
  *
  * Returns an enriched profile with details for a given LinkedIn profile identifier
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 second</span>
+ * <span>⚡ <strong>Rate limit:</strong> 4000 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per profile live fetch&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1118,7 +1118,21 @@ export const profileReactionsLiveFetch = <ThrowOnError extends boolean = false>(
 /**
  * Search LinkedIn posts by keywords
  *
- * Searches LinkedIn posts by keywords. Returns a paginated list of posts matching the search criteria upto 50.
+ * Search LinkedIn posts using keyword-based queries. Returns a paginated list of posts matching the search criteria, up to 50 per page.
+ *
+ * **Keyword Search Syntax:**
+ * - **Exact phrase:** Wrap keywords in quotes for exact phrase matching. "head of sales" matches the exact phrase, not the individual words.
+ * - **AND:** Use **AND** between keywords to require both terms. sales **AND** engineering matches posts containing both words.
+ * - **OR:** Use **OR** between keywords to match posts containing any of the terms. sales **OR** marketing matches posts with either word.
+ * - **NOT:** Use **NOT** before a keyword to exclude posts containing that term. sales **NOT** recruiter matches posts with "sales" but without "recruiter".
+ * - **Parentheses:** Group terms to control operator precedence. (sales **OR** marketing) **AND** "series A" finds posts about either sales or marketing that also mention "series A".
+ *
+ * **Order of precedence:**
+ * 1. **Quotes (" "):** Exact phrase match. Phrase matching occurs before any Boolean logic is applied.
+ * 2. **Parentheses (()):** Used to explicitly group Boolean logic. Grouped expressions are evaluated before ungrouped logic.
+ * 3. **NOT:** Applied after any parentheses or quoted phrases are resolved.
+ * 4. **AND:** Evaluated after **NOT** but before **OR**.
+ * 5. **OR:** Lowest precedence among Boolean operators.
  *
  * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
@@ -1138,9 +1152,9 @@ export const postSearchByKeywords = <ThrowOnError extends boolean = false>(optio
  *
  * Given an email address, find the person's LinkedIn profile and personal details.
  * If you also have the person's name, company, or other identifiers, use the Kitchen Sink endpoint instead — it accepts all available signals and produces better matches.
- * **Rate limit**: 50 requests per second. To avoid 429 errors, space requests evenly (~20ms apart) rather than bursting them all at once. Bursting can trigger the fixed-window rate limiter even below the stated limit.
+ * To avoid 429 errors, space requests evenly (such as 1/60th the rate limit per second) rather than bursting them all at once.
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 second</span>
+ * <span>⚡ <strong>Rate limit:</strong> 3500 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per email lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1646,7 +1660,7 @@ export const getLatestSavedSearchRun = <ThrowOnError extends boolean = false>(op
  *
  * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
  *
- * <span>💰 <strong>Cost:</strong> 3 credits per company&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ * <span>💰 <strong>Cost:</strong> 4 credits per company&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
 export const startLocalBusinessSearch = <ThrowOnError extends boolean = false>(options: Options<StartLocalBusinessSearchData, ThrowOnError>) => (options.client ?? client).post<StartLocalBusinessSearchResponses, StartLocalBusinessSearchErrors, ThrowOnError>({
     url: '/v1/local-business-search/start',
