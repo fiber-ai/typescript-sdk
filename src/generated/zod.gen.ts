@@ -72755,7 +72755,7 @@ export const zStartBatchContactEnrichmentData = z.object({
             linkedinUrl: z.object({
                 value: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?<slug>[^\/\\?,#]+)\/?(?:[\?,#].*)?/)
             })
-        })).min(1).max(5000),
+        })).min(1).max(1000),
         enrichmentTypes: z.optional(z.object({
             getWorkEmails: z.optional(z.boolean()).default(true),
             getPersonalEmails: z.optional(z.boolean()).default(true),

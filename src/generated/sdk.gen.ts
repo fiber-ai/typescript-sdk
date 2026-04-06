@@ -1011,7 +1011,7 @@ export const triggerExhaustiveContactEnrichment = <ThrowOnError extends boolean 
  *
  * Starts fetching contact details for multiple people (up to 10000) in batch. This is an asynchronous task; use the polling endpoint to check progress and get results.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 1 request per 10 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 5 credits for all phone numbers AND all emails<br />• 2 credits for work email only<br />• 2 credits for personal email only<br />• 3 credits for phone only&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Credits are charged upfront for all unique people queued (after deduping). Undelivered data is refunded per operation.">ⓘ</span></span>
  */
