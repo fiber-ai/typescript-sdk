@@ -8681,6 +8681,12 @@ export type GetIndustriesResponses = {
              */
             crunchbaseIndustries: Array<string>;
             /**
+             * Crunchbase's industry groups mapped to their constituent industries. Keys are industry group names, values are arrays of industry names belonging to that group.
+             */
+            crunchbaseIndustryGroups: {
+                [key: string]: Array<string>;
+            };
+            /**
              * LinkedIn's list of industries
              */
             linkedinIndustries: Array<string>;

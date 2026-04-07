@@ -3804,6 +3804,7 @@ export const zGetIndustriesResponse = z.object({
     output: z.object({
         fiberIndustries: z.array(z.string()),
         crunchbaseIndustries: z.array(z.string()),
+        crunchbaseIndustryGroups: z.record(z.string(), z.array(z.string())),
         linkedinIndustries: z.array(z.string())
     }),
     chargeInfo: z.union([
