@@ -577,7 +577,7 @@ export const getSubdivisions = <ThrowOnError extends boolean = false>(options: O
 /**
  * Create a new audience
  *
- * Creates a new audience in DRAFT status. After creation, use the update-search-params endpoint to set filters, then use the build endpoint to populate the audience with companies and prospects from Elasticsearch.
+ * Creates a new audience in DRAFT status. After creation, use the update-search-params endpoint to set filters, then use the build endpoint to populate the audience with companies and prospects.
  *
  * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
  *
@@ -951,7 +951,7 @@ export const combinedSearchCount = <ThrowOnError extends boolean = false>(option
 /**
  * Reveal contact details (turbo)
  *
- * Fastest synchronous contact reveal — optimized for speed at a higher credit cost. Uses a premium enrichment stack for the lowest possible latency. For a cheaper option with slightly longer response times, use the standard /contact-details/single endpoint. For maximum coverage across all vendors (async, slower), use the /contact-details/exhaustive/start endpoint.
+ * Fastest synchronous contact reveal — optimized for speed at a higher credit cost. Uses a premium enrichment stack for the lowest possible latency. For a cheaper option with slightly longer response times, use the standard /contact-details/single endpoint. For maximum coverage (async, slower), use the /contact-details/exhaustive/start endpoint.
  *
  * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
@@ -971,7 +971,7 @@ export const syncTurboContactEnrichment = <ThrowOnError extends boolean = false>
 /**
  * Reveal contact details (standard)
  *
- * Standard synchronous contact reveal — the best balance of speed, cost, and coverage. Only requires a LinkedIn URL; profile details are resolved automatically. For faster results at a higher credit cost, use the /contact-details/turbo/sync endpoint. For maximum coverage across all vendors (async, slower, higher cost), use the /contact-details/exhaustive/start endpoint.
+ * Standard synchronous contact reveal — the best balance of speed, cost, and coverage. Only requires a LinkedIn URL; profile details are resolved automatically. For faster results at a higher credit cost, use the /contact-details/turbo/sync endpoint. For maximum coverage (async, slower, higher cost), use the /contact-details/exhaustive/start endpoint.
  *
  * <span>⚡ <strong>Rate limit:</strong> 200 requests per 1 minute</span>
  *
@@ -991,7 +991,7 @@ export const syncQuickContactReveal = <ThrowOnError extends boolean = false>(opt
 /**
  * Start exhaustive contact details reveal
  *
- * Maximum-coverage contact reveal — runs all available vendors in parallel for the most comprehensive results. This is asynchronous: call this endpoint to start the task, then poll /contact-details/exhaustive/poll with the returned task ID. Slower and more expensive than the synchronous endpoints, but returns more emails and phone numbers on average. For faster synchronous results, use /contact-details/single (standard) or /contact-details/turbo/sync (fastest).
+ * Maximum-coverage contact reveal — runs all waterfall steps in parallel to get the most comprehensive results. This is asynchronous: call this endpoint to start the task, then poll /contact-details/exhaustive/poll with the returned task ID. Slower and more expensive than the synchronous endpoints, but returns more emails and phone numbers on average. For faster synchronous results, use /contact-details/single (standard) or /contact-details/turbo/sync (fastest).
  *
  * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
@@ -1391,7 +1391,7 @@ export const locationTypeahead = <ThrowOnError extends boolean = false>(options:
 /**
  * Validate a single email
  *
- * Checks if a given email is likely to bounce using a waterfall of strategies. Works for catch-all email addresses, which are increasingly common yet hard for other APIs to validate.
+ * Checks if a given email is likely to bounce using multiple validation strategies. Works for catch-all email addresses, which are increasingly common yet hard for other APIs to validate.
  *
  * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
  *
