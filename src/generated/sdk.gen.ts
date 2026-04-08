@@ -1393,7 +1393,7 @@ export const locationTypeahead = <ThrowOnError extends boolean = false>(options:
  *
  * Checks if a given email is likely to bounce using multiple validation strategies. Works for catch-all email addresses, which are increasingly common yet hard for other APIs to validate.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 200 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per email validation&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
