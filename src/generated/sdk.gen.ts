@@ -37,7 +37,7 @@ export const healthCheck = <ThrowOnError extends boolean = false>(options?: Opti
  *
  * Get credits for an organization
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -111,7 +111,7 @@ export const pollExhaustiveContactEnrichmentResult = <ThrowOnError extends boole
  *
  * Polls a batch contact enrichment task. Returns partial results as they complete. Call this endpoint repeatedly until the 'done' field is true. Use the task ID returned from the 'Start batch contact enrichment' endpoint.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
 export const pollBatchContactEnrichment = <ThrowOnError extends boolean = false>(options: Options<PollBatchContactEnrichmentData, ThrowOnError>) => (options.client ?? client).post<PollBatchContactEnrichmentResponses, PollBatchContactEnrichmentErrors, ThrowOnError>({
     url: '/v1/contact-enrich/batch/poll',
@@ -127,7 +127,7 @@ export const pollBatchContactEnrichment = <ThrowOnError extends boolean = false>
  *
  * Poll for Google Maps results
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
 export const pollGoogleMapsResults = <ThrowOnError extends boolean = false>(options: Options<PollGoogleMapsResultsData, ThrowOnError>) => (options.client ?? client).post<PollGoogleMapsResultsResponses, PollGoogleMapsResultsErrors, ThrowOnError>({
     url: '/v1/google-maps-search/poll',
@@ -143,7 +143,7 @@ export const pollGoogleMapsResults = <ThrowOnError extends boolean = false>(opti
  *
  * Poll Local Business Agent search results for a given researchRunId
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
 export const pollLocalBusinessSearch = <ThrowOnError extends boolean = false>(options: Options<PollLocalBusinessSearchData, ThrowOnError>) => (options.client ?? client).post<PollLocalBusinessSearchResponses, PollLocalBusinessSearchErrors, ThrowOnError>({
     url: '/v1/local-business-search/poll',
@@ -159,7 +159,7 @@ export const pollLocalBusinessSearch = <ThrowOnError extends boolean = false>(op
  *
  * Check progress for Google Maps results
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
 export const checkGoogleMapsResults = <ThrowOnError extends boolean = false>(options: Options<CheckGoogleMapsResultsData, ThrowOnError>) => (options.client ?? client).post<CheckGoogleMapsResultsResponses, CheckGoogleMapsResultsErrors, ThrowOnError>({
     url: '/v1/google-maps-search/check',
@@ -175,7 +175,7 @@ export const checkGoogleMapsResults = <ThrowOnError extends boolean = false>(opt
  *
  * Poll for the results of a domain lookup task.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
 export const domainLookupPolling = <ThrowOnError extends boolean = false>(options: Options<DomainLookupPollingData, ThrowOnError>) => (options.client ?? client).post<DomainLookupPollingResponses, DomainLookupPollingErrors, ThrowOnError>({
     url: '/v1/domain-lookup/polling',
@@ -191,7 +191,7 @@ export const domainLookupPolling = <ThrowOnError extends boolean = false>(option
  *
  * Poll for the results of a GitHub lookup task.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
 export const githubLookupPolling = <ThrowOnError extends boolean = false>(options: Options<GithubLookupPollingData, ThrowOnError>) => (options.client ?? client).post<GithubLookupPollingResponses, GithubLookupPollingErrors, ThrowOnError>({
     url: '/v1/github-lookup/polling',
@@ -223,7 +223,7 @@ export const githubToLinkedInPolling = <ThrowOnError extends boolean = false>(op
  *
  * Poll for the results of a social media lookup task.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
 export const socialMediaLookupPolling = <ThrowOnError extends boolean = false>(options: Options<SocialMediaLookupPollingData, ThrowOnError>) => (options.client ?? client).post<SocialMediaLookupPollingResponses, SocialMediaLookupPollingErrors, ThrowOnError>({
     url: '/v1/social-media-lookup/polling',
@@ -239,7 +239,7 @@ export const socialMediaLookupPolling = <ThrowOnError extends boolean = false>(o
  *
  * Get company exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -257,7 +257,7 @@ export const getCompanyExclusionLists = <ThrowOnError extends boolean = false>(o
  *
  * Create a company exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -275,7 +275,7 @@ export const createCompanyExclusionList = <ThrowOnError extends boolean = false>
  *
  * Delete a company exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -293,7 +293,7 @@ export const deleteCompanyExclusionList = <ThrowOnError extends boolean = false>
  *
  * Add companies to a company exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -311,7 +311,7 @@ export const addCompaniesToExclusionList = <ThrowOnError extends boolean = false
  *
  * Remove a company from a company exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -329,7 +329,7 @@ export const removeCompanyFromExclusionList = <ThrowOnError extends boolean = fa
  *
  * Get excluded companies for a specific exclusion list with pagination
  *
- * <span>⚡ <strong>Rate limit:</strong> 100 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -347,7 +347,7 @@ export const getExcludedCompaniesForExclusionList = <ThrowOnError extends boolea
  *
  * This endpoint creates a new company exclusion list by extracting all companies from a specified audience.
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -365,7 +365,7 @@ export const createCompanyExclusionListFromAudience = <ThrowOnError extends bool
  *
  * Get prospect exclusion lists
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -383,7 +383,7 @@ export const getProspectExclusionLists = <ThrowOnError extends boolean = false>(
  *
  * Create a prospect exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -401,7 +401,7 @@ export const createProspectExclusionList = <ThrowOnError extends boolean = false
  *
  * Delete a prospect exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -419,7 +419,7 @@ export const deleteProspectExclusionList = <ThrowOnError extends boolean = false
  *
  * Add prospects to a prospect exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -437,7 +437,7 @@ export const addProspectsToExclusionList = <ThrowOnError extends boolean = false
  *
  * Remove a prospect from a prospect exclusion list
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -455,7 +455,7 @@ export const removeProspectFromExclusionList = <ThrowOnError extends boolean = f
  *
  * Get excluded prospects for a specific exclusion list with pagination
  *
- * <span>⚡ <strong>Rate limit:</strong> 100 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -473,7 +473,7 @@ export const getExcludedProspectsForExclusionList = <ThrowOnError extends boolea
  *
  * Create a prospect exclusion list from an audience's prospects
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -491,7 +491,7 @@ export const createProspectExclusionListFromAudience = <ThrowOnError extends boo
  *
  * Get a list of all countries and regions supported by the API, along with their names, codes, and additional metadata.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -502,7 +502,7 @@ export const getRegions = <ThrowOnError extends boolean = false>(options: Option
  *
  * Get a list of all languages that you can pass to our API
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -513,7 +513,7 @@ export const getLanguages = <ThrowOnError extends boolean = false>(options: Opti
  *
  * Get a comprehensive list of all available time zones with geographic information, current time data, and UTC offset ranges. Useful for populating time zone filters in search requests.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -524,7 +524,7 @@ export const getTimeZones = <ThrowOnError extends boolean = false>(options: Opti
  *
  * Get lists of various industry categorizations. Useful for our company search API.
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -535,7 +535,7 @@ export const getIndustries = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Get a list of all profile and company tags that you can use to filter searches in our API, along with their descriptions.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -546,7 +546,7 @@ export const getTags = <ThrowOnError extends boolean = false>(options: Options<G
  *
  * Get all NAICS (North American Industry Classification System) codes from the 2017 version. Returns each code and its corresponding title.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -557,7 +557,7 @@ export const getNaicsCodes = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Get a list of all accelerators with their metadata, total company counts, and statistics broken down by batch and year. Useful for filtering accelerator data in search APIs.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -579,7 +579,7 @@ export const getSubdivisions = <ThrowOnError extends boolean = false>(options: O
  *
  * Creates a new audience in DRAFT status. After creation, use the update-search-params endpoint to set filters, then use the build endpoint to populate the audience with companies and prospects.
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -597,7 +597,7 @@ export const createAudience = <ThrowOnError extends boolean = false>(options: Op
  *
  * Archives an audience by hiding it from the user. The audience and its data are preserved for audit trail and enrichment history. Audiences that are currently BUILDING cannot be archived. Pass your apiKey in the query string.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -608,7 +608,7 @@ export const deleteAudience = <ThrowOnError extends boolean = false>(options: Op
  *
  * Gets the status and basic statistics of an audience. Use this to poll for build completion after triggering a build. Status values: DRAFT (waiting for configuration), BUILDING (search in progress), NORMAL (ready to use), FAILED (build failed). Pass your apiKey in the query string.
  *
- * <span>⚡ <strong>Rate limit:</strong> 100 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -619,7 +619,7 @@ export const getAudienceStatus = <ThrowOnError extends boolean = false>(options:
  *
  * Lists all audiences for your organization. Returns basic info and counts for each audience. Only visible audiences are returned (hidden system audiences are excluded). Pass your apiKey in the query string.
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -630,7 +630,7 @@ export const listAudiences = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Gets the companies in an audience with pagination. Use the nextCursor from the response to fetch the next page. Pass your apiKey in the query string.
  *
- * <span>⚡ <strong>Rate limit:</strong> 100 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -641,7 +641,7 @@ export const getAudienceCompanies = <ThrowOnError extends boolean = false>(optio
  *
  * Gets the prospects (people) in an audience with pagination. Use the nextCursor from the response to fetch the next page. Pass your apiKey in the query string.
  *
- * <span>⚡ <strong>Rate limit:</strong> 100 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -652,7 +652,7 @@ export const getAudienceProspects = <ThrowOnError extends boolean = false>(optio
  *
  * Updates the search parameters (filters) for an audience. You can set company filters (e.g., industry, headcount) and prospect filters (e.g., job title, location). This endpoint converts the API-friendly search parameters into the internal format used by the search engine. The audience must be in DRAFT status.
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -670,7 +670,7 @@ export const updateAudienceSearchParams = <ThrowOnError extends boolean = false>
  *
  * Gets the current status of an audience enrichment run. Returns progress information including current stage, progress percentage, completed steps, and remaining steps. Use this endpoint to poll for enrichment completion. Pass your apiKey in the query string.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -681,7 +681,7 @@ export const getEnrichmentStatus = <ThrowOnError extends boolean = false>(option
  *
  * Estimates the credit cost for an audience enrichment run before triggering it. Returns detailed breakdown by operation type (Sales Navigator, live enrichment, contact enrichment, validation) and estimated completion time. This endpoint is free and does not charge any credits.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -699,7 +699,7 @@ export const estimateEnrichmentCost = <ThrowOnError extends boolean = false>(opt
  *
  * Triggers CSV export of companies in an audience. The export runs asynchronously - CSV links will be sent to the provided email address (if userEmail is provided) or returned in the API response. Export quota limits apply per usage period.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -717,7 +717,7 @@ export const exportCompanies = <ThrowOnError extends boolean = false>(options: O
  *
  * Triggers CSV export of prospects (people) in an audience. The export runs asynchronously - CSV links will be sent to the provided email address (if userEmail is provided) or returned in the API response. Export quota limits apply per usage period. Optionally filter to only export prospects with verified emails or phones.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -753,7 +753,7 @@ export const companySearch = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Get count of companies matching search filters
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 180 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -771,7 +771,7 @@ export const companyCount = <ThrowOnError extends boolean = false>(options: Opti
  *
  * Search for investors with flexible filtering capabilities
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per investor found&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -789,7 +789,7 @@ export const investorSearch = <ThrowOnError extends boolean = false>(options: Op
  *
  * Search for investments with flexible filtering capabilities. Supports filtering by investor, company, round type, location, and financial metrics.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per investment found&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -825,7 +825,7 @@ export const jobPostingSearch = <ThrowOnError extends boolean = false>(options: 
  *
  * Get count of job postings matching search filters
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -861,7 +861,7 @@ export const peopleSearch = <ThrowOnError extends boolean = false>(options: Opti
  *
  * Get count of profiles matching search filters
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 180 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -879,7 +879,7 @@ export const peopleSearchCount = <ThrowOnError extends boolean = false>(options:
  *
  * A synchronous endpoint that lets you search for companies and then prospects in these companies.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Credits are charged after the search completes based on results: 1 credits per company found and 1 credits per profile found.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Your total charge will vary based on the number of companies and profiles returned in your results.">ⓘ</span></span>
  *
@@ -899,7 +899,7 @@ export const syncCombinedSearch = <ThrowOnError extends boolean = false>(options
  *
  * Get logo URLs for a list of companies. Max 10,000 companies can be looked up at a time.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 0.33 credits per company logo lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -917,7 +917,7 @@ export const bulkCompanyLogos = <ThrowOnError extends boolean = false>(options: 
  *
  * Get profile pics for a list of profiles. Max 10,000 profiles can be looked up at a time.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 0.33 credits per profile pic lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -935,7 +935,7 @@ export const bulkProfilePic = <ThrowOnError extends boolean = false>(options: Op
  *
  * Get the total count of companies and people matching the provided search filters. People counts are scoped to those currently or previously working (based on the job status filter) at companies that satisfy the company search filters.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Flat charge for the company count (1 credit) and profile count (1 credit)&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Flat charge">ⓘ</span></span>
  */
@@ -953,7 +953,7 @@ export const combinedSearchCount = <ThrowOnError extends boolean = false>(option
  *
  * Fastest synchronous contact reveal — optimized for speed at a higher credit cost. Uses a premium enrichment stack for the lowest possible latency. For a cheaper option with slightly longer response times, use the standard /contact-details/single endpoint. For maximum coverage (async, slower), use the /contact-details/exhaustive/start endpoint.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 7 credits for all phone numbers AND all emails<br />• 3 credits for work email only<br />• 3 credits for personal email only<br />• 5 credits for phone only<br />• 5 credits for all emails&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Partial reveals only bill for delivered data.">ⓘ</span></span>
  *
@@ -993,7 +993,7 @@ export const syncQuickContactReveal = <ThrowOnError extends boolean = false>(opt
  *
  * Maximum-coverage contact reveal — runs all waterfall steps in parallel to get the most comprehensive results. This is asynchronous: call this endpoint to start the task, then poll /contact-details/exhaustive/poll with the returned task ID. Slower and more expensive than the synchronous endpoints, but returns more emails and phone numbers on average. For faster synchronous results, use /contact-details/single (standard) or /contact-details/turbo/sync (fastest).
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Pay only for the data you request (exhaustive mode):<br />• 12 credits for all phone numbers AND all emails<br />• 5 credits for work email only<br />• 5 credits for personal email only<br />• 4 credits for phone only<br />• 9 credits for all emails&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Credits are charged after the reveal completes so partial reveals only bill for delivered data.">ⓘ</span></span>
  */
@@ -1049,7 +1049,7 @@ export const profileLiveEnrich = <ThrowOnError extends boolean = false>(options:
  *
  * Returns an enriched company with details for a given LinkedIn company identifier
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per company live fetch&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1067,7 +1067,7 @@ export const companyLiveEnrich = <ThrowOnError extends boolean = false>(options:
  *
  * Fetches recent posts from a LinkedIn profile. Returns a paginated feed of posts with optional cursor for pagination. Each page returns up to 50 posts.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1085,7 +1085,7 @@ export const profilePostsLiveFetch = <ThrowOnError extends boolean = false>(opti
  *
  * Fetches recent posts from a LinkedIn company page. Returns a paginated feed of company posts. Each page contains up to 50 posts.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1103,7 +1103,7 @@ export const companyPostsLiveFetch = <ThrowOnError extends boolean = false>(opti
  *
  * Fetches paginated comments for a LinkedIn post. Each page contains up to 10 comments.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1121,7 +1121,7 @@ export const postCommentsLiveFetch = <ThrowOnError extends boolean = false>(opti
  *
  * Fetches paginated reactions of a specific type for a LinkedIn post. Each page contains up to 10 reactions.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1139,7 +1139,7 @@ export const postReactionsLiveFetch = <ThrowOnError extends boolean = false>(opt
  *
  * Fetches comments made by a LinkedIn profile. Returns a paginated feed of comments with optional cursor for pagination. Each page returns up to 10 comments.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1157,7 +1157,7 @@ export const profileCommentsLiveFetch = <ThrowOnError extends boolean = false>(o
  *
  * Fetches reactions made by a LinkedIn profile. Returns a paginated feed of reactions with optional cursor for pagination. Each page returns up to 10 reactions.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1189,7 +1189,7 @@ export const profileReactionsLiveFetch = <ThrowOnError extends boolean = false>(
  * 4. **AND:** Evaluated after **NOT** but before **OR**.
  * 5. **OR:** Lowest precedence among Boolean operators.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1207,7 +1207,7 @@ export const postSearchByKeywords = <ThrowOnError extends boolean = false>(optio
  *
  * Resolves a LinkedIn entity URN to a proper LinkedIn profile URL. Supports a variety of URN formats from different LinkedIn sources (including ACoAA... and ACwAA... prefixes). Accepts either a raw entity URN or a full LinkedIn URL containing an entity URN in the slug position (e.g., 'https://www.linkedin.com/in/ACoAADVMtbkB...').
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per profile standardization&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1225,7 +1225,7 @@ export const standardizeProfile = <ThrowOnError extends boolean = false>(options
  *
  * Resolves a company LinkedIn identifier (slug, organization ID, or URL) to a standardized LinkedIn company URL with metadata. Useful for normalizing company identifiers from different sources.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per company standardization&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1265,7 +1265,7 @@ export const reverseEmailLookup = <ThrowOnError extends boolean = false>(options
  *
  * Start a search for local businesses or other places of interest on Google Maps
  *
- * <span>⚡ <strong>Rate limit:</strong> 5 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per business found&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1303,7 +1303,7 @@ export const kitchenSinkProfile = <ThrowOnError extends boolean = false>(options
  *
  * Search for a company using a variety of parameters such as LinkedIn slug, LinkedIn URL, name, etc. Returns complete company data if found.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per company lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1321,7 +1321,7 @@ export const kitchenSinkCompany = <ThrowOnError extends boolean = false>(options
  *
  * Search for many people using a variety of parameters such as LinkedIn slug, LinkedIn URL, or current company information. Returns profile data for each person if found. Providing more information per person (e.g. name + company + LinkedIn) improves match accuracy.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Pay per person: 2 credits per lookup, plus 2 additional credits when the liveFetch flag is set.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. LinkedIn live fetch credits only apply when the liveFetch flag is set.">ⓘ</span></span>
  */
@@ -1339,7 +1339,7 @@ export const kitchenSinkBulkProfile = <ThrowOnError extends boolean = false>(opt
  *
  * Search for many companies using a variety of parameters such as LinkedIn slug, LinkedIn URL, name, etc. Returns complete company data if found.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per company lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1357,7 +1357,7 @@ export const kitchenSinkBulkCompany = <ThrowOnError extends boolean = false>(opt
  *
  * Search for companies, schools/universities, and investors by name. Supports partial inputs, which can enable typeaheads in your UI.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1375,7 +1375,7 @@ export const companyTypeahead = <ThrowOnError extends boolean = false>(options: 
  *
  * Get the latitude/longitude of a given city, including prefixes (e.g. 'san fr'). This makes it good for typeaheads in your UI.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1393,7 +1393,7 @@ export const locationTypeahead = <ThrowOnError extends boolean = false>(options:
  *
  * Checks if a given email is likely to bounce using multiple validation strategies. Works for catch-all email addresses, which are increasingly common yet hard for other APIs to validate.
  *
- * <span>⚡ <strong>Rate limit:</strong> 200 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per email validation&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1411,7 +1411,7 @@ export const emailBounceDetection = <ThrowOnError extends boolean = false>(optio
  *
  * Validates a phone number and returns detailed information including whether it's valid, reachable (active/alive), carrier information, and the caller ID name associated with the number.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per phone validation&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1429,7 +1429,7 @@ export const validatePhoneNumber = <ThrowOnError extends boolean = false>(option
  *
  * Takes free-form text (e.g., 'Senior Product Managers from Series A to C FinTech startups in New York') and produces standardized filters (industries, funding stages, headcount ranges, locations, titles, seniorities, etc.). When limits are provided, executes the search and returns matching companies and people in a single synchronous call. When referencing specific companies, provide the identifier in one of these forms: plain name (e.g. 'Apple'), domain (e.g. 'apple.com'), or LinkedIn slug (e.g. 'company/banco-santander').Note: This is not optimized for job descriptions. If you have a JD, use the Search profiles from a job description endpoint instead.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Fixed costs per request:<br />• 2 credits for company search params generation based on prompt, if required<br />• 2 credits for profile search params generation based on prompt, if required<br /><br />Additional credits are charged for each company and profile returned, based on the search results.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  *
@@ -1449,7 +1449,7 @@ export const textToCombinedSearch = <ThrowOnError extends boolean = false>(optio
  *
  * Accepts a raw job description and returns a list of matching LinkedIn profiles. Optionally returns detailed work experience and education history. Results are paginated via cursor. Credits are charged per request and per profile returned.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request + 1 credit per profile found&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1467,7 +1467,7 @@ export const jdToProfileSearch = <ThrowOnError extends boolean = false>(options:
  *
  * Takes free-form text (e.g., 'Senior Product Managers from Series A to C FinTech startups in New York') and produces standardized filters (industries, funding stages, headcount ranges, locations, titles, seniorities, etc.). When limits are provided, executes the search and returns matching companies and people in a single synchronous call. When referencing specific companies, provide the identifier in one of these forms: plain name (e.g. 'Apple'), domain (e.g. 'apple.com'), or LinkedIn slug (e.g. 'company/banco-santander').Note: This is not optimized for job descriptions. If you have a JD, use the Search profiles from a job description endpoint instead.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Fixed costs per request:<br />• 2 credits for company search params generation based on prompt, if required<br />• 2 credits for profile search params generation based on prompt, if required&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1503,7 +1503,7 @@ export const createSavedSearch = <ThrowOnError extends boolean = false>(options:
  *
  * Get all details for a specific saved search
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1521,7 +1521,7 @@ export const getSavedSearch = <ThrowOnError extends boolean = false>(options: Op
  *
  * Get all details for a specific saved search run
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1557,7 +1557,7 @@ export const manuallySpawnSavedSearchRun = <ThrowOnError extends boolean = false
  *
  * Update a saved search
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1575,7 +1575,7 @@ export const updateSavedSearch = <ThrowOnError extends boolean = false>(options:
  *
  * List saved search runs
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1593,7 +1593,7 @@ export const listSavedSearchRuns = <ThrowOnError extends boolean = false>(option
  *
  * List saved searches
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1611,7 +1611,7 @@ export const listSavedSearch = <ThrowOnError extends boolean = false>(options: O
  *
  * Returns the execution status and metadata for a saved search run, including start time, completion time (if finished), and current status (NOT_STARTED, PROCESSING, COMPLETED, or FAILED)
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1629,7 +1629,7 @@ export const getSavedSearchRunStatus = <ThrowOnError extends boolean = false>(op
  *
  * Get current profiles found for a specific saved search
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1647,7 +1647,7 @@ export const getCurrentProfilesInSavedSearch = <ThrowOnError extends boolean = f
  *
  * Get current companies found for a specific saved search
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1665,7 +1665,7 @@ export const getCurrentCompaniesInSavedSearch = <ThrowOnError extends boolean = 
  *
  * Get the profiles found for a specific saved search run
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1683,7 +1683,7 @@ export const getSavedSearchRunProfiles = <ThrowOnError extends boolean = false>(
  *
  * Get the companies found for a specific saved search run
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1701,7 +1701,7 @@ export const getSavedSearchRunCompanies = <ThrowOnError extends boolean = false>
  *
  * Get the latest saved search run for a specific saved search
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1737,7 +1737,7 @@ export const startLocalBusinessSearch = <ThrowOnError extends boolean = false>(o
  *
  * Use our AI agent to find a company's domain and email domains using a variety of parameters such as company name, country, state, city, address, other context, and description. NOTE: Maximum 400 companies can be provided at a time. Estimated time to complete 150 companies is an hour.
  *
- * <span>⚡ <strong>Rate limit:</strong> 5 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per company&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1761,7 +1761,7 @@ export const domainLookupTrigger = <ThrowOnError extends boolean = false>(option
  * 2. **Subsequent pages** — send `{ search: { request: "subsequent", cursor: "<nextCursor>" } }`.
  * 3. When `nextCursor` is `null` in the response, there are no more results.
  *
- * <span>⚡ <strong>Rate limit:</strong> 100 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Pricing is coming soon. Credits will be charged once this feature is fully released.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1779,7 +1779,7 @@ export const multiSourceSearch = <ThrowOnError extends boolean = false>(options:
  *
  * Triggers the audience building process. This runs a company and prospect search based on the configured search parameters and saves results to the database. The build runs asynchronously - use the get-audience-status endpoint to poll for completion. Status transitions: DRAFT → BUILDING → NORMAL (success) or FAILED (error).
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Credits are charged after the build completes based on results: 1 credits per company and 1 credits per profile found.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Your total charge will vary based on the number of companies and profiles in your audience.">ⓘ</span></span>
  */
@@ -1797,7 +1797,7 @@ export const buildAudience = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Triggers the audience enrichment process. This runs company and prospect enrichment (live data, Sales Navigator, contact details) based on the configured enrichment types. The enrichment runs asynchronously - use the get-enrichment-status endpoint to poll for completion. Credits are charged immediately based on the estimated cost.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Credits are charged immediately: 2 per work email, 2 per personal email, 3 per phone number, 1 per prospect live enrichment.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Your total charge will vary based on the enrichment types selected and number of prospects.">ⓘ</span></span>
  */
@@ -1815,7 +1815,7 @@ export const triggerEnrichment = <ThrowOnError extends boolean = false>(options:
  *
  * Use our AI agent to find GitHub profiles for a list of people using name and optional context like LinkedIn URL, work email, company, and job title.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per person&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1851,7 +1851,7 @@ export const githubToLinkedInTrigger = <ThrowOnError extends boolean = false>(op
  *
  * Use our AI agent to find social media profiles (Twitter, Instagram) for a person using name and optional context like LinkedIn URL, work email, company, and job title.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per person&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1869,7 +1869,7 @@ export const socialMediaLookupTrigger = <ThrowOnError extends boolean = false>(o
  *
  * Fetches the timestamped transcript for a YouTube video. Returns all transcript segments and the list of languages available. Provide a full YouTube URL or a bare 11-character video ID.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1887,7 +1887,7 @@ export const youtubeTranscript = <ThrowOnError extends boolean = false>(options:
  *
  * Fetches detailed metadata for a YouTube video including title, view count, like count, channel information, chapters, key moments, and available transcript languages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1905,7 +1905,7 @@ export const youtubeVideoDetails = <ThrowOnError extends boolean = false>(option
  *
  * Fetches a page of comments for a YouTube video. Returns comment text, author, like count, and reply count. Use `nextPageToken` from the response to paginate through additional pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1923,7 +1923,7 @@ export const youtubeVideoComments = <ThrowOnError extends boolean = false>(optio
  *
  * Searches YouTube for videos matching a query. Returns video titles, links, channel information, view counts, and durations.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1941,7 +1941,7 @@ export const youtubeSearch = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Fetches metadata and videos for a YouTube channel. Returns subscriber count, description, video count, total views, and a paginated list of videos. Use `nextPageToken` from the response to paginate through additional video pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1977,7 +1977,7 @@ export const getScoutingReport = <ThrowOnError extends boolean = false>(options:
  *
  * Create a new job changes list. Track people when they change their jobs.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1995,7 +1995,7 @@ export const createJobChangeList = <ThrowOnError extends boolean = false>(option
  *
  * Get a job changes list.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2013,7 +2013,7 @@ export const getJourneymanList = <ThrowOnError extends boolean = false>(options:
  *
  * Update a job changes list. Track people when they change their jobs.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2031,7 +2031,7 @@ export const updateJobChangeList = <ThrowOnError extends boolean = false>(option
  *
  * Deletes a job changes list. This will remove the list and stop tracking job changes for prospects in this list.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2049,7 +2049,7 @@ export const deleteJobChangeList = <ThrowOnError extends boolean = false>(option
  *
  * Add profiles to the job change list who you want track when they change their jobs. Note: we tend to remove the 404 profiles to the list automatically.Once the upload is start, you can use /job-changes/get-list to track the uploading process of the people to the list.
  *
- * <span>⚡ <strong>Rate limit:</strong> 1 request per 15 second</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per Number of prospect tracking&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2067,7 +2067,7 @@ export const addProfilesToList = <ThrowOnError extends boolean = false>(options:
  *
  * This will remove people from job changes tracking lists
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2085,7 +2085,7 @@ export const deleteProfilesFromJobChangeList = <ThrowOnError extends boolean = f
  *
  * Lists all job changes lists for your organization. Returns basic info for each list.
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2103,7 +2103,7 @@ export const listAllJourneymanLists = <ThrowOnError extends boolean = false>(opt
  *
  * Get current state of all profiles from the list. Returns basic info for each profile.
  *
- * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2121,7 +2121,7 @@ export const listAllProfilesFromJourneymanList = <ThrowOnError extends boolean =
  *
  * Fetches the public profile for a Twitter/X user by handle. Returns follower/following counts, bio, verification status, and account metadata.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2139,7 +2139,7 @@ export const twitterProfile = <ThrowOnError extends boolean = false>(options: Op
  *
  * Fetches the latest tweets for a Twitter/X user. Returns a paginated list of tweets with engagement metrics. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2157,7 +2157,7 @@ export const twitterUserTweets = <ThrowOnError extends boolean = false>(options:
  *
  * Fetches a page of followers for a Twitter/X user. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2175,7 +2175,7 @@ export const twitterUserFollowers = <ThrowOnError extends boolean = false>(optio
  *
  * Fetches a page of accounts a Twitter/X user follows. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2193,7 +2193,7 @@ export const twitterUserFollowing = <ThrowOnError extends boolean = false>(optio
  *
  * Fetches details for a single tweet by its numeric ID. Returns full text, engagement metrics (likes, retweets, replies, views), and metadata.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2211,7 +2211,7 @@ export const twitterTweetDetails = <ThrowOnError extends boolean = false>(option
  *
  * Fetches a page of replies to a tweet. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2229,7 +2229,7 @@ export const twitterTweetReplies = <ThrowOnError extends boolean = false>(option
  *
  * Fetches a page of quote tweets for a tweet. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2247,7 +2247,7 @@ export const twitterTweetQuotes = <ThrowOnError extends boolean = false>(options
  *
  * Fetches a page of users who retweeted a tweet. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2265,7 +2265,7 @@ export const twitterTweetRetweeters = <ThrowOnError extends boolean = false>(opt
  *
  * Fetches a page of tweets that mention a Twitter/X user. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2283,7 +2283,7 @@ export const twitterUserMentions = <ThrowOnError extends boolean = false>(option
  *
  * Searches for tweets matching a query. Supports standard Twitter search operators (e.g. 'TypeScript from:elonmusk lang:en'). Returns a paginated list of matching tweets. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2301,7 +2301,7 @@ export const twitterSearch = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Fetches the most recent annual revenue estimate for a company. Pass a LinkedIn company URL, domain, and/or company name.
  *
- * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 4 credits per company lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
