@@ -1,4 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": ["src/_readme_typecheck.ts", "src/index.ts", "src/generated/index.ts", "src/generated/client", "src/generated/core", "src/generated/types.gen.ts"]
-}

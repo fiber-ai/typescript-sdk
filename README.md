@@ -71,8 +71,9 @@ const companies = await companySearch({
       industriesV2: {
         anyOf: ["Software", "Information Technology"],
       },
+      // Bucket-valued range. Allowed bounds: 0 | 1 | 10 | 50 | 200 | 500 | 1000 | 5000 | 10000 | null.
       employeeCountV2: {
-        lowerBoundExclusive: 100,
+        lowerBoundExclusive: 50,
         upperBoundInclusive: 1000,
       },
       headquartersCountryCode: {
@@ -305,7 +306,7 @@ const result = await syncCombinedSearch({
         anyOf: ["Software"],
       },
       employeeCountV2: {
-        lowerBoundExclusive: 100,
+        lowerBoundExclusive: 200,
       },
     },
     profileParams: {
@@ -508,11 +509,18 @@ const profile = await profileLiveEnrich({
   },
 });
 
-// Profile fields live under `output.profile`, not directly on `output`.
-console.log(profile.data?.output.profile.name);
-console.log(profile.data?.output.profile.summary);
-console.log(profile.data?.output.profile.experiences);
-console.log(profile.data?.output.profile.education);
+// `output` is a discriminated union: { found: true; profile: ... } |
+// { found: false; message: string }. Narrow on `output.found` before
+// touching `output.profile`.
+const out = profile.data?.output;
+if (out?.found) {
+  console.log(out.profile.name);
+  console.log(out.profile.summary);
+  console.log(out.profile.experiences);
+  console.log(out.profile.detailed_education);
+} else if (out) {
+  console.warn("not found:", out.message);
+}
 ```
 
 #### Live Company Enrichment
@@ -904,41 +912,38 @@ All SDK methods are fully typed with TypeScript.
 
 ```typescript
 import { companySearch } from "@fiberai/sdk";
-import type { CompanySearchData } from "@fiberai/sdk";
 
-// `<Op>Data` types describe the *input* shape — body, query, path, and headers.
-// Use them to pre-build requests that you'll later pass into the SDK function.
-const searchParams: CompanySearchData = {
+// SDK functions return `{ data, error, response }`. Annotate the awaited call
+// with `Awaited<ReturnType<typeof fn>>` — the exported `<Op>Response` /
+// `<Op>Errors` types describe the inner body union, NOT the wrapper.
+const result: Awaited<ReturnType<typeof companySearch>> = await companySearch({
   body: {
     apiKey: process.env.FIBERAI_API_KEY!,
     searchParams: {
-      industriesV2: {
-        anyOf: ["Software"],
-      },
+      industriesV2: { anyOf: ["Software"] },
       employeeCountV2: {
-        lowerBoundExclusive: 100,
+        lowerBoundExclusive: 50,
         upperBoundInclusive: 1000,
       },
     },
     pageSize: 25,
   },
-};
-
-// SDK functions return `{ data, error, response }`. The body shape lives at
-// `result.data`, and the exported `<Op>Response` / `<Op>Errors` types describe
-// the inner body union — NOT the wrapper. To annotate the awaited call,
-// use `Awaited<ReturnType<typeof fn>>`.
-const result: Awaited<ReturnType<typeof companySearch>> =
-  await companySearch(searchParams);
+});
 
 if (result.data) {
-  console.log(result.data.output.data.length, "companies");
+  console.log(`${result.data.output.data.length} companies`);
   console.log(result.data.chargeInfo);
 }
+
+// Need a name for the request shape (e.g. building a request in one place,
+// passing it elsewhere)? Derive it from the function — the bare `<Op>Data`
+// export carries an internal `url` literal and is not meant to be
+// hand-constructed.
+type CompanySearchArgs = Parameters<typeof companySearch>[0];
 ```
 
-> **Naming convention:** every operation `foo` ships three companion types:
-> `FooData` (input), `FooResponse` (200 body union), and `FooErrors` (4xx/5xx body union). The same convention applies to `peopleSearch`, `syncQuickContactReveal`, etc.
+> **Naming convention:** every operation `foo` ships companion types:
+> `FooResponse` (200 body union) and `FooErrors` (4xx/5xx body union). Use `Parameters<typeof foo>[0]` for input args and `Awaited<ReturnType<typeof foo>>` for the result envelope. The same applies to `peopleSearch`, `syncQuickContactReveal`, etc.
 
 ### Runtime Validation with Zod
 
