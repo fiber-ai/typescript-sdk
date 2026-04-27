@@ -16,13 +16,27 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
+    },
+    "./zod": {
+      "import": {
+        "types": "./dist/zod.d.ts",
+        "default": "./dist/zod.js"
+      },
+      "require": {
+        "types": "./dist/zod.d.cts",
+        "default": "./dist/zod.cjs"
+      }
     }
   },
   "files": [
-    "dist"
+    "dist/*.js",
+    "dist/*.cjs",
+    "dist/*.d.ts",
+    "dist/*.d.cts"
   ],
   "scripts": {
     "generate": "openapi-ts",
+    "postgenerate": "node scripts/patch-zod-gen.mjs",
     "build": "tsup",
     "prepublishOnly": "npm run generate && npm run build",
     "lint": "eslint src --ext .ts",
