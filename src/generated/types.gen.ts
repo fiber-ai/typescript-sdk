@@ -812,6 +812,265 @@ export type GetOrgCreditsResponses = {
 
 export type GetOrgCreditsResponse = GetOrgCreditsResponses[keyof GetOrgCreditsResponses];
 
+export type GetRateLimitsData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+    };
+    url: '/v1/rate-limits';
+};
+
+export type GetRateLimitsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type GetRateLimitsError = GetRateLimitsErrors[keyof GetRateLimitsErrors];
+
+export type GetRateLimitsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Rate limits for all available API endpoints
+             */
+            rateLimits: Array<{
+                /**
+                 * HTTP method (e.g. GET, POST)
+                 */
+                method: string;
+                /**
+                 * Route path (e.g. /v1/search/people)
+                 */
+                path: string;
+                /**
+                 * Maximum number of requests allowed in the window
+                 */
+                max: number;
+                /**
+                 * Time window duration in seconds (e.g. 60), or null if unavailable
+                 */
+                windowSeconds: number | null;
+                /**
+                 * Whether this rate limit is a custom override for your organization
+                 */
+                isCustom: boolean;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type GetRateLimitsResponse = GetRateLimitsResponses[keyof GetRateLimitsResponses];
+
 export type GetAutoTopupSettingsData = {
     body?: never;
     path?: never;
@@ -1826,31 +2085,23 @@ export type PollExhaustiveContactEnrichmentResultResponses = {
 
 export type PollExhaustiveContactEnrichmentResultResponse = PollExhaustiveContactEnrichmentResultResponses[keyof PollExhaustiveContactEnrichmentResultResponses];
 
-export type PollBatchContactEnrichmentData = {
+export type PollDepthChartData = {
     body: {
         /**
          * Your Fiber API key
          */
         apiKey: string;
         /**
-         * The task ID from the start endpoint response.
+         * Report ID returned by the /depth-chart/start endpoint
          */
-        taskId: string;
-        /**
-         * The pagination cursor from the previous poll response. Omit for the first request.
-         */
-        cursor?: string | null;
-        /**
-         * The number of people to return per page. Defaults to 100.
-         */
-        take?: number;
+        reportId: string;
     };
     path?: never;
     query?: never;
-    url: '/v1/contact-enrich/batch/poll';
+    url: '/v1/depth-chart/poll';
 };
 
-export type PollBatchContactEnrichmentErrors = {
+export type PollDepthChartErrors = {
     /**
      * Default Response
      */
@@ -1963,9 +2214,370 @@ export type PollBatchContactEnrichmentErrors = {
     };
 };
 
-export type PollBatchContactEnrichmentError = PollBatchContactEnrichmentErrors[keyof PollBatchContactEnrichmentErrors];
+export type PollDepthChartError = PollDepthChartErrors[keyof PollDepthChartErrors];
 
-export type PollBatchContactEnrichmentResponses = {
+export type PollDepthChartResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Report is still being generated
+             */
+            status: 'pending';
+        } | {
+            /**
+             * Report generation succeeded
+             */
+            status: 'completed';
+            /**
+             * The completed depth chart report
+             */
+            report: {
+                /**
+                 * Unique identifier for this report
+                 */
+                reportId: string;
+                /**
+                 * Company identification details
+                 */
+                companyInfo: {
+                    /**
+                     * Company name
+                     */
+                    name?: string | null;
+                    /**
+                     * Full LinkedIn company profile URL
+                     */
+                    linkedinUrl?: string | null;
+                    /**
+                     * LinkedIn organization ID for the company
+                     */
+                    linkedinOrgId?: string | null;
+                    /**
+                     * Company primary domain
+                     */
+                    domain?: string | null;
+                };
+                /**
+                 * Total number of classified employees in the depth chart
+                 */
+                totalEmployees: number;
+                /**
+                 * Overall average tenure in months across all employees
+                 */
+                averageTenureMonths: number | null;
+                /**
+                 * One entry per function x seniority combination with headcount and average tenure. Includes summary stats for each bucket, but does not list the people in each bucket.
+                 */
+                buckets: Array<{
+                    /**
+                     * Functional area (e.g. Engineering, Sales/GTM, Marketing, Product)
+                     */
+                    function: string;
+                    /**
+                     * Seniority level (Junior, Mid-Level, Senior, Manager, Executive)
+                     */
+                    seniority: string;
+                    /**
+                     * Number of employees in this function x seniority combination
+                     */
+                    totalEmployees: number;
+                    /**
+                     * Average tenure in months for employees in this combination
+                     */
+                    averageTenureMonths: number | null;
+                }>;
+                /**
+                 * Aggregated headcount and tenure per seniority level
+                 */
+                seniorityStats: Array<{
+                    /**
+                     * Seniority level (Junior, Mid-Level, Senior, Manager, Executive)
+                     */
+                    seniority: string;
+                    /**
+                     * Total employees at this seniority level
+                     */
+                    totalEmployees: number;
+                    /**
+                     * Average tenure in months across all functions at this seniority level
+                     */
+                    averageTenureMonths: number | null;
+                }>;
+                /**
+                 * Aggregated headcount and tenure per functional area
+                 */
+                functionStats: Array<{
+                    /**
+                     * Functional area (e.g. Engineering, Sales/GTM, Marketing)
+                     */
+                    function: string;
+                    /**
+                     * Total employees in this function
+                     */
+                    totalEmployees: number;
+                    /**
+                     * Average tenure in months across all seniority levels in this function
+                     */
+                    averageTenureMonths: number | null;
+                }>;
+                /**
+                 * Human-readable markdown summary of the depth chart, including a grid table of employee counts by function and seniority
+                 */
+                markdownSummary: string;
+            };
+        } | {
+            /**
+             * Report generation failed
+             */
+            status: 'failed';
+            /**
+             * Description of why generation failed
+             */
+            errorMessage: string;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type PollDepthChartResponse = PollDepthChartResponses[keyof PollDepthChartResponses];
+
+export type PollBatchContactDetailsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * The task ID from the start endpoint response.
+         */
+        taskId: string;
+        /**
+         * The pagination cursor from the previous poll response. Omit for the first request.
+         */
+        cursor?: string | null;
+        /**
+         * The number of people to return per page. Defaults to 100.
+         */
+        take?: number;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/contact-details/batch/poll';
+};
+
+export type PollBatchContactDetailsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type PollBatchContactDetailsError = PollBatchContactDetailsErrors[keyof PollBatchContactDetailsErrors];
+
+export type PollBatchContactDetailsResponses = {
     /**
      * Default Response
      */
@@ -1980,15 +2592,19 @@ export type PollBatchContactEnrichmentResponses = {
                  */
                 totalPeopleToFetch: number;
                 /**
-                 * The number of people for which contact reveal has completed.
+                 * The number of people for which contact reveal has completed successfully.
                  */
                 numCompleted: number;
                 /**
-                 * The number of people remaining to be processed.
+                 * The number of people for which enrichment failed (no data found or error occurred).
+                 */
+                numFailed: number;
+                /**
+                 * The number of people currently being processed (in progress).
                  */
                 numRemaining: number;
                 /**
-                 * The number of people rejected due to invalid input or person not found.
+                 * The number of people rejected before queueing because healing failed (for example, an invalid or unresolvable LinkedIn URL).
                  */
                 numRejected: number;
                 /**
@@ -1997,9 +2613,13 @@ export type PollBatchContactEnrichmentResponses = {
                 numDuplicates: number;
             };
             /**
-             * Whether all people have been processed (completed or failed).
+             * Whether the batch task has finished. When true, check the 'failed' field to determine if it completed successfully or failed.
              */
             done: boolean;
+            /**
+             * Whether the batch task failed. If true, the task encountered an error and won't be retried. If false and done=true, the task completed successfully. If done=false, this field indicates current processing state.
+             */
+            failed: boolean;
             /**
              * The array of results for each person in the current page.
              */
@@ -2134,7 +2754,941 @@ export type PollBatchContactEnrichmentResponses = {
     };
 };
 
-export type PollBatchContactEnrichmentResponse = PollBatchContactEnrichmentResponses[keyof PollBatchContactEnrichmentResponses];
+export type PollBatchContactDetailsResponse = PollBatchContactDetailsResponses[keyof PollBatchContactDetailsResponses];
+
+export type PollBatchLiveEnrichData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * The batch ID returned from the start endpoint
+         */
+        taskId: string;
+        /**
+         * Pagination cursor from the previous poll response. Omit for the first request.
+         */
+        cursor?: string | null;
+        /**
+         * Number of results per page. Defaults to 100.
+         */
+        take?: number;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/linkedin-live-fetch/batch/poll';
+};
+
+export type PollBatchLiveEnrichErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type PollBatchLiveEnrichError = PollBatchLiveEnrichErrors[keyof PollBatchLiveEnrichErrors];
+
+export type PollBatchLiveEnrichResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Current status of the batch job
+             */
+            status: 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
+            type: 'PROFILE' | 'COMPANY';
+            progress: {
+                /**
+                 * Total unique identifiers in the batch (excluding duplicates skipped at submission)
+                 */
+                total: number;
+                /**
+                 * Number successfully enriched
+                 */
+                completed: number;
+                /**
+                 * Number of identifiers not found on LinkedIn
+                 */
+                notFound: number;
+                /**
+                 * Number that failed due to enrichment errors
+                 */
+                failed: number;
+                /**
+                 * Number of identifiers that could not be parsed from your input
+                 */
+                malformed: number;
+                /**
+                 * Number still waiting or in progress
+                 */
+                pending: number;
+            };
+            /**
+             * Paginated enrichment results for completed/failed items.
+             */
+            results: Array<{
+                /**
+                 * The raw identifier that was submitted.
+                 */
+                identifier: string;
+                /**
+                 * The enrichment status for this identifier.
+                 */
+                status: 'COMPLETED' | 'FAILED' | 'NOT_FOUND' | 'MALFORMED';
+                /**
+                 * Enriched profile data. Present only when type is profile and status is COMPLETED.
+                 */
+                profile?: {
+                    articles?: Array<{
+                        id?: string | null;
+                        title?: string | null;
+                        date_published?: string | null;
+                    }> | null;
+                    certifications?: Array<{
+                        title?: string | null;
+                        credential_id?: string | null;
+                        verify_url?: string | null;
+                        summary?: string | null;
+                        linkedin_company_id?: string | null;
+                        company_name?: string | null;
+                        date?: string | null;
+                    }> | null;
+                    connection_count?: number | null;
+                    courses?: Array<{
+                        title?: string | null;
+                        course_number?: string | null;
+                        association?: null;
+                    }> | null;
+                    dob?: string | null;
+                    education?: Array<{
+                        school_id?: string | null;
+                        school_name?: string | null;
+                        field_of_study_id?: string | null;
+                        field_of_study_name?: string | null;
+                        degree?: string | null;
+                        grade?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        activities?: string | null;
+                        notes?: string | null;
+                    }> | null;
+                    experiences?: Array<{
+                        linkedin_company_id?: string | null;
+                        is_current?: boolean | null;
+                        company_name?: string | null;
+                        locality?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        seniority?: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | null;
+                        job_function?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        employment_type?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        academic_qualification?: Array<'High School' | 'Associate Degree' | 'Bachelor Degree'> | null;
+                        company_start_date?: string | null;
+                        company_end_date?: string | null;
+                    }> | null;
+                    first_name?: string | null;
+                    follower_count?: number | null;
+                    headline?: string | null;
+                    industry_name?: string | null;
+                    inferred_location?: {
+                        street_address?: string | null;
+                        neighborhood?: string | null;
+                        city?: string | null;
+                        state_name?: string | null;
+                        state_code?: string | null;
+                        county?: string | null;
+                        postal_code?: string | null;
+                        country_code?: string | null;
+                        country_name?: string | null;
+                        coordinates?: {
+                            lat: number;
+                            lon: number;
+                        } | null;
+                        timezone?: string | null;
+                        full_address?: string | null;
+                        formatted_address?: string | null;
+                    } | null;
+                    interests?: Array<string> | null;
+                    last_name?: string | null;
+                    locality?: string | null;
+                    name?: string | null;
+                    patents?: Array<{
+                        id?: string | null;
+                        title?: string | null;
+                        country?: string | null;
+                        number?: string | null;
+                        description?: string | null;
+                        url?: string | null;
+                        date?: string | null;
+                    }> | null;
+                    profile_pic?: string | null;
+                    projects?: Array<{
+                        project_id?: string | null;
+                        project_title?: string | null;
+                        project_url?: string | null;
+                        project_summary?: string | null;
+                        is_current?: boolean | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                    }> | null;
+                    publications?: Array<{
+                        collaborators?: Array<{
+                            name?: string | null;
+                            url?: string | null;
+                        }> | null;
+                        date?: string | null;
+                        id?: string | null;
+                        publisher?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        url?: string | null;
+                    }> | null;
+                    skills?: Array<string> | null;
+                    primary_slug: string;
+                    slugs?: Array<string> | null;
+                    summary?: string | null;
+                    url?: string | null;
+                    user_id?: string | null;
+                    volunteering?: Array<{
+                        role?: string | null;
+                        is_current?: boolean | null;
+                        cause?: string | null;
+                        summary?: string | null;
+                        linkedin_company_id?: string | null;
+                        company_name?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                    }> | null;
+                    tenures?: Array<{
+                        linkedin_company_id?: string | null;
+                        company_name?: string | null;
+                        date_range: {
+                            gte?: string | null;
+                            lte?: string | null;
+                        };
+                        range_length_days?: number | null;
+                        titles: Array<string>;
+                        localities: Array<string>;
+                    }> | null;
+                    career_began_at?: string | null;
+                    tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    entity_urn?: string | null;
+                    open_to_work?: boolean | null;
+                    premium?: boolean | null;
+                    influencer?: boolean | null;
+                    organizations?: Array<{
+                        name?: string | null;
+                        end_date?: string | null;
+                        title?: string | null;
+                        start_date?: string | null;
+                    }> | null;
+                    entity_urns?: Array<string> | null;
+                    is_hiring?: boolean | null;
+                    websites?: Array<string> | null;
+                    current_job?: {
+                        linkedin_company_id?: string | null;
+                        is_current?: boolean | null;
+                        company_name?: string | null;
+                        locality?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        seniority?: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | null;
+                        job_function?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        employment_type?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        academic_qualification?: Array<'High School' | 'Associate Degree' | 'Bachelor Degree'> | null;
+                        company_start_date?: string | null;
+                        company_end_date?: string | null;
+                    } | null;
+                    custom_data?: {
+                        [key: string]: string;
+                    } | null;
+                    relevance_score?: number | null;
+                    last_sort_key?: string | null;
+                    languages?: Array<{
+                        name?: string | null;
+                        proficiency_id?: string | null;
+                        proficiency_name?: string | null;
+                    }> | null;
+                    detailed_education?: Array<{
+                        school_details?: {
+                            linkedin_ids?: Array<string> | null;
+                            li_org_id?: string | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            preferred_name?: string | null;
+                        } | null;
+                        school_id?: string | null;
+                        school_name?: string | null;
+                        field_of_study_id?: string | null;
+                        field_of_study_name?: string | null;
+                        degree?: string | null;
+                        grade?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        activities?: string | null;
+                        notes?: string | null;
+                    }> | null;
+                    detailed_work_experiences?: Array<{
+                        company_details?: {
+                            linkedin_ids?: Array<string> | null;
+                            li_org_id?: string | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            preferred_name?: string | null;
+                        } | null;
+                        crunchbase_slug?: string | null;
+                        linkedin_company_id?: string | null;
+                        is_current?: boolean | null;
+                        company_name?: string | null;
+                        locality?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        seniority?: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | null;
+                        job_function?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        employment_type?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        academic_qualification?: Array<'High School' | 'Associate Degree' | 'Bachelor Degree'> | null;
+                        company_start_date?: string | null;
+                        company_end_date?: string | null;
+                    }> | null;
+                } | null;
+                /**
+                 * Enriched company data. Present only when type is company and status is COMPLETED.
+                 */
+                company?: {
+                    headline?: string | null;
+                    description?: string | null;
+                    employee_count?: number | null;
+                    follower_count?: number | null;
+                    founded_year?: number | null;
+                    industries?: Array<{
+                        id: string;
+                        name: string;
+                        primary?: boolean | null;
+                    }> | null;
+                    inferred_location?: {
+                        street_address?: string | null;
+                        neighborhood?: string | null;
+                        city?: string | null;
+                        state_name?: string | null;
+                        state_code?: string | null;
+                        county?: string | null;
+                        postal_code?: string | null;
+                        country_code?: string | null;
+                        country_name?: string | null;
+                        coordinates?: {
+                            lat: number;
+                            lon: number;
+                        } | null;
+                        timezone?: string | null;
+                        full_address?: string | null;
+                        formatted_address?: string | null;
+                    } | null;
+                    linkedin_url?: string | null;
+                    locations?: Array<{
+                        address?: string | null;
+                        is_primary?: boolean | null;
+                        location?: {
+                            street_address?: string | null;
+                            neighborhood?: string | null;
+                            city?: string | null;
+                            state_name?: string | null;
+                            state_code?: string | null;
+                            county?: string | null;
+                            postal_code?: string | null;
+                            country_code?: string | null;
+                            country_name?: string | null;
+                            coordinates?: {
+                                lat: number;
+                                lon: number;
+                            } | null;
+                            timezone?: string | null;
+                            full_address?: string | null;
+                            formatted_address?: string | null;
+                        } | null;
+                    }> | null;
+                    naics_codes?: Array<string> | null;
+                    name?: string | null;
+                    org_id?: string | null;
+                    slug: string;
+                    specialties?: Array<string> | null;
+                    ticker?: string | null;
+                    type?: string | null;
+                    domain?: string | null;
+                    website?: string | null;
+                    est_employee_count_lower_bound?: number | null;
+                    est_employee_count_upper_bound?: number | null;
+                    standardized_industries?: Array<string> | null;
+                    locations_stats?: {
+                        USA?: number;
+                        GBR?: number;
+                        FRA?: number;
+                        IND?: number;
+                        BRA?: number;
+                        DEU?: number;
+                        ESP?: number;
+                        CAN?: number;
+                        AUS?: number;
+                        NLD?: number;
+                        ITA?: number;
+                        ZAF?: number;
+                        BEL?: number;
+                        CHN?: number;
+                        TUR?: number;
+                        MEX?: number;
+                        CHE?: number;
+                        NOR?: number;
+                        ARE?: number;
+                        SWE?: number;
+                        POL?: number;
+                        IDN?: number;
+                        ARG?: number;
+                        PRT?: number;
+                        COL?: number;
+                        CHL?: number;
+                        PAK?: number;
+                        DNK?: number;
+                        JPN?: number;
+                        NGA?: number;
+                        SGP?: number;
+                        PER?: number;
+                        NZL?: number;
+                        AUT?: number;
+                        IRL?: number;
+                        MYS?: number;
+                        BGD?: number;
+                        EGY?: number;
+                        ISR?: number;
+                        SAU?: number;
+                        PHL?: number;
+                        FIN?: number;
+                        IRN?: number;
+                        ROU?: number;
+                        CZE?: number;
+                        GRC?: number;
+                        HKG?: number;
+                        HUN?: number;
+                        KEN?: number;
+                        MAR?: number;
+                        VNM?: number;
+                        RUS?: number;
+                        UKR?: number;
+                        ECU?: number;
+                        THA?: number;
+                        LKA?: number;
+                        KOR?: number;
+                        BGR?: number;
+                        GHA?: number;
+                        SRB?: number;
+                        TWN?: number;
+                        HRV?: number;
+                        LTU?: number;
+                        PRI?: number;
+                        SVK?: number;
+                        TUN?: number;
+                        EST?: number;
+                        VEN?: number;
+                        CRI?: number;
+                        PAN?: number;
+                        URY?: number;
+                        LBN?: number;
+                        LUX?: number;
+                        CYP?: number;
+                        NPL?: number;
+                        JOR?: number;
+                        SVN?: number;
+                        MTQ?: number;
+                        QAT?: number;
+                        GLP?: number;
+                        UGA?: number;
+                        DZA?: number;
+                        GTM?: number;
+                        CMR?: number;
+                        LVA?: number;
+                        DOM?: number;
+                        AZE?: number;
+                        GEO?: number;
+                        SEN?: number;
+                        TZA?: number;
+                        ZWE?: number;
+                        KWT?: number;
+                        MLT?: number;
+                        OMN?: number;
+                        BOL?: number;
+                        SLV?: number;
+                        ARM?: number;
+                        PRY?: number;
+                        IRQ?: number;
+                        KHM?: number;
+                        BIH?: number;
+                        AGO?: number;
+                        BHR?: number;
+                        ALB?: number;
+                        KAZ?: number;
+                        CIV?: number;
+                        ETH?: number;
+                        MUS?: number;
+                        ZMB?: number;
+                        MKD?: number;
+                        COD?: number;
+                        BLR?: number;
+                        MOZ?: number;
+                        REU?: number;
+                        TTO?: number;
+                        GUF?: number;
+                        ISL?: number;
+                        MMR?: number;
+                        HND?: number;
+                        RWA?: number;
+                        MDG?: number;
+                        BEN?: number;
+                        UZB?: number;
+                        NAM?: number;
+                        BWA?: number;
+                        MDA?: number;
+                        JEY?: number;
+                        NIC?: number;
+                        SDN?: number;
+                        JAM?: number;
+                        IMN?: number;
+                        BFA?: number;
+                        MNG?: number;
+                        MNE?: number;
+                        MCO?: number;
+                        TGO?: number;
+                        AFG?: number;
+                        LBY?: number;
+                        XKX?: number;
+                        CYM?: number;
+                        MWI?: number;
+                        SOM?: number;
+                        PNG?: number;
+                        MDV?: number;
+                        MLI?: number;
+                        GIN?: number;
+                        PSE?: number;
+                        GAB?: number;
+                        LIE?: number;
+                        HTI?: number;
+                        SYR?: number;
+                        BRB?: number;
+                        YEM?: number;
+                        GGY?: number;
+                        NCL?: number;
+                        AND?: number;
+                        SUR?: number;
+                        MYT?: number;
+                        KGZ?: number;
+                        BHS?: number;
+                        GIB?: number;
+                        COG?: number;
+                        FJI?: number;
+                        BLM?: number;
+                        CUW?: number;
+                        CUB?: number;
+                        SLE?: number;
+                        BLZ?: number;
+                        NER?: number;
+                        LBR?: number;
+                        VIR?: number;
+                        PYF?: number;
+                        GUM?: number;
+                        MRT?: number;
+                        ABW?: number;
+                        SYC?: number;
+                        GUY?: number;
+                        LSO?: number;
+                        SWZ?: number;
+                        SSD?: number;
+                        LCA?: number;
+                        MAC?: number;
+                        SMR?: number;
+                        LAO?: number;
+                        BRN?: number;
+                        TCD?: number;
+                        BMU?: number;
+                        VGB?: number;
+                        PRK?: number;
+                        BTN?: number;
+                        BDI?: number;
+                        FRO?: number;
+                        TJK?: number;
+                        GMB?: number;
+                        STP?: number;
+                        ANT?: number;
+                        VCT?: number;
+                        DJI?: number;
+                        CPV?: number;
+                        TKM?: number;
+                        ATG?: number;
+                        TCA?: number;
+                        KNA?: number;
+                        GRD?: number;
+                        ASM?: number;
+                        VUT?: number;
+                        GNQ?: number;
+                        GRL?: number;
+                        SXM?: number;
+                        MNP?: number;
+                        COM?: number;
+                        TLS?: number;
+                        SJM?: number;
+                        CAF?: number;
+                        DMA?: number;
+                        MAF?: number;
+                        WSM?: number;
+                        BES?: number;
+                        MHL?: number;
+                        AIA?: number;
+                        TON?: number;
+                        COK?: number;
+                        SLB?: number;
+                        SPM?: number;
+                        GNB?: number;
+                        ATA?: number;
+                        TUV?: number;
+                        ALA?: number;
+                        IOT?: number;
+                        ERI?: number;
+                        PLW?: number;
+                        FSM?: number;
+                        NRU?: number;
+                        PCN?: number;
+                        FLK?: number;
+                        MSR?: number;
+                        VAT?: number;
+                        KIR?: number;
+                        SHN?: number;
+                        NIU?: number;
+                        WLF?: number;
+                        HMD?: number;
+                        CXR?: number;
+                        NFK?: number;
+                        ATF?: number;
+                        CCK?: number;
+                        SGS?: number;
+                        BVT?: number;
+                        UMI?: number;
+                        ESH?: number;
+                        TKL?: number;
+                        'X-SOUTH_ASIA'?: number;
+                        'X-SOUTH_EAST_EUROPE'?: number;
+                        'X-NORTHERN_AFRICA'?: number;
+                        'X-PACIFIC'?: number;
+                        'X-SOUTH_WEST_EUROPE'?: number;
+                        'X-SOUTHERN_AFRICA'?: number;
+                        'X-WEST_INDIES'?: number;
+                        'X-SOUTH_AMERICA'?: number;
+                        'X-SOUTH_WEST_ASIA'?: number;
+                        'X-CENTRAL_EUROPE'?: number;
+                        'X-EASTERN_EUROPE'?: number;
+                        'X-WESTERN_EUROPE'?: number;
+                        'X-CENTRAL_AMERICA'?: number;
+                        'X-WESTERN_AFRICA'?: number;
+                        'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                        'X-SOUTH_EAST_ASIA'?: number;
+                        'X-CENTRAL_AFRICA'?: number;
+                        'X-NORTH_AMERICA'?: number;
+                        'X-EAST_ASIA'?: number;
+                        'X-NORTHERN_EUROPE'?: number;
+                        'X-EASTERN_AFRICA'?: number;
+                        'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                        'X-SOUTHERN_EUROPE'?: number;
+                        'X-CENTRAL_ASIA'?: number;
+                        'X-NORTHERN_ASIA'?: number;
+                        'X-ASIA'?: number;
+                        'X-EUROPE'?: number;
+                        'X-AFRICA'?: number;
+                        'X-OCEANIA'?: number;
+                        'X-AMERICAS'?: number;
+                        'X-ANTARCTICA'?: number;
+                        'X-ATLANTIC_OCEAN'?: number;
+                        'X-INDIAN_OCEAN'?: number;
+                        'X-MIDDLE_EAST'?: number;
+                        'X-MENA'?: number;
+                        'X-EMEA'?: number;
+                        'X-EUROPEAN_UNION'?: number;
+                        'X-EFTA'?: number;
+                        'X-APAC'?: number;
+                        'X-LATAM'?: number;
+                        'X-ANGLOSPHERE'?: number;
+                        'X-DACH'?: number;
+                        'X-NORDICS'?: number;
+                        'X-BENELUX'?: number;
+                        'X-GCC'?: number;
+                        'X-BRICS'?: number;
+                        'X-G20'?: number;
+                        'X-OECD'?: number;
+                        'X-SANCTIONED'?: number;
+                    } | null;
+                    logo_url?: string | null;
+                    historical_headcount?: {
+                        latest_snapshot_date: string;
+                        snapshots: Array<{
+                            date: string;
+                            employees: number;
+                        }>;
+                        growth: {
+                            '1m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '2m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '3m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '6m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '12m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '18m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '24m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '36m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                        };
+                    } | null;
+                    revenue_usd_lower_bound?: string | null;
+                    revenue_usd_upper_bound?: string | null;
+                } | null;
+            }>;
+            /**
+             * Pagination cursor for the next page. Null when no more results.
+             */
+            nextCursor?: string | null;
+            /**
+             * ISO timestamp of when the batch completed, if done
+             */
+            completedAt?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type PollBatchLiveEnrichResponse = PollBatchLiveEnrichResponses[keyof PollBatchLiveEnrichResponses];
 
 export type PollGoogleMapsResultsData = {
     body: {
@@ -3280,7 +4834,7 @@ export type DomainLookupPollingResponses = {
 
 export type DomainLookupPollingResponse = DomainLookupPollingResponses[keyof DomainLookupPollingResponses];
 
-export type GithubLookupPollingData = {
+export type GithubLookupPollData = {
     body: {
         /**
          * Your Fiber API key
@@ -3290,21 +4844,13 @@ export type GithubLookupPollingData = {
          * The ID of the GitHub lookup agent run which you got back from the trigger endpoint.
          */
         githubAgentRunId: string;
-        /**
-         * The cursor from where to start fetching the next page of results. Provide the `nextCursor` from the previous response to continue from there.
-         */
-        cursor?: string | null;
-        /**
-         * The number of results to fetch per page.
-         */
-        pageSize?: number;
     };
     path?: never;
     query?: never;
-    url: '/v1/github-lookup/polling';
+    url: '/v1/github-lookup/poll';
 };
 
-export type GithubLookupPollingErrors = {
+export type GithubLookupPollErrors = {
     /**
      * Default Response
      */
@@ -3417,81 +4963,153 @@ export type GithubLookupPollingErrors = {
     };
 };
 
-export type GithubLookupPollingError = GithubLookupPollingErrors[keyof GithubLookupPollingErrors];
+export type GithubLookupPollError = GithubLookupPollErrors[keyof GithubLookupPollErrors];
 
-export type GithubLookupPollingResponses = {
+export type GithubLookupPollResponses = {
     /**
      * Default Response
      */
     200: {
         output: {
-            status: 'NOT_STARTED' | 'STARTED' | 'DONE' | 'FAILED';
             /**
-             * The list of GitHub profiles found along with their rationale and confidence scores.
+             * The ID of the GitHub lookup run these results belong to.
              */
-            data: Array<{
+            githubAgentRunId: string;
+            /**
+             * The overall status of the lookup run.
+             */
+            overallStatus: 'NOT_STARTED' | 'STARTED' | 'DONE' | 'FAILED';
+            /**
+             * Breakdown of lookup progress. All fields sum to the total number of people in the run.
+             */
+            counts: {
                 /**
-                 * The full name of the person this result corresponds to. This generally matches the input full name.
+                 * Total number of people submitted in this run.
                  */
-                fullName: string;
+                total: number;
                 /**
-                 * The GitHub profile URL that best matches this person. Null if we could not confidently find a profile.
+                 * Number of people for whom a GitHub profile was found.
                  */
-                githubUrl?: string | null;
+                found: number;
                 /**
-                 * The GitHub username (login) for the matched profile. Null when no confident match was found.
+                 * Number of people for whom no GitHub profile could be found after searching.
                  */
-                username?: string | null;
+                notFound: number;
                 /**
-                 * The user's display name on GitHub.
+                 * Number of people whose input could not be resolved (e.g. unresolvable LinkedIn URL, insufficient information).
                  */
-                displayName?: string | null;
+                invalidInput: number;
                 /**
-                 * URL to the user's GitHub profile picture.
+                 * Number of people whose lookup failed due to a system error.
                  */
-                profilePictureUrl?: string | null;
+                failed: number;
                 /**
-                 * One-line summary below the person's name on GitHub.
+                 * Number of people still waiting to be processed.
                  */
-                bio?: string | null;
+                pending: number;
+            };
+            /**
+             * All processed people sorted by outcome (found first). Pending people are not included.
+             */
+            people: Array<{
                 /**
-                 * Location as displayed on the GitHub profile.
+                 * The original input person.
                  */
-                location?: string | null;
+                person: {
+                    /**
+                     * The full name of the person.
+                     */
+                    fullName: string;
+                    /**
+                     * Company provided in the original input.
+                     */
+                    company?: string | null;
+                    /**
+                     * Job title provided in the original input.
+                     */
+                    jobTitle?: string | null;
+                    /**
+                     * Work email provided in the original input.
+                     */
+                    workEmail?: string | null;
+                    /**
+                     * LinkedIn URL provided or resolved from the original input.
+                     */
+                    linkedInUrl?: string | null;
+                    /**
+                     * LinkedIn numeric user ID if provided in the original input.
+                     */
+                    linkedinUserId?: string | null;
+                    /**
+                     * The external ID echoed back from the input for joining results to the original dataset.
+                     */
+                    customerProvidedId?: string | null;
+                };
                 /**
-                 * Number of public repositories.
+                 * The GitHub lookup result for this person.
                  */
-                numRepositories?: number | null;
-                /**
-                 * Number of followers on GitHub.
-                 */
-                numFollowers?: number | null;
-                /**
-                 * Confidence score between 1 and 10 denoting the match quality. Higher scores mean a stronger match.
-                 */
-                confidenceOutOf10: number;
-                /**
-                 * The reasoning for why the agent chose (or did not choose) the given GitHub profile.
-                 */
-                rationale?: string | null;
-                /**
-                 * Error message if the lookup failed for this person.
-                 */
-                errorMessage?: string | null;
-                /**
-                 * The external ID echoed back from the input for joining results to the original dataset.
-                 */
-                customerProvidedId?: string | null;
-                outcome?: 'FOUND_CANDIDATES' | 'NO_CANDIDATES_FOUND' | 'INSUFFICIENT_INFORMATION' | null;
+                githubProfile: {
+                    outcome: 'found';
+                    /**
+                     * The GitHub username (login) for the matched profile.
+                     */
+                    username: string;
+                    /**
+                     * The GitHub profile URL.
+                     */
+                    githubUrl: string;
+                    /**
+                     * The user's display name on GitHub.
+                     */
+                    displayName?: string | null;
+                    /**
+                     * URL to the user's GitHub profile picture.
+                     */
+                    profilePictureUrl?: string | null;
+                    /**
+                     * One-line summary below the person's name on GitHub.
+                     */
+                    bio?: string | null;
+                    /**
+                     * Location as displayed on the GitHub profile.
+                     */
+                    location?: string | null;
+                    /**
+                     * Number of public repositories.
+                     */
+                    numRepositories?: number | null;
+                    /**
+                     * Number of followers on GitHub.
+                     */
+                    numFollowers?: number | null;
+                    /**
+                     * Confidence score between 1 and 10 denoting the match quality.
+                     */
+                    confidenceOutOf10: number;
+                    /**
+                     * The reasoning for why the agent chose the given GitHub profile.
+                     */
+                    rationale?: string | null;
+                } | {
+                    outcome: 'notFound';
+                    /**
+                     * A user-facing explanation of why no profile was found.
+                     */
+                    message: string;
+                } | {
+                    outcome: 'invalidInput';
+                    /**
+                     * A user-facing explanation of why the lookup could not proceed.
+                     */
+                    message: string;
+                } | {
+                    outcome: 'failed';
+                    /**
+                     * A user-facing explanation of the failure.
+                     */
+                    message: string;
+                };
             }>;
-            /**
-             * The cursor to the next page of results. Provide this to the polling endpoint to get the next page of results - null if there are no more results.
-             */
-            nextCursor?: string | null;
-            /**
-             * Whether there are more results to fetch for this run.
-             */
-            hasMore: boolean;
         };
         chargeInfo: {
             method: 'charged-now';
@@ -3591,7 +5209,7 @@ export type GithubLookupPollingResponses = {
     };
 };
 
-export type GithubLookupPollingResponse = GithubLookupPollingResponses[keyof GithubLookupPollingResponses];
+export type GithubLookupPollResponse = GithubLookupPollResponses[keyof GithubLookupPollResponses];
 
 export type GithubToLinkedInPollingData = {
     body: {
@@ -3749,7 +5367,10 @@ export type GithubToLinkedInPollingResponses = {
                 linkedInUrl: string | null;
                 linkedInSlug: string | null;
                 confidenceOutOf10: number;
-                matchSource: 'email-elastic' | 'email-apollo' | 'email-aviato' | 'name-search' | 'name-search-llm' | 'kitchen-sink-agent' | 'web-search-agent' | 'web-search' | 'not-found';
+                /**
+                 * Method used to resolve the LinkedIn profile. See the enum values on the PublicMatchSource schema for the full list.
+                 */
+                matchSource: 'email' | 'name-search' | 'agent' | 'web-search' | 'not-found';
                 rationale: string | null;
                 extractedEmails: Array<string>;
                 githubProfile: {
@@ -9874,6 +11495,256 @@ export type GetSubdivisionsResponses = {
 
 export type GetSubdivisionsResponse = GetSubdivisionsResponses[keyof GetSubdivisionsResponses];
 
+export type GetTechnologiesData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+    };
+    url: '/v1/enums/technologies';
+};
+
+export type GetTechnologiesErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type GetTechnologiesError = GetTechnologiesErrors[keyof GetTechnologiesErrors];
+
+export type GetTechnologiesResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: Array<{
+            /**
+             * Canonical slug for this technology or platform
+             */
+            technology: string;
+            /**
+             * Human-readable names and variants
+             */
+            synonyms: Array<string>;
+            /**
+             * Technology category (e.g. CMS, CRM, Analytics)
+             */
+            category?: string | null;
+            /**
+             * Whether this is a technology or a platform
+             */
+            type: 'technology' | 'platform';
+        }>;
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type GetTechnologiesResponse = GetTechnologiesResponses[keyof GetTechnologiesResponses];
+
 export type CreateAudienceData = {
     body: {
         /**
@@ -11695,80 +13566,6 @@ export type UpdateAudienceSearchParamsData = {
                         lowerBound?: number | null;
                         upperBound?: number | null;
                     } | null;
-                }> | null;
-            } | null;
-            employeeTrends?: {
-                obeysAll?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysAny?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysNone?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
                 }> | null;
             } | null;
             headquartersLocation?: {
@@ -15021,80 +16818,6 @@ export type CompanySearchData = {
                     } | null;
                 }> | null;
             } | null;
-            employeeTrends?: {
-                obeysAll?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysAny?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysNone?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-            } | null;
             headquartersLocation?: {
                 unionAll?: Array<{
                     strategy: 'radial-distance';
@@ -16018,6 +17741,10 @@ export type CompanySearchData = {
          * The IDs of company exclusion lists to filter out matching companies.
          */
         companyExclusionListIDs?: Array<string>;
+        /**
+         * When true, returns an estimated total count of matching companies in the response. The count does not account for exclusion lists.
+         */
+        includeCount?: boolean | null;
     };
     path?: never;
     query?: never;
@@ -18240,6 +19967,10 @@ export type CompanySearchResponses = {
                 } | null;
             }>;
             /**
+             * The estimated total number of companies who match your search parameters. Note that this does not account for exclusion lists.
+             */
+            estimatedCount?: number | null;
+            /**
              * The pagination cursor for the next page. Provide this in the next request to continue paginating.
              */
             nextCursor?: string | null;
@@ -18529,80 +20260,6 @@ export type CompanyCountData = {
                         lowerBound?: number | null;
                         upperBound?: number | null;
                     } | null;
-                }> | null;
-            } | null;
-            employeeTrends?: {
-                obeysAll?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysAny?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysNone?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
                 }> | null;
             } | null;
             headquartersLocation?: {
@@ -21397,6 +23054,10 @@ export type PeopleSearchData = {
          * Filter out people who work at companies which belong to the given company exclusion lists
          */
         companyExclusionListIDs?: Array<string> | null;
+        /**
+         * When true, returns an estimated total count of matching prospects in the response. The count does not account for exclusion lists.
+         */
+        includeCount?: boolean | null;
     };
     path?: never;
     query?: never;
@@ -21743,6 +23404,10 @@ export type PeopleSearchResponses = {
                     company_end_date?: string | null;
                 }> | null;
             }>;
+            /**
+             * The estimated total number of people who match your search parameters. Note that this does not account for exclusion lists.
+             */
+            estimatedCount?: number | null;
             /**
              * The pagination cursor for the next page. Provide this in the next request to continue paginating.
              */
@@ -22653,6 +24318,10 @@ export type PeopleSearchCountData = {
          * Filter out people who work at companies which belong to the given company exclusion lists
          */
         companyExclusionListIDs?: Array<string> | null;
+        /**
+         * When true, returns an estimated total count of matching prospects in the response. The count does not account for exclusion lists.
+         */
+        includeCount?: boolean | null;
     };
     path?: never;
     query?: never;
@@ -22885,319 +24554,276 @@ export type PeopleSearchCountResponses = {
 
 export type PeopleSearchCountResponse = PeopleSearchCountResponses[keyof PeopleSearchCountResponses];
 
-export type SyncCombinedSearchData = {
+export type PaginatedCombinedSearchData = {
     body: {
         /**
          * Your Fiber API key
          */
         apiKey: string;
-        /**
-         * The company search parameters. Prospects are found from companies matching these filters. Results are truncated to the top 1000 companies.
-         */
-        companyParams: {
-            exactCompanyV2?: {
-                anyOf?: Array<{
-                    identifier: 'domain';
-                    domain: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-org-id';
-                    org_id: string;
-                } | {
-                    identifier: 'advanced';
-                    linkedin_id?: string | null;
-                    li_org_id: string;
-                    preferred_name?: string | null;
-                    names?: Array<string> | null;
-                    linkedin_primary_slug?: string | null;
-                    domains?: Array<string> | null;
-                    logo_url?: string | null;
-                    source?: 'csv' | null;
-                }> | null;
-                noneOf?: Array<{
-                    identifier: 'domain';
-                    domain: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-org-id';
-                    org_id: string;
-                } | {
-                    identifier: 'advanced';
-                    linkedin_id?: string | null;
-                    li_org_id: string;
-                    preferred_name?: string | null;
-                    names?: Array<string> | null;
-                    linkedin_primary_slug?: string | null;
-                    domains?: Array<string> | null;
-                    logo_url?: string | null;
-                    source?: 'csv' | null;
-                }> | null;
-            } | null;
-            domains?: Array<string> | null;
-            headquartersCountryCode?: {
-                anyOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
-                noneOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
-            } | null;
-            headquartersStateName?: {
-                anyOf?: Array<string> | null;
-                noneOf?: Array<string> | null;
-            } | null;
-            employeeCountV2?: {
-                lowerBoundExclusive?: 0 | 1 | 10 | 50 | 200 | 500 | 1000 | 5000 | 10000 | null;
-                upperBoundInclusive?: 0 | 1 | 10 | 50 | 200 | 500 | 1000 | 5000 | 10000 | null;
-            } | null;
-            keywords?: {
-                containsAll?: Array<string> | null;
-                containsAny?: Array<string> | null;
-                containsNone?: Array<string> | null;
-            } | null;
-            industriesV2?: {
-                anyOf?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
-                noneOf?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
-                allOf?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
-            } | null;
-            stage?: {
-                anyOf?: Array<'acquired' | 'public' | 'closed' | 'pre_seed' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j' | 'venture_other' | 'private_equity' | 'unknown' | 'no_funding_yet'> | null;
-                noneOf?: Array<'acquired' | 'public' | 'closed' | 'pre_seed' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j' | 'venture_other' | 'private_equity' | 'unknown' | 'no_funding_yet'> | null;
-            } | null;
-            totalFundingUSD?: {
-                lowerBound?: number | null;
-                upperBound?: number | null;
-            } | null;
-            lastFundingUSD?: {
-                lowerBound?: number | null;
-                upperBound?: number | null;
-            } | null;
-            lastFundedOn?: {
-                strategy: 'absolute';
-                range?: {
-                    lowerBound?: string | null;
-                    upperBound?: string | null;
+        companyConfig?: {
+            /**
+             * The company search parameters. Prospects are found from companies matching these filters.
+             */
+            searchParams: {
+                exactCompanyV2?: {
+                    anyOf?: Array<{
+                        identifier: 'domain';
+                        domain: string;
+                    } | {
+                        identifier: 'linkedin-url';
+                        linkedin_url: string;
+                    } | {
+                        identifier: 'linkedin-org-id';
+                        org_id: string;
+                    } | {
+                        identifier: 'advanced';
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        identifier: 'domain';
+                        domain: string;
+                    } | {
+                        identifier: 'linkedin-url';
+                        linkedin_url: string;
+                    } | {
+                        identifier: 'linkedin-org-id';
+                        org_id: string;
+                    } | {
+                        identifier: 'advanced';
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    }> | null;
                 } | null;
-            } | {
-                strategy: 'relative';
-                window?: {
-                    method: 'lastN';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                    quantity: number;
-                } | {
-                    method: 'within';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                domains?: Array<string> | null;
+                headquartersCountryCode?: {
+                    anyOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                    noneOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                } | null;
+                headquartersStateName?: {
+                    anyOf?: Array<string> | null;
+                    noneOf?: Array<string> | null;
+                } | null;
+                employeeCountV2?: {
+                    lowerBoundExclusive?: 0 | 1 | 10 | 50 | 200 | 500 | 1000 | 5000 | 10000 | null;
+                    upperBoundInclusive?: 0 | 1 | 10 | 50 | 200 | 500 | 1000 | 5000 | 10000 | null;
+                } | null;
+                keywords?: {
+                    containsAll?: Array<string> | null;
+                    containsAny?: Array<string> | null;
+                    containsNone?: Array<string> | null;
+                } | null;
+                industriesV2?: {
+                    anyOf?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                    noneOf?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                    allOf?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                } | null;
+                stage?: {
+                    anyOf?: Array<'acquired' | 'public' | 'closed' | 'pre_seed' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j' | 'venture_other' | 'private_equity' | 'unknown' | 'no_funding_yet'> | null;
+                    noneOf?: Array<'acquired' | 'public' | 'closed' | 'pre_seed' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j' | 'venture_other' | 'private_equity' | 'unknown' | 'no_funding_yet'> | null;
+                } | null;
+                totalFundingUSD?: {
                     lowerBound?: number | null;
                     upperBound?: number | null;
-                } | {
-                    method: 'calendar';
-                    which: 'current' | 'previous';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                 } | null;
-            } | null;
-            foundedOn?: {
-                strategy: 'absolute';
-                range?: {
-                    lowerBound?: string | null;
-                    upperBound?: string | null;
-                } | null;
-            } | {
-                strategy: 'relative';
-                window?: {
-                    method: 'lastN';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                    quantity: number;
-                } | {
-                    method: 'within';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                lastFundingUSD?: {
                     lowerBound?: number | null;
                     upperBound?: number | null;
-                } | {
-                    method: 'calendar';
-                    which: 'current' | 'previous';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                 } | null;
-            } | null;
-            nameLike?: {
-                anyOf?: Array<string> | null;
-                noneOf?: Array<string> | null;
-            } | null;
-            exactCompany?: {
-                anyOf?: Array<{
-                    linkedin_id?: string | null;
-                    li_org_id: string;
-                    preferred_name?: string | null;
-                    names?: Array<string> | null;
-                    linkedin_primary_slug?: string | null;
-                    domains?: Array<string> | null;
-                    logo_url?: string | null;
-                    source?: 'csv' | null;
-                }> | null;
-                noneOf?: Array<{
-                    linkedin_id?: string | null;
-                    li_org_id: string;
-                    preferred_name?: string | null;
-                    names?: Array<string> | null;
-                    linkedin_primary_slug?: string | null;
-                    domains?: Array<string> | null;
-                    logo_url?: string | null;
-                    source?: 'csv' | null;
-                }> | null;
-            } | null;
-            acceleratorsV2?: {
-                anyOf?: Array<{
-                    acceleratorName: 'a16z_speedrun' | 'accel_atoms' | 'ai2_incubator' | 'alchemist_accelerator' | 'alliance' | 'antler' | 'berkeley_skydeck' | 'founders_inc' | 'google_startups' | 'launch_accelerator' | 'neo' | 'pear_x' | 'plug_and_play' | 'sosv' | 'south_park_commons' | 'startx' | 'techstars' | 'the_mint' | 'ycombinator';
-                    batchSelection?: {
-                        strategy: 'all-batches';
-                    } | {
-                        strategy: 'only-these-batches';
-                        batches: Array<string>;
+                lastFundedOn?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
                     } | null;
-                    years?: {
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                         lowerBound?: number | null;
                         upperBound?: number | null;
-                    } | null;
-                }> | null;
-                noneOf?: Array<{
-                    acceleratorName: 'a16z_speedrun' | 'accel_atoms' | 'ai2_incubator' | 'alchemist_accelerator' | 'alliance' | 'antler' | 'berkeley_skydeck' | 'founders_inc' | 'google_startups' | 'launch_accelerator' | 'neo' | 'pear_x' | 'plug_and_play' | 'sosv' | 'south_park_commons' | 'startx' | 'techstars' | 'the_mint' | 'ycombinator';
-                    batchSelection?: {
-                        strategy: 'all-batches';
                     } | {
-                        strategy: 'only-these-batches';
-                        batches: Array<string>;
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                     } | null;
-                    years?: {
+                } | null;
+                foundedOn?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
+                    } | null;
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                         lowerBound?: number | null;
                         upperBound?: number | null;
+                    } | {
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                     } | null;
-                }> | null;
-            } | null;
-            employeeTrends?: {
-                obeysAll?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
+                } | null;
+                nameLike?: {
+                    anyOf?: Array<string> | null;
+                    noneOf?: Array<string> | null;
+                } | null;
+                exactCompany?: {
+                    anyOf?: Array<{
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    }> | null;
+                } | null;
+                acceleratorsV2?: {
+                    anyOf?: Array<{
+                        acceleratorName: 'a16z_speedrun' | 'accel_atoms' | 'ai2_incubator' | 'alchemist_accelerator' | 'alliance' | 'antler' | 'berkeley_skydeck' | 'founders_inc' | 'google_startups' | 'launch_accelerator' | 'neo' | 'pear_x' | 'plug_and_play' | 'sosv' | 'south_park_commons' | 'startx' | 'techstars' | 'the_mint' | 'ycombinator';
+                        batchSelection?: {
+                            strategy: 'all-batches';
+                        } | {
+                            strategy: 'only-these-batches';
+                            batches: Array<string>;
+                        } | null;
+                        years?: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        acceleratorName: 'a16z_speedrun' | 'accel_atoms' | 'ai2_incubator' | 'alchemist_accelerator' | 'alliance' | 'antler' | 'berkeley_skydeck' | 'founders_inc' | 'google_startups' | 'launch_accelerator' | 'neo' | 'pear_x' | 'plug_and_play' | 'sosv' | 'south_park_commons' | 'startx' | 'techstars' | 'the_mint' | 'ycombinator';
+                        batchSelection?: {
+                            strategy: 'all-batches';
+                        } | {
+                            strategy: 'only-these-batches';
+                            batches: Array<string>;
+                        } | null;
+                        years?: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                headquartersLocation?: {
+                    unionAll?: Array<{
+                        strategy: 'radial-distance';
+                        center: {
+                            name?: string | null;
+                            address?: string | null;
+                            latitude: number;
+                            longitude: number;
+                        };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    }> | null;
+                    subtractAll?: Array<{
+                        strategy: 'radial-distance';
+                        center: {
+                            name?: string | null;
+                            address?: string | null;
+                            latitude: number;
+                            longitude: number;
+                        };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    }> | null;
+                } | null;
+                linkedinSlugs?: Array<string> | null;
+                specialFlags?: {
+                    excludeYcCompanies?: boolean | null;
+                } | null;
+                employees?: {
+                    rules: Array<{
+                        employeesToMatch: {
+                            tag: 'all';
+                        } | {
+                            tag: 'finiteRange';
                             lowerBound?: number | null;
                             upperBound?: number | null;
                         };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysAny?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysNone?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-            } | null;
-            headquartersLocation?: {
-                unionAll?: Array<{
-                    strategy: 'radial-distance';
-                    center: {
-                        name?: string | null;
-                        address?: string | null;
-                        latitude: number;
-                        longitude: number;
-                    };
-                    radius: {
-                        unit: 'miles';
-                        quantity: number;
-                    } | {
-                        unit: 'kilometers';
-                        quantity: number;
-                    };
-                }> | null;
-                subtractAll?: Array<{
-                    strategy: 'radial-distance';
-                    center: {
-                        name?: string | null;
-                        address?: string | null;
-                        latitude: number;
-                        longitude: number;
-                    };
-                    radius: {
-                        unit: 'miles';
-                        quantity: number;
-                    } | {
-                        unit: 'kilometers';
-                        quantity: number;
-                    };
-                }> | null;
-            } | null;
-            linkedinSlugs?: Array<string> | null;
-            specialFlags?: {
-                excludeYcCompanies?: boolean | null;
-            } | null;
-            employees?: {
-                rules: Array<{
-                    employeesToMatch: {
-                        tag: 'all';
-                    } | {
-                        tag: 'finiteRange';
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                    employeeFilters?: {
-                        countryCode?: Array<string> | null;
-                        jobTitle?: Array<string> | null;
-                        recentlyHired?: Array<{
-                            hiredAt?: {
+                        employeeFilters?: {
+                            countryCode?: Array<string> | null;
+                            jobTitle?: Array<string> | null;
+                            recentlyHired?: Array<{
+                                hiredAt?: {
+                                    strategy: 'absolute';
+                                    range?: {
+                                        lowerBound?: string | null;
+                                        upperBound?: string | null;
+                                    } | null;
+                                } | {
+                                    strategy: 'relative';
+                                    window?: {
+                                        method: 'lastN';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                        quantity: number;
+                                    } | {
+                                        method: 'within';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                        lowerBound?: number | null;
+                                        upperBound?: number | null;
+                                    } | {
+                                        method: 'calendar';
+                                        which: 'current' | 'previous';
+                                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                    } | null;
+                                } | null;
+                                jobTitle?: Array<string> | null;
+                            }> | null;
+                        } | null;
+                        jobStatus?: {
+                            status: 'currently-employed';
+                        } | {
+                            status: 'previously-employed';
+                            leftAt?: {
                                 strategy: 'absolute';
                                 range?: {
                                     lowerBound?: string | null;
@@ -23220,14 +24846,43 @@ export type SyncCombinedSearchData = {
                                     period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                                 } | null;
                             } | null;
-                            jobTitle?: Array<string> | null;
-                        }> | null;
-                    } | null;
-                    jobStatus?: {
-                        status: 'currently-employed';
-                    } | {
-                        status: 'previously-employed';
-                        leftAt?: {
+                        } | {
+                            status: 'ever-employed';
+                        } | null;
+                    }>;
+                    joiner: 'AND' | 'OR';
+                } | null;
+                naicsCodes?: {
+                    anyOf?: Array<{
+                        code: string;
+                        title: string;
+                    }> | null;
+                    allOf?: Array<{
+                        code: string;
+                        title: string;
+                    }> | null;
+                    noneOf?: Array<{
+                        code: string;
+                        title: string;
+                    }> | null;
+                } | null;
+                fortuneRankings?: {
+                    anyOf?: Array<{
+                        list: 'fortune-500-usa';
+                        range: {
+                            low: number;
+                            high: number;
+                            name?: string | null;
+                        };
+                        year: number;
+                    }> | null;
+                } | null;
+                jobPostingsV2?: {
+                    anyOf?: Array<{
+                        jobPostingStatus?: 'active' | 'closed' | 'either' | null;
+                        jobTitle?: Array<string> | null;
+                        keywords?: Array<string> | null;
+                        postedAt?: {
                             strategy: 'absolute';
                             range?: {
                                 lowerBound?: string | null;
@@ -23250,846 +24905,823 @@ export type SyncCombinedSearchData = {
                                 period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                             } | null;
                         } | null;
-                    } | {
-                        status: 'ever-employed';
-                    } | null;
-                }>;
-                joiner: 'AND' | 'OR';
-            } | null;
-            naicsCodes?: {
-                anyOf?: Array<{
-                    code: string;
-                    title: string;
-                }> | null;
-                allOf?: Array<{
-                    code: string;
-                    title: string;
-                }> | null;
-                noneOf?: Array<{
-                    code: string;
-                    title: string;
-                }> | null;
-            } | null;
-            fortuneRankings?: {
-                anyOf?: Array<{
-                    list: 'fortune-500-usa';
-                    range: {
-                        low: number;
-                        high: number;
-                        name?: string | null;
-                    };
-                    year: number;
-                }> | null;
-            } | null;
-            jobPostingsV2?: {
-                anyOf?: Array<{
-                    jobPostingStatus?: 'active' | 'closed' | 'either' | null;
-                    jobTitle?: Array<string> | null;
-                    keywords?: Array<string> | null;
-                    postedAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
+                        numApplicants?: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
                         } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        annualPayUSD?: {
                             lowerBound?: number | null;
                             upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                         } | null;
-                    } | null;
-                    numApplicants?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    annualPayUSD?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    yearsOfExperience?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    geoLocation?: {
-                        strategy: 'radial-distance';
-                        center: {
-                            name?: string | null;
-                            address?: string | null;
-                            latitude: number;
-                            longitude: number;
-                        };
-                        radius: {
-                            unit: 'miles';
-                            quantity: number;
-                        } | {
-                            unit: 'kilometers';
-                            quantity: number;
-                        };
-                    } | null;
-                    countryOrRegionCode?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
-                    seniority?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable'> | null;
-                    employmentType?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
-                    jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
-                    industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
-                    jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
-                }> | null;
-                allOf?: Array<{
-                    jobPostingStatus?: 'active' | 'closed' | 'either' | null;
-                    jobTitle?: Array<string> | null;
-                    keywords?: Array<string> | null;
-                    postedAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
+                        yearsOfExperience?: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
                         } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        geoLocation?: {
+                            strategy: 'radial-distance';
+                            center: {
+                                name?: string | null;
+                                address?: string | null;
+                                latitude: number;
+                                longitude: number;
+                            };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
                         } | null;
-                    } | null;
-                    numApplicants?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    annualPayUSD?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    yearsOfExperience?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    geoLocation?: {
-                        strategy: 'radial-distance';
-                        center: {
-                            name?: string | null;
-                            address?: string | null;
-                            latitude: number;
-                            longitude: number;
-                        };
-                        radius: {
-                            unit: 'miles';
-                            quantity: number;
+                        countryOrRegionCode?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                        seniority?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable'> | null;
+                        employmentType?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    }> | null;
+                    allOf?: Array<{
+                        jobPostingStatus?: 'active' | 'closed' | 'either' | null;
+                        jobTitle?: Array<string> | null;
+                        keywords?: Array<string> | null;
+                        postedAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
                         } | {
-                            unit: 'kilometers';
-                            quantity: number;
-                        };
-                    } | null;
-                    countryOrRegionCode?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
-                    seniority?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable'> | null;
-                    employmentType?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
-                    jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
-                    industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
-                    jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
-                }> | null;
-                noneOf?: Array<{
-                    jobPostingStatus?: 'active' | 'closed' | 'either' | null;
-                    jobTitle?: Array<string> | null;
-                    keywords?: Array<string> | null;
-                    postedAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
                         } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        numApplicants?: {
                             lowerBound?: number | null;
                             upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                         } | null;
-                    } | null;
-                    numApplicants?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    annualPayUSD?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    yearsOfExperience?: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | null;
-                    geoLocation?: {
-                        strategy: 'radial-distance';
-                        center: {
-                            name?: string | null;
-                            address?: string | null;
-                            latitude: number;
-                            longitude: number;
-                        };
-                        radius: {
-                            unit: 'miles';
-                            quantity: number;
-                        } | {
-                            unit: 'kilometers';
-                            quantity: number;
-                        };
-                    } | null;
-                    countryOrRegionCode?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
-                    seniority?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable'> | null;
-                    employmentType?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
-                    jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
-                    industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
-                    jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
-                }> | null;
-            } | null;
-            jobPostingStats?: {
-                anyOf?: Array<{
-                    rule: 'total';
-                    count: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                } | {
-                    rule: 'country';
-                    countryCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL';
-                    range: {
-                        type: 'count-range';
-                        range: {
+                        annualPayUSD?: {
                             lowerBound?: number | null;
                             upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'seniority';
-                    seniority: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'employment-type';
-                    employmentType: 'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'job-function';
-                    jobFunction: 'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'location-type';
-                    locationType: 'On-site' | 'Remote' | 'Hybrid';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'industry';
-                    industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                allOf?: Array<{
-                    rule: 'total';
-                    count: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                } | {
-                    rule: 'country';
-                    countryCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'seniority';
-                    seniority: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'employment-type';
-                    employmentType: 'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'job-function';
-                    jobFunction: 'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'location-type';
-                    locationType: 'On-site' | 'Remote' | 'Hybrid';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'industry';
-                    industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                noneOf?: Array<{
-                    rule: 'total';
-                    count: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                } | {
-                    rule: 'country';
-                    countryCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'seniority';
-                    seniority: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'employment-type';
-                    employmentType: 'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'job-function';
-                    jobFunction: 'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'location-type';
-                    locationType: 'On-site' | 'Remote' | 'Hybrid';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                } | {
-                    rule: 'industry';
-                    industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
-                    range: {
-                        type: 'count-range';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    } | {
-                        type: 'percent-range';
-                        rangeInHundredths: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-            } | null;
-            officeLocationsV2?: {
-                anyOf?: Array<{
-                    type: 'worldwide';
-                    range: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                } | {
-                    type: 'country-or-region';
-                    range: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                    countryOrRegionCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED';
-                } | {
-                    type: 'geography';
-                    location: {
-                        strategy: 'radial-distance';
-                        center: {
-                            name?: string | null;
-                            address?: string | null;
-                            latitude: number;
-                            longitude: number;
-                        };
-                        radius: {
-                            unit: 'miles';
-                            quantity: number;
-                        } | {
-                            unit: 'kilometers';
-                            quantity: number;
-                        };
-                    };
-                }> | null;
-                allOf?: Array<{
-                    type: 'worldwide';
-                    range: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                } | {
-                    type: 'country-or-region';
-                    range: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                    countryOrRegionCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED';
-                } | {
-                    type: 'geography';
-                    location: {
-                        strategy: 'radial-distance';
-                        center: {
-                            name?: string | null;
-                            address?: string | null;
-                            latitude: number;
-                            longitude: number;
-                        };
-                        radius: {
-                            unit: 'miles';
-                            quantity: number;
-                        } | {
-                            unit: 'kilometers';
-                            quantity: number;
-                        };
-                    };
-                }> | null;
-                noneOf?: Array<{
-                    type: 'worldwide';
-                    range: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                } | {
-                    type: 'country-or-region';
-                    range: {
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    };
-                    countryOrRegionCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED';
-                } | {
-                    type: 'geography';
-                    location: {
-                        strategy: 'radial-distance';
-                        center: {
-                            name?: string | null;
-                            address?: string | null;
-                            latitude: number;
-                            longitude: number;
-                        };
-                        radius: {
-                            unit: 'miles';
-                            quantity: number;
-                        } | {
-                            unit: 'kilometers';
-                            quantity: number;
-                        };
-                    };
-                }> | null;
-            } | null;
-            tlds?: {
-                anyOf?: Array<string> | null;
-                noneOf?: Array<string> | null;
-            } | null;
-            numWordsInName?: {
-                lowerBound?: number | null;
-                upperBound?: number | null;
-            } | null;
-            status?: {
-                anyOf?: Array<'active' | 'acquired' | 'closed'> | null;
-                noneOf?: Array<'active' | 'acquired' | 'closed'> | null;
-            } | null;
-            technologies?: {
-                anyOf?: Array<{
-                    type: 'predefined';
-                    technology: 'Python' | 'JavaScript' | 'Java' | 'C#' | 'C++' | 'Go' | 'Rust' | 'TypeScript' | 'PHP' | 'Ruby' | 'Kotlin' | 'Swift' | 'Scala' | 'SQL' | 'Node.js' | 'React' | 'Angular' | 'Vue.js' | 'Next.js' | 'Django' | 'Flask' | 'Spring Boot' | 'Express' | 'Laravel' | 'WordPress' | 'Shopify' | 'Magento' | 'Docker' | 'Kubernetes' | 'AWS' | 'Google Cloud' | 'Azure' | 'Cloudflare' | 'Nginx' | 'Apache' | 'Redis' | 'PostgreSQL' | 'MongoDB' | 'MySQL' | 'SQLite' | 'Elasticsearch' | 'RabbitMQ' | 'Kafka' | 'Terraform' | 'Ansible' | 'Prometheus' | 'Grafana' | 'Sentry' | 'PagerDuty' | 'New Relic' | 'Datadog' | 'Splunk' | 'GitHub' | 'GitLab' | 'Bitbucket' | 'Jenkins' | 'CircleCI' | 'Travis CI' | 'Azure DevOps' | 'Jira' | 'Confluence' | 'Slack' | 'Microsoft Teams' | 'Tableau' | 'Power BI' | 'Looker' | 'Mixpanel' | 'Amplitude' | 'Google Analytics' | 'Segment' | 'HubSpot' | 'Salesforce' | 'Stripe' | 'Intercom' | 'Zendesk' | 'Cursor' | 'Windsurf' | 'TensorFlow' | 'PyTorch' | 'Keras' | 'Scikit-learn' | 'OpenAI' | 'Anthropic' | 'GraphQL' | 'Tailwind CSS' | 'Bootstrap' | 'Cassandra' | 'DynamoDB' | 'BigQuery' | 'Redshift' | 'ClickHouse' | 'Neo4j' | 'InfluxDB' | 'TimescaleDB' | 'CockroachDB' | 'Supabase' | 'PlanetScale' | 'Prisma' | 'Hasura' | 'NestJS' | 'Fastify' | 'Railway' | 'Fly.io' | 'Render' | 'Firebase' | 'Playwright' | 'Cypress' | 'Selenium' | 'Puppeteer' | 'Helm' | 'ELK Stack' | 'dbt' | 'Airflow' | 'Apache Spark' | 'Hadoop' | 'NumPy' | 'Jupyter' | 'Elixir' | 'LangChain' | 'Kubeflow' | 'Weights & Biases' | 'CUDA' | 'Algolia' | 'OpenSearch' | 'Solr' | 'WooCommerce' | 'Contentful' | 'Netlify' | 'Vercel' | 'Databricks' | 'Snowflake' | 'Notion' | 'Twilio' | 'Klaviyo' | 'Webflow' | 'Rippling' | 'Gusto' | 'Zapier' | 'Marketo' | 'ServiceNow' | 'Cloudinary';
-                } | {
-                    type: 'custom';
-                    name: string;
-                }> | null;
-                allOf?: Array<{
-                    type: 'predefined';
-                    technology: 'Python' | 'JavaScript' | 'Java' | 'C#' | 'C++' | 'Go' | 'Rust' | 'TypeScript' | 'PHP' | 'Ruby' | 'Kotlin' | 'Swift' | 'Scala' | 'SQL' | 'Node.js' | 'React' | 'Angular' | 'Vue.js' | 'Next.js' | 'Django' | 'Flask' | 'Spring Boot' | 'Express' | 'Laravel' | 'WordPress' | 'Shopify' | 'Magento' | 'Docker' | 'Kubernetes' | 'AWS' | 'Google Cloud' | 'Azure' | 'Cloudflare' | 'Nginx' | 'Apache' | 'Redis' | 'PostgreSQL' | 'MongoDB' | 'MySQL' | 'SQLite' | 'Elasticsearch' | 'RabbitMQ' | 'Kafka' | 'Terraform' | 'Ansible' | 'Prometheus' | 'Grafana' | 'Sentry' | 'PagerDuty' | 'New Relic' | 'Datadog' | 'Splunk' | 'GitHub' | 'GitLab' | 'Bitbucket' | 'Jenkins' | 'CircleCI' | 'Travis CI' | 'Azure DevOps' | 'Jira' | 'Confluence' | 'Slack' | 'Microsoft Teams' | 'Tableau' | 'Power BI' | 'Looker' | 'Mixpanel' | 'Amplitude' | 'Google Analytics' | 'Segment' | 'HubSpot' | 'Salesforce' | 'Stripe' | 'Intercom' | 'Zendesk' | 'Cursor' | 'Windsurf' | 'TensorFlow' | 'PyTorch' | 'Keras' | 'Scikit-learn' | 'OpenAI' | 'Anthropic' | 'GraphQL' | 'Tailwind CSS' | 'Bootstrap' | 'Cassandra' | 'DynamoDB' | 'BigQuery' | 'Redshift' | 'ClickHouse' | 'Neo4j' | 'InfluxDB' | 'TimescaleDB' | 'CockroachDB' | 'Supabase' | 'PlanetScale' | 'Prisma' | 'Hasura' | 'NestJS' | 'Fastify' | 'Railway' | 'Fly.io' | 'Render' | 'Firebase' | 'Playwright' | 'Cypress' | 'Selenium' | 'Puppeteer' | 'Helm' | 'ELK Stack' | 'dbt' | 'Airflow' | 'Apache Spark' | 'Hadoop' | 'NumPy' | 'Jupyter' | 'Elixir' | 'LangChain' | 'Kubeflow' | 'Weights & Biases' | 'CUDA' | 'Algolia' | 'OpenSearch' | 'Solr' | 'WooCommerce' | 'Contentful' | 'Netlify' | 'Vercel' | 'Databricks' | 'Snowflake' | 'Notion' | 'Twilio' | 'Klaviyo' | 'Webflow' | 'Rippling' | 'Gusto' | 'Zapier' | 'Marketo' | 'ServiceNow' | 'Cloudinary';
-                } | {
-                    type: 'custom';
-                    name: string;
-                }> | null;
-                noneOf?: Array<{
-                    type: 'predefined';
-                    technology: 'Python' | 'JavaScript' | 'Java' | 'C#' | 'C++' | 'Go' | 'Rust' | 'TypeScript' | 'PHP' | 'Ruby' | 'Kotlin' | 'Swift' | 'Scala' | 'SQL' | 'Node.js' | 'React' | 'Angular' | 'Vue.js' | 'Next.js' | 'Django' | 'Flask' | 'Spring Boot' | 'Express' | 'Laravel' | 'WordPress' | 'Shopify' | 'Magento' | 'Docker' | 'Kubernetes' | 'AWS' | 'Google Cloud' | 'Azure' | 'Cloudflare' | 'Nginx' | 'Apache' | 'Redis' | 'PostgreSQL' | 'MongoDB' | 'MySQL' | 'SQLite' | 'Elasticsearch' | 'RabbitMQ' | 'Kafka' | 'Terraform' | 'Ansible' | 'Prometheus' | 'Grafana' | 'Sentry' | 'PagerDuty' | 'New Relic' | 'Datadog' | 'Splunk' | 'GitHub' | 'GitLab' | 'Bitbucket' | 'Jenkins' | 'CircleCI' | 'Travis CI' | 'Azure DevOps' | 'Jira' | 'Confluence' | 'Slack' | 'Microsoft Teams' | 'Tableau' | 'Power BI' | 'Looker' | 'Mixpanel' | 'Amplitude' | 'Google Analytics' | 'Segment' | 'HubSpot' | 'Salesforce' | 'Stripe' | 'Intercom' | 'Zendesk' | 'Cursor' | 'Windsurf' | 'TensorFlow' | 'PyTorch' | 'Keras' | 'Scikit-learn' | 'OpenAI' | 'Anthropic' | 'GraphQL' | 'Tailwind CSS' | 'Bootstrap' | 'Cassandra' | 'DynamoDB' | 'BigQuery' | 'Redshift' | 'ClickHouse' | 'Neo4j' | 'InfluxDB' | 'TimescaleDB' | 'CockroachDB' | 'Supabase' | 'PlanetScale' | 'Prisma' | 'Hasura' | 'NestJS' | 'Fastify' | 'Railway' | 'Fly.io' | 'Render' | 'Firebase' | 'Playwright' | 'Cypress' | 'Selenium' | 'Puppeteer' | 'Helm' | 'ELK Stack' | 'dbt' | 'Airflow' | 'Apache Spark' | 'Hadoop' | 'NumPy' | 'Jupyter' | 'Elixir' | 'LangChain' | 'Kubeflow' | 'Weights & Biases' | 'CUDA' | 'Algolia' | 'OpenSearch' | 'Solr' | 'WooCommerce' | 'Contentful' | 'Netlify' | 'Vercel' | 'Databricks' | 'Snowflake' | 'Notion' | 'Twilio' | 'Klaviyo' | 'Webflow' | 'Rippling' | 'Gusto' | 'Zapier' | 'Marketo' | 'ServiceNow' | 'Cloudinary';
-                } | {
-                    type: 'custom';
-                    name: string;
-                }> | null;
-            } | null;
-            investorsV2?: {
-                anyOf?: Array<{
-                    investorIdentifier: {
-                        type: 'domain';
-                        domain: string;
-                    } | {
-                        type: 'linkedin-url';
-                        linkedin_url: string;
-                    } | {
-                        type: 'linkedin-slug';
-                        linkedin_slug: string;
-                    } | {
-                        type: 'linkedin-org-id';
-                        org_id: string;
-                    };
-                    investedAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
                         } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        yearsOfExperience?: {
                             lowerBound?: number | null;
                             upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                         } | null;
-                    } | null;
-                    investmentRounds?: {
-                        anyOf: Array<'pre_seed' | 'venture_other' | 'private_equity' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j'>;
-                    } | null;
-                }> | null;
-                allOf?: Array<{
-                    investorIdentifier: {
-                        type: 'domain';
-                        domain: string;
-                    } | {
-                        type: 'linkedin-url';
-                        linkedin_url: string;
-                    } | {
-                        type: 'linkedin-slug';
-                        linkedin_slug: string;
-                    } | {
-                        type: 'linkedin-org-id';
-                        org_id: string;
-                    };
-                    investedAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
+                        geoLocation?: {
+                            strategy: 'radial-distance';
+                            center: {
+                                name?: string | null;
+                                address?: string | null;
+                                latitude: number;
+                                longitude: number;
+                            };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
                         } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
+                        countryOrRegionCode?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                        seniority?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable'> | null;
+                        employmentType?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        jobPostingStatus?: 'active' | 'closed' | 'either' | null;
+                        jobTitle?: Array<string> | null;
+                        keywords?: Array<string> | null;
+                        postedAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
                         } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                        numApplicants?: {
                             lowerBound?: number | null;
                             upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                         } | null;
-                    } | null;
-                    investmentRounds?: {
-                        anyOf: Array<'pre_seed' | 'venture_other' | 'private_equity' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j'>;
-                    } | null;
-                }> | null;
-                noneOf?: Array<{
-                    investorIdentifier: {
-                        type: 'domain';
-                        domain: string;
-                    } | {
-                        type: 'linkedin-url';
-                        linkedin_url: string;
-                    } | {
-                        type: 'linkedin-slug';
-                        linkedin_slug: string;
-                    } | {
-                        type: 'linkedin-org-id';
-                        org_id: string;
-                    };
-                    investedAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
-                        } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        annualPayUSD?: {
                             lowerBound?: number | null;
                             upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                         } | null;
-                    } | null;
-                    investmentRounds?: {
-                        anyOf: Array<'pre_seed' | 'venture_other' | 'private_equity' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j'>;
-                    } | null;
-                }> | null;
-            } | null;
-            technologiesV2?: {
-                anyOf?: Array<string> | null;
-                allOf?: Array<string> | null;
-                noneOf?: Array<string> | null;
-            } | null;
-            revenueRangeUSD?: {
-                lowerBound?: number | null;
-                upperBound?: number | null;
-            } | null;
-            tags?: {
-                anyOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
-                allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
-                noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
-            } | null;
-            linkedinIndustries?: {
-                anyOf?: Array<string> | null;
-                noneOf?: Array<string> | null;
-            } | null;
-        };
-        /**
-         * The profile search parameters. Returns profiles matching these filters who work at companies satisfying companyParams. Results are truncated to the top 1000 profiles.
-         */
-        profileParams?: {
-            country3LetterCode?: {
-                anyOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
-                noneOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
-            } | null;
-            numConnections?: {
-                lowerBound?: number | null;
-                upperBound?: number | null;
-            } | null;
-            numFollowers?: {
-                lowerBound?: number | null;
-                upperBound?: number | null;
-            } | null;
-            approxAge?: {
-                lowerBound?: number | null;
-                upperBound?: number | null;
-            } | null;
-            keywords?: {
-                containsAll?: Array<string> | null;
-                containsAny?: Array<string> | null;
-                containsNone?: Array<string> | null;
-            } | null;
-            keywordsV2?: {
-                operator?: 'AND' | 'OR';
-                clauses: Array<{
+                        yearsOfExperience?: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | null;
+                        geoLocation?: {
+                            strategy: 'radial-distance';
+                            center: {
+                                name?: string | null;
+                                address?: string | null;
+                                latitude: number;
+                                longitude: number;
+                            };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | null;
+                        countryOrRegionCode?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                        seniority?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable'> | null;
+                        employmentType?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    }> | null;
+                } | null;
+                jobPostingStats?: {
+                    anyOf?: Array<{
+                        rule: 'total';
+                        count: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        rule: 'country';
+                        countryCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'seniority';
+                        seniority: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'employment-type';
+                        employmentType: 'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'job-function';
+                        jobFunction: 'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'location-type';
+                        locationType: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'industry';
+                        industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    }> | null;
+                    allOf?: Array<{
+                        rule: 'total';
+                        count: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        rule: 'country';
+                        countryCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'seniority';
+                        seniority: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'employment-type';
+                        employmentType: 'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'job-function';
+                        jobFunction: 'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'location-type';
+                        locationType: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'industry';
+                        industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    }> | null;
+                    noneOf?: Array<{
+                        rule: 'total';
+                        count: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        rule: 'country';
+                        countryCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'seniority';
+                        seniority: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | 'Not Applicable';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'employment-type';
+                        employmentType: 'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'job-function';
+                        jobFunction: 'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'location-type';
+                        locationType: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'industry';
+                        industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    }> | null;
+                } | null;
+                officeLocationsV2?: {
+                    anyOf?: Array<{
+                        type: 'worldwide';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'country-or-region';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                        countryOrRegionCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED';
+                    } | {
+                        type: 'geography';
+                        location: {
+                            strategy: 'radial-distance';
+                            center: {
+                                name?: string | null;
+                                address?: string | null;
+                                latitude: number;
+                                longitude: number;
+                            };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        };
+                    }> | null;
+                    allOf?: Array<{
+                        type: 'worldwide';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'country-or-region';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                        countryOrRegionCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED';
+                    } | {
+                        type: 'geography';
+                        location: {
+                            strategy: 'radial-distance';
+                            center: {
+                                name?: string | null;
+                                address?: string | null;
+                                latitude: number;
+                                longitude: number;
+                            };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        };
+                    }> | null;
+                    noneOf?: Array<{
+                        type: 'worldwide';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'country-or-region';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                        countryOrRegionCode: 'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED';
+                    } | {
+                        type: 'geography';
+                        location: {
+                            strategy: 'radial-distance';
+                            center: {
+                                name?: string | null;
+                                address?: string | null;
+                                latitude: number;
+                                longitude: number;
+                            };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        };
+                    }> | null;
+                } | null;
+                tlds?: {
+                    anyOf?: Array<string> | null;
+                    noneOf?: Array<string> | null;
+                } | null;
+                numWordsInName?: {
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | null;
+                status?: {
+                    anyOf?: Array<'active' | 'acquired' | 'closed'> | null;
+                    noneOf?: Array<'active' | 'acquired' | 'closed'> | null;
+                } | null;
+                technologies?: {
+                    anyOf?: Array<{
+                        type: 'predefined';
+                        technology: 'Python' | 'JavaScript' | 'Java' | 'C#' | 'C++' | 'Go' | 'Rust' | 'TypeScript' | 'PHP' | 'Ruby' | 'Kotlin' | 'Swift' | 'Scala' | 'SQL' | 'Node.js' | 'React' | 'Angular' | 'Vue.js' | 'Next.js' | 'Django' | 'Flask' | 'Spring Boot' | 'Express' | 'Laravel' | 'WordPress' | 'Shopify' | 'Magento' | 'Docker' | 'Kubernetes' | 'AWS' | 'Google Cloud' | 'Azure' | 'Cloudflare' | 'Nginx' | 'Apache' | 'Redis' | 'PostgreSQL' | 'MongoDB' | 'MySQL' | 'SQLite' | 'Elasticsearch' | 'RabbitMQ' | 'Kafka' | 'Terraform' | 'Ansible' | 'Prometheus' | 'Grafana' | 'Sentry' | 'PagerDuty' | 'New Relic' | 'Datadog' | 'Splunk' | 'GitHub' | 'GitLab' | 'Bitbucket' | 'Jenkins' | 'CircleCI' | 'Travis CI' | 'Azure DevOps' | 'Jira' | 'Confluence' | 'Slack' | 'Microsoft Teams' | 'Tableau' | 'Power BI' | 'Looker' | 'Mixpanel' | 'Amplitude' | 'Google Analytics' | 'Segment' | 'HubSpot' | 'Salesforce' | 'Stripe' | 'Intercom' | 'Zendesk' | 'Cursor' | 'Windsurf' | 'TensorFlow' | 'PyTorch' | 'Keras' | 'Scikit-learn' | 'OpenAI' | 'Anthropic' | 'GraphQL' | 'Tailwind CSS' | 'Bootstrap' | 'Cassandra' | 'DynamoDB' | 'BigQuery' | 'Redshift' | 'ClickHouse' | 'Neo4j' | 'InfluxDB' | 'TimescaleDB' | 'CockroachDB' | 'Supabase' | 'PlanetScale' | 'Prisma' | 'Hasura' | 'NestJS' | 'Fastify' | 'Railway' | 'Fly.io' | 'Render' | 'Firebase' | 'Playwright' | 'Cypress' | 'Selenium' | 'Puppeteer' | 'Helm' | 'ELK Stack' | 'dbt' | 'Airflow' | 'Apache Spark' | 'Hadoop' | 'NumPy' | 'Jupyter' | 'Elixir' | 'LangChain' | 'Kubeflow' | 'Weights & Biases' | 'CUDA' | 'Algolia' | 'OpenSearch' | 'Solr' | 'WooCommerce' | 'Contentful' | 'Netlify' | 'Vercel' | 'Databricks' | 'Snowflake' | 'Notion' | 'Twilio' | 'Klaviyo' | 'Webflow' | 'Rippling' | 'Gusto' | 'Zapier' | 'Marketo' | 'ServiceNow' | 'Cloudinary';
+                    } | {
+                        type: 'custom';
+                        name: string;
+                    }> | null;
+                    allOf?: Array<{
+                        type: 'predefined';
+                        technology: 'Python' | 'JavaScript' | 'Java' | 'C#' | 'C++' | 'Go' | 'Rust' | 'TypeScript' | 'PHP' | 'Ruby' | 'Kotlin' | 'Swift' | 'Scala' | 'SQL' | 'Node.js' | 'React' | 'Angular' | 'Vue.js' | 'Next.js' | 'Django' | 'Flask' | 'Spring Boot' | 'Express' | 'Laravel' | 'WordPress' | 'Shopify' | 'Magento' | 'Docker' | 'Kubernetes' | 'AWS' | 'Google Cloud' | 'Azure' | 'Cloudflare' | 'Nginx' | 'Apache' | 'Redis' | 'PostgreSQL' | 'MongoDB' | 'MySQL' | 'SQLite' | 'Elasticsearch' | 'RabbitMQ' | 'Kafka' | 'Terraform' | 'Ansible' | 'Prometheus' | 'Grafana' | 'Sentry' | 'PagerDuty' | 'New Relic' | 'Datadog' | 'Splunk' | 'GitHub' | 'GitLab' | 'Bitbucket' | 'Jenkins' | 'CircleCI' | 'Travis CI' | 'Azure DevOps' | 'Jira' | 'Confluence' | 'Slack' | 'Microsoft Teams' | 'Tableau' | 'Power BI' | 'Looker' | 'Mixpanel' | 'Amplitude' | 'Google Analytics' | 'Segment' | 'HubSpot' | 'Salesforce' | 'Stripe' | 'Intercom' | 'Zendesk' | 'Cursor' | 'Windsurf' | 'TensorFlow' | 'PyTorch' | 'Keras' | 'Scikit-learn' | 'OpenAI' | 'Anthropic' | 'GraphQL' | 'Tailwind CSS' | 'Bootstrap' | 'Cassandra' | 'DynamoDB' | 'BigQuery' | 'Redshift' | 'ClickHouse' | 'Neo4j' | 'InfluxDB' | 'TimescaleDB' | 'CockroachDB' | 'Supabase' | 'PlanetScale' | 'Prisma' | 'Hasura' | 'NestJS' | 'Fastify' | 'Railway' | 'Fly.io' | 'Render' | 'Firebase' | 'Playwright' | 'Cypress' | 'Selenium' | 'Puppeteer' | 'Helm' | 'ELK Stack' | 'dbt' | 'Airflow' | 'Apache Spark' | 'Hadoop' | 'NumPy' | 'Jupyter' | 'Elixir' | 'LangChain' | 'Kubeflow' | 'Weights & Biases' | 'CUDA' | 'Algolia' | 'OpenSearch' | 'Solr' | 'WooCommerce' | 'Contentful' | 'Netlify' | 'Vercel' | 'Databricks' | 'Snowflake' | 'Notion' | 'Twilio' | 'Klaviyo' | 'Webflow' | 'Rippling' | 'Gusto' | 'Zapier' | 'Marketo' | 'ServiceNow' | 'Cloudinary';
+                    } | {
+                        type: 'custom';
+                        name: string;
+                    }> | null;
+                    noneOf?: Array<{
+                        type: 'predefined';
+                        technology: 'Python' | 'JavaScript' | 'Java' | 'C#' | 'C++' | 'Go' | 'Rust' | 'TypeScript' | 'PHP' | 'Ruby' | 'Kotlin' | 'Swift' | 'Scala' | 'SQL' | 'Node.js' | 'React' | 'Angular' | 'Vue.js' | 'Next.js' | 'Django' | 'Flask' | 'Spring Boot' | 'Express' | 'Laravel' | 'WordPress' | 'Shopify' | 'Magento' | 'Docker' | 'Kubernetes' | 'AWS' | 'Google Cloud' | 'Azure' | 'Cloudflare' | 'Nginx' | 'Apache' | 'Redis' | 'PostgreSQL' | 'MongoDB' | 'MySQL' | 'SQLite' | 'Elasticsearch' | 'RabbitMQ' | 'Kafka' | 'Terraform' | 'Ansible' | 'Prometheus' | 'Grafana' | 'Sentry' | 'PagerDuty' | 'New Relic' | 'Datadog' | 'Splunk' | 'GitHub' | 'GitLab' | 'Bitbucket' | 'Jenkins' | 'CircleCI' | 'Travis CI' | 'Azure DevOps' | 'Jira' | 'Confluence' | 'Slack' | 'Microsoft Teams' | 'Tableau' | 'Power BI' | 'Looker' | 'Mixpanel' | 'Amplitude' | 'Google Analytics' | 'Segment' | 'HubSpot' | 'Salesforce' | 'Stripe' | 'Intercom' | 'Zendesk' | 'Cursor' | 'Windsurf' | 'TensorFlow' | 'PyTorch' | 'Keras' | 'Scikit-learn' | 'OpenAI' | 'Anthropic' | 'GraphQL' | 'Tailwind CSS' | 'Bootstrap' | 'Cassandra' | 'DynamoDB' | 'BigQuery' | 'Redshift' | 'ClickHouse' | 'Neo4j' | 'InfluxDB' | 'TimescaleDB' | 'CockroachDB' | 'Supabase' | 'PlanetScale' | 'Prisma' | 'Hasura' | 'NestJS' | 'Fastify' | 'Railway' | 'Fly.io' | 'Render' | 'Firebase' | 'Playwright' | 'Cypress' | 'Selenium' | 'Puppeteer' | 'Helm' | 'ELK Stack' | 'dbt' | 'Airflow' | 'Apache Spark' | 'Hadoop' | 'NumPy' | 'Jupyter' | 'Elixir' | 'LangChain' | 'Kubeflow' | 'Weights & Biases' | 'CUDA' | 'Algolia' | 'OpenSearch' | 'Solr' | 'WooCommerce' | 'Contentful' | 'Netlify' | 'Vercel' | 'Databricks' | 'Snowflake' | 'Notion' | 'Twilio' | 'Klaviyo' | 'Webflow' | 'Rippling' | 'Gusto' | 'Zapier' | 'Marketo' | 'ServiceNow' | 'Cloudinary';
+                    } | {
+                        type: 'custom';
+                        name: string;
+                    }> | null;
+                } | null;
+                investorsV2?: {
+                    anyOf?: Array<{
+                        investorIdentifier: {
+                            type: 'domain';
+                            domain: string;
+                        } | {
+                            type: 'linkedin-url';
+                            linkedin_url: string;
+                        } | {
+                            type: 'linkedin-slug';
+                            linkedin_slug: string;
+                        } | {
+                            type: 'linkedin-org-id';
+                            org_id: string;
+                        };
+                        investedAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                        investmentRounds?: {
+                            anyOf: Array<'pre_seed' | 'venture_other' | 'private_equity' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j'>;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        investorIdentifier: {
+                            type: 'domain';
+                            domain: string;
+                        } | {
+                            type: 'linkedin-url';
+                            linkedin_url: string;
+                        } | {
+                            type: 'linkedin-slug';
+                            linkedin_slug: string;
+                        } | {
+                            type: 'linkedin-org-id';
+                            org_id: string;
+                        };
+                        investedAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                        investmentRounds?: {
+                            anyOf: Array<'pre_seed' | 'venture_other' | 'private_equity' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j'>;
+                        } | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        investorIdentifier: {
+                            type: 'domain';
+                            domain: string;
+                        } | {
+                            type: 'linkedin-url';
+                            linkedin_url: string;
+                        } | {
+                            type: 'linkedin-slug';
+                            linkedin_slug: string;
+                        } | {
+                            type: 'linkedin-org-id';
+                            org_id: string;
+                        };
+                        investedAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                        investmentRounds?: {
+                            anyOf: Array<'pre_seed' | 'venture_other' | 'private_equity' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j'>;
+                        } | null;
+                    }> | null;
+                } | null;
+                technologiesV2?: {
+                    anyOf?: Array<string> | null;
+                    allOf?: Array<string> | null;
+                    noneOf?: Array<string> | null;
+                } | null;
+                revenueRangeUSD?: {
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | null;
+                tags?: {
+                    anyOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
+                    allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
+                    noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
+                } | null;
+                linkedinIndustries?: {
+                    anyOf?: Array<string> | null;
+                    noneOf?: Array<string> | null;
+                } | null;
+            };
+            /**
+             * The number of companies to return per page. Pass null if you only want profiles. NOTE: your companies search params will still get honored to find the profiles.
+             */
+            pageSize?: number | null;
+            /**
+             * The IDs of company exclusion lists to filter out matching companies.
+             */
+            exclusionListIDs?: Array<string> | null;
+            companyCursor?: string | null;
+        } | null;
+        profileConfig?: {
+            /**
+             * The profile search parameters. Returns profiles matching these filters who work at companies satisfying companyParams.
+             */
+            searchParams?: {
+                country3LetterCode?: {
+                    anyOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                    noneOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                } | null;
+                numConnections?: {
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | null;
+                numFollowers?: {
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | null;
+                approxAge?: {
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | null;
+                keywords?: {
+                    containsAll?: Array<string> | null;
+                    containsAny?: Array<string> | null;
+                    containsNone?: Array<string> | null;
+                } | null;
+                keywordsV2?: {
                     operator?: 'AND' | 'OR';
-                    terms: Array<string>;
-                    negate?: boolean;
-                }>;
-                options?: {
+                    clauses: Array<{
+                        operator?: 'AND' | 'OR';
+                        terms: Array<string>;
+                        negate?: boolean;
+                    }>;
+                    options?: {
+                        fieldsToSearchOver?: {
+                            summary?: boolean;
+                            headline?: boolean;
+                            pastJobTitles?: boolean;
+                            pastJobSummaries?: boolean;
+                            pastCompanyNames?: boolean;
+                            currentJobTitles?: boolean;
+                            currentJobSummaries?: boolean;
+                            currentCompanyNames?: boolean;
+                            interests?: boolean;
+                            skills?: boolean;
+                            industry?: boolean;
+                            education?: boolean;
+                            publications?: boolean;
+                            certifications?: boolean;
+                            articles?: boolean;
+                            courses?: boolean;
+                            projects?: boolean;
+                            patents?: boolean;
+                            volunteering?: boolean;
+                            languages?: boolean;
+                        } | null;
+                    } | null;
+                } | null;
+                keywordSearchOptions?: {
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -24113,216 +25745,52 @@ export type SyncCombinedSearchData = {
                         languages?: boolean;
                     } | null;
                 } | null;
-            } | null;
-            keywordSearchOptions?: {
-                fieldsToSearchOver?: {
-                    summary?: boolean;
-                    headline?: boolean;
-                    pastJobTitles?: boolean;
-                    pastJobSummaries?: boolean;
-                    pastCompanyNames?: boolean;
-                    currentJobTitles?: boolean;
-                    currentJobSummaries?: boolean;
-                    currentCompanyNames?: boolean;
-                    interests?: boolean;
-                    skills?: boolean;
-                    industry?: boolean;
-                    education?: boolean;
-                    publications?: boolean;
-                    certifications?: boolean;
-                    articles?: boolean;
-                    courses?: boolean;
-                    projects?: boolean;
-                    patents?: boolean;
-                    volunteering?: boolean;
-                    languages?: boolean;
-                } | null;
-            } | null;
-            jobTitleV2?: {
-                anyOf?: Array<{
-                    type: 'term';
-                    term: string;
-                } | {
-                    type: 'static-groups';
-                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
-                } | {
-                    type: 'dynamic-groups';
-                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
-                    keywords?: Array<string>;
-                }> | null;
-                noneOf?: Array<{
-                    type: 'term';
-                    term: string;
-                } | {
-                    type: 'static-groups';
-                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
-                } | {
-                    type: 'dynamic-groups';
-                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
-                    keywords?: Array<string>;
-                }> | null;
-                allOf?: Array<{
-                    type: 'term';
-                    term: string;
-                } | {
-                    type: 'static-groups';
-                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
-                } | {
-                    type: 'dynamic-groups';
-                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
-                    keywords?: Array<string>;
-                }> | null;
-            } | null;
-            exactProfile?: {
-                anyOf?: Array<{
-                    profile_id?: string | null;
-                    primary_slug?: string | null;
-                }> | null;
-                noneOf?: Array<{
-                    profile_id?: string | null;
-                    primary_slug?: string | null;
-                }> | null;
-            } | null;
-            startedInRole?: {
-                strategy: 'absolute';
-                range?: {
-                    lowerBound?: string | null;
-                    upperBound?: string | null;
-                } | null;
-            } | {
-                strategy: 'relative';
-                window?: {
-                    method: 'lastN';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                    quantity: number;
-                } | {
-                    method: 'within';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                    lowerBound?: number | null;
-                    upperBound?: number | null;
-                } | {
-                    method: 'calendar';
-                    which: 'current' | 'previous';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                } | null;
-            } | null;
-            startedAtCompany?: {
-                strategy: 'absolute';
-                range?: {
-                    lowerBound?: string | null;
-                    upperBound?: string | null;
-                } | null;
-            } | {
-                strategy: 'relative';
-                window?: {
-                    method: 'lastN';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                    quantity: number;
-                } | {
-                    method: 'within';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                    lowerBound?: number | null;
-                    upperBound?: number | null;
-                } | {
-                    method: 'calendar';
-                    which: 'current' | 'previous';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                } | null;
-            } | null;
-            location?: {
-                unionAll?: Array<{
-                    strategy: 'radial-distance';
-                    center: {
-                        name?: string | null;
-                        address?: string | null;
-                        latitude: number;
-                        longitude: number;
-                    };
-                    radius: {
-                        unit: 'miles';
-                        quantity: number;
+                jobTitleV2?: {
+                    anyOf?: Array<{
+                        type: 'term';
+                        term: string;
                     } | {
-                        unit: 'kilometers';
-                        quantity: number;
-                    };
-                }> | null;
-                subtractAll?: Array<{
-                    strategy: 'radial-distance';
-                    center: {
-                        name?: string | null;
-                        address?: string | null;
-                        latitude: number;
-                        longitude: number;
-                    };
-                    radius: {
-                        unit: 'miles';
-                        quantity: number;
+                        type: 'static-groups';
+                        groups: Array<'founder' | 'c-suite' | 'board-member'>;
                     } | {
-                        unit: 'kilometers';
-                        quantity: number;
-                    };
-                }> | null;
-            } | null;
-            pastJobs?: {
-                anyOf?: Array<{
-                    jobTitle?: Array<string> | null;
-                    company?: {
-                        linkedin_id?: string | null;
-                        li_org_id: string;
-                        preferred_name?: string | null;
-                        names?: Array<string> | null;
-                        linkedin_primary_slug?: string | null;
-                        domains?: Array<string> | null;
-                        logo_url?: string | null;
-                        source?: 'csv' | null;
-                    } | null;
-                }> | null;
-                noneOf?: Array<{
-                    jobTitle?: Array<string> | null;
-                    company?: {
-                        linkedin_id?: string | null;
-                        li_org_id: string;
-                        preferred_name?: string | null;
-                        names?: Array<string> | null;
-                        linkedin_primary_slug?: string | null;
-                        domains?: Array<string> | null;
-                        logo_url?: string | null;
-                        source?: 'csv' | null;
-                    } | null;
-                }> | null;
-            } | null;
-            languages?: {
-                anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
-                allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
-                noneOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
-            } | null;
-            leftStealthAt?: {
-                strategy: 'absolute';
-                range?: {
-                    lowerBound?: string | null;
-                    upperBound?: string | null;
+                        type: 'dynamic-groups';
+                        groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                        keywords?: Array<string>;
+                    }> | null;
+                    noneOf?: Array<{
+                        type: 'term';
+                        term: string;
+                    } | {
+                        type: 'static-groups';
+                        groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                    } | {
+                        type: 'dynamic-groups';
+                        groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                        keywords?: Array<string>;
+                    }> | null;
+                    allOf?: Array<{
+                        type: 'term';
+                        term: string;
+                    } | {
+                        type: 'static-groups';
+                        groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                    } | {
+                        type: 'dynamic-groups';
+                        groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                        keywords?: Array<string>;
+                    }> | null;
                 } | null;
-            } | {
-                strategy: 'relative';
-                window?: {
-                    method: 'lastN';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                    quantity: number;
-                } | {
-                    method: 'within';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                    lowerBound?: number | null;
-                    upperBound?: number | null;
-                } | {
-                    method: 'calendar';
-                    which: 'current' | 'previous';
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                exactProfile?: {
+                    anyOf?: Array<{
+                        profile_id?: string | null;
+                        primary_slug?: string | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        profile_id?: string | null;
+                        primary_slug?: string | null;
+                    }> | null;
                 } | null;
-            } | null;
-            isInStealth?: boolean | null;
-            stealthV2?: {
-                status: 'currently-in-stealth';
-                enteredStealthAt?: {
+                startedInRole?: {
                     strategy: 'absolute';
                     range?: {
                         lowerBound?: string | null;
@@ -24345,8 +25813,96 @@ export type SyncCombinedSearchData = {
                         period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                     } | null;
                 } | null;
-            } | {
-                status: 'left-stealth';
+                startedAtCompany?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
+                    } | null;
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    } | {
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    } | null;
+                } | null;
+                location?: {
+                    unionAll?: Array<{
+                        strategy: 'radial-distance';
+                        center: {
+                            name?: string | null;
+                            address?: string | null;
+                            latitude: number;
+                            longitude: number;
+                        };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    }> | null;
+                    subtractAll?: Array<{
+                        strategy: 'radial-distance';
+                        center: {
+                            name?: string | null;
+                            address?: string | null;
+                            latitude: number;
+                            longitude: number;
+                        };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    }> | null;
+                } | null;
+                pastJobs?: {
+                    anyOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                languages?: {
+                    anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                    allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                    noneOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                } | null;
                 leftStealthAt?: {
                     strategy: 'absolute';
                     range?: {
@@ -24370,486 +25926,531 @@ export type SyncCombinedSearchData = {
                         period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                     } | null;
                 } | null;
-                enteredStealthAt?: {
-                    strategy: 'absolute';
-                    range?: {
-                        lowerBound?: string | null;
-                        upperBound?: string | null;
+                isInStealth?: boolean | null;
+                stealthV2?: {
+                    status: 'currently-in-stealth';
+                    enteredStealthAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
                     } | null;
                 } | {
-                    strategy: 'relative';
-                    window?: {
-                        method: 'lastN';
-                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                        quantity: number;
+                    status: 'left-stealth';
+                    leftStealthAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
                     } | {
-                        method: 'within';
-                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    enteredStealthAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
                     } | {
-                        method: 'calendar';
-                        which: 'current' | 'previous';
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    stealthDuration?: {
+                        range: {
+                            lowerBound: number;
+                            upperBound: number;
+                        };
                         period: 'day' | 'week' | 'month' | 'quarter' | 'year';
                     } | null;
                 } | null;
-                stealthDuration?: {
-                    range: {
-                        lowerBound: number;
-                        upperBound: number;
-                    };
-                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                } | null;
-            } | null;
-            jobStatus?: {
-                status: 'currently-employed';
-            } | {
-                status: 'previously-employed';
-                leftAt?: {
-                    strategy: 'absolute';
-                    range?: {
-                        lowerBound?: string | null;
-                        upperBound?: string | null;
-                    } | null;
+                jobStatus?: {
+                    status: 'currently-employed';
                 } | {
-                    strategy: 'relative';
-                    window?: {
-                        method: 'lastN';
-                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                        quantity: number;
+                    status: 'previously-employed';
+                    leftAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
                     } | {
-                        method: 'within';
-                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                        lowerBound?: number | null;
-                        upperBound?: number | null;
-                    } | {
-                        method: 'calendar';
-                        which: 'current' | 'previous';
-                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
                     } | null;
+                } | {
+                    status: 'ever-employed';
                 } | null;
-            } | {
-                status: 'ever-employed';
-            } | null;
-            timeZone?: {
-                anyOf: Array<{
-                    strategy: {
-                        mode: 'midpoint-with-buffer';
-                        midpointTimeZoneName: string;
-                        maxMinutesWestward: number;
-                        maxMinutesEastward: number;
-                        includePartialYearMatches: boolean;
-                    };
-                }>;
-            } | null;
-            pastJobText?: {
-                joiner: 'and' | 'or';
-                criteria: Array<{
-                    field: 'title' | 'summary' | 'anywhere';
-                    rule: 'includes' | 'excludes';
-                    text?: string | null;
-                }>;
-            } | null;
-            fuzzyName?: {
-                anyOf: Array<{
-                    name: string;
-                }>;
-            } | null;
-            companyMatchMode?: {
-                mode: 'strict';
-            } | {
-                mode: 'loose';
-            } | null;
-            yearsOfExperience?: {
-                lowerBound?: number | null;
-                upperBound?: number | null;
-            } | null;
-            jobTitleV3?: {
-                anyOf?: Array<{
-                    type: 'plain';
-                    term: string;
+                timeZone?: {
+                    anyOf: Array<{
+                        strategy: {
+                            mode: 'midpoint-with-buffer';
+                            midpointTimeZoneName: string;
+                            maxMinutesWestward: number;
+                            maxMinutesEastward: number;
+                            includePartialYearMatches: boolean;
+                        };
+                    }>;
+                } | null;
+                pastJobText?: {
+                    joiner: 'and' | 'or';
+                    criteria: Array<{
+                        field: 'title' | 'summary' | 'anywhere';
+                        rule: 'includes' | 'excludes';
+                        text?: string | null;
+                    }>;
+                } | null;
+                fuzzyName?: {
+                    anyOf: Array<{
+                        name: string;
+                    }>;
+                } | null;
+                companyMatchMode?: {
+                    mode: 'strict';
                 } | {
-                    type: 'functional';
-                    keywords?: Array<string> | null;
-                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
-                } | {
-                    type: 'cartesian';
-                    keywordArrays: Array<Array<string>>;
-                }> | null;
-                allOf?: Array<{
-                    type: 'plain';
-                    term: string;
-                } | {
-                    type: 'functional';
-                    keywords?: Array<string> | null;
-                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
-                } | {
-                    type: 'cartesian';
-                    keywordArrays: Array<Array<string>>;
-                }> | null;
-                noneOf?: Array<{
-                    type: 'plain';
-                    term: string;
-                } | {
-                    type: 'functional';
-                    keywords?: Array<string> | null;
-                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
-                } | {
-                    type: 'cartesian';
-                    keywordArrays: Array<Array<string>>;
-                }> | null;
-            } | null;
-            hasProfilePicture?: boolean | null;
-            state?: {
-                anyOf?: Array<{
-                    countryCode?: string | null;
-                    stateName: string;
-                }> | null;
-                noneOf?: Array<{
-                    countryCode?: string | null;
-                    stateName: string;
-                }> | null;
-            } | null;
-            certifications?: {
-                anyOf?: Array<{
-                    keywords?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                }> | null;
-                allOf?: Array<{
-                    keywords?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                }> | null;
-            } | null;
-            publications?: {
-                anyOf?: Array<{
-                    keywords?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                }> | null;
-                allOf?: Array<{
-                    keywords?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                }> | null;
-            } | null;
-            hasNoEducation?: boolean | null;
-            employmentType?: {
-                anyOf?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
-                noneOf?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
-            } | null;
-            /**
-             * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
-             */
-            getDetailedEducation?: boolean | null;
-            /**
-             * Whether to include deep details about each work experience item, like the company's LinkedIn URL, website, location, etc. That'll be put in the detailedWorkExperience array. This slows down the API call, so only enable this if you need it.
-             */
-            getDetailedWorkExperience?: boolean | null;
-            tags?: {
-                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
-            } | null;
-            education?: {
-                anyOf?: Array<{
-                    school?: {
-                        anyOf?: Array<{
-                            /**
-                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
-                             */
-                            linkedinId?: string | null;
-                            /**
-                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
-                             */
-                            linkedinUrl?: string | null;
-                            /**
-                             * The domain of the school, like 'harvard.edu'
-                             */
-                            domain?: string | null;
-                        }> | null;
-                        noneOf?: Array<{
-                            /**
-                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
-                             */
-                            linkedinId?: string | null;
-                            /**
-                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
-                             */
-                            linkedinUrl?: string | null;
-                            /**
-                             * The domain of the school, like 'harvard.edu'
-                             */
-                            domain?: string | null;
-                        }> | null;
-                    } | null;
-                    schoolV2?: {
-                        anyOf?: Array<{
-                            /**
-                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
-                             */
-                            linkedinId?: string | null;
-                            /**
-                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
-                             */
-                            linkedinUrl?: string | null;
-                            /**
-                             * The domain of the school, like 'harvard.edu'
-                             */
-                            domain?: string | null;
-                        }> | null;
-                        noneOf?: Array<{
-                            /**
-                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
-                             */
-                            linkedinId?: string | null;
-                            /**
-                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
-                             */
-                            linkedinUrl?: string | null;
-                            /**
-                             * The domain of the school, like 'harvard.edu'
-                             */
-                            domain?: string | null;
-                        }> | null;
-                    } | null;
-                    keywords?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                    degree?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                    degreeV2?: {
-                        method: 'text';
-                        criteria: {
+                    mode: 'loose';
+                } | null;
+                yearsOfExperience?: {
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | null;
+                jobTitleV3?: {
+                    anyOf?: Array<{
+                        type: 'plain';
+                        term: string;
+                    } | {
+                        type: 'functional';
+                        keywords?: Array<string> | null;
+                        seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                    } | {
+                        type: 'cartesian';
+                        keywordArrays: Array<Array<string>>;
+                    }> | null;
+                    allOf?: Array<{
+                        type: 'plain';
+                        term: string;
+                    } | {
+                        type: 'functional';
+                        keywords?: Array<string> | null;
+                        seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                    } | {
+                        type: 'cartesian';
+                        keywordArrays: Array<Array<string>>;
+                    }> | null;
+                    noneOf?: Array<{
+                        type: 'plain';
+                        term: string;
+                    } | {
+                        type: 'functional';
+                        keywords?: Array<string> | null;
+                        seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                    } | {
+                        type: 'cartesian';
+                        keywordArrays: Array<Array<string>>;
+                    }> | null;
+                } | null;
+                hasProfilePicture?: boolean | null;
+                state?: {
+                    anyOf?: Array<{
+                        countryCode?: string | null;
+                        stateName: string;
+                    }> | null;
+                    noneOf?: Array<{
+                        countryCode?: string | null;
+                        stateName: string;
+                    }> | null;
+                } | null;
+                certifications?: {
+                    anyOf?: Array<{
+                        keywords?: {
                             anyOf?: Array<string> | null;
                             noneOf?: Array<string> | null;
-                        };
-                    } | {
-                        method: 'level';
-                        criteria: {
-                            anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
-                            noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
-                        };
-                    } | null;
-                    schoolNameKeywords?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                    finishedSchoolAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
                         } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                        } | null;
-                    } | null;
-                    startedSchoolAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
-                        } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                        } | null;
-                    } | null;
-                    isCurrentlyStudent?: boolean | null;
-                }> | null;
-                allOf?: Array<{
-                    school?: {
-                        anyOf?: Array<{
-                            /**
-                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
-                             */
-                            linkedinId?: string | null;
-                            /**
-                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
-                             */
-                            linkedinUrl?: string | null;
-                            /**
-                             * The domain of the school, like 'harvard.edu'
-                             */
-                            domain?: string | null;
-                        }> | null;
-                        noneOf?: Array<{
-                            /**
-                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
-                             */
-                            linkedinId?: string | null;
-                            /**
-                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
-                             */
-                            linkedinUrl?: string | null;
-                            /**
-                             * The domain of the school, like 'harvard.edu'
-                             */
-                            domain?: string | null;
-                        }> | null;
-                    } | null;
-                    schoolV2?: {
-                        anyOf?: Array<{
-                            /**
-                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
-                             */
-                            linkedinId?: string | null;
-                            /**
-                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
-                             */
-                            linkedinUrl?: string | null;
-                            /**
-                             * The domain of the school, like 'harvard.edu'
-                             */
-                            domain?: string | null;
-                        }> | null;
-                        noneOf?: Array<{
-                            /**
-                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
-                             */
-                            linkedinId?: string | null;
-                            /**
-                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
-                             */
-                            linkedinUrl?: string | null;
-                            /**
-                             * The domain of the school, like 'harvard.edu'
-                             */
-                            domain?: string | null;
-                        }> | null;
-                    } | null;
-                    keywords?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                    degree?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                    degreeV2?: {
-                        method: 'text';
-                        criteria: {
+                    }> | null;
+                    allOf?: Array<{
+                        keywords?: {
                             anyOf?: Array<string> | null;
                             noneOf?: Array<string> | null;
-                        };
-                    } | {
-                        method: 'level';
-                        criteria: {
-                            anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
-                            noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
-                        };
-                    } | null;
-                    schoolNameKeywords?: {
-                        anyOf?: Array<string> | null;
-                        noneOf?: Array<string> | null;
-                    } | null;
-                    finishedSchoolAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
                         } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    }> | null;
+                } | null;
+                publications?: {
+                    anyOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
                         } | null;
-                    } | null;
-                    startedSchoolAt?: {
-                        strategy: 'absolute';
-                        range?: {
-                            lowerBound?: string | null;
-                            upperBound?: string | null;
+                    }> | null;
+                    allOf?: Array<{
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
                         } | null;
-                    } | {
-                        strategy: 'relative';
-                        window?: {
-                            method: 'lastN';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            quantity: number;
-                        } | {
-                            method: 'within';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        } | {
-                            method: 'calendar';
-                            which: 'current' | 'previous';
-                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    }> | null;
+                } | null;
+                hasNoEducation?: boolean | null;
+                employmentType?: {
+                    anyOf?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                    noneOf?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                } | null;
+                /**
+                 * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
+                 */
+                getDetailedEducation?: boolean | null;
+                /**
+                 * Whether to include deep details about each work experience item, like the company's LinkedIn URL, website, location, etc. That'll be put in the detailedWorkExperience array. This slows down the API call, so only enable this if you need it.
+                 */
+                getDetailedWorkExperience?: boolean | null;
+                tags?: {
+                    anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                } | null;
+                education?: {
+                    anyOf?: Array<{
+                        school?: {
+                            anyOf?: Array<{
+                                /**
+                                 * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                                 */
+                                linkedinId?: string | null;
+                                /**
+                                 * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                                 */
+                                linkedinUrl?: string | null;
+                                /**
+                                 * The domain of the school, like 'harvard.edu'
+                                 */
+                                domain?: string | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                /**
+                                 * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                                 */
+                                linkedinId?: string | null;
+                                /**
+                                 * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                                 */
+                                linkedinUrl?: string | null;
+                                /**
+                                 * The domain of the school, like 'harvard.edu'
+                                 */
+                                domain?: string | null;
+                            }> | null;
                         } | null;
-                    } | null;
-                    isCurrentlyStudent?: boolean | null;
-                }> | null;
-            } | null;
-        };
-        /**
-         * The number of companies to return. Defaults to 20. Pass null to omit companies while still searching for profiles within matching companies.
-         */
-        companyItemLimit?: number | null;
-        /**
-         * The number of profiles to return.
-         */
-        profileItemLimit?: number;
-        /**
-         * The IDs of company exclusion lists to filter out matching companies.
-         */
-        companyExclusionListIDs?: Array<string> | null;
-        /**
-         * The IDs of prospect exclusion lists to filter out matching people.
-         */
-        prospectExclusionListIDs?: Array<string> | null;
+                        schoolV2?: {
+                            anyOf?: Array<{
+                                /**
+                                 * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                                 */
+                                linkedinId?: string | null;
+                                /**
+                                 * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                                 */
+                                linkedinUrl?: string | null;
+                                /**
+                                 * The domain of the school, like 'harvard.edu'
+                                 */
+                                domain?: string | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                /**
+                                 * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                                 */
+                                linkedinId?: string | null;
+                                /**
+                                 * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                                 */
+                                linkedinUrl?: string | null;
+                                /**
+                                 * The domain of the school, like 'harvard.edu'
+                                 */
+                                domain?: string | null;
+                            }> | null;
+                        } | null;
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                        degree?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                        degreeV2?: {
+                            method: 'text';
+                            criteria: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            };
+                        } | {
+                            method: 'level';
+                            criteria: {
+                                anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                                noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            };
+                        } | null;
+                        schoolNameKeywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                        finishedSchoolAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                        startedSchoolAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                        isCurrentlyStudent?: boolean | null;
+                    }> | null;
+                    allOf?: Array<{
+                        school?: {
+                            anyOf?: Array<{
+                                /**
+                                 * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                                 */
+                                linkedinId?: string | null;
+                                /**
+                                 * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                                 */
+                                linkedinUrl?: string | null;
+                                /**
+                                 * The domain of the school, like 'harvard.edu'
+                                 */
+                                domain?: string | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                /**
+                                 * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                                 */
+                                linkedinId?: string | null;
+                                /**
+                                 * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                                 */
+                                linkedinUrl?: string | null;
+                                /**
+                                 * The domain of the school, like 'harvard.edu'
+                                 */
+                                domain?: string | null;
+                            }> | null;
+                        } | null;
+                        schoolV2?: {
+                            anyOf?: Array<{
+                                /**
+                                 * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                                 */
+                                linkedinId?: string | null;
+                                /**
+                                 * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                                 */
+                                linkedinUrl?: string | null;
+                                /**
+                                 * The domain of the school, like 'harvard.edu'
+                                 */
+                                domain?: string | null;
+                            }> | null;
+                            noneOf?: Array<{
+                                /**
+                                 * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                                 */
+                                linkedinId?: string | null;
+                                /**
+                                 * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                                 */
+                                linkedinUrl?: string | null;
+                                /**
+                                 * The domain of the school, like 'harvard.edu'
+                                 */
+                                domain?: string | null;
+                            }> | null;
+                        } | null;
+                        keywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                        degree?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                        degreeV2?: {
+                            method: 'text';
+                            criteria: {
+                                anyOf?: Array<string> | null;
+                                noneOf?: Array<string> | null;
+                            };
+                        } | {
+                            method: 'level';
+                            criteria: {
+                                anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                                noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            };
+                        } | null;
+                        schoolNameKeywords?: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        } | null;
+                        finishedSchoolAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                        startedSchoolAt?: {
+                            strategy: 'absolute';
+                            range?: {
+                                lowerBound?: string | null;
+                                upperBound?: string | null;
+                            } | null;
+                        } | {
+                            strategy: 'relative';
+                            window?: {
+                                method: 'lastN';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                quantity: number;
+                            } | {
+                                method: 'within';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            } | {
+                                method: 'calendar';
+                                which: 'current' | 'previous';
+                                period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            } | null;
+                        } | null;
+                        isCurrentlyStudent?: boolean | null;
+                    }> | null;
+                } | null;
+            };
+            /**
+             * The number of profiles to return per page.
+             */
+            pageSize: number;
+            /**
+             * The IDs of prospect exclusion lists to filter out matching people.
+             */
+            exclusionListIDs?: Array<string> | null;
+            profileCursor?: string | null;
+        } | null;
     };
     path?: never;
     query?: never;
-    url: '/v1/combined-search/sync';
+    url: '/v1/combined-search/paginated';
 };
 
-export type SyncCombinedSearchErrors = {
+export type PaginatedCombinedSearchErrors = {
     /**
      * Default Response
      */
@@ -24962,9 +26563,9 @@ export type SyncCombinedSearchErrors = {
     };
 };
 
-export type SyncCombinedSearchError = SyncCombinedSearchErrors[keyof SyncCombinedSearchErrors];
+export type PaginatedCombinedSearchError = PaginatedCombinedSearchErrors[keyof PaginatedCombinedSearchErrors];
 
-export type SyncCombinedSearchResponses = {
+export type PaginatedCombinedSearchResponses = {
     /**
      * Default Response
      */
@@ -27283,6 +28884,14 @@ export type SyncCombinedSearchResponses = {
                     company_end_date?: string | null;
                 }> | null;
             }>;
+            /**
+             * Pass this as companiesCursor in a subsequent request to get the next page of companies. Null when there are no more companies to return.
+             */
+            nextCompaniesCursor?: string | null;
+            /**
+             * Pass this as profilesCursor in a subsequent request to get the next page of profiles. Null when there are no more profiles to return.
+             */
+            nextProfilesCursor?: string | null;
         };
         chargeInfo: {
             method: 'charged-now';
@@ -27382,7 +28991,7 @@ export type SyncCombinedSearchResponses = {
     };
 };
 
-export type SyncCombinedSearchResponse = SyncCombinedSearchResponses[keyof SyncCombinedSearchResponses];
+export type PaginatedCombinedSearchResponse = PaginatedCombinedSearchResponses[keyof PaginatedCombinedSearchResponses];
 
 export type BulkCompanyLogosData = {
     body: {
@@ -28102,80 +29711,6 @@ export type CombinedSearchCountData = {
                         lowerBound?: number | null;
                         upperBound?: number | null;
                     } | null;
-                }> | null;
-            } | null;
-            employeeTrends?: {
-                obeysAll?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysAny?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
-                }> | null;
-                obeysNone?: Array<{
-                    jobFunction: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal';
-                    countCriteria: {
-                        type: 'numeric_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'percent_change';
-                        change: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                        windowLookBackMonths: number;
-                    } | {
-                        type: 'current_count';
-                        range: {
-                            lowerBound?: number | null;
-                            upperBound?: number | null;
-                        };
-                    };
                 }> | null;
             } | null;
             headquartersLocation?: {
@@ -30097,6 +31632,2100 @@ export type CombinedSearchCountResponses = {
 
 export type CombinedSearchCountResponse = CombinedSearchCountResponses[keyof CombinedSearchCountResponses];
 
+export type StealthFoundersSearchData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Stealth mode configuration. Use in-stealth for current stealth founders, or left-stealth for exited stealth founders.
+         */
+        stealthConfig: {
+            /**
+             * Find people currently in stealth. Optional enteredStealthAt narrows by entry date.
+             */
+            mode: 'in-stealth';
+            /**
+             * Date selection for when people entered stealth. Supports absolute or relative windows.
+             */
+            enteredStealthAt?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+        } | {
+            /**
+             * Find people who recently exited stealth. leftStealthAt defaults to the last year when omitted.
+             */
+            mode: 'left-stealth';
+            /**
+             * Optional date selection for when people entered stealth.
+             */
+            enteredStealthAt?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            /**
+             * Date selection for when people exited stealth. Defaults to the last year when omitted.
+             */
+            leftStealthAt?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+        };
+        /**
+         * Profile search filters to narrow results within the stealth population. All fields are optional — omit to search all stealth founders.
+         */
+        searchParams?: {
+            country3LetterCode?: {
+                anyOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                noneOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+            } | null;
+            numConnections?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            numFollowers?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            approxAge?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            keywords?: {
+                containsAll?: Array<string> | null;
+                containsAny?: Array<string> | null;
+                containsNone?: Array<string> | null;
+            } | null;
+            keywordsV2?: {
+                operator?: 'AND' | 'OR';
+                clauses: Array<{
+                    operator?: 'AND' | 'OR';
+                    terms: Array<string>;
+                    negate?: boolean;
+                }>;
+                options?: {
+                    fieldsToSearchOver?: {
+                        summary?: boolean;
+                        headline?: boolean;
+                        pastJobTitles?: boolean;
+                        pastJobSummaries?: boolean;
+                        pastCompanyNames?: boolean;
+                        currentJobTitles?: boolean;
+                        currentJobSummaries?: boolean;
+                        currentCompanyNames?: boolean;
+                        interests?: boolean;
+                        skills?: boolean;
+                        industry?: boolean;
+                        education?: boolean;
+                        publications?: boolean;
+                        certifications?: boolean;
+                        articles?: boolean;
+                        courses?: boolean;
+                        projects?: boolean;
+                        patents?: boolean;
+                        volunteering?: boolean;
+                        languages?: boolean;
+                    } | null;
+                } | null;
+            } | null;
+            keywordSearchOptions?: {
+                fieldsToSearchOver?: {
+                    summary?: boolean;
+                    headline?: boolean;
+                    pastJobTitles?: boolean;
+                    pastJobSummaries?: boolean;
+                    pastCompanyNames?: boolean;
+                    currentJobTitles?: boolean;
+                    currentJobSummaries?: boolean;
+                    currentCompanyNames?: boolean;
+                    interests?: boolean;
+                    skills?: boolean;
+                    industry?: boolean;
+                    education?: boolean;
+                    publications?: boolean;
+                    certifications?: boolean;
+                    articles?: boolean;
+                    courses?: boolean;
+                    projects?: boolean;
+                    patents?: boolean;
+                    volunteering?: boolean;
+                    languages?: boolean;
+                } | null;
+            } | null;
+            jobTitleV2?: {
+                anyOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+                noneOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+                allOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+            } | null;
+            startedInRole?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'lastN';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    quantity: number;
+                } | {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            startedAtCompany?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'lastN';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    quantity: number;
+                } | {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            location?: {
+                unionAll?: Array<{
+                    strategy: 'radial-distance';
+                    center: {
+                        name?: string | null;
+                        address?: string | null;
+                        latitude: number;
+                        longitude: number;
+                    };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                }> | null;
+                subtractAll?: Array<{
+                    strategy: 'radial-distance';
+                    center: {
+                        name?: string | null;
+                        address?: string | null;
+                        latitude: number;
+                        longitude: number;
+                    };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                }> | null;
+            } | null;
+            pastJobs?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
+            languages?: {
+                anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                noneOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+            } | null;
+            jobStatus?: {
+                status: 'currently-employed';
+            } | {
+                status: 'previously-employed';
+                leftAt?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
+                    } | null;
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    } | {
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    } | null;
+                } | null;
+            } | {
+                status: 'ever-employed';
+            } | null;
+            timeZone?: {
+                anyOf: Array<{
+                    strategy: {
+                        mode: 'midpoint-with-buffer';
+                        midpointTimeZoneName: string;
+                        maxMinutesWestward: number;
+                        maxMinutesEastward: number;
+                        includePartialYearMatches: boolean;
+                    };
+                }>;
+            } | null;
+            pastJobText?: {
+                joiner: 'and' | 'or';
+                criteria: Array<{
+                    field: 'title' | 'summary' | 'anywhere';
+                    rule: 'includes' | 'excludes';
+                    text?: string | null;
+                }>;
+            } | null;
+            fuzzyName?: {
+                anyOf: Array<{
+                    name: string;
+                }>;
+            } | null;
+            companyMatchMode?: {
+                mode: 'strict';
+            } | {
+                mode: 'loose';
+            } | null;
+            yearsOfExperience?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            jobTitleV3?: {
+                anyOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+                allOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+                noneOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+            } | null;
+            hasProfilePicture?: boolean | null;
+            state?: {
+                anyOf?: Array<{
+                    countryCode?: string | null;
+                    stateName: string;
+                }> | null;
+                noneOf?: Array<{
+                    countryCode?: string | null;
+                    stateName: string;
+                }> | null;
+            } | null;
+            certifications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            publications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            hasNoEducation?: boolean | null;
+            employmentType?: {
+                anyOf?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                noneOf?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+            } | null;
+            /**
+             * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
+             */
+            getDetailedEducation?: boolean | null;
+            /**
+             * Whether to include deep details about each work experience item, like the company's LinkedIn URL, website, location, etc. That'll be put in the detailedWorkExperience array. This slows down the API call, so only enable this if you need it.
+             */
+            getDetailedWorkExperience?: boolean | null;
+            tags?: {
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+            } | null;
+            education?: {
+                anyOf?: Array<{
+                    school?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    schoolV2?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degree?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degreeV2?: {
+                        method: 'text';
+                        criteria: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        };
+                    } | {
+                        method: 'level';
+                        criteria: {
+                            anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                        };
+                    } | null;
+                    schoolNameKeywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    finishedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    startedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    isCurrentlyStudent?: boolean | null;
+                }> | null;
+                allOf?: Array<{
+                    school?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    schoolV2?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degree?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degreeV2?: {
+                        method: 'text';
+                        criteria: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        };
+                    } | {
+                        method: 'level';
+                        criteria: {
+                            anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                        };
+                    } | null;
+                    schoolNameKeywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    finishedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    startedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    isCurrentlyStudent?: boolean | null;
+                }> | null;
+            } | null;
+        };
+        /**
+         * Number of profiles to return per page.
+         */
+        pageSize?: number;
+        /**
+         * Opaque cursor from the previous response. Omit for the first page.
+         */
+        cursor?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/stealth-founders/search';
+};
+
+export type StealthFoundersSearchErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type StealthFoundersSearchError = StealthFoundersSearchErrors[keyof StealthFoundersSearchErrors];
+
+export type StealthFoundersSearchResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            data: Array<{
+                profile: {
+                    user_id?: string | null;
+                    primary_slug: string;
+                    first_name?: string | null;
+                    last_name?: string | null;
+                    name?: string | null;
+                    headline?: string | null;
+                    profile_pic?: string | null;
+                    locality?: string | null;
+                    inferred_location?: {
+                        street_address?: string | null;
+                        neighborhood?: string | null;
+                        city?: string | null;
+                        state_name?: string | null;
+                        state_code?: string | null;
+                        county?: string | null;
+                        postal_code?: string | null;
+                        country_code?: string | null;
+                        country_name?: string | null;
+                        coordinates?: {
+                            lat: number;
+                            lon: number;
+                        } | null;
+                        timezone?: string | null;
+                        full_address?: string | null;
+                        formatted_address?: string | null;
+                    } | null;
+                    experiences?: Array<{
+                        linkedin_company_id?: string | null;
+                        is_current?: boolean | null;
+                        company_name?: string | null;
+                        locality?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        seniority?: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | null;
+                        job_function?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        employment_type?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        academic_qualification?: Array<'High School' | 'Associate Degree' | 'Bachelor Degree'> | null;
+                        company_start_date?: string | null;
+                        company_end_date?: string | null;
+                    }> | null;
+                    education?: Array<{
+                        school_id?: string | null;
+                        school_name?: string | null;
+                        field_of_study_id?: string | null;
+                        field_of_study_name?: string | null;
+                        degree?: string | null;
+                        grade?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        activities?: string | null;
+                        notes?: string | null;
+                    }> | null;
+                    current_job?: {
+                        linkedin_company_id?: string | null;
+                        is_current?: boolean | null;
+                        company_name?: string | null;
+                        locality?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        seniority?: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | null;
+                        job_function?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        employment_type?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        academic_qualification?: Array<'High School' | 'Associate Degree' | 'Bachelor Degree'> | null;
+                        company_start_date?: string | null;
+                        company_end_date?: string | null;
+                    } | null;
+                    relevance_score?: number | null;
+                    last_sort_key?: string | null;
+                    entity_urn?: string | null;
+                    detailed_education?: Array<unknown> | null;
+                    detailed_work_experiences?: Array<unknown> | null;
+                };
+                stealthCareer: {
+                    /**
+                     * When we first observed this person in stealth.
+                     */
+                    enteredStealthAt?: string | null;
+                    /**
+                     * Most recent date where we confirmed that they were still in stealth.
+                     */
+                    lastConfirmedInStealthAt?: string | null;
+                    /**
+                     * When we first observed this person no longer in stealth. Null if still in stealth.
+                     */
+                    leftStealthAt?: string | null;
+                    /**
+                     * Days spent in stealth. If still in stealth, days from entry to today. If left, days from entry to exit.
+                     */
+                    daysInStealth?: number | null;
+                    /**
+                     * Signals job-listing changes across adjacent snapshots (older -> newer). These changes can provide useful clues while someone is in stealth, such as a role shifting from 'Founder @ Stealth Startup' to a more specific label like 'CTO @ Stealth Fintech Startup'.
+                     */
+                    transitions: Array<{
+                        /**
+                         * Older snapshot timestamp in this transition.
+                         */
+                        beforeSnapshotDate: string;
+                        /**
+                         * Newer snapshot timestamp in this transition.
+                         */
+                        afterSnapshotDate: string;
+                        /**
+                         * Current experiences that appeared in the newer snapshot and were absent in the older snapshot.
+                         */
+                        addedCurrentExperiences: Array<{
+                            title?: string | null;
+                            companyName?: string | null;
+                            startDate?: string | null;
+                            endDate?: string | null;
+                            isCurrent?: boolean | null;
+                        }>;
+                        /**
+                         * Current experiences that existed in the older snapshot and disappeared in the newer snapshot.
+                         */
+                        removedCurrentExperiences: Array<{
+                            title?: string | null;
+                            companyName?: string | null;
+                            startDate?: string | null;
+                            endDate?: string | null;
+                            isCurrent?: boolean | null;
+                        }>;
+                        /**
+                         * Whether the person switched stealth state between the two snapshots.
+                         */
+                        stealthStateChanged: boolean;
+                    }>;
+                };
+            }>;
+            pagination: {
+                /**
+                 * Cursor for the next page. Null means there are no additional pages.
+                 */
+                nextCursor?: string | null;
+                /**
+                 * Whether additional pages are available for this query.
+                 */
+                hasMore: boolean;
+            };
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type StealthFoundersSearchResponse = StealthFoundersSearchResponses[keyof StealthFoundersSearchResponses];
+
+export type StealthFoundersCountData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Stealth mode configuration. Use in-stealth for current stealth founders, or left-stealth for exited stealth founders.
+         */
+        stealthConfig: {
+            /**
+             * Find people currently in stealth. Optional enteredStealthAt narrows by entry date.
+             */
+            mode: 'in-stealth';
+            /**
+             * Date selection for when people entered stealth. Supports absolute or relative windows.
+             */
+            enteredStealthAt?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+        } | {
+            /**
+             * Find people who recently exited stealth. leftStealthAt defaults to the last year when omitted.
+             */
+            mode: 'left-stealth';
+            /**
+             * Optional date selection for when people entered stealth.
+             */
+            enteredStealthAt?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            /**
+             * Date selection for when people exited stealth. Defaults to the last year when omitted.
+             */
+            leftStealthAt?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+        };
+        /**
+         * Profile search filters to narrow results within the stealth population. All fields are optional — omit to search all stealth founders.
+         */
+        searchParams?: {
+            country3LetterCode?: {
+                anyOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+                noneOf?: Array<'USA' | 'GBR' | 'FRA' | 'IND' | 'BRA' | 'DEU' | 'ESP' | 'CAN' | 'AUS' | 'NLD' | 'ITA' | 'ZAF' | 'BEL' | 'CHN' | 'TUR' | 'MEX' | 'CHE' | 'NOR' | 'ARE' | 'SWE' | 'POL' | 'IDN' | 'ARG' | 'PRT' | 'COL' | 'CHL' | 'PAK' | 'DNK' | 'JPN' | 'NGA' | 'SGP' | 'PER' | 'NZL' | 'AUT' | 'IRL' | 'MYS' | 'BGD' | 'EGY' | 'ISR' | 'SAU' | 'PHL' | 'FIN' | 'IRN' | 'ROU' | 'CZE' | 'GRC' | 'HKG' | 'HUN' | 'KEN' | 'MAR' | 'VNM' | 'RUS' | 'UKR' | 'ECU' | 'THA' | 'LKA' | 'KOR' | 'BGR' | 'GHA' | 'SRB' | 'TWN' | 'HRV' | 'LTU' | 'PRI' | 'SVK' | 'TUN' | 'EST' | 'VEN' | 'CRI' | 'PAN' | 'URY' | 'LBN' | 'LUX' | 'CYP' | 'NPL' | 'JOR' | 'SVN' | 'MTQ' | 'QAT' | 'GLP' | 'UGA' | 'DZA' | 'GTM' | 'CMR' | 'LVA' | 'DOM' | 'AZE' | 'GEO' | 'SEN' | 'TZA' | 'ZWE' | 'KWT' | 'MLT' | 'OMN' | 'BOL' | 'SLV' | 'ARM' | 'PRY' | 'IRQ' | 'KHM' | 'BIH' | 'AGO' | 'BHR' | 'ALB' | 'KAZ' | 'CIV' | 'ETH' | 'MUS' | 'ZMB' | 'MKD' | 'COD' | 'BLR' | 'MOZ' | 'REU' | 'TTO' | 'GUF' | 'ISL' | 'MMR' | 'HND' | 'RWA' | 'MDG' | 'BEN' | 'UZB' | 'NAM' | 'BWA' | 'MDA' | 'JEY' | 'NIC' | 'SDN' | 'JAM' | 'IMN' | 'BFA' | 'MNG' | 'MNE' | 'MCO' | 'TGO' | 'AFG' | 'LBY' | 'XKX' | 'CYM' | 'MWI' | 'SOM' | 'PNG' | 'MDV' | 'MLI' | 'GIN' | 'PSE' | 'GAB' | 'LIE' | 'HTI' | 'SYR' | 'BRB' | 'YEM' | 'GGY' | 'NCL' | 'AND' | 'SUR' | 'MYT' | 'KGZ' | 'BHS' | 'GIB' | 'COG' | 'FJI' | 'BLM' | 'CUW' | 'CUB' | 'SLE' | 'BLZ' | 'NER' | 'LBR' | 'VIR' | 'PYF' | 'GUM' | 'MRT' | 'ABW' | 'SYC' | 'GUY' | 'LSO' | 'SWZ' | 'SSD' | 'LCA' | 'MAC' | 'SMR' | 'LAO' | 'BRN' | 'TCD' | 'BMU' | 'VGB' | 'PRK' | 'BTN' | 'BDI' | 'FRO' | 'TJK' | 'GMB' | 'STP' | 'ANT' | 'VCT' | 'DJI' | 'CPV' | 'TKM' | 'ATG' | 'TCA' | 'KNA' | 'GRD' | 'ASM' | 'VUT' | 'GNQ' | 'GRL' | 'SXM' | 'MNP' | 'COM' | 'TLS' | 'SJM' | 'CAF' | 'DMA' | 'MAF' | 'WSM' | 'BES' | 'MHL' | 'AIA' | 'TON' | 'COK' | 'SLB' | 'SPM' | 'GNB' | 'ATA' | 'TUV' | 'ALA' | 'IOT' | 'ERI' | 'PLW' | 'FSM' | 'NRU' | 'PCN' | 'FLK' | 'MSR' | 'VAT' | 'KIR' | 'SHN' | 'NIU' | 'WLF' | 'HMD' | 'CXR' | 'NFK' | 'ATF' | 'CCK' | 'SGS' | 'BVT' | 'UMI' | 'ESH' | 'TKL' | 'X-SOUTH_ASIA' | 'X-SOUTH_EAST_EUROPE' | 'X-NORTHERN_AFRICA' | 'X-PACIFIC' | 'X-SOUTH_WEST_EUROPE' | 'X-SOUTHERN_AFRICA' | 'X-WEST_INDIES' | 'X-SOUTH_AMERICA' | 'X-SOUTH_WEST_ASIA' | 'X-CENTRAL_EUROPE' | 'X-EASTERN_EUROPE' | 'X-WESTERN_EUROPE' | 'X-CENTRAL_AMERICA' | 'X-WESTERN_AFRICA' | 'X-SOUTH_ATLANTIC_OCEAN' | 'X-SOUTH_EAST_ASIA' | 'X-CENTRAL_AFRICA' | 'X-NORTH_AMERICA' | 'X-EAST_ASIA' | 'X-NORTHERN_EUROPE' | 'X-EASTERN_AFRICA' | 'X-SOUTHERN_INDIAN_OCEAN' | 'X-SOUTHERN_EUROPE' | 'X-CENTRAL_ASIA' | 'X-NORTHERN_ASIA' | 'X-ASIA' | 'X-EUROPE' | 'X-AFRICA' | 'X-OCEANIA' | 'X-AMERICAS' | 'X-ANTARCTICA' | 'X-ATLANTIC_OCEAN' | 'X-INDIAN_OCEAN' | 'X-MIDDLE_EAST' | 'X-MENA' | 'X-EMEA' | 'X-EUROPEAN_UNION' | 'X-EFTA' | 'X-APAC' | 'X-LATAM' | 'X-ANGLOSPHERE' | 'X-DACH' | 'X-NORDICS' | 'X-BENELUX' | 'X-GCC' | 'X-BRICS' | 'X-G20' | 'X-OECD' | 'X-SANCTIONED'> | null;
+            } | null;
+            numConnections?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            numFollowers?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            approxAge?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            keywords?: {
+                containsAll?: Array<string> | null;
+                containsAny?: Array<string> | null;
+                containsNone?: Array<string> | null;
+            } | null;
+            keywordsV2?: {
+                operator?: 'AND' | 'OR';
+                clauses: Array<{
+                    operator?: 'AND' | 'OR';
+                    terms: Array<string>;
+                    negate?: boolean;
+                }>;
+                options?: {
+                    fieldsToSearchOver?: {
+                        summary?: boolean;
+                        headline?: boolean;
+                        pastJobTitles?: boolean;
+                        pastJobSummaries?: boolean;
+                        pastCompanyNames?: boolean;
+                        currentJobTitles?: boolean;
+                        currentJobSummaries?: boolean;
+                        currentCompanyNames?: boolean;
+                        interests?: boolean;
+                        skills?: boolean;
+                        industry?: boolean;
+                        education?: boolean;
+                        publications?: boolean;
+                        certifications?: boolean;
+                        articles?: boolean;
+                        courses?: boolean;
+                        projects?: boolean;
+                        patents?: boolean;
+                        volunteering?: boolean;
+                        languages?: boolean;
+                    } | null;
+                } | null;
+            } | null;
+            keywordSearchOptions?: {
+                fieldsToSearchOver?: {
+                    summary?: boolean;
+                    headline?: boolean;
+                    pastJobTitles?: boolean;
+                    pastJobSummaries?: boolean;
+                    pastCompanyNames?: boolean;
+                    currentJobTitles?: boolean;
+                    currentJobSummaries?: boolean;
+                    currentCompanyNames?: boolean;
+                    interests?: boolean;
+                    skills?: boolean;
+                    industry?: boolean;
+                    education?: boolean;
+                    publications?: boolean;
+                    certifications?: boolean;
+                    articles?: boolean;
+                    courses?: boolean;
+                    projects?: boolean;
+                    patents?: boolean;
+                    volunteering?: boolean;
+                    languages?: boolean;
+                } | null;
+            } | null;
+            jobTitleV2?: {
+                anyOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+                noneOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+                allOf?: Array<{
+                    type: 'term';
+                    term: string;
+                } | {
+                    type: 'static-groups';
+                    groups: Array<'founder' | 'c-suite' | 'board-member'>;
+                } | {
+                    type: 'dynamic-groups';
+                    groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
+                    keywords?: Array<string>;
+                }> | null;
+            } | null;
+            startedInRole?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'lastN';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    quantity: number;
+                } | {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            startedAtCompany?: {
+                strategy: 'absolute';
+                range?: {
+                    lowerBound?: string | null;
+                    upperBound?: string | null;
+                } | null;
+            } | {
+                strategy: 'relative';
+                window?: {
+                    method: 'lastN';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    quantity: number;
+                } | {
+                    method: 'within';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                } | {
+                    method: 'calendar';
+                    which: 'current' | 'previous';
+                    period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                } | null;
+            } | null;
+            location?: {
+                unionAll?: Array<{
+                    strategy: 'radial-distance';
+                    center: {
+                        name?: string | null;
+                        address?: string | null;
+                        latitude: number;
+                        longitude: number;
+                    };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                }> | null;
+                subtractAll?: Array<{
+                    strategy: 'radial-distance';
+                    center: {
+                        name?: string | null;
+                        address?: string | null;
+                        latitude: number;
+                        longitude: number;
+                    };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                }> | null;
+            } | null;
+            pastJobs?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
+            languages?: {
+                anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+                noneOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
+            } | null;
+            jobStatus?: {
+                status: 'currently-employed';
+            } | {
+                status: 'previously-employed';
+                leftAt?: {
+                    strategy: 'absolute';
+                    range?: {
+                        lowerBound?: string | null;
+                        upperBound?: string | null;
+                    } | null;
+                } | {
+                    strategy: 'relative';
+                    window?: {
+                        method: 'lastN';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        quantity: number;
+                    } | {
+                        method: 'within';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    } | {
+                        method: 'calendar';
+                        which: 'current' | 'previous';
+                        period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                    } | null;
+                } | null;
+            } | {
+                status: 'ever-employed';
+            } | null;
+            timeZone?: {
+                anyOf: Array<{
+                    strategy: {
+                        mode: 'midpoint-with-buffer';
+                        midpointTimeZoneName: string;
+                        maxMinutesWestward: number;
+                        maxMinutesEastward: number;
+                        includePartialYearMatches: boolean;
+                    };
+                }>;
+            } | null;
+            pastJobText?: {
+                joiner: 'and' | 'or';
+                criteria: Array<{
+                    field: 'title' | 'summary' | 'anywhere';
+                    rule: 'includes' | 'excludes';
+                    text?: string | null;
+                }>;
+            } | null;
+            fuzzyName?: {
+                anyOf: Array<{
+                    name: string;
+                }>;
+            } | null;
+            companyMatchMode?: {
+                mode: 'strict';
+            } | {
+                mode: 'loose';
+            } | null;
+            yearsOfExperience?: {
+                lowerBound?: number | null;
+                upperBound?: number | null;
+            } | null;
+            jobTitleV3?: {
+                anyOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+                allOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+                noneOf?: Array<{
+                    type: 'plain';
+                    term: string;
+                } | {
+                    type: 'functional';
+                    keywords?: Array<string> | null;
+                    seniority: Array<'senior' | 'staff' | 'principal' | 'lead' | 'manager' | 'head' | 'director' | 'vp' | 'svp' | 'c-suite'>;
+                } | {
+                    type: 'cartesian';
+                    keywordArrays: Array<Array<string>>;
+                }> | null;
+            } | null;
+            hasProfilePicture?: boolean | null;
+            state?: {
+                anyOf?: Array<{
+                    countryCode?: string | null;
+                    stateName: string;
+                }> | null;
+                noneOf?: Array<{
+                    countryCode?: string | null;
+                    stateName: string;
+                }> | null;
+            } | null;
+            certifications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            publications?: {
+                anyOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                }> | null;
+            } | null;
+            hasNoEducation?: boolean | null;
+            employmentType?: {
+                anyOf?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                noneOf?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+            } | null;
+            /**
+             * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
+             */
+            getDetailedEducation?: boolean | null;
+            /**
+             * Whether to include deep details about each work experience item, like the company's LinkedIn URL, website, location, etc. That'll be put in the detailedWorkExperience array. This slows down the API call, so only enable this if you need it.
+             */
+            getDetailedWorkExperience?: boolean | null;
+            tags?: {
+                anyOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                allOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                noneOf?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+            } | null;
+            education?: {
+                anyOf?: Array<{
+                    school?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    schoolV2?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degree?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degreeV2?: {
+                        method: 'text';
+                        criteria: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        };
+                    } | {
+                        method: 'level';
+                        criteria: {
+                            anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                        };
+                    } | null;
+                    schoolNameKeywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    finishedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    startedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    isCurrentlyStudent?: boolean | null;
+                }> | null;
+                allOf?: Array<{
+                    school?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    schoolV2?: {
+                        anyOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            /**
+                             * The LinkedIn organization ID of the school, like 1646 for Harvard University
+                             */
+                            linkedinId?: string | null;
+                            /**
+                             * The LinkedIn URL of the school, like 'https://www.linkedin.com/school/harvard-university/'
+                             */
+                            linkedinUrl?: string | null;
+                            /**
+                             * The domain of the school, like 'harvard.edu'
+                             */
+                            domain?: string | null;
+                        }> | null;
+                    } | null;
+                    keywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degree?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    degreeV2?: {
+                        method: 'text';
+                        criteria: {
+                            anyOf?: Array<string> | null;
+                            noneOf?: Array<string> | null;
+                        };
+                    } | {
+                        method: 'level';
+                        criteria: {
+                            anyOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                            noneOf?: Array<'High School' | 'Associate' | 'Bachelor' | 'Master' | 'Doctorate' | 'Business' | 'Law' | 'Medicine' | 'Dentistry' | 'Nursing' | 'Pharmacy' | 'Public Health' | 'Public Policy' | 'Education' | 'Social Work' | 'Divinity' | 'Architecture'> | null;
+                        };
+                    } | null;
+                    schoolNameKeywords?: {
+                        anyOf?: Array<string> | null;
+                        noneOf?: Array<string> | null;
+                    } | null;
+                    finishedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    startedSchoolAt?: {
+                        strategy: 'absolute';
+                        range?: {
+                            lowerBound?: string | null;
+                            upperBound?: string | null;
+                        } | null;
+                    } | {
+                        strategy: 'relative';
+                        window?: {
+                            method: 'lastN';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            quantity: number;
+                        } | {
+                            method: 'within';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        } | {
+                            method: 'calendar';
+                            which: 'current' | 'previous';
+                            period: 'day' | 'week' | 'month' | 'quarter' | 'year';
+                        } | null;
+                    } | null;
+                    isCurrentlyStudent?: boolean | null;
+                }> | null;
+            } | null;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/stealth-founders/count';
+};
+
+export type StealthFoundersCountErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type StealthFoundersCountError = StealthFoundersCountErrors[keyof StealthFoundersCountErrors];
+
+export type StealthFoundersCountResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Total number of profiles matching this stealth query.
+             */
+            count: number;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type StealthFoundersCountResponse = StealthFoundersCountResponses[keyof StealthFoundersCountResponses];
+
 export type SyncTurboContactEnrichmentData = {
     body: {
         /**
@@ -30629,6 +34258,276 @@ export type SyncQuickContactRevealResponses = {
 
 export type SyncQuickContactRevealResponse = SyncQuickContactRevealResponses[keyof SyncQuickContactRevealResponses];
 
+export type StartDepthChartData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Company identifier. Set identifier to 'linkedinUrl', 'linkedinSlug', 'linkedinOrgId', or 'domain' and provide the corresponding value.
+         */
+        company: {
+            identifier: 'linkedinUrl';
+            /**
+             * LinkedIn company URL (e.g. 'https://www.linkedin.com/company/anthropic').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinSlug';
+            /**
+             * LinkedIn company slug (e.g. 'anthropic').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinOrgId';
+            /**
+             * LinkedIn numeric organization ID (e.g. '1441').
+             */
+            value: string;
+        } | {
+            identifier: 'domain';
+            /**
+             * Company website domain (e.g. 'anthropic.com').
+             */
+            value: string;
+        };
+        /**
+         * Optional list of function/department labels to classify employees into (e.g. ['Engineering', 'Sales', 'Legal Practice']). When omitted, functions are auto-detected based on the company's employee titles. An 'Other' category is automatically appended if not already included, to catch employees that don't fit the provided labels.
+         */
+        functions?: Array<string> | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/depth-chart/start';
+};
+
+export type StartDepthChartErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type StartDepthChartError = StartDepthChartErrors[keyof StartDepthChartErrors];
+
+export type StartDepthChartResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Unique report ID. Poll /depth-chart/poll with this ID to check status and retrieve results.
+             */
+            reportId: string;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type StartDepthChartResponse = StartDepthChartResponses[keyof StartDepthChartResponses];
+
 export type TriggerExhaustiveContactEnrichmentData = {
     body: {
         /**
@@ -30879,7 +34778,7 @@ export type TriggerExhaustiveContactEnrichmentResponses = {
 
 export type TriggerExhaustiveContactEnrichmentResponse = TriggerExhaustiveContactEnrichmentResponses[keyof TriggerExhaustiveContactEnrichmentResponses];
 
-export type StartBatchContactEnrichmentData = {
+export type StartBatchContactDetailsData = {
     body: {
         /**
          * Your Fiber API key
@@ -30904,10 +34803,10 @@ export type StartBatchContactEnrichmentData = {
     };
     path?: never;
     query?: never;
-    url: '/v1/contact-enrich/batch/start';
+    url: '/v1/contact-details/batch/start';
 };
 
-export type StartBatchContactEnrichmentErrors = {
+export type StartBatchContactDetailsErrors = {
     /**
      * Default Response
      */
@@ -31020,9 +34919,9 @@ export type StartBatchContactEnrichmentErrors = {
     };
 };
 
-export type StartBatchContactEnrichmentError = StartBatchContactEnrichmentErrors[keyof StartBatchContactEnrichmentErrors];
+export type StartBatchContactDetailsError = StartBatchContactDetailsErrors[keyof StartBatchContactDetailsErrors];
 
-export type StartBatchContactEnrichmentResponses = {
+export type StartBatchContactDetailsResponses = {
     /**
      * Default Response
      */
@@ -31139,7 +35038,7 @@ export type StartBatchContactEnrichmentResponses = {
     };
 };
 
-export type StartBatchContactEnrichmentResponse = StartBatchContactEnrichmentResponses[keyof StartBatchContactEnrichmentResponses];
+export type StartBatchContactDetailsResponse = StartBatchContactDetailsResponses[keyof StartBatchContactDetailsResponses];
 
 export type ProfileLiveEnrichData = {
     body: {
@@ -31506,6 +35405,10 @@ export type ProfileLiveEnrichResponses = {
                     company_end_date?: string | null;
                 }> | null;
             };
+            /**
+             * True when the profile is not found but we have the cached data in our database. In this case, you won't be charged.
+             */
+            isCached404?: boolean | null;
         } | {
             found: false;
             message: string;
@@ -32166,6 +36069,10 @@ export type CompanyLiveEnrichResponses = {
                 revenue_usd_lower_bound?: string | null;
                 revenue_usd_upper_bound?: string | null;
             };
+            /**
+             * True when the company is not found but we have the cached data in our database. In this case, you won't be charged.
+             */
+            isCached404?: boolean | null;
         };
         chargeInfo: {
             method: 'charged-now';
@@ -32266,6 +36173,535 @@ export type CompanyLiveEnrichResponses = {
 };
 
 export type CompanyLiveEnrichResponse = CompanyLiveEnrichResponses[keyof CompanyLiveEnrichResponses];
+
+export type WebpageScreenshotData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * The URL of the webpage to capture (e.g. 'https://stripe.com/pricing'). Bare domains like 'stripe.com' are also accepted and will be treated as HTTPS.
+         */
+        url: string;
+        /**
+         * If true, captures the entire scrollable page. Defaults to false (viewport only).
+         */
+        fullPage?: boolean;
+        /**
+         * Device format for the capture. 'mobile' uses a phone-sized viewport, 'desktop' uses a standard widescreen viewport. Defaults to 'desktop'.
+         */
+        format?: 'mobile' | 'desktop';
+        /**
+         * ISO 3166-1 alpha-3 country code for geo-located capture (e.g. 'USA', 'GBR', 'DEU'). If omitted, defaults to a US-based capture.
+         */
+        country?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/live-fetch/webpage/screenshot';
+};
+
+export type WebpageScreenshotErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type WebpageScreenshotError = WebpageScreenshotErrors[keyof WebpageScreenshotErrors];
+
+export type WebpageScreenshotResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Hosted URL of the captured screenshot image in PNG format.
+             */
+            screenshotUrl: string;
+            /**
+             * The final URL of the page that was screenshotted, after following any redirects. May differ from the input URL if the page redirects.
+             */
+            pageUrl: string;
+            /**
+             * The HTML title of the screenshotted page, if available.
+             */
+            pageTitle?: string | null;
+            /**
+             * MIME type of the screenshot image.
+             */
+            imageMediaType: 'image/png';
+            /**
+             * ISO 8601 timestamp of when the screenshot was captured.
+             */
+            capturedAt: string;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type WebpageScreenshotResponse = WebpageScreenshotResponses[keyof WebpageScreenshotResponses];
+
+export type StartBatchLiveEnrichData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Whether to enrich people or companies
+         */
+        type: 'PROFILE' | 'COMPANY';
+        /**
+         * List of LinkedIn identifiers. For profiles: LinkedIn URL (e.g. 'https://www.linkedin.com/in/williamhgates'), profile slug (e.g. 'williamhgates'), or Sales Navigator URN (e.g. 'ACwAAAjNR6wBsr_od4UG9Y-HRxg21mwhv5xO0FE') or numeric user ID (e.g. '4532776'). For companies: LinkedIn URL (e.g. 'https://www.linkedin.com/company/microsoft'), company slug (e.g. 'microsoft'), or numeric org ID (e.g. '1035').
+         */
+        identifiers: Array<string>;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/linkedin-live-fetch/batch/start';
+};
+
+export type StartBatchLiveEnrichErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type StartBatchLiveEnrichError = StartBatchLiveEnrichErrors[keyof StartBatchLiveEnrichErrors];
+
+export type StartBatchLiveEnrichResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Use this ID to poll for progress via the poll endpoint.
+             */
+            taskId: string;
+            type: 'PROFILE' | 'COMPANY';
+            /**
+             * Number of unique identifiers queued for enrichment
+             */
+            numIdentifiersEnqueued: number;
+            /**
+             * Number of duplicate identifiers skipped.
+             */
+            numDuplicatesSkipped: number;
+            /**
+             * Number of identifiers that could not be parsed. numIdentifiersEnqueued + numDuplicatesSkipped + numMalformed = length of your input.
+             */
+            numMalformed: number;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type StartBatchLiveEnrichResponse = StartBatchLiveEnrichResponses[keyof StartBatchLiveEnrichResponses];
 
 export type ProfilePostsLiveFetchData = {
     body: {
@@ -35121,7 +39557,7 @@ export type ReverseEmailLookupResponses = {
                 /**
                  * Machine-readable rejection reason
                  */
-                reason: 'disposable_or_anonymous_email' | 'invalid_tld' | 'autogenerated_icloud_email' | 'digits_only_username' | 'role_based_mailbox' | 'junk_username' | 'spam_domain' | 'bot_farm_email';
+                reason: 'disposable_or_anonymous_email' | 'invalid_tld' | 'autogenerated_icloud_email' | 'digits_only_username' | 'role_based_mailbox' | 'junk_username' | 'spam_domain' | 'bot_farm_email' | 'mailing_list';
                 /**
                  * Human-readable explanation
                  */
@@ -35227,6 +39663,285 @@ export type ReverseEmailLookupResponses = {
 };
 
 export type ReverseEmailLookupResponse = ReverseEmailLookupResponses[keyof ReverseEmailLookupResponses];
+
+export type TwitterHandleToLinkedinUrlData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Twitter/X handle to look up. Accepts a bare handle with or without a leading '@' (e.g. 'elonmusk', '@elonmusk'), or a full X/Twitter profile URL (e.g. 'https://x.com/elonmusk', 'twitter.com/@elonmusk').
+         */
+        handle: string;
+        /**
+         * Optional hint about the person, used to disambiguate common-name handles (e.g. "VC at a16z" or "YC W23 founder"). Improves accuracy on ambiguous handles. Max 1000 characters.
+         */
+        context?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/twitter-handle-to-linkedin/single';
+};
+
+export type TwitterHandleToLinkedinUrlErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TwitterHandleToLinkedinUrlError = TwitterHandleToLinkedinUrlErrors[keyof TwitterHandleToLinkedinUrlErrors];
+
+export type TwitterHandleToLinkedinUrlResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * LinkedIn profile URL if a match was found, else null.
+             */
+            linkedInUrl?: string | null;
+            /**
+             * Match confidence on a 0-10 scale. 0 means no confident match was found; higher values indicate stronger evidence.
+             */
+            confidenceOutOf10: number;
+            /**
+             * Short explanation of why this LinkedIn profile was matched. Null for high-confidence direct matches and when no match was found.
+             */
+            rationale?: string | null;
+            /**
+             * Public snapshot of the X profile that was used for matching (null if the X profile could not be fetched).
+             */
+            xProfile?: {
+                /**
+                 * The X handle, echoed from the fetched profile.
+                 */
+                handle: string;
+                /**
+                 * Display name shown on the X profile. Null if the profile has no display name set.
+                 */
+                displayName?: string | null;
+                /**
+                 * Profile bio text. Null if the profile has no bio.
+                 */
+                bio?: string | null;
+                /**
+                 * Location as displayed on the X profile (free-form, not normalized). Null if the user did not set a location.
+                 */
+                location?: string | null;
+                /**
+                 * External URL linked from the X profile (often a personal site or company link). Null if the profile has no external URL.
+                 */
+                externalUrl?: string | null;
+            } | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TwitterHandleToLinkedinUrlResponse = TwitterHandleToLinkedinUrlResponses[keyof TwitterHandleToLinkedinUrlResponses];
 
 export type GoogleMapsSearchData = {
     body: {
@@ -41741,6 +46456,249 @@ export type CompanyTypeaheadResponses = {
 
 export type CompanyTypeaheadResponse = CompanyTypeaheadResponses[keyof CompanyTypeaheadResponses];
 
+export type JobTitleRewriteData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * The job title to expand into synonyms and variations.
+         */
+        query: string;
+        /**
+         * Maximum number of suggestions to return.
+         */
+        limit?: number;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/typeahead/job-title';
+};
+
+export type JobTitleRewriteErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type JobTitleRewriteError = JobTitleRewriteErrors[keyof JobTitleRewriteErrors];
+
+export type JobTitleRewriteResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            suggestions: Array<string>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type JobTitleRewriteResponse = JobTitleRewriteResponses[keyof JobTitleRewriteResponses];
+
 export type LocationTypeaheadData = {
     body: {
         /**
@@ -42567,30 +47525,36 @@ export type TextToCombinedSearchData = {
          * Describe what you’re looking for — for example: I want Senior Product Managers from Series A to C FinTech startups located in New York.
          */
         query: string;
-        /**
-         * The number of companies to return. If not provided, no companies will be returned. Prospects are found based on the query regardless of this value.
-         */
-        companyItemLimit?: number | null;
-        /**
-         * The number of profiles to return.
-         */
-        profileItemLimit: number;
-        /**
-         * The IDs of company exclusion lists to filter out matching companies.
-         */
-        companyExclusionListIDs?: Array<string> | null;
-        /**
-         * The IDs of prospect exclusion lists to filter out matching prospects.
-         */
-        prospectExclusionListIDs?: Array<string> | null;
-        /**
-         * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
-         */
-        getDetailedEducation?: boolean | null;
-        /**
-         * Whether to include deep details about each work experience item, like the company's LinkedIn URL, website, location, etc. That'll be put in the detailedWorkExperience array. This slows down the API call, so only enable this if you need it.
-         */
-        getDetailedWorkExperience?: boolean | null;
+        companyConfig: {
+            /**
+             * The number of companies to return per page. Pass null if you only want profiles. NOTE: your companies search params will still get honored to find the profiles.
+             */
+            pageSize?: number | null;
+            /**
+             * The IDs of company exclusion lists to filter out matching companies.
+             */
+            exclusionListIDs?: Array<string> | null;
+            companyCursor?: string | null;
+        };
+        profileConfig: {
+            /**
+             * The number of profiles to return per page.
+             */
+            pageSize: number;
+            /**
+             * The IDs of prospect exclusion lists to filter out matching people.
+             */
+            exclusionListIDs?: Array<string> | null;
+            profileCursor?: string | null;
+            /**
+             * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
+             */
+            getDetailedEducation?: boolean | null;
+            /**
+             * Whether to include deep details about each work experience item, like the company's LinkedIn URL, website, location, etc. That'll be put in the detailedWorkExperience array. This slows down the API call, so only enable this if you need it.
+             */
+            getDetailedWorkExperience?: boolean | null;
+        };
     };
     path?: never;
     query?: never;
@@ -43073,16 +48037,6 @@ export type TextToCombinedSearchResponses = {
                         emoji: string;
                     }> | null;
                 } | null;
-                revenueUSD?: {
-                    min?: {
-                        quantity: number;
-                        suffix: 'K' | 'M' | 'B' | 'T' | null;
-                    } | null;
-                    max?: {
-                        quantity: number;
-                        suffix: 'K' | 'M' | 'B' | 'T' | null;
-                    } | null;
-                } | null;
                 officeLocationsV2?: {
                     anyOf?: Array<{
                         type: 'worldwide';
@@ -43399,6 +48353,10 @@ export type TextToCombinedSearchResponses = {
                         };
                         year: number;
                     }> | null;
+                } | null;
+                revenueRangeUSD?: {
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
                 } | null;
             } | null;
             profileSearchParams: {
@@ -46395,6 +51353,8 @@ export type TextToCombinedSearchResponses = {
                     }> | null;
                 }>;
             };
+            companyCursor?: string | null;
+            profileCursor?: string | null;
         };
         chargeInfo: {
             method: 'charged-now';
@@ -48831,16 +53791,6 @@ export type TextToCombinedSearchParamResponses = {
                         emoji: string;
                     }> | null;
                 } | null;
-                revenueUSD?: {
-                    min?: {
-                        quantity: number;
-                        suffix: 'K' | 'M' | 'B' | 'T' | null;
-                    } | null;
-                    max?: {
-                        quantity: number;
-                        suffix: 'K' | 'M' | 'B' | 'T' | null;
-                    } | null;
-                } | null;
                 officeLocationsV2?: {
                     anyOf?: Array<{
                         type: 'worldwide';
@@ -49157,6 +54107,10 @@ export type TextToCombinedSearchParamResponses = {
                         };
                         year: number;
                     }> | null;
+                } | null;
+                revenueRangeUSD?: {
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
                 } | null;
             } | null;
             profileSearchParams: {
@@ -51556,7 +56510,7 @@ export type GithubLookupTriggerData = {
          */
         overallContext: string;
         /**
-         * List of people to look up. Maximum 2000 people can be provided at a time.
+         * List of people to look up. Maximum 1000 people can be provided at a time.
          */
         people: Array<{
             /**
@@ -52081,6 +57035,343 @@ export type GithubToLinkedInTriggerResponses = {
 };
 
 export type GithubToLinkedInTriggerResponse = GithubToLinkedInTriggerResponses[keyof GithubToLinkedInTriggerResponses];
+
+export type GithubToLinkedinSingleData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * The GitHub username to look up.
+         */
+        githubUsername: string;
+        /**
+         * What to extract from GitHub profile. 'linkedin' finds LinkedIn profile, 'email' extracts work emails from commits, 'both' returns both.
+         */
+        outputType?: 'linkedin' | 'email' | 'both';
+        /**
+         * Optional customer-provided ID to tie results back to original input.
+         */
+        customerProvidedId?: string | null;
+        /**
+         * When true, include resolver timing details in the response for diagnostics.
+         */
+        includeDebugTimings?: boolean;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/github-to-linkedin/single';
+};
+
+export type GithubToLinkedinSingleErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type GithubToLinkedinSingleError = GithubToLinkedinSingleErrors[keyof GithubToLinkedinSingleErrors];
+
+export type GithubToLinkedinSingleResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * The GitHub username that was resolved.
+             */
+            githubUsername: string;
+            /**
+             * Echoes the optional customer-provided ID from the request.
+             */
+            customerProvidedId: string | null;
+            /**
+             * Resolved LinkedIn profile URL when available.
+             */
+            linkedInUrl: string | null;
+            /**
+             * Resolved LinkedIn profile slug when available.
+             */
+            linkedInSlug: string | null;
+            /**
+             * Confidence score (0-10) for this resolution.
+             */
+            confidenceOutOf10: number;
+            /**
+             * Method used to resolve the result. See the enum values on the PublicMatchSource schema for the full list.
+             */
+            matchSource: 'email' | 'name-search' | 'agent' | 'web-search' | 'not-found';
+            /**
+             * Optional explanation for the selected match.
+             */
+            rationale: string | null;
+            /**
+             * Extracted work email addresses from GitHub commits/cache.
+             */
+            extractedEmails: Array<string>;
+            /**
+             * Basic GitHub profile fields used by the resolver.
+             */
+            githubProfile: {
+                name: string | null;
+                company: string | null;
+                location: string | null;
+                bio: string | null;
+                blog: string | null;
+                avatarUrl: string | null;
+                followers: number | null;
+                publicRepos: number | null;
+            } | null;
+            /**
+             * Optional resolver timing metadata. Present only when requested for diagnostics.
+             */
+            debugTimings?: {
+                /**
+                 * Lookup runtime measured inside the single-lookup worker.
+                 */
+                lookupDurationMs: number;
+                /**
+                 * Duration of cache/bootstrap loading before resolver execution.
+                 */
+                bootstrapDurationMs: number;
+                /**
+                 * Total resolver duration for this lookup.
+                 */
+                resolverDurationMs: number;
+                /**
+                 * Sum of explicitly instrumented resolver step durations.
+                 */
+                resolverStepDurationsSumMs: number;
+                /**
+                 * Resolver duration not covered by step-level instrumentation.
+                 */
+                resolverUninstrumentedDurationMs: number;
+                /**
+                 * Duration spent charging credits for this request.
+                 */
+                creditChargeDurationMs?: number | null;
+                /**
+                 * End-to-end route handler duration for this request.
+                 */
+                routeDurationMs?: number | null;
+                /**
+                 * Step-level resolver timings for troubleshooting and profiling.
+                 */
+                resolverSteps: Array<{
+                    step: 'cache_bootstrap' | 'zen_cache_hit' | 'github_fetch' | 'email_waterfall' | 'kitchen_sink' | 'agent' | 'tavily_web_search';
+                    durationMs: number;
+                    outcome: 'hit' | 'miss' | 'skipped' | 'error';
+                    detail?: string | null;
+                }>;
+            } | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type GithubToLinkedinSingleResponse = GithubToLinkedinSingleResponses[keyof GithubToLinkedinSingleResponses];
 
 export type SocialMediaLookupTriggerData = {
     body: {
@@ -53980,6 +59271,806 @@ export type YoutubeChannelResponses = {
 };
 
 export type YoutubeChannelResponse = YoutubeChannelResponses[keyof YoutubeChannelResponses];
+
+export type FetchRealEstateListingsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Location input for listing search. Use `raw` for user-provided text and `structured` for exact city/state precision.
+         */
+        location: {
+            type: 'raw';
+            rawQuery: string;
+        } | {
+            type: 'structured';
+            city: string;
+            stateCode: string;
+        };
+        /**
+         * Pagination token from a previous response. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+        /**
+         * Sort order for search results.
+         */
+        sortBy?: 'relevance' | 'newest' | 'priceAscending' | 'priceDescending' | 'paymentAscending' | 'paymentDescending' | 'bedroomCountDescending' | 'bathroomCountDescending' | 'floorAreaSqFtDescending' | 'lotAreaSqFtDescending' | 'estimatedPriceDescending' | 'estimatedPriceAscending' | null;
+        /**
+         * Listing category to search.
+         */
+        listingStatus?: 'forSale' | 'forRent' | 'sold' | null;
+        /**
+         * Property types to include.
+         */
+        homeTypes?: Array<'house' | 'condo' | 'townhouse' | 'multi_family' | 'apartment' | 'land' | 'manufactured'> | null;
+        /**
+         * Price range filter for sale and sold listings. Values must use the local market currency for the location (for example, CAD for Canada and USD for the United States).
+         */
+        price?: {
+            min?: number | null;
+            max?: number | null;
+        } | null;
+        /**
+         * Monthly rent range filter for rental listings. Values must use the local market currency for the location (for example, CAD for Canada and USD for the United States).
+         */
+        rent?: {
+            min?: number | null;
+            max?: number | null;
+        } | null;
+        /**
+         * Bedroom count filter. Use `min` to set the lower bound.
+         */
+        bedrooms?: {
+            min: number;
+        } | null;
+        /**
+         * Bathroom count filter. Use `min` to set the lower bound.
+         */
+        bathrooms?: {
+            min: number;
+        } | null;
+        /**
+         * Interior living-area range in square feet.
+         */
+        floorAreaSqFt?: {
+            min?: number | null;
+            max?: number | null;
+        } | null;
+        /**
+         * Lot-size range in square feet.
+         */
+        lotAreaSqFt?: {
+            min?: number | null;
+            max?: number | null;
+        } | null;
+        /**
+         * Year-built range.
+         */
+        yearBuilt?: {
+            min?: number | null;
+            max?: number | null;
+        } | null;
+        /**
+         * Parking spots filter.
+         */
+        parkingSpots?: {
+            /**
+             * Minimum number of parking spots.
+             */
+            min: number;
+        } | null;
+        /**
+         * Additional keyword terms to match in listing text. For broader matching, separate terms with commas (for example: 'pool,garage').
+         */
+        keywords?: string | null;
+        /**
+         * Optional property feature filters.
+         */
+        features?: {
+            hasPool?: boolean | null;
+            hasGarage?: boolean | null;
+            hasAirConditioning?: boolean | null;
+            isWaterfront?: boolean | null;
+            isSingleStory?: boolean | null;
+            hasOpenHouse?: boolean | null;
+            includeUnderContract?: boolean | null;
+        } | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/real-estate/listings';
+};
+
+export type FetchRealEstateListingsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type FetchRealEstateListingsError = FetchRealEstateListingsErrors[keyof FetchRealEstateListingsErrors];
+
+export type FetchRealEstateListingsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Unique identifier for this search request.
+             */
+            runId: string;
+            /**
+             * Total number of matching listings.
+             */
+            totalResultCount?: number | null;
+            /**
+             * Region name interpreted for this search query.
+             */
+            regionName?: string | null;
+            /**
+             * Token for retrieving the next page. Pass this exact value as `nextPageToken` in the next request. Null if no more pages.
+             */
+            nextPageToken?: string | null;
+            /**
+             * Properties returned for this page.
+             */
+            properties: Array<{
+                /**
+                 * Price represented in both USD and local listing currency.
+                 */
+                price?: {
+                    /**
+                     * Listing price converted to USD when conversion data is available.
+                     */
+                    usd: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                    /**
+                     * Listing price in the local market currency.
+                     */
+                    local: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                } | null;
+                /**
+                 * Result position on this page.
+                 */
+                position?: number | null;
+                /**
+                 * Unique listing identifier.
+                 */
+                listingId: string;
+                /**
+                 * Full property address.
+                 */
+                address?: string | null;
+                /**
+                 * Street address.
+                 */
+                street?: string | null;
+                /**
+                 * City name.
+                 */
+                city?: string | null;
+                /**
+                 * State or province code.
+                 */
+                state?: string | null;
+                /**
+                 * Postal or ZIP code.
+                 */
+                postalCode?: string | null;
+                /**
+                 * Unit or apartment number, when the listing is part of a multi-unit building.
+                 */
+                unitNumber?: string | null;
+                /**
+                 * Number of bedrooms.
+                 */
+                bedroomCount?: number | null;
+                /**
+                 * Number of bathrooms.
+                 */
+                bathroomCount?: number | null;
+                /**
+                 * Estimated property value in USD and local currency.
+                 */
+                estimatedPrice?: {
+                    /**
+                     * Listing price converted to USD when conversion data is available.
+                     */
+                    usd: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                    /**
+                     * Listing price in the local market currency.
+                     */
+                    local: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                } | null;
+                /**
+                 * Estimated monthly rent in USD and local currency.
+                 */
+                estimatedMonthlyRent?: {
+                    /**
+                     * Listing price converted to USD when conversion data is available.
+                     */
+                    usd: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                    /**
+                     * Listing price in the local market currency.
+                     */
+                    local: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                } | null;
+                /**
+                 * Latest absolute price change in USD and local currency.
+                 */
+                priceChangeAmount?: {
+                    /**
+                     * Listing price converted to USD when conversion data is available.
+                     */
+                    usd: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                    /**
+                     * Listing price in the local market currency.
+                     */
+                    local: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                } | null;
+                /**
+                 * Formatted price-reduction note.
+                 */
+                priceReductionNote?: string | null;
+                /**
+                 * Tax-assessed property value in USD and local currency.
+                 */
+                taxAssessedValue?: {
+                    /**
+                     * Listing price converted to USD when conversion data is available.
+                     */
+                    usd: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                    /**
+                     * Listing price in the local market currency.
+                     */
+                    local: {
+                        /**
+                         * ISO 4217 currency code for the listing price.
+                         */
+                        currency?: string | null;
+                        /**
+                         * Numeric listing price amount.
+                         */
+                        amount?: number | null;
+                    };
+                } | null;
+                /**
+                 * Living area in square feet.
+                 */
+                floorAreaSqFt?: number | null;
+                /**
+                 * Lot size in square feet.
+                 */
+                lotAreaSqFt?: number | null;
+                /**
+                 * Property type label.
+                 */
+                homeType?: string | null;
+                /**
+                 * Listing lifecycle status.
+                 */
+                listingLifecycleStatus?: string | null;
+                /**
+                 * Human-readable listing status label.
+                 */
+                listingStatusLabel?: string | null;
+                /**
+                 * Listing type.
+                 */
+                listingType?: string | null;
+                /**
+                 * Sold date.
+                 */
+                dateSold?: string | null;
+                /**
+                 * Latest price-change date.
+                 */
+                datePriceChanged?: string | null;
+                /**
+                 * New-construction type.
+                 */
+                newConstructionType?: string | null;
+                /**
+                 * Number of days this listing has been on market.
+                 */
+                timeOnMarketDays?: number | null;
+                /**
+                 * Listing URL.
+                 */
+                url?: string | null;
+                /**
+                 * Listing thumbnail URL.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Listing image URLs.
+                 */
+                imageUrls?: Array<string> | null;
+                /**
+                 * Street-view URL.
+                 */
+                streetViewUrl?: string | null;
+                /**
+                 * Whether a 3D model is available.
+                 */
+                has3dModel?: boolean | null;
+                /**
+                 * Listing broker name.
+                 */
+                brokerName?: string | null;
+                /**
+                 * Builder name.
+                 */
+                builderName?: string | null;
+                /**
+                 * Whether the listing is marked as showcase.
+                 */
+                isShowcaseListing?: boolean | null;
+                /**
+                 * Whether the listing is marked as featured.
+                 */
+                isFeaturedListing?: boolean | null;
+                /**
+                 * Primary listing tag.
+                 */
+                primaryTag?: {
+                    type?: string | null;
+                    text?: string | null;
+                } | null;
+                /**
+                 * Additional listing tags.
+                 */
+                listingTags?: Array<{
+                    type?: string | null;
+                    text?: string | null;
+                }> | null;
+                /**
+                 * Listing contact phone number.
+                 */
+                contactPhone?: string | null;
+                /**
+                 * Open-house details.
+                 */
+                openHouse?: {
+                    description?: string | null;
+                    startDate?: string | null;
+                    endDate?: string | null;
+                } | null;
+                /**
+                 * Building name.
+                 */
+                buildingName?: string | null;
+                /**
+                 * Individual rental units available in a multi-unit building.
+                 */
+                rentalUnits?: Array<{
+                    /**
+                     * Unit asking price in USD and local currency.
+                     */
+                    price?: {
+                        /**
+                         * Listing price converted to USD when conversion data is available.
+                         */
+                        usd: {
+                            /**
+                             * ISO 4217 currency code for the listing price.
+                             */
+                            currency?: string | null;
+                            /**
+                             * Numeric listing price amount.
+                             */
+                            amount?: number | null;
+                        };
+                        /**
+                         * Listing price in the local market currency.
+                         */
+                        local: {
+                            /**
+                             * ISO 4217 currency code for the listing price.
+                             */
+                            currency?: string | null;
+                            /**
+                             * Numeric listing price amount.
+                             */
+                            amount?: number | null;
+                        };
+                    } | null;
+                    /**
+                     * Number of bedrooms in the unit. 0 indicates a studio.
+                     */
+                    bedroomCount?: number | null;
+                    /**
+                     * Whether the unit is a single room for rent.
+                     */
+                    isRoomForRent?: boolean | null;
+                }> | null;
+                /**
+                 * Count of available units.
+                 */
+                availabilityCount?: number | null;
+                /**
+                 * Base-rent range in USD and local currency.
+                 */
+                baseRent?: {
+                    /**
+                     * Minimum base rent in USD and local currency.
+                     */
+                    min?: {
+                        /**
+                         * Listing price converted to USD when conversion data is available.
+                         */
+                        usd: {
+                            /**
+                             * ISO 4217 currency code for the listing price.
+                             */
+                            currency?: string | null;
+                            /**
+                             * Numeric listing price amount.
+                             */
+                            amount?: number | null;
+                        };
+                        /**
+                         * Listing price in the local market currency.
+                         */
+                        local: {
+                            /**
+                             * ISO 4217 currency code for the listing price.
+                             */
+                            currency?: string | null;
+                            /**
+                             * Numeric listing price amount.
+                             */
+                            amount?: number | null;
+                        };
+                    } | null;
+                    /**
+                     * Maximum base rent in USD and local currency.
+                     */
+                    max?: {
+                        /**
+                         * Listing price converted to USD when conversion data is available.
+                         */
+                        usd: {
+                            /**
+                             * ISO 4217 currency code for the listing price.
+                             */
+                            currency?: string | null;
+                            /**
+                             * Numeric listing price amount.
+                             */
+                            amount?: number | null;
+                        };
+                        /**
+                         * Listing price in the local market currency.
+                         */
+                        local: {
+                            /**
+                             * ISO 4217 currency code for the listing price.
+                             */
+                            currency?: string | null;
+                            /**
+                             * Numeric listing price amount.
+                             */
+                            amount?: number | null;
+                        };
+                    } | null;
+                } | null;
+                /**
+                 * Availability date.
+                 */
+                availabilityDate?: string | null;
+                /**
+                 * Whether instant tour is enabled.
+                 */
+                isInstantTourEnabled?: boolean | null;
+                /**
+                 * Additional facts and features.
+                 */
+                factsAndFeatures?: {
+                    [key: string]: unknown;
+                } | null;
+                /**
+                 * ISO 3166-1 alpha-3 country code (for example: 'CAN').
+                 */
+                countryCode?: string | null;
+                /**
+                 * Latitude coordinate.
+                 */
+                latitude?: number | null;
+                /**
+                 * Longitude coordinate.
+                 */
+                longitude?: number | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type FetchRealEstateListingsResponse = FetchRealEstateListingsResponses[keyof FetchRealEstateListingsResponses];
 
 export type GetScoutingReportData = {
     body: {
@@ -56448,6 +62539,6851 @@ export type ListAllProfilesFromJourneymanListResponses = {
 
 export type ListAllProfilesFromJourneymanListResponse = ListAllProfilesFromJourneymanListResponses[keyof ListAllProfilesFromJourneymanListResponses];
 
+export type TiktokProfileData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * TikTok handle to look up. Accepts with or without a leading '@' (e.g. 'therock' or '@therock').
+         */
+        handle: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/profile';
+};
+
+export type TiktokProfileErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokProfileError = TiktokProfileErrors[keyof TiktokProfileErrors];
+
+export type TiktokProfileResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Unique user identifier.
+             */
+            id?: string | null;
+            /**
+             * TikTok handle (without '@').
+             */
+            handle?: string | null;
+            /**
+             * Display name.
+             */
+            displayName?: string | null;
+            /**
+             * Profile bio.
+             */
+            bio?: string | null;
+            /**
+             * Number of followers.
+             */
+            followerCount?: number | null;
+            /**
+             * URL of the profile picture.
+             */
+            profileImageUrl?: string | null;
+            /**
+             * Whether the account is verified.
+             */
+            isVerified?: boolean | null;
+            /**
+             * Number of accounts followed.
+             */
+            followingCount?: number | null;
+            /**
+             * Total number of videos posted.
+             */
+            videoCount?: number | null;
+            /**
+             * Total number of likes received across all videos.
+             */
+            totalLikeCount?: number | null;
+            /**
+             * Whether the account is private.
+             */
+            isPrivate?: boolean | null;
+            /**
+             * Website URL from the profile (the 'link in bio').
+             */
+            externalUrl?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokProfileResponse = TiktokProfileResponses[keyof TiktokProfileResponses];
+
+export type TiktokUserVideosData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * TikTok handle (with or without leading '@').
+         */
+        handle: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/user-videos';
+};
+
+export type TiktokUserVideosErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokUserVideosError = TiktokUserVideosErrors[keyof TiktokUserVideosErrors];
+
+export type TiktokUserVideosResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of videos for this page.
+             */
+            videos: Array<{
+                /**
+                 * Unique video identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Video caption or description.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of shares.
+                 */
+                shareCount?: number | null;
+                /**
+                 * Number of views.
+                 */
+                viewCount?: number | null;
+                /**
+                 * Video duration in seconds.
+                 */
+                durationSeconds?: number | null;
+                /**
+                 * URL of the video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Direct URL to the TikTok video page.
+                 */
+                videoUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the video was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokUserVideosResponse = TiktokUserVideosResponses[keyof TiktokUserVideosResponses];
+
+export type TiktokUserFollowersData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * TikTok handle (with or without leading '@').
+         */
+        handle: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/user-followers';
+};
+
+export type TiktokUserFollowersErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokUserFollowersError = TiktokUserFollowersErrors[keyof TiktokUserFollowersErrors];
+
+export type TiktokUserFollowersResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of followers for this page.
+             */
+            users: Array<{
+                /**
+                 * Unique user identifier.
+                 */
+                id?: string | null;
+                /**
+                 * TikTok handle (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name.
+                 */
+                displayName?: string | null;
+                /**
+                 * Profile bio.
+                 */
+                bio?: string | null;
+                /**
+                 * Number of followers.
+                 */
+                followerCount?: number | null;
+                /**
+                 * URL of the profile picture.
+                 */
+                profileImageUrl?: string | null;
+                /**
+                 * Whether the account is verified.
+                 */
+                isVerified?: boolean | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokUserFollowersResponse = TiktokUserFollowersResponses[keyof TiktokUserFollowersResponses];
+
+export type TiktokUserFollowingData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * TikTok handle (with or without leading '@').
+         */
+        handle: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/user-following';
+};
+
+export type TiktokUserFollowingErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokUserFollowingError = TiktokUserFollowingErrors[keyof TiktokUserFollowingErrors];
+
+export type TiktokUserFollowingResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of accounts this user follows, for this page.
+             */
+            users: Array<{
+                /**
+                 * Unique user identifier.
+                 */
+                id?: string | null;
+                /**
+                 * TikTok handle (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name.
+                 */
+                displayName?: string | null;
+                /**
+                 * Profile bio.
+                 */
+                bio?: string | null;
+                /**
+                 * Number of followers.
+                 */
+                followerCount?: number | null;
+                /**
+                 * URL of the profile picture.
+                 */
+                profileImageUrl?: string | null;
+                /**
+                 * Whether the account is verified.
+                 */
+                isVerified?: boolean | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokUserFollowingResponse = TiktokUserFollowingResponses[keyof TiktokUserFollowingResponses];
+
+export type TiktokVideoDetailsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Full TikTok video URL (e.g. 'https://www.tiktok.com/@therock/video/1234567890').
+         */
+        videoUrl: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/video-details';
+};
+
+export type TiktokVideoDetailsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokVideoDetailsError = TiktokVideoDetailsErrors[keyof TiktokVideoDetailsErrors];
+
+export type TiktokVideoDetailsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Unique video identifier.
+             */
+            id?: string | null;
+            /**
+             * Video caption or description.
+             */
+            caption?: string | null;
+            /**
+             * Number of likes.
+             */
+            likeCount?: number | null;
+            /**
+             * Number of comments.
+             */
+            commentCount?: number | null;
+            /**
+             * Number of shares.
+             */
+            shareCount?: number | null;
+            /**
+             * Number of views.
+             */
+            viewCount?: number | null;
+            /**
+             * Video duration in seconds.
+             */
+            durationSeconds?: number | null;
+            /**
+             * URL of the video thumbnail.
+             */
+            thumbnailUrl?: string | null;
+            /**
+             * Direct URL to the TikTok video page.
+             */
+            videoUrl?: string | null;
+            /**
+             * ISO 8601 timestamp of when the video was published.
+             */
+            publishedAt?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokVideoDetailsResponse = TiktokVideoDetailsResponses[keyof TiktokVideoDetailsResponses];
+
+export type TiktokVideoCommentsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Full TikTok video URL (e.g. 'https://www.tiktok.com/@therock/video/1234567890').
+         */
+        videoUrl: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/video-comments';
+};
+
+export type TiktokVideoCommentsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokVideoCommentsError = TiktokVideoCommentsErrors[keyof TiktokVideoCommentsErrors];
+
+export type TiktokVideoCommentsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of comments for this page.
+             */
+            comments: Array<{
+                /**
+                 * Unique comment identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Comment text.
+                 */
+                text?: string | null;
+                /**
+                 * Number of likes on the comment.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of replies to the comment.
+                 */
+                replyCount?: number | null;
+                /**
+                 * ISO 8601 timestamp of when the comment was posted.
+                 */
+                publishedAt?: string | null;
+                /**
+                 * The user who posted the comment.
+                 */
+                user?: {
+                    /**
+                     * Unique user identifier.
+                     */
+                    id?: string | null;
+                    /**
+                     * TikTok handle (without '@').
+                     */
+                    handle?: string | null;
+                    /**
+                     * Display name.
+                     */
+                    displayName?: string | null;
+                    /**
+                     * Profile bio.
+                     */
+                    bio?: string | null;
+                    /**
+                     * Number of followers.
+                     */
+                    followerCount?: number | null;
+                    /**
+                     * URL of the profile picture.
+                     */
+                    profileImageUrl?: string | null;
+                    /**
+                     * Whether the account is verified.
+                     */
+                    isVerified?: boolean | null;
+                } | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokVideoCommentsResponse = TiktokVideoCommentsResponses[keyof TiktokVideoCommentsResponses];
+
+export type TiktokCommentRepliesData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Unique comment ID to fetch replies for.
+         */
+        commentId: string;
+        /**
+         * Full TikTok video URL the comment belongs to (e.g. 'https://www.tiktok.com/@therock/video/1234567890').
+         */
+        videoUrl: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/comment-replies';
+};
+
+export type TiktokCommentRepliesErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokCommentRepliesError = TiktokCommentRepliesErrors[keyof TiktokCommentRepliesErrors];
+
+export type TiktokCommentRepliesResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of replies for this page.
+             */
+            comments: Array<{
+                /**
+                 * Unique comment identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Comment text.
+                 */
+                text?: string | null;
+                /**
+                 * Number of likes on the comment.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of replies to the comment.
+                 */
+                replyCount?: number | null;
+                /**
+                 * ISO 8601 timestamp of when the comment was posted.
+                 */
+                publishedAt?: string | null;
+                /**
+                 * The user who posted the comment.
+                 */
+                user?: {
+                    /**
+                     * Unique user identifier.
+                     */
+                    id?: string | null;
+                    /**
+                     * TikTok handle (without '@').
+                     */
+                    handle?: string | null;
+                    /**
+                     * Display name.
+                     */
+                    displayName?: string | null;
+                    /**
+                     * Profile bio.
+                     */
+                    bio?: string | null;
+                    /**
+                     * Number of followers.
+                     */
+                    followerCount?: number | null;
+                    /**
+                     * URL of the profile picture.
+                     */
+                    profileImageUrl?: string | null;
+                    /**
+                     * Whether the account is verified.
+                     */
+                    isVerified?: boolean | null;
+                } | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokCommentRepliesResponse = TiktokCommentRepliesResponses[keyof TiktokCommentRepliesResponses];
+
+export type TiktokVideoTranscriptData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Full TikTok video URL (e.g. 'https://www.tiktok.com/@therock/video/1234567890').
+         */
+        videoUrl: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/video-transcript';
+};
+
+export type TiktokVideoTranscriptErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokVideoTranscriptError = TiktokVideoTranscriptErrors[keyof TiktokVideoTranscriptErrors];
+
+export type TiktokVideoTranscriptResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Ordered list of transcript segments.
+             */
+            segments: Array<{
+                /**
+                 * Transcript segment text.
+                 */
+                text: string;
+                /**
+                 * Start time of this segment in seconds from the beginning of the video.
+                 */
+                startSeconds?: number | null;
+                /**
+                 * Duration of this segment in seconds.
+                 */
+                durationSeconds?: number | null;
+            }>;
+            /**
+             * Language of the transcript, if detected.
+             */
+            language?: {
+                /**
+                 * BCP-47 language code (e.g. 'en' or 'pt-BR').
+                 */
+                code: string;
+                /**
+                 * Human-readable language name (e.g. 'English' or 'Portuguese (Brazil)').
+                 */
+                name: string;
+            } | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokVideoTranscriptResponse = TiktokVideoTranscriptResponses[keyof TiktokVideoTranscriptResponses];
+
+export type TiktokSearchUsersData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Search query to find TikTok users (e.g. 'Dwayne Johnson').
+         */
+        query: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/search-users';
+};
+
+export type TiktokSearchUsersErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokSearchUsersError = TiktokSearchUsersErrors[keyof TiktokSearchUsersErrors];
+
+export type TiktokSearchUsersResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of users matching the search query, for this page.
+             */
+            users: Array<{
+                /**
+                 * Unique user identifier.
+                 */
+                id?: string | null;
+                /**
+                 * TikTok handle (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name.
+                 */
+                displayName?: string | null;
+                /**
+                 * Profile bio.
+                 */
+                bio?: string | null;
+                /**
+                 * Number of followers.
+                 */
+                followerCount?: number | null;
+                /**
+                 * URL of the profile picture.
+                 */
+                profileImageUrl?: string | null;
+                /**
+                 * Whether the account is verified.
+                 */
+                isVerified?: boolean | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokSearchUsersResponse = TiktokSearchUsersResponses[keyof TiktokSearchUsersResponses];
+
+export type TiktokSearchKeywordData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Keyword or phrase to search for TikTok videos (e.g. 'fitness motivation').
+         */
+        query: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/search-keyword';
+};
+
+export type TiktokSearchKeywordErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokSearchKeywordError = TiktokSearchKeywordErrors[keyof TiktokSearchKeywordErrors];
+
+export type TiktokSearchKeywordResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of videos matching the keyword search, for this page.
+             */
+            videos: Array<{
+                /**
+                 * Unique video identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Video caption or description.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of shares.
+                 */
+                shareCount?: number | null;
+                /**
+                 * Number of views.
+                 */
+                viewCount?: number | null;
+                /**
+                 * Video duration in seconds.
+                 */
+                durationSeconds?: number | null;
+                /**
+                 * URL of the video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Direct URL to the TikTok video page.
+                 */
+                videoUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the video was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokSearchKeywordResponse = TiktokSearchKeywordResponses[keyof TiktokSearchKeywordResponses];
+
+export type TiktokSearchHashtagData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Hashtag to search for (with or without leading '#', e.g. 'fitness' or '#fitness'). The '#' is stripped automatically.
+         */
+        query: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/search-hashtag';
+};
+
+export type TiktokSearchHashtagErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokSearchHashtagError = TiktokSearchHashtagErrors[keyof TiktokSearchHashtagErrors];
+
+export type TiktokSearchHashtagResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of videos for this hashtag, for this page.
+             */
+            videos: Array<{
+                /**
+                 * Unique video identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Video caption or description.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of shares.
+                 */
+                shareCount?: number | null;
+                /**
+                 * Number of views.
+                 */
+                viewCount?: number | null;
+                /**
+                 * Video duration in seconds.
+                 */
+                durationSeconds?: number | null;
+                /**
+                 * URL of the video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Direct URL to the TikTok video page.
+                 */
+                videoUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the video was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+            /**
+             * Metadata about the hashtag.
+             */
+            hashtag?: {
+                /**
+                 * Unique hashtag identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Hashtag name (without '#').
+                 */
+                name?: string | null;
+                /**
+                 * Total number of views across all videos with this hashtag.
+                 */
+                totalViewCount?: number | null;
+                /**
+                 * Total number of videos using this hashtag.
+                 */
+                videoCount?: number | null;
+            } | null;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokSearchHashtagResponse = TiktokSearchHashtagResponses[keyof TiktokSearchHashtagResponses];
+
+export type TiktokUnifiedSearchData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Query string for a unified search returning both videos and users (e.g. 'cooking').
+         */
+        query: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/unified-search';
+};
+
+export type TiktokUnifiedSearchErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokUnifiedSearchError = TiktokUnifiedSearchErrors[keyof TiktokUnifiedSearchErrors];
+
+export type TiktokUnifiedSearchResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of videos from the unified search results, for this page.
+             */
+            videos: Array<{
+                /**
+                 * Unique video identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Video caption or description.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of shares.
+                 */
+                shareCount?: number | null;
+                /**
+                 * Number of views.
+                 */
+                viewCount?: number | null;
+                /**
+                 * Video duration in seconds.
+                 */
+                durationSeconds?: number | null;
+                /**
+                 * URL of the video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Direct URL to the TikTok video page.
+                 */
+                videoUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the video was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+            /**
+             * List of users from the unified search results, for this page.
+             */
+            users: Array<{
+                /**
+                 * Unique user identifier.
+                 */
+                id?: string | null;
+                /**
+                 * TikTok handle (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name.
+                 */
+                displayName?: string | null;
+                /**
+                 * Profile bio.
+                 */
+                bio?: string | null;
+                /**
+                 * Number of followers.
+                 */
+                followerCount?: number | null;
+                /**
+                 * URL of the profile picture.
+                 */
+                profileImageUrl?: string | null;
+                /**
+                 * Whether the account is verified.
+                 */
+                isVerified?: boolean | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokUnifiedSearchResponse = TiktokUnifiedSearchResponses[keyof TiktokUnifiedSearchResponses];
+
+export type TiktokPopularCreatorsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * ISO 3166-1 alpha-3 country code to filter by (e.g. 'USA'). Omit for global results.
+         */
+        country?: 'ARE' | 'AUS' | 'BRA' | 'CAN' | 'DEU' | 'EGY' | 'ESP' | 'FRA' | 'GBR' | 'IDN' | 'ISR' | 'ITA' | 'JPN' | 'KOR' | 'MYS' | 'PHL' | 'RUS' | 'SAU' | 'SGP' | 'THA' | 'TUR' | 'TWN' | 'USA' | 'VNM' | null;
+        /**
+         * Sort results in descending order. Omit for default ranking.
+         */
+        sort?: 'engagement' | 'follower' | 'average_views' | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/popular-creators';
+};
+
+export type TiktokPopularCreatorsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokPopularCreatorsError = TiktokPopularCreatorsErrors[keyof TiktokPopularCreatorsErrors];
+
+export type TiktokPopularCreatorsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of popular creators.
+             */
+            creators: Array<{
+                /**
+                 * TikTok handle (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name.
+                 */
+                displayName?: string | null;
+                /**
+                 * Number of followers.
+                 */
+                followerCount?: number | null;
+                /**
+                 * URL of the profile picture.
+                 */
+                profileImageUrl?: string | null;
+                /**
+                 * Total number of likes received across all videos.
+                 */
+                totalLikeCount?: number | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokPopularCreatorsResponse = TiktokPopularCreatorsResponses[keyof TiktokPopularCreatorsResponses];
+
+export type TiktokPopularVideosData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * ISO 3166-1 alpha-3 country code to filter by (e.g. 'USA'). Omit for global results.
+         */
+        country?: 'ARE' | 'AUS' | 'BRA' | 'CAN' | 'DEU' | 'EGY' | 'ESP' | 'FRA' | 'GBR' | 'IDN' | 'ISR' | 'ITA' | 'JPN' | 'KOR' | 'MYS' | 'PHL' | 'RUS' | 'SAU' | 'SGP' | 'THA' | 'TUR' | 'TWN' | 'USA' | 'VNM' | null;
+        /**
+         * Time period in days for trending data: 7 or 30. Omit for default (7).
+         */
+        periodDays?: 7 | 30 | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/popular-videos';
+};
+
+export type TiktokPopularVideosErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokPopularVideosError = TiktokPopularVideosErrors[keyof TiktokPopularVideosErrors];
+
+export type TiktokPopularVideosResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of popular videos.
+             */
+            videos: Array<{
+                /**
+                 * Unique video identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Video caption or description.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of shares.
+                 */
+                shareCount?: number | null;
+                /**
+                 * Number of views.
+                 */
+                viewCount?: number | null;
+                /**
+                 * Video duration in seconds.
+                 */
+                durationSeconds?: number | null;
+                /**
+                 * URL of the video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Direct URL to the TikTok video page.
+                 */
+                videoUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the video was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokPopularVideosResponse = TiktokPopularVideosResponses[keyof TiktokPopularVideosResponses];
+
+export type TiktokPopularHashtagsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * ISO 3166-1 alpha-3 country code to filter by (e.g. 'USA'). Omit for global results.
+         */
+        country?: 'ARE' | 'AUS' | 'BRA' | 'CAN' | 'DEU' | 'EGY' | 'ESP' | 'FRA' | 'GBR' | 'IDN' | 'ISR' | 'ITA' | 'JPN' | 'KOR' | 'MYS' | 'PHL' | 'RUS' | 'SAU' | 'SGP' | 'THA' | 'TUR' | 'TWN' | 'USA' | 'VNM' | null;
+        /**
+         * Time period in days for trending data: 7, 30, or 120. Omit for default (7).
+         */
+        periodDays?: 7 | 30 | 120 | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/popular-hashtags';
+};
+
+export type TiktokPopularHashtagsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokPopularHashtagsError = TiktokPopularHashtagsErrors[keyof TiktokPopularHashtagsErrors];
+
+export type TiktokPopularHashtagsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of popular hashtags.
+             */
+            hashtags: Array<{
+                /**
+                 * Hashtag name (without '#').
+                 */
+                name?: string | null;
+                /**
+                 * Total number of videos using this hashtag.
+                 */
+                videoCount?: number | null;
+                /**
+                 * Total number of views across all videos with this hashtag.
+                 */
+                totalViewCount?: number | null;
+                /**
+                 * Trend direction indicator (free-form; the value depends on what TikTok reports).
+                 */
+                trendDirection?: string | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokPopularHashtagsResponse = TiktokPopularHashtagsResponses[keyof TiktokPopularHashtagsResponses];
+
+export type TiktokPopularSongsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/popular-songs';
+};
+
+export type TiktokPopularSongsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokPopularSongsError = TiktokPopularSongsErrors[keyof TiktokPopularSongsErrors];
+
+export type TiktokPopularSongsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of popular songs.
+             */
+            songs: Array<{
+                /**
+                 * Unique song identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Song title.
+                 */
+                title?: string | null;
+                /**
+                 * Artist or creator name.
+                 */
+                artist?: string | null;
+                /**
+                 * Song duration in seconds.
+                 */
+                durationSeconds?: number | null;
+                /**
+                 * URL of the song cover image.
+                 */
+                coverImageUrl?: string | null;
+                /**
+                 * Number of TikTok videos that use this song as audio.
+                 */
+                videoCount?: number | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokPopularSongsResponse = TiktokPopularSongsResponses[keyof TiktokPopularSongsResponses];
+
+export type TiktokTrendingFeedData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/trending-feed';
+};
+
+export type TiktokTrendingFeedErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokTrendingFeedError = TiktokTrendingFeedErrors[keyof TiktokTrendingFeedErrors];
+
+export type TiktokTrendingFeedResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of trending videos for this page.
+             */
+            videos: Array<{
+                /**
+                 * Unique video identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Video caption or description.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of shares.
+                 */
+                shareCount?: number | null;
+                /**
+                 * Number of views.
+                 */
+                viewCount?: number | null;
+                /**
+                 * Video duration in seconds.
+                 */
+                durationSeconds?: number | null;
+                /**
+                 * URL of the video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Direct URL to the TikTok video page.
+                 */
+                videoUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the video was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokTrendingFeedResponse = TiktokTrendingFeedResponses[keyof TiktokTrendingFeedResponses];
+
+export type TiktokSongDetailsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Full TikTok music/song URL (e.g. 'https://www.tiktok.com/music/song-title-7439295283975702544').
+         */
+        songUrl: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/song-details';
+};
+
+export type TiktokSongDetailsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokSongDetailsError = TiktokSongDetailsErrors[keyof TiktokSongDetailsErrors];
+
+export type TiktokSongDetailsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Unique song identifier.
+             */
+            id?: string | null;
+            /**
+             * Song title.
+             */
+            title?: string | null;
+            /**
+             * Artist or creator name.
+             */
+            artist?: string | null;
+            /**
+             * Song duration in seconds.
+             */
+            durationSeconds?: number | null;
+            /**
+             * URL of the song cover image.
+             */
+            coverImageUrl?: string | null;
+            /**
+             * Number of TikTok videos that use this song as audio.
+             */
+            videoCount?: number | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokSongDetailsResponse = TiktokSongDetailsResponses[keyof TiktokSongDetailsResponses];
+
+export type TiktokSongVideosData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Full TikTok music/song URL (e.g. 'https://www.tiktok.com/music/song-title-7439295283975702544').
+         */
+        songUrl: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/tiktok/song-videos';
+};
+
+export type TiktokSongVideosErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type TiktokSongVideosError = TiktokSongVideosErrors[keyof TiktokSongVideosErrors];
+
+export type TiktokSongVideosResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of videos using this song, for this page.
+             */
+            videos: Array<{
+                /**
+                 * Unique video identifier.
+                 */
+                id?: string | null;
+                /**
+                 * Video caption or description.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of shares.
+                 */
+                shareCount?: number | null;
+                /**
+                 * Number of views.
+                 */
+                viewCount?: number | null;
+                /**
+                 * Video duration in seconds.
+                 */
+                durationSeconds?: number | null;
+                /**
+                 * URL of the video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Direct URL to the TikTok video page.
+                 */
+                videoUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the video was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type TiktokSongVideosResponse = TiktokSongVideosResponses[keyof TiktokSongVideosResponses];
+
+export type InstagramProfileData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Instagram handle to look up. Accepts with or without a leading '@' (e.g. 'natgeo' or '@natgeo').
+         */
+        handle: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/instagram/profile';
+};
+
+export type InstagramProfileErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type InstagramProfileError = InstagramProfileErrors[keyof InstagramProfileErrors];
+
+export type InstagramProfileResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Unique user identifier.
+             */
+            id: string;
+            /**
+             * Instagram handle (without '@').
+             */
+            handle?: string | null;
+            /**
+             * Display name.
+             */
+            displayName?: string | null;
+            /**
+             * Profile bio.
+             */
+            bio?: string | null;
+            /**
+             * Number of followers.
+             */
+            followerCount?: number | null;
+            /**
+             * Number of accounts followed.
+             */
+            followingCount?: number | null;
+            /**
+             * Total number of posts.
+             */
+            postCount?: number | null;
+            /**
+             * Whether the account is verified.
+             */
+            isVerified?: boolean | null;
+            /**
+             * Whether the account is private.
+             */
+            isPrivate?: boolean | null;
+            /**
+             * Whether this is a business account.
+             */
+            isBusinessAccount?: boolean | null;
+            /**
+             * Business category (e.g. 'Media/News Company'). Null for personal accounts.
+             */
+            businessCategory?: string | null;
+            /**
+             * URL of the profile picture.
+             */
+            profileImageUrl?: string | null;
+            /**
+             * Website URL from the profile (the 'link in bio').
+             */
+            externalUrl?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type InstagramProfileResponse = InstagramProfileResponses[keyof InstagramProfileResponses];
+
+export type InstagramUserPostsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Instagram handle (with or without leading '@').
+         */
+        handle: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/instagram/user-posts';
+};
+
+export type InstagramUserPostsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type InstagramUserPostsError = InstagramUserPostsErrors[keyof InstagramUserPostsErrors];
+
+export type InstagramUserPostsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of posts for this page.
+             */
+            posts: Array<{
+                /**
+                 * Unique post identifier.
+                 */
+                id: string;
+                /**
+                 * Post shortcode — the unique identifier from the URL. For example, in 'https://www.instagram.com/p/DVoDVg5DkXM/', the shortcode is 'DVoDVg5DkXM'.
+                 */
+                shortcode?: string | null;
+                /**
+                 * Post caption text.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of plays or views (video/reel only).
+                 */
+                playCount?: number | null;
+                /**
+                 * True if the post is a video or reel. False if it is an image.
+                 */
+                isVideo: boolean;
+                /**
+                 * URL of the post image or video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the post was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type InstagramUserPostsResponse = InstagramUserPostsResponses[keyof InstagramUserPostsResponses];
+
+export type InstagramUserReelsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Instagram handle (with or without leading '@').
+         */
+        handle: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/instagram/user-reels';
+};
+
+export type InstagramUserReelsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type InstagramUserReelsError = InstagramUserReelsErrors[keyof InstagramUserReelsErrors];
+
+export type InstagramUserReelsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of reels for this page.
+             */
+            reels: Array<{
+                /**
+                 * Unique post identifier.
+                 */
+                id: string;
+                /**
+                 * Post shortcode — the unique identifier from the URL. For example, in 'https://www.instagram.com/p/DVoDVg5DkXM/', the shortcode is 'DVoDVg5DkXM'.
+                 */
+                shortcode?: string | null;
+                /**
+                 * Post caption text.
+                 */
+                caption?: string | null;
+                /**
+                 * Number of likes.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Number of comments.
+                 */
+                commentCount?: number | null;
+                /**
+                 * Number of plays or views (video/reel only).
+                 */
+                playCount?: number | null;
+                /**
+                 * True if the post is a video or reel. False if it is an image.
+                 */
+                isVideo: boolean;
+                /**
+                 * URL of the post image or video thumbnail.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the post was published.
+                 */
+                publishedAt?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type InstagramUserReelsResponse = InstagramUserReelsResponses[keyof InstagramUserReelsResponses];
+
+export type InstagramPostDetailsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Full Instagram post URL (e.g. 'https://www.instagram.com/p/DVoDVg5DkXM/') or shortcode (e.g. 'DVoDVg5DkXM').
+         */
+        postUrl: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/instagram/post-details';
+};
+
+export type InstagramPostDetailsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type InstagramPostDetailsError = InstagramPostDetailsErrors[keyof InstagramPostDetailsErrors];
+
+export type InstagramPostDetailsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Unique post identifier.
+             */
+            id: string;
+            /**
+             * Post shortcode — the unique identifier from the URL. For example, in 'https://www.instagram.com/p/DVoDVg5DkXM/', the shortcode is 'DVoDVg5DkXM'.
+             */
+            shortcode?: string | null;
+            /**
+             * Post caption text.
+             */
+            caption?: string | null;
+            /**
+             * Number of likes.
+             */
+            likeCount?: number | null;
+            /**
+             * Number of comments.
+             */
+            commentCount?: number | null;
+            /**
+             * Number of plays or views (video/reel only).
+             */
+            playCount?: number | null;
+            /**
+             * True if the post is a video or reel. False if it is an image.
+             */
+            isVideo: boolean;
+            /**
+             * URL of the post image or video thumbnail.
+             */
+            thumbnailUrl?: string | null;
+            /**
+             * ISO 8601 timestamp of when the post was published.
+             */
+            publishedAt?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type InstagramPostDetailsResponse = InstagramPostDetailsResponses[keyof InstagramPostDetailsResponses];
+
+export type InstagramPostCommentsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Full Instagram post URL (e.g. 'https://www.instagram.com/p/DVoDVg5DkXM/') or shortcode (e.g. 'DVoDVg5DkXM').
+         */
+        postUrl: string;
+        /**
+         * Pagination token from a previous response to retrieve the next page. Omit for the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/instagram/post-comments';
+};
+
+export type InstagramPostCommentsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type InstagramPostCommentsError = InstagramPostCommentsErrors[keyof InstagramPostCommentsErrors];
+
+export type InstagramPostCommentsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * List of comments for this page.
+             */
+            comments: Array<{
+                /**
+                 * Unique comment identifier.
+                 */
+                id: string;
+                /**
+                 * Comment text.
+                 */
+                text?: string | null;
+                /**
+                 * ISO 8601 timestamp of when the comment was posted.
+                 */
+                publishedAt?: string | null;
+                /**
+                 * The user who posted the comment.
+                 */
+                user?: {
+                    /**
+                     * Unique user identifier.
+                     */
+                    id: string;
+                    /**
+                     * Instagram handle (without '@').
+                     */
+                    handle?: string | null;
+                    /**
+                     * Display name.
+                     */
+                    displayName?: string | null;
+                    /**
+                     * URL of the profile picture.
+                     */
+                    profileImageUrl?: string | null;
+                    /**
+                     * Whether the account is verified.
+                     */
+                    isVerified?: boolean | null;
+                } | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if there are no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+    };
+};
+
+export type InstagramPostCommentsResponse = InstagramPostCommentsResponses[keyof InstagramPostCommentsResponses];
+
 export type TwitterProfileData = {
     body: {
         /**
@@ -56895,6 +69831,18 @@ export type TwitterUserTweetsResponses = {
                  * Full tweet text.
                  */
                 text?: string | null;
+                /**
+                 * Numeric user ID of the tweet author.
+                 */
+                authorId?: string | null;
+                /**
+                 * Twitter/X handle of the tweet author (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name of the tweet author.
+                 */
+                displayName?: string | null;
                 /**
                  * When the tweet was created.
                  */
@@ -57753,6 +70701,18 @@ export type TwitterTweetDetailsResponses = {
              */
             text?: string | null;
             /**
+             * Numeric user ID of the tweet author.
+             */
+            authorId?: string | null;
+            /**
+             * Twitter/X handle of the tweet author (without '@').
+             */
+            handle?: string | null;
+            /**
+             * Display name of the tweet author.
+             */
+            displayName?: string | null;
+            /**
              * When the tweet was created.
              */
             createdAt?: string | null;
@@ -58046,6 +71006,18 @@ export type TwitterTweetRepliesResponses = {
                  * Full tweet text.
                  */
                 text?: string | null;
+                /**
+                 * Numeric user ID of the tweet author.
+                 */
+                authorId?: string | null;
+                /**
+                 * Twitter/X handle of the tweet author (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name of the tweet author.
+                 */
+                displayName?: string | null;
                 /**
                  * When the tweet was created.
                  */
@@ -58345,6 +71317,18 @@ export type TwitterTweetQuotesResponses = {
                  * Full tweet text.
                  */
                 text?: string | null;
+                /**
+                 * Numeric user ID of the tweet author.
+                 */
+                authorId?: string | null;
+                /**
+                 * Twitter/X handle of the tweet author (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name of the tweet author.
+                 */
+                displayName?: string | null;
                 /**
                  * When the tweet was created.
                  */
@@ -58928,6 +71912,18 @@ export type TwitterUserMentionsResponses = {
                  */
                 text?: string | null;
                 /**
+                 * Numeric user ID of the tweet author.
+                 */
+                authorId?: string | null;
+                /**
+                 * Twitter/X handle of the tweet author (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name of the tweet author.
+                 */
+                displayName?: string | null;
+                /**
                  * When the tweet was created.
                  */
                 createdAt?: string | null;
@@ -59226,6 +72222,18 @@ export type TwitterSearchResponses = {
                  * Full tweet text.
                  */
                 text?: string | null;
+                /**
+                 * Numeric user ID of the tweet author.
+                 */
+                authorId?: string | null;
+                /**
+                 * Twitter/X handle of the tweet author (without '@').
+                 */
+                handle?: string | null;
+                /**
+                 * Display name of the tweet author.
+                 */
+                displayName?: string | null;
                 /**
                  * When the tweet was created.
                  */

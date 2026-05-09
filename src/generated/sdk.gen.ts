@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { AddCompaniesToExclusionListData, AddCompaniesToExclusionListErrors, AddCompaniesToExclusionListResponses, AddProfilesToListData, AddProfilesToListErrors, AddProfilesToListResponses, AddProspectsToExclusionListData, AddProspectsToExclusionListErrors, AddProspectsToExclusionListResponses, BuildAudienceData, BuildAudienceErrors, BuildAudienceResponses, BulkCompanyLogosData, BulkCompanyLogosErrors, BulkCompanyLogosResponses, BulkProfilePicData, BulkProfilePicErrors, BulkProfilePicResponses, BuyCreditsData, BuyCreditsErrors, BuyCreditsResponses, CheckGoogleMapsResultsData, CheckGoogleMapsResultsErrors, CheckGoogleMapsResultsResponses, CombinedSearchCountData, CombinedSearchCountErrors, CombinedSearchCountResponses, CompanyCountData, CompanyCountErrors, CompanyCountResponses, CompanyLiveEnrichData, CompanyLiveEnrichErrors, CompanyLiveEnrichResponses, CompanyPostsLiveFetchData, CompanyPostsLiveFetchErrors, CompanyPostsLiveFetchResponses, CompanySearchData, CompanySearchErrors, CompanySearchResponses, CompanyTypeaheadData, CompanyTypeaheadErrors, CompanyTypeaheadResponses, CreateAudienceData, CreateAudienceErrors, CreateAudienceResponses, CreateCompanyExclusionListData, CreateCompanyExclusionListErrors, CreateCompanyExclusionListFromAudienceData, CreateCompanyExclusionListFromAudienceErrors, CreateCompanyExclusionListFromAudienceResponses, CreateCompanyExclusionListResponses, CreateJobChangeListData, CreateJobChangeListErrors, CreateJobChangeListResponses, CreateProspectExclusionListData, CreateProspectExclusionListErrors, CreateProspectExclusionListFromAudienceData, CreateProspectExclusionListFromAudienceErrors, CreateProspectExclusionListFromAudienceResponses, CreateProspectExclusionListResponses, DeleteAudienceData, DeleteAudienceErrors, DeleteAudienceResponses, DeleteCompanyExclusionListData, DeleteCompanyExclusionListErrors, DeleteCompanyExclusionListResponses, DeleteJobChangeListData, DeleteJobChangeListErrors, DeleteJobChangeListResponses, DeleteProfilesFromJobChangeListData, DeleteProfilesFromJobChangeListErrors, DeleteProfilesFromJobChangeListResponses, DeleteProspectExclusionListData, DeleteProspectExclusionListErrors, DeleteProspectExclusionListResponses, DomainLookupPollingData, DomainLookupPollingErrors, DomainLookupPollingResponses, DomainLookupTriggerData, DomainLookupTriggerErrors, DomainLookupTriggerResponses, EmailBounceDetectionData, EmailBounceDetectionErrors, EmailBounceDetectionResponses, EstimateEnrichmentCostData, EstimateEnrichmentCostErrors, EstimateEnrichmentCostResponses, ExportCompaniesData, ExportCompaniesErrors, ExportCompaniesResponses, ExportProspectsData, ExportProspectsErrors, ExportProspectsResponses, GetAcceleratorsData, GetAcceleratorsErrors, GetAcceleratorsResponses, GetAudienceCompaniesData, GetAudienceCompaniesErrors, GetAudienceCompaniesResponses, GetAudienceProspectsData, GetAudienceProspectsErrors, GetAudienceProspectsResponses, GetAudienceStatusData, GetAudienceStatusErrors, GetAudienceStatusResponses, GetAutoTopupSettingsData, GetAutoTopupSettingsErrors, GetAutoTopupSettingsResponses, GetCompanyExclusionListsData, GetCompanyExclusionListsErrors, GetCompanyExclusionListsResponses, GetCompanyRevenueData, GetCompanyRevenueErrors, GetCompanyRevenueResponses, GetEnrichmentStatusData, GetEnrichmentStatusErrors, GetEnrichmentStatusResponses, GetExcludedCompaniesForExclusionListData, GetExcludedCompaniesForExclusionListErrors, GetExcludedCompaniesForExclusionListResponses, GetExcludedProspectsForExclusionListData, GetExcludedProspectsForExclusionListErrors, GetExcludedProspectsForExclusionListResponses, GetIndustriesData, GetIndustriesErrors, GetIndustriesResponses, GetJourneymanListData, GetJourneymanListErrors, GetJourneymanListResponses, GetLanguagesData, GetLanguagesErrors, GetLanguagesResponses, GetNaicsCodesData, GetNaicsCodesErrors, GetNaicsCodesResponses, GetOpenApiData, GetOpenApiResponses, GetOrgCreditsData, GetOrgCreditsErrors, GetOrgCreditsResponses, GetProspectExclusionListsData, GetProspectExclusionListsErrors, GetProspectExclusionListsResponses, GetRegionsData, GetRegionsErrors, GetRegionsResponses, GetScoutingReportData, GetScoutingReportErrors, GetScoutingReportResponses, GetSubdivisionsData, GetSubdivisionsErrors, GetSubdivisionsResponses, GetTagsData, GetTagsErrors, GetTagsResponses, GetTimeZonesData, GetTimeZonesErrors, GetTimeZonesResponses, GithubLookupPollingData, GithubLookupPollingErrors, GithubLookupPollingResponses, GithubLookupTriggerData, GithubLookupTriggerErrors, GithubLookupTriggerResponses, GithubToLinkedInPollingData, GithubToLinkedInPollingErrors, GithubToLinkedInPollingResponses, GithubToLinkedInTriggerData, GithubToLinkedInTriggerErrors, GithubToLinkedInTriggerResponses, GoogleMapsSearchData, GoogleMapsSearchErrors, GoogleMapsSearchResponses, HealthCheckData, HealthCheckResponses, JdToProfileSearchData, JdToProfileSearchErrors, JdToProfileSearchResponses, JobPostingSearchCountData, JobPostingSearchCountErrors, JobPostingSearchCountResponses, JobPostingSearchData, JobPostingSearchErrors, JobPostingSearchResponses, KitchenSinkBulkCompanyData, KitchenSinkBulkCompanyErrors, KitchenSinkBulkCompanyResponses, KitchenSinkBulkProfileData, KitchenSinkBulkProfileErrors, KitchenSinkBulkProfileResponses, KitchenSinkCompanyData, KitchenSinkCompanyErrors, KitchenSinkCompanyResponses, KitchenSinkProfileData, KitchenSinkProfileErrors, KitchenSinkProfileResponses, ListAllJourneymanListsData, ListAllJourneymanListsErrors, ListAllJourneymanListsResponses, ListAllProfilesFromJourneymanListData, ListAllProfilesFromJourneymanListErrors, ListAllProfilesFromJourneymanListResponses, ListAudiencesData, ListAudiencesErrors, ListAudiencesResponses, LocationTypeaheadData, LocationTypeaheadErrors, LocationTypeaheadResponses, MultiSourceSearchData, MultiSourceSearchErrors, MultiSourceSearchResponses, PeopleSearchCountData, PeopleSearchCountErrors, PeopleSearchCountResponses, PeopleSearchData, PeopleSearchErrors, PeopleSearchResponses, PollBatchContactEnrichmentData, PollBatchContactEnrichmentErrors, PollBatchContactEnrichmentResponses, PollExhaustiveContactEnrichmentResultData, PollExhaustiveContactEnrichmentResultErrors, PollExhaustiveContactEnrichmentResultResponses, PollGoogleMapsResultsData, PollGoogleMapsResultsErrors, PollGoogleMapsResultsResponses, PollLocalBusinessSearchData, PollLocalBusinessSearchErrors, PollLocalBusinessSearchResponses, PostCommentsLiveFetchData, PostCommentsLiveFetchErrors, PostCommentsLiveFetchResponses, PostReactionsLiveFetchData, PostReactionsLiveFetchErrors, PostReactionsLiveFetchResponses, PostSearchByKeywordsData, PostSearchByKeywordsErrors, PostSearchByKeywordsResponses, ProfileCommentsLiveFetchData, ProfileCommentsLiveFetchErrors, ProfileCommentsLiveFetchResponses, ProfileLiveEnrichData, ProfileLiveEnrichErrors, ProfileLiveEnrichResponses, ProfilePostsLiveFetchData, ProfilePostsLiveFetchErrors, ProfilePostsLiveFetchResponses, ProfileReactionsLiveFetchData, ProfileReactionsLiveFetchErrors, ProfileReactionsLiveFetchResponses, RemoveCompanyFromExclusionListData, RemoveCompanyFromExclusionListErrors, RemoveCompanyFromExclusionListResponses, RemoveProspectFromExclusionListData, RemoveProspectFromExclusionListErrors, RemoveProspectFromExclusionListResponses, ReverseEmailLookupData, ReverseEmailLookupErrors, ReverseEmailLookupResponses, SocialMediaLookupPollingData, SocialMediaLookupPollingErrors, SocialMediaLookupPollingResponses, SocialMediaLookupTriggerData, SocialMediaLookupTriggerErrors, SocialMediaLookupTriggerResponses, StandardizeCompanyData, StandardizeCompanyErrors, StandardizeCompanyResponses, StandardizeProfileData, StandardizeProfileErrors, StandardizeProfileResponses, StartBatchContactEnrichmentData, StartBatchContactEnrichmentErrors, StartBatchContactEnrichmentResponses, StartLocalBusinessSearchData, StartLocalBusinessSearchErrors, StartLocalBusinessSearchResponses, SyncCombinedSearchData, SyncCombinedSearchErrors, SyncCombinedSearchResponses, SyncQuickContactRevealData, SyncQuickContactRevealErrors, SyncQuickContactRevealResponses, SyncTurboContactEnrichmentData, SyncTurboContactEnrichmentErrors, SyncTurboContactEnrichmentResponses, TextToCombinedSearchData, TextToCombinedSearchErrors, TextToCombinedSearchParamData, TextToCombinedSearchParamErrors, TextToCombinedSearchParamResponses, TextToCombinedSearchResponses, TriggerEnrichmentData, TriggerEnrichmentErrors, TriggerEnrichmentResponses, TriggerExhaustiveContactEnrichmentData, TriggerExhaustiveContactEnrichmentErrors, TriggerExhaustiveContactEnrichmentResponses, TwitterProfileData, TwitterProfileErrors, TwitterProfileResponses, TwitterSearchData, TwitterSearchErrors, TwitterSearchResponses, TwitterTweetDetailsData, TwitterTweetDetailsErrors, TwitterTweetDetailsResponses, TwitterTweetQuotesData, TwitterTweetQuotesErrors, TwitterTweetQuotesResponses, TwitterTweetRepliesData, TwitterTweetRepliesErrors, TwitterTweetRepliesResponses, TwitterTweetRetweetersData, TwitterTweetRetweetersErrors, TwitterTweetRetweetersResponses, TwitterUserFollowersData, TwitterUserFollowersErrors, TwitterUserFollowersResponses, TwitterUserFollowingData, TwitterUserFollowingErrors, TwitterUserFollowingResponses, TwitterUserMentionsData, TwitterUserMentionsErrors, TwitterUserMentionsResponses, TwitterUserTweetsData, TwitterUserTweetsErrors, TwitterUserTweetsResponses, UpdateAudienceSearchParamsData, UpdateAudienceSearchParamsErrors, UpdateAudienceSearchParamsResponses, UpdateAutoTopupSettingsData, UpdateAutoTopupSettingsErrors, UpdateAutoTopupSettingsResponses, UpdateJobChangeListData, UpdateJobChangeListErrors, UpdateJobChangeListResponses, ValidatePhoneNumberData, ValidatePhoneNumberErrors, ValidatePhoneNumberResponses, YoutubeChannelData, YoutubeChannelErrors, YoutubeChannelResponses, YoutubeSearchData, YoutubeSearchErrors, YoutubeSearchResponses, YoutubeTranscriptData, YoutubeTranscriptErrors, YoutubeTranscriptResponses, YoutubeVideoCommentsData, YoutubeVideoCommentsErrors, YoutubeVideoCommentsResponses, YoutubeVideoDetailsData, YoutubeVideoDetailsErrors, YoutubeVideoDetailsResponses } from './types.gen';
+import type { AddCompaniesToExclusionListData, AddCompaniesToExclusionListErrors, AddCompaniesToExclusionListResponses, AddProfilesToListData, AddProfilesToListErrors, AddProfilesToListResponses, AddProspectsToExclusionListData, AddProspectsToExclusionListErrors, AddProspectsToExclusionListResponses, BuildAudienceData, BuildAudienceErrors, BuildAudienceResponses, BulkCompanyLogosData, BulkCompanyLogosErrors, BulkCompanyLogosResponses, BulkProfilePicData, BulkProfilePicErrors, BulkProfilePicResponses, BuyCreditsData, BuyCreditsErrors, BuyCreditsResponses, CheckGoogleMapsResultsData, CheckGoogleMapsResultsErrors, CheckGoogleMapsResultsResponses, CombinedSearchCountData, CombinedSearchCountErrors, CombinedSearchCountResponses, CompanyCountData, CompanyCountErrors, CompanyCountResponses, CompanyLiveEnrichData, CompanyLiveEnrichErrors, CompanyLiveEnrichResponses, CompanyPostsLiveFetchData, CompanyPostsLiveFetchErrors, CompanyPostsLiveFetchResponses, CompanySearchData, CompanySearchErrors, CompanySearchResponses, CompanyTypeaheadData, CompanyTypeaheadErrors, CompanyTypeaheadResponses, CreateAudienceData, CreateAudienceErrors, CreateAudienceResponses, CreateCompanyExclusionListData, CreateCompanyExclusionListErrors, CreateCompanyExclusionListFromAudienceData, CreateCompanyExclusionListFromAudienceErrors, CreateCompanyExclusionListFromAudienceResponses, CreateCompanyExclusionListResponses, CreateJobChangeListData, CreateJobChangeListErrors, CreateJobChangeListResponses, CreateProspectExclusionListData, CreateProspectExclusionListErrors, CreateProspectExclusionListFromAudienceData, CreateProspectExclusionListFromAudienceErrors, CreateProspectExclusionListFromAudienceResponses, CreateProspectExclusionListResponses, DeleteAudienceData, DeleteAudienceErrors, DeleteAudienceResponses, DeleteCompanyExclusionListData, DeleteCompanyExclusionListErrors, DeleteCompanyExclusionListResponses, DeleteJobChangeListData, DeleteJobChangeListErrors, DeleteJobChangeListResponses, DeleteProfilesFromJobChangeListData, DeleteProfilesFromJobChangeListErrors, DeleteProfilesFromJobChangeListResponses, DeleteProspectExclusionListData, DeleteProspectExclusionListErrors, DeleteProspectExclusionListResponses, DomainLookupPollingData, DomainLookupPollingErrors, DomainLookupPollingResponses, DomainLookupTriggerData, DomainLookupTriggerErrors, DomainLookupTriggerResponses, EmailBounceDetectionData, EmailBounceDetectionErrors, EmailBounceDetectionResponses, EstimateEnrichmentCostData, EstimateEnrichmentCostErrors, EstimateEnrichmentCostResponses, ExportCompaniesData, ExportCompaniesErrors, ExportCompaniesResponses, ExportProspectsData, ExportProspectsErrors, ExportProspectsResponses, FetchRealEstateListingsData, FetchRealEstateListingsErrors, FetchRealEstateListingsResponses, GetAcceleratorsData, GetAcceleratorsErrors, GetAcceleratorsResponses, GetAudienceCompaniesData, GetAudienceCompaniesErrors, GetAudienceCompaniesResponses, GetAudienceProspectsData, GetAudienceProspectsErrors, GetAudienceProspectsResponses, GetAudienceStatusData, GetAudienceStatusErrors, GetAudienceStatusResponses, GetAutoTopupSettingsData, GetAutoTopupSettingsErrors, GetAutoTopupSettingsResponses, GetCompanyExclusionListsData, GetCompanyExclusionListsErrors, GetCompanyExclusionListsResponses, GetCompanyRevenueData, GetCompanyRevenueErrors, GetCompanyRevenueResponses, GetEnrichmentStatusData, GetEnrichmentStatusErrors, GetEnrichmentStatusResponses, GetExcludedCompaniesForExclusionListData, GetExcludedCompaniesForExclusionListErrors, GetExcludedCompaniesForExclusionListResponses, GetExcludedProspectsForExclusionListData, GetExcludedProspectsForExclusionListErrors, GetExcludedProspectsForExclusionListResponses, GetIndustriesData, GetIndustriesErrors, GetIndustriesResponses, GetJourneymanListData, GetJourneymanListErrors, GetJourneymanListResponses, GetLanguagesData, GetLanguagesErrors, GetLanguagesResponses, GetNaicsCodesData, GetNaicsCodesErrors, GetNaicsCodesResponses, GetOpenApiData, GetOpenApiResponses, GetOrgCreditsData, GetOrgCreditsErrors, GetOrgCreditsResponses, GetProspectExclusionListsData, GetProspectExclusionListsErrors, GetProspectExclusionListsResponses, GetRateLimitsData, GetRateLimitsErrors, GetRateLimitsResponses, GetRegionsData, GetRegionsErrors, GetRegionsResponses, GetScoutingReportData, GetScoutingReportErrors, GetScoutingReportResponses, GetSubdivisionsData, GetSubdivisionsErrors, GetSubdivisionsResponses, GetTagsData, GetTagsErrors, GetTagsResponses, GetTechnologiesData, GetTechnologiesErrors, GetTechnologiesResponses, GetTimeZonesData, GetTimeZonesErrors, GetTimeZonesResponses, GithubLookupPollData, GithubLookupPollErrors, GithubLookupPollResponses, GithubLookupTriggerData, GithubLookupTriggerErrors, GithubLookupTriggerResponses, GithubToLinkedInPollingData, GithubToLinkedInPollingErrors, GithubToLinkedInPollingResponses, GithubToLinkedinSingleData, GithubToLinkedinSingleErrors, GithubToLinkedinSingleResponses, GithubToLinkedInTriggerData, GithubToLinkedInTriggerErrors, GithubToLinkedInTriggerResponses, GoogleMapsSearchData, GoogleMapsSearchErrors, GoogleMapsSearchResponses, HealthCheckData, HealthCheckResponses, InstagramPostCommentsData, InstagramPostCommentsErrors, InstagramPostCommentsResponses, InstagramPostDetailsData, InstagramPostDetailsErrors, InstagramPostDetailsResponses, InstagramProfileData, InstagramProfileErrors, InstagramProfileResponses, InstagramUserPostsData, InstagramUserPostsErrors, InstagramUserPostsResponses, InstagramUserReelsData, InstagramUserReelsErrors, InstagramUserReelsResponses, JdToProfileSearchData, JdToProfileSearchErrors, JdToProfileSearchResponses, JobPostingSearchCountData, JobPostingSearchCountErrors, JobPostingSearchCountResponses, JobPostingSearchData, JobPostingSearchErrors, JobPostingSearchResponses, JobTitleRewriteData, JobTitleRewriteErrors, JobTitleRewriteResponses, KitchenSinkBulkCompanyData, KitchenSinkBulkCompanyErrors, KitchenSinkBulkCompanyResponses, KitchenSinkBulkProfileData, KitchenSinkBulkProfileErrors, KitchenSinkBulkProfileResponses, KitchenSinkCompanyData, KitchenSinkCompanyErrors, KitchenSinkCompanyResponses, KitchenSinkProfileData, KitchenSinkProfileErrors, KitchenSinkProfileResponses, ListAllJourneymanListsData, ListAllJourneymanListsErrors, ListAllJourneymanListsResponses, ListAllProfilesFromJourneymanListData, ListAllProfilesFromJourneymanListErrors, ListAllProfilesFromJourneymanListResponses, ListAudiencesData, ListAudiencesErrors, ListAudiencesResponses, LocationTypeaheadData, LocationTypeaheadErrors, LocationTypeaheadResponses, MultiSourceSearchData, MultiSourceSearchErrors, MultiSourceSearchResponses, PaginatedCombinedSearchData, PaginatedCombinedSearchErrors, PaginatedCombinedSearchResponses, PeopleSearchCountData, PeopleSearchCountErrors, PeopleSearchCountResponses, PeopleSearchData, PeopleSearchErrors, PeopleSearchResponses, PollBatchContactDetailsData, PollBatchContactDetailsErrors, PollBatchContactDetailsResponses, PollBatchLiveEnrichData, PollBatchLiveEnrichErrors, PollBatchLiveEnrichResponses, PollDepthChartData, PollDepthChartErrors, PollDepthChartResponses, PollExhaustiveContactEnrichmentResultData, PollExhaustiveContactEnrichmentResultErrors, PollExhaustiveContactEnrichmentResultResponses, PollGoogleMapsResultsData, PollGoogleMapsResultsErrors, PollGoogleMapsResultsResponses, PollLocalBusinessSearchData, PollLocalBusinessSearchErrors, PollLocalBusinessSearchResponses, PostCommentsLiveFetchData, PostCommentsLiveFetchErrors, PostCommentsLiveFetchResponses, PostReactionsLiveFetchData, PostReactionsLiveFetchErrors, PostReactionsLiveFetchResponses, PostSearchByKeywordsData, PostSearchByKeywordsErrors, PostSearchByKeywordsResponses, ProfileCommentsLiveFetchData, ProfileCommentsLiveFetchErrors, ProfileCommentsLiveFetchResponses, ProfileLiveEnrichData, ProfileLiveEnrichErrors, ProfileLiveEnrichResponses, ProfilePostsLiveFetchData, ProfilePostsLiveFetchErrors, ProfilePostsLiveFetchResponses, ProfileReactionsLiveFetchData, ProfileReactionsLiveFetchErrors, ProfileReactionsLiveFetchResponses, RemoveCompanyFromExclusionListData, RemoveCompanyFromExclusionListErrors, RemoveCompanyFromExclusionListResponses, RemoveProspectFromExclusionListData, RemoveProspectFromExclusionListErrors, RemoveProspectFromExclusionListResponses, ReverseEmailLookupData, ReverseEmailLookupErrors, ReverseEmailLookupResponses, SocialMediaLookupPollingData, SocialMediaLookupPollingErrors, SocialMediaLookupPollingResponses, SocialMediaLookupTriggerData, SocialMediaLookupTriggerErrors, SocialMediaLookupTriggerResponses, StandardizeCompanyData, StandardizeCompanyErrors, StandardizeCompanyResponses, StandardizeProfileData, StandardizeProfileErrors, StandardizeProfileResponses, StartBatchContactDetailsData, StartBatchContactDetailsErrors, StartBatchContactDetailsResponses, StartBatchLiveEnrichData, StartBatchLiveEnrichErrors, StartBatchLiveEnrichResponses, StartDepthChartData, StartDepthChartErrors, StartDepthChartResponses, StartLocalBusinessSearchData, StartLocalBusinessSearchErrors, StartLocalBusinessSearchResponses, StealthFoundersCountData, StealthFoundersCountErrors, StealthFoundersCountResponses, StealthFoundersSearchData, StealthFoundersSearchErrors, StealthFoundersSearchResponses, SyncQuickContactRevealData, SyncQuickContactRevealErrors, SyncQuickContactRevealResponses, SyncTurboContactEnrichmentData, SyncTurboContactEnrichmentErrors, SyncTurboContactEnrichmentResponses, TextToCombinedSearchData, TextToCombinedSearchErrors, TextToCombinedSearchParamData, TextToCombinedSearchParamErrors, TextToCombinedSearchParamResponses, TextToCombinedSearchResponses, TiktokCommentRepliesData, TiktokCommentRepliesErrors, TiktokCommentRepliesResponses, TiktokPopularCreatorsData, TiktokPopularCreatorsErrors, TiktokPopularCreatorsResponses, TiktokPopularHashtagsData, TiktokPopularHashtagsErrors, TiktokPopularHashtagsResponses, TiktokPopularSongsData, TiktokPopularSongsErrors, TiktokPopularSongsResponses, TiktokPopularVideosData, TiktokPopularVideosErrors, TiktokPopularVideosResponses, TiktokProfileData, TiktokProfileErrors, TiktokProfileResponses, TiktokSearchHashtagData, TiktokSearchHashtagErrors, TiktokSearchHashtagResponses, TiktokSearchKeywordData, TiktokSearchKeywordErrors, TiktokSearchKeywordResponses, TiktokSearchUsersData, TiktokSearchUsersErrors, TiktokSearchUsersResponses, TiktokSongDetailsData, TiktokSongDetailsErrors, TiktokSongDetailsResponses, TiktokSongVideosData, TiktokSongVideosErrors, TiktokSongVideosResponses, TiktokTrendingFeedData, TiktokTrendingFeedErrors, TiktokTrendingFeedResponses, TiktokUnifiedSearchData, TiktokUnifiedSearchErrors, TiktokUnifiedSearchResponses, TiktokUserFollowersData, TiktokUserFollowersErrors, TiktokUserFollowersResponses, TiktokUserFollowingData, TiktokUserFollowingErrors, TiktokUserFollowingResponses, TiktokUserVideosData, TiktokUserVideosErrors, TiktokUserVideosResponses, TiktokVideoCommentsData, TiktokVideoCommentsErrors, TiktokVideoCommentsResponses, TiktokVideoDetailsData, TiktokVideoDetailsErrors, TiktokVideoDetailsResponses, TiktokVideoTranscriptData, TiktokVideoTranscriptErrors, TiktokVideoTranscriptResponses, TriggerEnrichmentData, TriggerEnrichmentErrors, TriggerEnrichmentResponses, TriggerExhaustiveContactEnrichmentData, TriggerExhaustiveContactEnrichmentErrors, TriggerExhaustiveContactEnrichmentResponses, TwitterHandleToLinkedinUrlData, TwitterHandleToLinkedinUrlErrors, TwitterHandleToLinkedinUrlResponses, TwitterProfileData, TwitterProfileErrors, TwitterProfileResponses, TwitterSearchData, TwitterSearchErrors, TwitterSearchResponses, TwitterTweetDetailsData, TwitterTweetDetailsErrors, TwitterTweetDetailsResponses, TwitterTweetQuotesData, TwitterTweetQuotesErrors, TwitterTweetQuotesResponses, TwitterTweetRepliesData, TwitterTweetRepliesErrors, TwitterTweetRepliesResponses, TwitterTweetRetweetersData, TwitterTweetRetweetersErrors, TwitterTweetRetweetersResponses, TwitterUserFollowersData, TwitterUserFollowersErrors, TwitterUserFollowersResponses, TwitterUserFollowingData, TwitterUserFollowingErrors, TwitterUserFollowingResponses, TwitterUserMentionsData, TwitterUserMentionsErrors, TwitterUserMentionsResponses, TwitterUserTweetsData, TwitterUserTweetsErrors, TwitterUserTweetsResponses, UpdateAudienceSearchParamsData, UpdateAudienceSearchParamsErrors, UpdateAudienceSearchParamsResponses, UpdateAutoTopupSettingsData, UpdateAutoTopupSettingsErrors, UpdateAutoTopupSettingsResponses, UpdateJobChangeListData, UpdateJobChangeListErrors, UpdateJobChangeListResponses, ValidatePhoneNumberData, ValidatePhoneNumberErrors, ValidatePhoneNumberResponses, WebpageScreenshotData, WebpageScreenshotErrors, WebpageScreenshotResponses, YoutubeChannelData, YoutubeChannelErrors, YoutubeChannelResponses, YoutubeSearchData, YoutubeSearchErrors, YoutubeSearchResponses, YoutubeTranscriptData, YoutubeTranscriptErrors, YoutubeTranscriptResponses, YoutubeVideoCommentsData, YoutubeVideoCommentsErrors, YoutubeVideoCommentsResponses, YoutubeVideoDetailsData, YoutubeVideoDetailsErrors, YoutubeVideoDetailsResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -42,6 +42,17 @@ export const healthCheck = <ThrowOnError extends boolean = false>(options?: Opti
  * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
 export const getOrgCredits = <ThrowOnError extends boolean = false>(options: Options<GetOrgCreditsData, ThrowOnError>) => (options.client ?? client).get<GetOrgCreditsResponses, GetOrgCreditsErrors, ThrowOnError>({ url: '/v1/get-org-credits', ...options });
+
+/**
+ * Get organization rate limits
+ *
+ * Returns the effective rate limits for all API endpoints for your organization. If your organization has custom rate limits on any endpoint, those are reflected here.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const getRateLimits = <ThrowOnError extends boolean = false>(options: Options<GetRateLimitsData, ThrowOnError>) => (options.client ?? client).get<GetRateLimitsResponses, GetRateLimitsErrors, ThrowOnError>({ url: '/v1/rate-limits', ...options });
 
 /**
  * Get auto top-up settings
@@ -107,14 +118,46 @@ export const pollExhaustiveContactEnrichmentResult = <ThrowOnError extends boole
 });
 
 /**
- * Poll batch contact enrichment
+ * Poll depth chart generation result
  *
- * Polls a batch contact enrichment task. Returns partial results as they complete. Call this endpoint repeatedly until the 'done' field is true. Use the task ID returned from the 'Start batch contact enrichment' endpoint.
+ * Polls the status of a depth chart generation — a close analog to a company's internal org chart. Pass the report ID returned by /depth-chart/start. Returns the current status and, once complete, the depth chart aggregate with employee distribution across functions and seniority levels. Includes summary stats for each bucket, but does not list the people in each bucket.
  *
  * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
-export const pollBatchContactEnrichment = <ThrowOnError extends boolean = false>(options: Options<PollBatchContactEnrichmentData, ThrowOnError>) => (options.client ?? client).post<PollBatchContactEnrichmentResponses, PollBatchContactEnrichmentErrors, ThrowOnError>({
-    url: '/v1/contact-enrich/batch/poll',
+export const pollDepthChart = <ThrowOnError extends boolean = false>(options: Options<PollDepthChartData, ThrowOnError>) => (options.client ?? client).post<PollDepthChartResponses, PollDepthChartErrors, ThrowOnError>({
+    url: '/v1/depth-chart/poll',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Poll batch contact details
+ *
+ * Polls a batch contact details task. Returns partial results as they complete. Call this endpoint repeatedly until the 'done' field is true. Use the task ID returned from the 'Start batch contact details' endpoint.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 240 requests per 1 minute</span>
+ */
+export const pollBatchContactDetails = <ThrowOnError extends boolean = false>(options: Options<PollBatchContactDetailsData, ThrowOnError>) => (options.client ?? client).post<PollBatchContactDetailsResponses, PollBatchContactDetailsErrors, ThrowOnError>({
+    url: '/v1/contact-details/batch/poll',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Poll batch live enrichment
+ *
+ * Polls a batch live enrichment task for progress and results. Returns paginated enrichment results as they complete. Call repeatedly until status is 'completed' or 'failed'.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 360 requests per 1 minute</span>
+ */
+export const pollBatchLiveEnrich = <ThrowOnError extends boolean = false>(options: Options<PollBatchLiveEnrichData, ThrowOnError>) => (options.client ?? client).post<PollBatchLiveEnrichResponses, PollBatchLiveEnrichErrors, ThrowOnError>({
+    url: '/v1/linkedin-live-fetch/batch/poll',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -187,14 +230,14 @@ export const domainLookupPolling = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Poll GitHub lookup
+ * Poll GitHub lookup results
  *
- * Poll for the results of a GitHub lookup task.
+ * Poll for the results of a GitHub lookup task. Returns progress breakdown and all completed results in a single response (no pagination).
  *
  * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
-export const githubLookupPolling = <ThrowOnError extends boolean = false>(options: Options<GithubLookupPollingData, ThrowOnError>) => (options.client ?? client).post<GithubLookupPollingResponses, GithubLookupPollingErrors, ThrowOnError>({
-    url: '/v1/github-lookup/polling',
+export const githubLookupPoll = <ThrowOnError extends boolean = false>(options: Options<GithubLookupPollData, ThrowOnError>) => (options.client ?? client).post<GithubLookupPollResponses, GithubLookupPollErrors, ThrowOnError>({
+    url: '/v1/github-lookup/poll',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -207,7 +250,7 @@ export const githubLookupPolling = <ThrowOnError extends boolean = false>(option
  *
  * Poll for the results of a GitHub to LinkedIn lookup task.
  *
- * <span>⚡ <strong>Rate limit:</strong> 20 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  */
 export const githubToLinkedInPolling = <ThrowOnError extends boolean = false>(options: Options<GithubToLinkedInPollingData, ThrowOnError>) => (options.client ?? client).post<GithubToLinkedInPollingResponses, GithubToLinkedInPollingErrors, ThrowOnError>({
     url: '/v1/github-to-linkedin/polling',
@@ -575,6 +618,17 @@ export const getAccelerators = <ThrowOnError extends boolean = false>(options: O
 export const getSubdivisions = <ThrowOnError extends boolean = false>(options: Options<GetSubdivisionsData, ThrowOnError>) => (options.client ?? client).get<GetSubdivisionsResponses, GetSubdivisionsErrors, ThrowOnError>({ url: '/v1/enums/subdivisions', ...options });
 
 /**
+ * List technologies
+ *
+ * Get all searchable technologies and platforms with their synonyms. Useful for the technology search API.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 50 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> FREE! No credits are charged for this API.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const getTechnologies = <ThrowOnError extends boolean = false>(options: Options<GetTechnologiesData, ThrowOnError>) => (options.client ?? client).get<GetTechnologiesResponses, GetTechnologiesErrors, ThrowOnError>({ url: '/v1/enums/technologies', ...options });
+
+/**
  * Create a new audience
  *
  * Creates a new audience in DRAFT status. After creation, use the update-search-params endpoint to set filters, then use the build endpoint to populate the audience with companies and prospects.
@@ -839,18 +893,18 @@ export const peopleSearchCount = <ThrowOnError extends boolean = false>(options:
 });
 
 /**
- * Sync combined search
+ * Combined people + company search
  *
- * A synchronous endpoint that lets you search for companies and then prospects in these companies.
+ * Search for companies and profiles together. Returns results page by page using cursor-based pagination. Each entity type (companies, profiles) has its own cursor, so you can paginate them independently.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
- * <span>💰 <strong>Cost:</strong> Credits are charged after the search completes based on results: 1 credits per company found and 1 credits per profile found.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Your total charge will vary based on the number of companies and profiles returned in your results.">ⓘ</span></span>
+ * <span>💰 <strong>Cost:</strong> Credits are charged per page based on results: 1 credits per company found and 1 credits per profile found.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Your total charge will vary based on the number of companies and profiles returned in your results.">ⓘ</span></span>
  *
  * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
-export const syncCombinedSearch = <ThrowOnError extends boolean = false>(options: Options<SyncCombinedSearchData, ThrowOnError>) => (options.client ?? client).post<SyncCombinedSearchResponses, SyncCombinedSearchErrors, ThrowOnError>({
-    url: '/v1/combined-search/sync',
+export const paginatedCombinedSearch = <ThrowOnError extends boolean = false>(options: Options<PaginatedCombinedSearchData, ThrowOnError>) => (options.client ?? client).post<PaginatedCombinedSearchResponses, PaginatedCombinedSearchErrors, ThrowOnError>({
+    url: '/v1/combined-search/paginated',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -913,6 +967,42 @@ export const combinedSearchCount = <ThrowOnError extends boolean = false>(option
 });
 
 /**
+ * Search stealth/ex-stealth founders
+ *
+ * Find stealth founders — people currently at stealth-mode companies, or who recently left stealth (launched). Supports profile search filters to narrow results by location, keywords, job history, education, and more.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 1 credit per profile found&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const stealthFoundersSearch = <ThrowOnError extends boolean = false>(options: Options<StealthFoundersSearchData, ThrowOnError>) => (options.client ?? client).post<StealthFoundersSearchResponses, StealthFoundersSearchErrors, ThrowOnError>({
+    url: '/v1/stealth-founders/search',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Count stealth/ex-stealth founders
+ *
+ * Count profiles matching stealth founder filters. Uses the same filters as the stealth founders search endpoint but returns only the total count.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const stealthFoundersCount = <ThrowOnError extends boolean = false>(options: Options<StealthFoundersCountData, ThrowOnError>) => (options.client ?? client).post<StealthFoundersCountResponses, StealthFoundersCountErrors, ThrowOnError>({
+    url: '/v1/stealth-founders/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Reveal contact details (turbo)
  *
  * Fastest synchronous contact reveal — optimized for speed at a higher credit cost. Uses a premium enrichment stack for the lowest possible latency. For a cheaper option with slightly longer response times, use the standard /contact-details/single endpoint. For maximum coverage (async, slower), use the /contact-details/exhaustive/start endpoint.
@@ -953,6 +1043,22 @@ export const syncQuickContactReveal = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
+ * Start depth chart generation
+ *
+ * Generates an organizational depth chart for a company — a close analog to the company's internal org chart. Classifies employees by function (Engineering, Sales, Marketing, etc.) and seniority level (Junior through Executive). This is asynchronous: call this endpoint to start generation, then poll /depth-chart/poll with the returned report ID. Processing typically takes 1-5 minutes depending on company size. Depth chart generation processes up to 10,000 employee profiles per report; larger companies are truncated to the most relevant profiles.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ */
+export const startDepthChart = <ThrowOnError extends boolean = false>(options: Options<StartDepthChartData, ThrowOnError>) => (options.client ?? client).post<StartDepthChartResponses, StartDepthChartErrors, ThrowOnError>({
+    url: '/v1/depth-chart/start',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Start exhaustive contact details reveal
  *
  * Maximum-coverage contact reveal — runs all waterfall steps in parallel to get the most comprehensive results. This is asynchronous: call this endpoint to start the task, then poll /contact-details/exhaustive/poll with the returned task ID. Slower and more expensive than the synchronous endpoints, but returns more emails and phone numbers on average. For faster synchronous results, use /contact-details/single (standard) or /contact-details/turbo/sync (fastest).
@@ -971,16 +1077,16 @@ export const triggerExhaustiveContactEnrichment = <ThrowOnError extends boolean 
 });
 
 /**
- * Start batch contact enrichment
+ * Start batch contact details
  *
- * Starts fetching contact details for multiple people (up to 10000) in batch. This is an asynchronous task; use the polling endpoint to check progress and get results.
+ * Starts fetching contact details for multiple people (up to 2000) in batch. This is an asynchronous task; use the polling endpoint to check progress and get results.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Pay only for the data you request:<br />• 5 credits for all phone numbers AND all emails<br />• 2 credits for work email only<br />• 2 credits for personal email only<br />• 3 credits for phone only&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. Credits are charged upfront for all unique people queued (after deduping). Undelivered data is refunded per operation.">ⓘ</span></span>
  */
-export const startBatchContactEnrichment = <ThrowOnError extends boolean = false>(options: Options<StartBatchContactEnrichmentData, ThrowOnError>) => (options.client ?? client).post<StartBatchContactEnrichmentResponses, StartBatchContactEnrichmentErrors, ThrowOnError>({
-    url: '/v1/contact-enrich/batch/start',
+export const startBatchContactDetails = <ThrowOnError extends boolean = false>(options: Options<StartBatchContactDetailsData, ThrowOnError>) => (options.client ?? client).post<StartBatchContactDetailsResponses, StartBatchContactDetailsErrors, ThrowOnError>({
+    url: '/v1/contact-details/batch/start',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -1019,6 +1125,44 @@ export const profileLiveEnrich = <ThrowOnError extends boolean = false>(options:
  */
 export const companyLiveEnrich = <ThrowOnError extends boolean = false>(options: Options<CompanyLiveEnrichData, ThrowOnError>) => (options.client ?? client).post<CompanyLiveEnrichResponses, CompanyLiveEnrichErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/company/single',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Capture webpage screenshot
+ *
+ * Captures a screenshot of a public webpage and returns a hosted image URL. Supports both viewport-only and full-page captures. The returned URL is permanent and does not expire.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per screenshot&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
+ */
+export const webpageScreenshot = <ThrowOnError extends boolean = false>(options: Options<WebpageScreenshotData, ThrowOnError>) => (options.client ?? client).post<WebpageScreenshotResponses, WebpageScreenshotErrors, ThrowOnError>({
+    url: '/v1/live-fetch/webpage/screenshot',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Start batch live enrichment
+ *
+ * Starts a batch live enrichment job for multiple LinkedIn profiles or companies (up to 10,000). This is an asynchronous task; use the polling endpoint to check progress and get results.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per live fetch&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const startBatchLiveEnrich = <ThrowOnError extends boolean = false>(options: Options<StartBatchLiveEnrichData, ThrowOnError>) => (options.client ?? client).post<StartBatchLiveEnrichResponses, StartBatchLiveEnrichErrors, ThrowOnError>({
+    url: '/v1/linkedin-live-fetch/batch/start',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -1225,6 +1369,26 @@ export const reverseEmailLookup = <ThrowOnError extends boolean = false>(options
 });
 
 /**
+ * Find LinkedIn URL from X (Twitter) handle
+ *
+ * Given an X (Twitter) handle, find the person's LinkedIn profile URL. Accepts bare handles (with or without '@') and full X / Twitter profile URLs.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 3 credits per X→LinkedIn lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
+ */
+export const twitterHandleToLinkedinUrl = <ThrowOnError extends boolean = false>(options: Options<TwitterHandleToLinkedinUrlData, ThrowOnError>) => (options.client ?? client).post<TwitterHandleToLinkedinUrlResponses, TwitterHandleToLinkedinUrlErrors, ThrowOnError>({
+    url: '/v1/twitter-handle-to-linkedin/single',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Start a search on Google Maps
  *
  * Start a search for local businesses or other places of interest on Google Maps
@@ -1321,7 +1485,7 @@ export const kitchenSinkBulkCompany = <ThrowOnError extends boolean = false>(opt
  *
  * Search for companies, schools/universities, and investors by name. Supports partial inputs, which can enable typeaheads in your UI.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 240 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1335,11 +1499,29 @@ export const companyTypeahead = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
+ * Job Title Synonym Expansion
+ *
+ * Expand a job title into synonyms and related variations. Useful for broadening job title searches to improve yield.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 240 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const jobTitleRewrite = <ThrowOnError extends boolean = false>(options: Options<JobTitleRewriteData, ThrowOnError>) => (options.client ?? client).post<JobTitleRewriteResponses, JobTitleRewriteErrors, ThrowOnError>({
+    url: '/v1/typeahead/job-title',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Location typeahead
  *
  * Get the latitude/longitude of a given city, including prefixes (e.g. 'san fr'). This makes it good for typeaheads in your UI.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 240 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1467,7 +1649,7 @@ export const startLocalBusinessSearch = <ThrowOnError extends boolean = false>(o
  *
  * Use our AI agent to find a company's domain and email domains using a variety of parameters such as company name, country, state, city, address, other context, and description. NOTE: Maximum 400 companies can be provided at a time. Estimated time to complete 150 companies is an hour.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per company&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1545,7 +1727,7 @@ export const triggerEnrichment = <ThrowOnError extends boolean = false>(options:
  *
  * Use our AI agent to find GitHub profiles for a list of people using name and optional context like LinkedIn URL, work email, company, and job title.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per person&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1563,12 +1745,35 @@ export const githubLookupTrigger = <ThrowOnError extends boolean = false>(option
  *
  * Convert GitHub usernames to LinkedIn profiles or get emailIds. Use outputType flag to specify what to retrieve.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per person for LinkedIn lookup OR email extraction. 2 credits per person if outputType='both'.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
 export const githubToLinkedInTrigger = <ThrowOnError extends boolean = false>(options: Options<GithubToLinkedInTriggerData, ThrowOnError>) => (options.client ?? client).post<GithubToLinkedInTriggerResponses, GithubToLinkedInTriggerErrors, ThrowOnError>({
     url: '/v1/github-to-linkedin/trigger',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Find person by GitHub username (single)
+ *
+ * Given a GitHub username, find the person's LinkedIn profile and extract work emails.
+ * Use `outputType` to control what data is returned and charged for.
+ * For outputType=linkedin we only return LinkedIn fields, for outputType=email we only return emails, for outputType=both we return both.
+ * To avoid 429 errors, spread requests evenly instead of sending a burst.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 5 credits per person (LinkedIn lookup) + 3 credits per person (email extraction)&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 2 minutes&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 2 minutes for this endpoint.">ⓘ</span></span>
+ */
+export const githubToLinkedinSingle = <ThrowOnError extends boolean = false>(options: Options<GithubToLinkedinSingleData, ThrowOnError>) => (options.client ?? client).post<GithubToLinkedinSingleResponses, GithubToLinkedinSingleErrors, ThrowOnError>({
+    url: '/v1/github-to-linkedin/single',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -1685,6 +1890,26 @@ export const youtubeChannel = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
+ * Fetch real estate listings
+ *
+ * Fetches real estate listings by location and optional filters such as listing status, price ranges, home types, and property features. Data is available for all 50 US states, D.C., Puerto Rico, and the Canadian provinces of British Columbia, Alberta, Saskatchewan, Ontario, New Brunswick, Nova Scotia, PEI, and Newfoundland and Labrador.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 30 seconds&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 30 seconds for this endpoint.">ⓘ</span></span>
+ */
+export const fetchRealEstateListings = <ThrowOnError extends boolean = false>(options: Options<FetchRealEstateListingsData, ThrowOnError>) => (options.client ?? client).post<FetchRealEstateListingsResponses, FetchRealEstateListingsErrors, ThrowOnError>({
+    url: '/v1/real-estate/listings',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Get company scouting report
  *
  * Generates a comprehensive scouting report for a company including news, founders, funding, media links, and historical headcount. This endpoint may take 1-2 minutes to respond as it gathers data from multiple sources — please set a generous client timeout (at least 120 seconds).
@@ -1777,9 +2002,9 @@ export const deleteJobChangeList = <ThrowOnError extends boolean = false>(option
 /**
  * Add profiles to the job change list
  *
- * Add profiles to the job change list who you want track when they change their jobs. Note: we tend to remove the 404 profiles to the list automatically.Once the upload is start, you can use /job-changes/get-list to track the uploading process of the people to the list.
+ * Add profiles to the job change list whose job changes you want to track. Note: we automatically remove 404 profiles from the list. Once the upload starts, you can use /job-changes/get-list to track the upload progress.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per Number of prospect tracking&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1839,6 +2064,438 @@ export const listAllJourneymanLists = <ThrowOnError extends boolean = false>(opt
  */
 export const listAllProfilesFromJourneymanList = <ThrowOnError extends boolean = false>(options: Options<ListAllProfilesFromJourneymanListData, ThrowOnError>) => (options.client ?? client).post<ListAllProfilesFromJourneymanListResponses, ListAllProfilesFromJourneymanListErrors, ThrowOnError>({
     url: '/v1/job-changes/list-all-profiles',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok user profile
+ *
+ * Fetches profile information for a TikTok user including follower counts, bio, and account type.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokProfile = <ThrowOnError extends boolean = false>(options: Options<TiktokProfileData, ThrowOnError>) => (options.client ?? client).post<TiktokProfileResponses, TiktokProfileErrors, ThrowOnError>({
+    url: '/v1/tiktok/profile',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok user videos
+ *
+ * Fetches the latest videos for a TikTok user. Returns a paginated list of videos with engagement metrics. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokUserVideos = <ThrowOnError extends boolean = false>(options: Options<TiktokUserVideosData, ThrowOnError>) => (options.client ?? client).post<TiktokUserVideosResponses, TiktokUserVideosErrors, ThrowOnError>({
+    url: '/v1/tiktok/user-videos',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok user followers
+ *
+ * Fetches the followers of a TikTok user. Returns a paginated list. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokUserFollowers = <ThrowOnError extends boolean = false>(options: Options<TiktokUserFollowersData, ThrowOnError>) => (options.client ?? client).post<TiktokUserFollowersResponses, TiktokUserFollowersErrors, ThrowOnError>({
+    url: '/v1/tiktok/user-followers',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok user following
+ *
+ * Fetches the accounts that a TikTok user follows. Returns a paginated list. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokUserFollowing = <ThrowOnError extends boolean = false>(options: Options<TiktokUserFollowingData, ThrowOnError>) => (options.client ?? client).post<TiktokUserFollowingResponses, TiktokUserFollowingErrors, ThrowOnError>({
+    url: '/v1/tiktok/user-following',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok video details
+ *
+ * Fetches detailed information about a TikTok video including engagement metrics and video metadata.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokVideoDetails = <ThrowOnError extends boolean = false>(options: Options<TiktokVideoDetailsData, ThrowOnError>) => (options.client ?? client).post<TiktokVideoDetailsResponses, TiktokVideoDetailsErrors, ThrowOnError>({
+    url: '/v1/tiktok/video-details',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok video comments
+ *
+ * Fetches comments for a TikTok video. Returns a paginated list of comments. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokVideoComments = <ThrowOnError extends boolean = false>(options: Options<TiktokVideoCommentsData, ThrowOnError>) => (options.client ?? client).post<TiktokVideoCommentsResponses, TiktokVideoCommentsErrors, ThrowOnError>({
+    url: '/v1/tiktok/video-comments',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok comment replies
+ *
+ * Fetches replies to a TikTok comment. Returns a paginated list of replies. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokCommentReplies = <ThrowOnError extends boolean = false>(options: Options<TiktokCommentRepliesData, ThrowOnError>) => (options.client ?? client).post<TiktokCommentRepliesResponses, TiktokCommentRepliesErrors, ThrowOnError>({
+    url: '/v1/tiktok/comment-replies',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok video transcript
+ *
+ * Fetches the spoken word transcript for a TikTok video, broken into timed segments.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokVideoTranscript = <ThrowOnError extends boolean = false>(options: Options<TiktokVideoTranscriptData, ThrowOnError>) => (options.client ?? client).post<TiktokVideoTranscriptResponses, TiktokVideoTranscriptErrors, ThrowOnError>({
+    url: '/v1/tiktok/video-transcript',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Search TikTok users
+ *
+ * Searches for TikTok users by name or keyword. Returns a paginated list of matching accounts. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokSearchUsers = <ThrowOnError extends boolean = false>(options: Options<TiktokSearchUsersData, ThrowOnError>) => (options.client ?? client).post<TiktokSearchUsersResponses, TiktokSearchUsersErrors, ThrowOnError>({
+    url: '/v1/tiktok/search-users',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Search TikTok videos by keyword
+ *
+ * Searches for TikTok videos by keyword or phrase. Returns a paginated list of matching videos. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokSearchKeyword = <ThrowOnError extends boolean = false>(options: Options<TiktokSearchKeywordData, ThrowOnError>) => (options.client ?? client).post<TiktokSearchKeywordResponses, TiktokSearchKeywordErrors, ThrowOnError>({
+    url: '/v1/tiktok/search-keyword',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Search TikTok hashtag videos
+ *
+ * Fetches videos for a TikTok hashtag along with hashtag metadata. Returns a paginated list of videos. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokSearchHashtag = <ThrowOnError extends boolean = false>(options: Options<TiktokSearchHashtagData, ThrowOnError>) => (options.client ?? client).post<TiktokSearchHashtagResponses, TiktokSearchHashtagErrors, ThrowOnError>({
+    url: '/v1/tiktok/search-hashtag',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * TikTok unified search
+ *
+ * Searches TikTok and returns both matching videos and user accounts for a query in a single response. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokUnifiedSearch = <ThrowOnError extends boolean = false>(options: Options<TiktokUnifiedSearchData, ThrowOnError>) => (options.client ?? client).post<TiktokUnifiedSearchResponses, TiktokUnifiedSearchErrors, ThrowOnError>({
+    url: '/v1/tiktok/unified-search',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch popular TikTok creators
+ *
+ * Fetches a list of popular TikTok creators. Optionally filter by country and sort order.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokPopularCreators = <ThrowOnError extends boolean = false>(options: Options<TiktokPopularCreatorsData, ThrowOnError>) => (options.client ?? client).post<TiktokPopularCreatorsResponses, TiktokPopularCreatorsErrors, ThrowOnError>({
+    url: '/v1/tiktok/popular-creators',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch popular TikTok videos
+ *
+ * Fetches a list of popular TikTok videos. Optionally filter by country and time period.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokPopularVideos = <ThrowOnError extends boolean = false>(options: Options<TiktokPopularVideosData, ThrowOnError>) => (options.client ?? client).post<TiktokPopularVideosResponses, TiktokPopularVideosErrors, ThrowOnError>({
+    url: '/v1/tiktok/popular-videos',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch popular TikTok hashtags
+ *
+ * Fetches a list of popular TikTok hashtags. Optionally filter by country and time period.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokPopularHashtags = <ThrowOnError extends boolean = false>(options: Options<TiktokPopularHashtagsData, ThrowOnError>) => (options.client ?? client).post<TiktokPopularHashtagsResponses, TiktokPopularHashtagsErrors, ThrowOnError>({
+    url: '/v1/tiktok/popular-hashtags',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch popular TikTok songs
+ *
+ * Fetches a list of currently popular songs/sounds on TikTok.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokPopularSongs = <ThrowOnError extends boolean = false>(options: Options<TiktokPopularSongsData, ThrowOnError>) => (options.client ?? client).post<TiktokPopularSongsResponses, TiktokPopularSongsErrors, ThrowOnError>({
+    url: '/v1/tiktok/popular-songs',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok trending feed
+ *
+ * Fetches the current TikTok trending feed. Returns a paginated list of trending videos. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokTrendingFeed = <ThrowOnError extends boolean = false>(options: Options<TiktokTrendingFeedData, ThrowOnError>) => (options.client ?? client).post<TiktokTrendingFeedResponses, TiktokTrendingFeedErrors, ThrowOnError>({
+    url: '/v1/tiktok/trending-feed',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok song details
+ *
+ * Fetches details about a TikTok song/sound including title, artist, and usage statistics.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokSongDetails = <ThrowOnError extends boolean = false>(options: Options<TiktokSongDetailsData, ThrowOnError>) => (options.client ?? client).post<TiktokSongDetailsResponses, TiktokSongDetailsErrors, ThrowOnError>({
+    url: '/v1/tiktok/song-details',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch TikTok videos using a song
+ *
+ * Fetches TikTok videos that use a specific song/sound. Returns a paginated list. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const tiktokSongVideos = <ThrowOnError extends boolean = false>(options: Options<TiktokSongVideosData, ThrowOnError>) => (options.client ?? client).post<TiktokSongVideosResponses, TiktokSongVideosErrors, ThrowOnError>({
+    url: '/v1/tiktok/song-videos',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch Instagram user profile
+ *
+ * Fetches profile information for an Instagram user including follower counts, bio, and account type.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const instagramProfile = <ThrowOnError extends boolean = false>(options: Options<InstagramProfileData, ThrowOnError>) => (options.client ?? client).post<InstagramProfileResponses, InstagramProfileErrors, ThrowOnError>({
+    url: '/v1/instagram/profile',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch Instagram user posts
+ *
+ * Fetches the latest posts for an Instagram user. Returns a paginated list of posts with engagement metrics. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const instagramUserPosts = <ThrowOnError extends boolean = false>(options: Options<InstagramUserPostsData, ThrowOnError>) => (options.client ?? client).post<InstagramUserPostsResponses, InstagramUserPostsErrors, ThrowOnError>({
+    url: '/v1/instagram/user-posts',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch Instagram user reels
+ *
+ * Fetches the latest reels for an Instagram user. Returns a paginated list of reels with engagement metrics. Use the `nextPageToken` field from the response to retrieve subsequent pages.
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const instagramUserReels = <ThrowOnError extends boolean = false>(options: Options<InstagramUserReelsData, ThrowOnError>) => (options.client ?? client).post<InstagramUserReelsResponses, InstagramUserReelsErrors, ThrowOnError>({
+    url: '/v1/instagram/user-reels',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch Instagram post details
+ *
+ * Fetches details for a single Instagram post including caption, like count, and media URL. Accepts a full post URL (e.g. 'https://www.instagram.com/p/DVoDVg5DkXM/') or a bare shortcode (e.g. 'DVoDVg5DkXM').
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const instagramPostDetails = <ThrowOnError extends boolean = false>(options: Options<InstagramPostDetailsData, ThrowOnError>) => (options.client ?? client).post<InstagramPostDetailsResponses, InstagramPostDetailsErrors, ThrowOnError>({
+    url: '/v1/instagram/post-details',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Fetch Instagram post comments
+ *
+ * Fetches comments for an Instagram post. Returns a paginated list. Use the `nextPageToken` field from the response to retrieve subsequent pages. Accepts a full post URL (e.g. 'https://www.instagram.com/p/DVoDVg5DkXM/') or a bare shortcode (e.g. 'DVoDVg5DkXM').
+ *
+ * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ *
+ * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ */
+export const instagramPostComments = <ThrowOnError extends boolean = false>(options: Options<InstagramPostCommentsData, ThrowOnError>) => (options.client ?? client).post<InstagramPostCommentsResponses, InstagramPostCommentsErrors, ThrowOnError>({
+    url: '/v1/instagram/post-comments',
     ...options,
     headers: {
         'Content-Type': 'application/json',
