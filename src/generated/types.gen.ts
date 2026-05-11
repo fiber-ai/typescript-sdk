@@ -4,8 +4,6 @@ export type ClientOptions = {
     baseUrl: 'https://api.fiber.ai' | (string & {});
 };
 
-export type Webhooks = RevealCompletedWebhookRequest | SavedSearchRunCompletedWebhookRequest | JobChangedWebhookRequest | BatchLiveEnrichCompletedWebhookRequest | BatchContactEnrichCompletedWebhookRequest | BatchContactEnrichV1CompletedWebhookRequest | GithubToLinkedinCompletedWebhookRequest | GithubLookupCompletedWebhookRequest | DomainLookupCompletedWebhookRequest | SocialMediaLookupCompletedWebhookRequest | GoogleMapsSearchCompletedWebhookRequest | LocalBusinessSearchCompletedWebhookRequest | DepthChartCompletedWebhookRequest | AudienceEnrichmentCompletedWebhookRequest | AudienceProspectExportCompletedWebhookRequest | AudienceCompanyExportCompletedWebhookRequest | AudienceBuildCompletedWebhookRequest | CombinedSearchCompletedWebhookRequest | SalesNavScrapeCompletedWebhookRequest | SalesNavLiteScrapeCompletedWebhookRequest | JobChangesProfilesAddedWebhookRequest;
-
 export type GetOpenApiData = {
     body?: never;
     path?: never;
@@ -460,18 +458,6 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
-                getLiProfileLatestActivities: {
-                    levels: Array<{
-                        limit?: number | null;
-                        centiCreditCost: number;
-                    }>;
-                };
-                getLiProfileLastActiveDate: {
-                    levels: Array<{
-                        limit?: number | null;
-                        centiCreditCost: number;
-                    }>;
-                };
                 getProfileLatestLiPost: {
                     levels: Array<{
                         limit?: number | null;
@@ -719,12 +705,6 @@ export type GetOrgCreditsResponses = {
                     }>;
                 };
                 flightSearch: {
-                    levels: Array<{
-                        limit?: number | null;
-                        centiCreditCost: number;
-                    }>;
-                };
-                mosaicRow: {
                     levels: Array<{
                         limit?: number | null;
                         centiCreditCost: number;
@@ -3116,7 +3096,6 @@ export type PollBatchLiveEnrichResponses = {
                     entity_urns?: Array<string> | null;
                     is_hiring?: boolean | null;
                     websites?: Array<string> | null;
-                    is_verified?: boolean | null;
                     current_job?: {
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
@@ -5108,7 +5087,7 @@ export type GithubLookupPollResponses = {
                      */
                     confidenceOutOf10: number;
                     /**
-                     * Short explanation of why this GitHub profile was matched to the person, referencing details like name, company, or location.
+                     * The reasoning for why the agent chose the given GitHub profile.
                      */
                     rationale?: string | null;
                 } | {
@@ -5383,24 +5362,28 @@ export type GithubToLinkedInPollingResponses = {
              */
             data: Array<{
                 githubUsername: string;
-                customerProvidedId?: string | null;
+                customerProvidedId: string | null;
                 status: 'NOT_STARTED' | 'STARTED' | 'DONE' | 'FAILED';
-                linkedInUrl?: string | null;
-                linkedInSlug?: string | null;
+                linkedInUrl: string | null;
+                linkedInSlug: string | null;
                 confidenceOutOf10: number;
-                rationale?: string | null;
+                /**
+                 * Method used to resolve the LinkedIn profile. See the enum values on the PublicMatchSource schema for the full list.
+                 */
+                matchSource: 'email' | 'name-search' | 'agent' | 'web-search' | 'not-found';
+                rationale: string | null;
                 extractedEmails: Array<string>;
-                githubProfile?: {
-                    name?: string | null;
-                    company?: string | null;
-                    location?: string | null;
-                    bio?: string | null;
-                    blog?: string | null;
-                    avatarUrl?: string | null;
-                    followers?: number | null;
-                    publicRepos?: number | null;
+                githubProfile: {
+                    name: string | null;
+                    company: string | null;
+                    location: string | null;
+                    bio: string | null;
+                    blog: string | null;
+                    avatarUrl: string | null;
+                    followers: number | null;
+                    publicRepos: number | null;
                 } | null;
-                errorMessage?: string | null;
+                errorMessage: string | null;
             }>;
             /**
              * The cursor from where to start fetching the next page of results. Provide `nextCursor` from the previous response to continue from there.
@@ -11762,261 +11745,6 @@ export type GetTechnologiesResponses = {
 
 export type GetTechnologiesResponse = GetTechnologiesResponses[keyof GetTechnologiesResponses];
 
-export type GetFlightRegionsData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * Your Fiber API key
-         */
-        apiKey: string;
-    };
-    url: '/v1/enums/flight-regions';
-};
-
-export type GetFlightRegionsErrors = {
-    /**
-     * Default Response
-     */
-    400: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    401: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    402: {
-        /**
-         * The error message.
-         */
-        message: string;
-        /**
-         * Present on 402 responses. Contains a link to get more credits.
-         */
-        outOfCreditsAlert?: {
-            /**
-             * URL to top up credits or restart billing cycle to get fresh credits.
-             */
-            getMoreCreditsUrl: string;
-            /**
-             * Human-readable credits warning.
-             */
-            message: string;
-            /**
-             * Number of credits remaining in the current billing period.
-             */
-            availableCredits: number;
-        } | null;
-        [key: string]: unknown | string | {
-            /**
-             * URL to top up credits or restart billing cycle to get fresh credits.
-             */
-            getMoreCreditsUrl: string;
-            /**
-             * Human-readable credits warning.
-             */
-            message: string;
-            /**
-             * Number of credits remaining in the current billing period.
-             */
-            availableCredits: number;
-        } | null | undefined;
-    };
-    /**
-     * Default Response
-     */
-    403: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    404: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    429: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    500: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    503: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-};
-
-export type GetFlightRegionsError = GetFlightRegionsErrors[keyof GetFlightRegionsErrors];
-
-export type GetFlightRegionsResponses = {
-    /**
-     * Default Response
-     */
-    200: {
-        output: {
-            /**
-             * All supported flight region aliases.
-             */
-            regions: Array<{
-                /**
-                 * Alias to use as `departureAirports` / `arrivalAirports` to target this entire metro (e.g. 'X-NYC').
-                 */
-                apiCode: string;
-                /**
-                 * Human-readable metro name (e.g. 'New York City').
-                 */
-                name: string;
-                /**
-                 * IATA codes covered by this metro alias (e.g. 'JFK', 'LGA', 'EWR').
-                 */
-                airportIataCodes: Array<string>;
-                /**
-                 * Stable identifier for this metro. Also accepted as `departureAirports` / `arrivalAirports`.
-                 */
-                freebaseId: string;
-            }>;
-        };
-        chargeInfo: {
-            method: 'charged-now';
-            creditsCharged: number;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'charging-later';
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'charged-for-async-process';
-            creditsCharged: number;
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'free';
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        };
-        /**
-         * Warnings about extraneous fields in request
-         */
-        warnings?: Array<{
-            /**
-             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
-             */
-            field: string;
-            /**
-             * Warning message
-             */
-            message: string;
-        }> | null;
-    };
-};
-
-export type GetFlightRegionsResponse = GetFlightRegionsResponses[keyof GetFlightRegionsResponses];
-
 export type CreateAudienceData = {
     body: {
         /**
@@ -14875,28 +14603,6 @@ export type UpdateAudienceSearchParamsData = {
                 noneOf?: Array<{
                     profile_id?: string | null;
                     primary_slug?: string | null;
-                }> | null;
-            } | null;
-            exactProfileV2?: {
-                anyOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
-                }> | null;
-                noneOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
                 }> | null;
             } | null;
             startedInRole?: {
@@ -22667,28 +22373,6 @@ export type PeopleSearchData = {
                     primary_slug?: string | null;
                 }> | null;
             } | null;
-            exactProfileV2?: {
-                anyOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
-                }> | null;
-                noneOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
-                }> | null;
-            } | null;
             startedInRole?: {
                 strategy: 'absolute';
                 range?: {
@@ -23650,7 +23334,6 @@ export type PeopleSearchResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
-                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -23960,28 +23643,6 @@ export type PeopleSearchCountData = {
                 noneOf?: Array<{
                     profile_id?: string | null;
                     primary_slug?: string | null;
-                }> | null;
-            } | null;
-            exactProfileV2?: {
-                anyOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
-                }> | null;
-                noneOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
                 }> | null;
             } | null;
             startedInRole?: {
@@ -26127,28 +25788,6 @@ export type PaginatedCombinedSearchData = {
                     noneOf?: Array<{
                         profile_id?: string | null;
                         primary_slug?: string | null;
-                    }> | null;
-                } | null;
-                exactProfileV2?: {
-                    anyOf?: Array<{
-                        identifier: 'linkedin-slug';
-                        linkedin_slug: string;
-                    } | {
-                        identifier: 'linkedin-url';
-                        linkedin_url: string;
-                    } | {
-                        identifier: 'linkedin-user-id';
-                        user_id: string;
-                    }> | null;
-                    noneOf?: Array<{
-                        identifier: 'linkedin-slug';
-                        linkedin_slug: string;
-                    } | {
-                        identifier: 'linkedin-url';
-                        linkedin_url: string;
-                    } | {
-                        identifier: 'linkedin-user-id';
-                        user_id: string;
                     }> | null;
                 } | null;
                 startedInRole?: {
@@ -29175,7 +28814,6 @@ export type PaginatedCombinedSearchResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
-                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -31112,28 +30750,6 @@ export type CombinedSearchCountData = {
                     primary_slug?: string | null;
                 }> | null;
             } | null;
-            exactProfileV2?: {
-                anyOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
-                }> | null;
-                noneOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
-                }> | null;
-            } | null;
             startedInRole?: {
                 strategy: 'absolute';
                 range?: {
@@ -32216,28 +31832,6 @@ export type StealthFoundersSearchData = {
                     type: 'dynamic-groups';
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
-                }> | null;
-            } | null;
-            exactProfileV2?: {
-                anyOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
-                }> | null;
-                noneOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
                 }> | null;
             } | null;
             startedInRole?: {
@@ -33359,28 +32953,6 @@ export type StealthFoundersCountData = {
                     type: 'dynamic-groups';
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
-                }> | null;
-            } | null;
-            exactProfileV2?: {
-                anyOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
-                }> | null;
-                noneOf?: Array<{
-                    identifier: 'linkedin-slug';
-                    linkedin_slug: string;
-                } | {
-                    identifier: 'linkedin-url';
-                    linkedin_url: string;
-                } | {
-                    identifier: 'linkedin-user-id';
-                    user_id: string;
                 }> | null;
             } | null;
             startedInRole?: {
@@ -34686,298 +34258,6 @@ export type SyncQuickContactRevealResponses = {
 
 export type SyncQuickContactRevealResponse = SyncQuickContactRevealResponses[keyof SyncQuickContactRevealResponses];
 
-export type LiteContactRevealData = {
-    body: {
-        /**
-         * Your Fiber API key
-         */
-        apiKey: string;
-        /**
-         * Person lookup parameters. Use mode 'linkedin' or 'name-domain'.
-         */
-        input: {
-            mode: 'linkedin';
-            /**
-             * LinkedIn profile identifier — a full URL, bare slug, or URN (e.g. 'williamhgates', 'https://www.linkedin.com/in/williamhgates').
-             */
-            linkedinIdentifier: string;
-            /**
-             * Full name of the person. Optional — improves match accuracy.
-             */
-            fullName?: string | null;
-        } | {
-            mode: 'name-domain';
-            /**
-             * Full name of the person.
-             */
-            fullName: string;
-            /**
-             * Company domain (e.g. 'gatesfoundation.org').
-             */
-            companyDomain: string;
-        };
-        /**
-         * Which email types to look for.
-         */
-        enrichmentType?: {
-            getWorkEmails?: boolean;
-            getPersonalEmails?: boolean;
-        };
-    };
-    path?: never;
-    query?: never;
-    url: '/v1/contact-details/lite';
-};
-
-export type LiteContactRevealErrors = {
-    /**
-     * Default Response
-     */
-    400: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    401: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    402: {
-        /**
-         * The error message.
-         */
-        message: string;
-        /**
-         * Present on 402 responses. Contains a link to get more credits.
-         */
-        outOfCreditsAlert?: {
-            /**
-             * URL to top up credits or restart billing cycle to get fresh credits.
-             */
-            getMoreCreditsUrl: string;
-            /**
-             * Human-readable credits warning.
-             */
-            message: string;
-            /**
-             * Number of credits remaining in the current billing period.
-             */
-            availableCredits: number;
-        } | null;
-        [key: string]: unknown | string | {
-            /**
-             * URL to top up credits or restart billing cycle to get fresh credits.
-             */
-            getMoreCreditsUrl: string;
-            /**
-             * Human-readable credits warning.
-             */
-            message: string;
-            /**
-             * Number of credits remaining in the current billing period.
-             */
-            availableCredits: number;
-        } | null | undefined;
-    };
-    /**
-     * Default Response
-     */
-    403: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    404: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    429: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    500: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    503: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-};
-
-export type LiteContactRevealError = LiteContactRevealErrors[keyof LiteContactRevealErrors];
-
-export type LiteContactRevealResponses = {
-    /**
-     * Default Response
-     */
-    200: {
-        output: {
-            profile: {
-                /**
-                 * All emails found for this profile, ordered by priority.
-                 */
-                emails: Array<{
-                    /**
-                     * Email address for the person.
-                     */
-                    emailAddress?: string | null;
-                    /**
-                     * Classification of the email address.
-                     */
-                    type?: 'work' | 'personal' | null;
-                    /**
-                     * Email verification result.
-                     */
-                    validationStatus?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
-                    /**
-                     * Confidence score ranking deliverability for this email. Higher values indicate higher likelihood of delivery.
-                     */
-                    deliverabilityScore?: number | null;
-                    /**
-                     * Whether the domain accepts email to any address (catch-all). Catch-all domains make individual address verification unreliable — the address may appear valid but not actually be monitored.
-                     */
-                    isCatchAll?: boolean | null;
-                }>;
-            };
-        };
-        chargeInfo: {
-            method: 'charged-now';
-            creditsCharged: number;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'charging-later';
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'charged-for-async-process';
-            creditsCharged: number;
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'free';
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        };
-        /**
-         * Warnings about extraneous fields in request
-         */
-        warnings?: Array<{
-            /**
-             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
-             */
-            field: string;
-            /**
-             * Warning message
-             */
-            message: string;
-        }> | null;
-    };
-};
-
-export type LiteContactRevealResponse = LiteContactRevealResponses[keyof LiteContactRevealResponses];
-
 export type StartDepthChartData = {
     body: {
         /**
@@ -36055,7 +35335,6 @@ export type ProfileLiveEnrichResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
-                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -40201,7 +39480,6 @@ export type ReverseEmailLookupResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
-                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -41443,7 +40721,6 @@ export type KitchenSinkProfileResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
-                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -44385,7 +43662,6 @@ export type KitchenSinkBulkProfileResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
-                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -52006,7 +51282,6 @@ export type TextToCombinedSearchResponses = {
                     entity_urns?: Array<string> | null;
                     is_hiring?: boolean | null;
                     websites?: Array<string> | null;
-                    is_verified?: boolean | null;
                     current_job?: {
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
@@ -52491,7 +51766,6 @@ export type JdToProfileSearchResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
-                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -57773,10 +57047,6 @@ export type GithubToLinkedinSingleData = {
          */
         githubUsername: string;
         /**
-         * Optional descriptor of who this person is (e.g. "Engineer at Fiber AI" or "YC founder 2021 batch"). Improves disambiguation on common names. Max 1000 characters.
-         */
-        context?: string | null;
-        /**
          * What to extract from GitHub profile. 'linkedin' finds LinkedIn profile, 'email' extracts work emails from commits, 'both' returns both.
          */
         outputType?: 'linkedin' | 'email' | 'both';
@@ -57784,6 +57054,10 @@ export type GithubToLinkedinSingleData = {
          * Optional customer-provided ID to tie results back to original input.
          */
         customerProvidedId?: string | null;
+        /**
+         * When true, include resolver timing details in the response for diagnostics.
+         */
+        includeDebugTimings?: boolean;
     };
     path?: never;
     query?: never;
@@ -57918,23 +57192,27 @@ export type GithubToLinkedinSingleResponses = {
             /**
              * Echoes the optional customer-provided ID from the request.
              */
-            customerProvidedId?: string | null;
+            customerProvidedId: string | null;
             /**
              * Resolved LinkedIn profile URL when available.
              */
-            linkedInUrl?: string | null;
+            linkedInUrl: string | null;
             /**
              * Resolved LinkedIn profile slug when available.
              */
-            linkedInSlug?: string | null;
+            linkedInSlug: string | null;
             /**
              * Confidence score (0-10) for this resolution.
              */
             confidenceOutOf10: number;
             /**
+             * Method used to resolve the result. See the enum values on the PublicMatchSource schema for the full list.
+             */
+            matchSource: 'email' | 'name-search' | 'agent' | 'web-search' | 'not-found';
+            /**
              * Optional explanation for the selected match.
              */
-            rationale?: string | null;
+            rationale: string | null;
             /**
              * Extracted work email addresses from GitHub commits/cache.
              */
@@ -57942,15 +57220,57 @@ export type GithubToLinkedinSingleResponses = {
             /**
              * Basic GitHub profile fields used by the resolver.
              */
-            githubProfile?: {
-                name?: string | null;
-                company?: string | null;
-                location?: string | null;
-                bio?: string | null;
-                blog?: string | null;
-                avatarUrl?: string | null;
-                followers?: number | null;
-                publicRepos?: number | null;
+            githubProfile: {
+                name: string | null;
+                company: string | null;
+                location: string | null;
+                bio: string | null;
+                blog: string | null;
+                avatarUrl: string | null;
+                followers: number | null;
+                publicRepos: number | null;
+            } | null;
+            /**
+             * Optional resolver timing metadata. Present only when requested for diagnostics.
+             */
+            debugTimings?: {
+                /**
+                 * Lookup runtime measured inside the single-lookup worker.
+                 */
+                lookupDurationMs: number;
+                /**
+                 * Duration of cache/bootstrap loading before resolver execution.
+                 */
+                bootstrapDurationMs: number;
+                /**
+                 * Total resolver duration for this lookup.
+                 */
+                resolverDurationMs: number;
+                /**
+                 * Sum of explicitly instrumented resolver step durations.
+                 */
+                resolverStepDurationsSumMs: number;
+                /**
+                 * Resolver duration not covered by step-level instrumentation.
+                 */
+                resolverUninstrumentedDurationMs: number;
+                /**
+                 * Duration spent charging credits for this request.
+                 */
+                creditChargeDurationMs?: number | null;
+                /**
+                 * End-to-end route handler duration for this request.
+                 */
+                routeDurationMs?: number | null;
+                /**
+                 * Step-level resolver timings for troubleshooting and profiling.
+                 */
+                resolverSteps: Array<{
+                    step: 'cache_bootstrap' | 'zen_cache_hit' | 'github_fetch' | 'email_waterfall' | 'kitchen_sink' | 'agent' | 'tavily_web_search';
+                    durationMs: number;
+                    outcome: 'hit' | 'miss' | 'skipped' | 'error';
+                    detail?: string | null;
+                }>;
             } | null;
         };
         chargeInfo: {
@@ -59952,862 +59272,6 @@ export type YoutubeChannelResponses = {
 
 export type YoutubeChannelResponse = YoutubeChannelResponses[keyof YoutubeChannelResponses];
 
-export type FlightSearchData = {
-    body: {
-        /**
-         * Your Fiber API key
-         */
-        apiKey: string;
-        /**
-         * Preferred cabin class. Omit to consider flights across all cabin classes.
-         */
-        travelClass?: 'economy' | 'premiumEconomy' | 'business' | 'first' | null;
-        /**
-         * Number of adult passengers (ages 12+).
-         */
-        adults?: number;
-        /**
-         * Number of child passengers (ages 2-11).
-         */
-        children?: number;
-        /**
-         * Number of infants (under 2) with their own seat.
-         */
-        infantsInSeat?: number;
-        /**
-         * Number of infants (under 2) on an adult's lap.
-         */
-        infantsOnLap?: number;
-        /**
-         * Maximum number of stops allowed. 0 = nonstop only, 1 = one stop or fewer, 2 = two stops or fewer. Omit to allow any number of stops.
-         */
-        maxStops?: number | null;
-        /**
-         * Sort criterion for results. 'top' ranks by overall value. 'price' sorts cheapest first. 'departureTime' and 'arrivalTime' sort earliest first. 'duration' sorts shortest first. 'emissions' sorts lowest carbon first. Direction is always ascending and cannot be changed. Omit to sort by 'top'.
-         */
-        sortBy?: 'top' | 'price' | 'departureTime' | 'arrivalTime' | 'duration' | 'emissions' | null;
-        /**
-         * Filter by airline. By default all airlines are considered. If you pass 'include', only flights from those airlines are returned. If you pass 'exclude', flights from those airlines are removed.
-         */
-        airlines?: {
-            /**
-             * Only return flights operated or marketed by these airlines. Pass 2-letter IATA airline codes (e.g. 'UA' for United, 'AA' for American, 'DL' for Delta, 'B6' for JetBlue). Case-insensitive.
-             */
-            include?: Array<string> | null;
-            /**
-             * Exclude flights operated or marketed by these airlines. Pass 2-letter IATA airline codes (e.g. 'UA' for United, 'AA' for American, 'DL' for Delta, 'B6' for JetBlue). Case-insensitive.
-             */
-            exclude?: Array<string> | null;
-        } | null;
-        /**
-         * Minimum carry-on bags the itinerary must include. Omit for no requirement.
-         */
-        minCarryOnBags?: number | null;
-        /**
-         * Minimum checked bags the itinerary must include. Omit for no requirement. Honored on a best-effort basis: not every itinerary exposes checked-bag inclusion.
-         */
-        minCheckedBags?: number | null;
-        /**
-         * Maximum total itinerary price in whole currency units. You may want to set `currencyCode` as well so the price cap is in the currency you expect (default currency is USD). Omit for no price cap.
-         */
-        maxPrice?: number | null;
-        /**
-         * Time-of-day window for outbound flights. For multi-city trips this constrains the first segment. Both startHour and endHour must be provided together per sub-window.
-         */
-        outboundTimeWindow?: {
-            /**
-             * Restrict departure times to this hour range.
-             */
-            departure?: {
-                /**
-                 * Start of the hour range (inclusive), in 24-hour format.
-                 */
-                startHour: number;
-                /**
-                 * End of the hour range (inclusive), in 24-hour format.
-                 */
-                endHour: number;
-            } | null;
-            /**
-             * Restrict arrival times to this hour range.
-             */
-            arrival?: {
-                /**
-                 * Start of the hour range (inclusive), in 24-hour format.
-                 */
-                startHour: number;
-                /**
-                 * End of the hour range (inclusive), in 24-hour format.
-                 */
-                endHour: number;
-            } | null;
-        } | null;
-        /**
-         * Time-of-day window for return flights (round-trip only). Both startHour and endHour must be provided together per sub-window.
-         */
-        returnTimeWindow?: {
-            /**
-             * Restrict departure times to this hour range.
-             */
-            departure?: {
-                /**
-                 * Start of the hour range (inclusive), in 24-hour format.
-                 */
-                startHour: number;
-                /**
-                 * End of the hour range (inclusive), in 24-hour format.
-                 */
-                endHour: number;
-            } | null;
-            /**
-             * Restrict arrival times to this hour range.
-             */
-            arrival?: {
-                /**
-                 * Start of the hour range (inclusive), in 24-hour format.
-                 */
-                startHour: number;
-                /**
-                 * End of the hour range (inclusive), in 24-hour format.
-                 */
-                endHour: number;
-            } | null;
-        } | null;
-        /**
-         * Constrain layover duration. Omit to allow any layover length.
-         */
-        layoverDuration?: {
-            /**
-             * Minimum layover duration in minutes. Omit for no minimum.
-             */
-            minMinutes?: number | null;
-            /**
-             * Maximum layover duration in minutes. Omit for no maximum.
-             */
-            maxMinutes?: number | null;
-        } | null;
-        /**
-         * Maximum total flight duration in minutes. Omit for no limit.
-         */
-        maxFlightDurationMinutes?: number | null;
-        /**
-         * Filter by connecting airports. By default all connecting airports are allowed. We recommend not passing this unless you have a good reason — it significantly reduces the number of results returned.
-         */
-        connectingAirports?: {
-            /**
-             * Only allow itineraries connecting through at least one of these IATA airports (e.g. 'DFW', 'SFO'). Nonstop flights and itineraries that don't match are filtered out. Narrow allowlists may return zero results. Case-insensitive.
-             */
-            include?: Array<string> | null;
-            /**
-             * Drop itineraries connecting through any of these IATA airports (e.g. 'ORD', 'ATL'). Case-insensitive.
-             */
-            exclude?: Array<string> | null;
-        } | null;
-        /**
-         * When true, only return flights with lower-than-typical carbon emissions. When false (default), return all flights.
-         */
-        onlyShowLowEmissionFlights?: boolean;
-        /**
-         * When true, include itineraries that would normally be hidden (e.g. very late or undesirable schedules).
-         */
-        showHidden?: boolean;
-        /**
-         * When true, drop itineraries that combine separately-issued tickets (which carry higher disruption risk).
-         */
-        hideSeparateTickets?: boolean;
-        /**
-         * ISO 4217 currency code for prices in the response (e.g. 'EUR', 'GBP', 'CAD'). Case-insensitive. Defaults to USD.
-         */
-        currencyCode?: string;
-        /**
-         * ISO 3166-1 alpha-3 country code that sets the search market (e.g. 'GBR', 'BRA'). This affects regional pricing and flight availability — the same route may show different prices and options depending on the market. Case-insensitive.
-         */
-        searchMarketCountryCode?: string;
-        /**
-         * Language for search results (airport names, airline names, labels). Pass a BCP-47 language tag such as 'en', 'en-US', 'pt-BR', 'zh-CN', 'ja', 'ko', 'fr', 'de', 'es'.
-         */
-        languageCode?: string;
-        /**
-         * Token to retrieve the next page. Pass as nextPageToken in the next request. Null if no more pages.
-         */
-        nextPageToken?: string | null;
-        /**
-         * Trip configuration. The shape is determined by flightType — see each variant for its required fields.
-         */
-        trip: {
-            flightType: 'one_way';
-            /**
-             * Airport(s) to search. Accepts a 3-letter IATA airport code (e.g. 'JFK'), a comma-separated IATA list to search multiple airports (e.g. 'JFK,LGA,EWR'), an X- metro alias that covers every airport in a metro area (e.g. 'X-NYC' — call GET /v1/enums/flight-regions for the full list), or a Freebase ID for a city or metro (e.g. '/m/02_286'). Case-insensitive except Freebase IDs.
-             */
-            departureAirports: string;
-            /**
-             * Airport(s) to search. Accepts a 3-letter IATA airport code (e.g. 'JFK'), a comma-separated IATA list to search multiple airports (e.g. 'JFK,LGA,EWR'), an X- metro alias that covers every airport in a metro area (e.g. 'X-NYC' — call GET /v1/enums/flight-regions for the full list), or a Freebase ID for a city or metro (e.g. '/m/02_286'). Case-insensitive except Freebase IDs.
-             */
-            arrivalAirports: string;
-            /**
-             * ISO date in YYYY-MM-DD format (e.g. '2026-06-10').
-             */
-            outboundDate: string;
-        } | {
-            flightType: 'round_trip';
-            /**
-             * Airport(s) to search. Accepts a 3-letter IATA airport code (e.g. 'JFK'), a comma-separated IATA list to search multiple airports (e.g. 'JFK,LGA,EWR'), an X- metro alias that covers every airport in a metro area (e.g. 'X-NYC' — call GET /v1/enums/flight-regions for the full list), or a Freebase ID for a city or metro (e.g. '/m/02_286'). Case-insensitive except Freebase IDs.
-             */
-            departureAirports: string;
-            /**
-             * Airport(s) to search. Accepts a 3-letter IATA airport code (e.g. 'JFK'), a comma-separated IATA list to search multiple airports (e.g. 'JFK,LGA,EWR'), an X- metro alias that covers every airport in a metro area (e.g. 'X-NYC' — call GET /v1/enums/flight-regions for the full list), or a Freebase ID for a city or metro (e.g. '/m/02_286'). Case-insensitive except Freebase IDs.
-             */
-            arrivalAirports: string;
-            /**
-             * ISO date in YYYY-MM-DD format (e.g. '2026-06-10').
-             */
-            outboundDate: string;
-            /**
-             * ISO date in YYYY-MM-DD format (e.g. '2026-06-10').
-             */
-            returnDate: string;
-        } | {
-            flightType: 'multi_city';
-            /**
-             * Provide between 2 and 5 segments.
-             */
-            segments: Array<{
-                /**
-                 * Airport(s) to search. Accepts a 3-letter IATA airport code (e.g. 'JFK'), a comma-separated IATA list to search multiple airports (e.g. 'JFK,LGA,EWR'), an X- metro alias that covers every airport in a metro area (e.g. 'X-NYC' — call GET /v1/enums/flight-regions for the full list), or a Freebase ID for a city or metro (e.g. '/m/02_286'). Case-insensitive except Freebase IDs.
-                 */
-                departureAirports: string;
-                /**
-                 * Airport(s) to search. Accepts a 3-letter IATA airport code (e.g. 'JFK'), a comma-separated IATA list to search multiple airports (e.g. 'JFK,LGA,EWR'), an X- metro alias that covers every airport in a metro area (e.g. 'X-NYC' — call GET /v1/enums/flight-regions for the full list), or a Freebase ID for a city or metro (e.g. '/m/02_286'). Case-insensitive except Freebase IDs.
-                 */
-                arrivalAirports: string;
-                /**
-                 * ISO date in YYYY-MM-DD format (e.g. '2026-06-10').
-                 */
-                outboundDate: string;
-            }>;
-        };
-    };
-    path?: never;
-    query?: never;
-    url: '/v1/flights/search';
-};
-
-export type FlightSearchErrors = {
-    /**
-     * Default Response
-     */
-    400: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    401: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    402: {
-        /**
-         * The error message.
-         */
-        message: string;
-        /**
-         * Present on 402 responses. Contains a link to get more credits.
-         */
-        outOfCreditsAlert?: {
-            /**
-             * URL to top up credits or restart billing cycle to get fresh credits.
-             */
-            getMoreCreditsUrl: string;
-            /**
-             * Human-readable credits warning.
-             */
-            message: string;
-            /**
-             * Number of credits remaining in the current billing period.
-             */
-            availableCredits: number;
-        } | null;
-        [key: string]: unknown | string | {
-            /**
-             * URL to top up credits or restart billing cycle to get fresh credits.
-             */
-            getMoreCreditsUrl: string;
-            /**
-             * Human-readable credits warning.
-             */
-            message: string;
-            /**
-             * Number of credits remaining in the current billing period.
-             */
-            availableCredits: number;
-        } | null | undefined;
-    };
-    /**
-     * Default Response
-     */
-    403: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    404: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    429: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    500: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-    /**
-     * Default Response
-     */
-    503: {
-        /**
-         * The error message.
-         */
-        message: string;
-        [key: string]: unknown | string;
-    };
-};
-
-export type FlightSearchError = FlightSearchErrors[keyof FlightSearchErrors];
-
-export type FlightSearchResponses = {
-    /**
-     * Default Response
-     */
-    200: {
-        output: {
-            /**
-             * Best flight itineraries for this query.
-             */
-            bestFlights: Array<{
-                /**
-                 * Flight segments for this itinerary.
-                 */
-                segments: Array<{
-                    /**
-                     * Departure airport.
-                     */
-                    departureAirport: {
-                        /**
-                         * 3-letter IATA airport code (e.g. 'JFK', 'LAX', 'LHR').
-                         */
-                        iataCode?: string | null;
-                        /**
-                         * Airport display name.
-                         */
-                        name?: string | null;
-                        /**
-                         * Local departure or arrival datetime without timezone offset (format: YYYY-MM-DDTHH:mm:ss).
-                         */
-                        localDateTime?: string | null;
-                    };
-                    /**
-                     * Arrival airport.
-                     */
-                    arrivalAirport: {
-                        /**
-                         * 3-letter IATA airport code (e.g. 'JFK', 'LAX', 'LHR').
-                         */
-                        iataCode?: string | null;
-                        /**
-                         * Airport display name.
-                         */
-                        name?: string | null;
-                        /**
-                         * Local departure or arrival datetime without timezone offset (format: YYYY-MM-DDTHH:mm:ss).
-                         */
-                        localDateTime?: string | null;
-                    };
-                    /**
-                     * Segment duration in minutes.
-                     */
-                    durationMinutes?: number | null;
-                    /**
-                     * Operating airline name.
-                     */
-                    airlineName?: string | null;
-                    /**
-                     * Operating airline logo URL.
-                     */
-                    airlineLogoUrl?: string | null;
-                    /**
-                     * Cabin class as labeled in the search results (e.g. 'Economy', 'Premium Economy', 'Business', 'First').
-                     */
-                    travelClass?: string | null;
-                    /**
-                     * Flight number including airline code (e.g. 'UA 2175', 'DL 1384').
-                     */
-                    flightNumber?: string | null;
-                    /**
-                     * Aircraft model.
-                     */
-                    aircraftModel?: string | null;
-                    /**
-                     * Legroom distance as reported by the airline (e.g. '32 in').
-                     */
-                    legroom?: string | null;
-                    /**
-                     * True when this segment is overnight.
-                     */
-                    isOvernight?: boolean | null;
-                    /**
-                     * True when this segment is frequently delayed.
-                     */
-                    isOftenDelayed?: boolean | null;
-                    /**
-                     * Estimated carbon emissions in kilograms.
-                     */
-                    carbonEmissionKg?: number | null;
-                }>;
-                /**
-                 * Layovers for this itinerary.
-                 */
-                layovers: Array<{
-                    /**
-                     * 3-letter IATA code of the layover airport (e.g. 'DFW', 'ORD').
-                     */
-                    iataCode?: string | null;
-                    /**
-                     * Layover airport name.
-                     */
-                    airportName?: string | null;
-                    /**
-                     * Layover duration in minutes.
-                     */
-                    durationMinutes?: number | null;
-                    /**
-                     * True when layover spans overnight.
-                     */
-                    isOvernight?: boolean | null;
-                }>;
-                /**
-                 * Total itinerary duration in minutes.
-                 */
-                totalDurationMinutes?: number | null;
-                /**
-                 * Total itinerary price in whole currency units.
-                 */
-                price?: number | null;
-                /**
-                 * Opaque booking token. Pass this in follow-up requests to retrieve booking options for this itinerary.
-                 */
-                bookingToken?: string | null;
-                /**
-                 * Trip type for this itinerary.
-                 */
-                flightType?: 'one_way' | 'round_trip' | 'multi_city' | null;
-                /**
-                 * Logo URL for the primary airline on this itinerary. For multi-airline itineraries this may be a generic multi-carrier logo.
-                 */
-                mainAirlineLogoUrl?: string | null;
-                /**
-                 * Carbon emissions summary for this itinerary.
-                 */
-                carbonEmissions?: {
-                    /**
-                     * Estimated emissions for this itinerary in kilograms.
-                     */
-                    thisFlightKg?: number | null;
-                    /**
-                     * Typical route emissions in kilograms.
-                     */
-                    typicalForRouteKg?: number | null;
-                    /**
-                     * Percent difference versus typical route emissions. Negative means lower than typical, positive means higher.
-                     */
-                    differencePercent?: number | null;
-                } | null;
-                /**
-                 * Full names of other airlines that also sell this itinerary (e.g. 'United', 'Korean Air').
-                 */
-                alsoSoldBy?: Array<string> | null;
-                /**
-                 * Full name of the airline operating the aircraft and crew, when it differs from the marketing airline (e.g. 'Envoy Air' operating on behalf of American Airlines).
-                 */
-                operatingCarrier?: string | null;
-            }>;
-            /**
-             * Additional flight itineraries for this query.
-             */
-            otherFlights: Array<{
-                /**
-                 * Flight segments for this itinerary.
-                 */
-                segments: Array<{
-                    /**
-                     * Departure airport.
-                     */
-                    departureAirport: {
-                        /**
-                         * 3-letter IATA airport code (e.g. 'JFK', 'LAX', 'LHR').
-                         */
-                        iataCode?: string | null;
-                        /**
-                         * Airport display name.
-                         */
-                        name?: string | null;
-                        /**
-                         * Local departure or arrival datetime without timezone offset (format: YYYY-MM-DDTHH:mm:ss).
-                         */
-                        localDateTime?: string | null;
-                    };
-                    /**
-                     * Arrival airport.
-                     */
-                    arrivalAirport: {
-                        /**
-                         * 3-letter IATA airport code (e.g. 'JFK', 'LAX', 'LHR').
-                         */
-                        iataCode?: string | null;
-                        /**
-                         * Airport display name.
-                         */
-                        name?: string | null;
-                        /**
-                         * Local departure or arrival datetime without timezone offset (format: YYYY-MM-DDTHH:mm:ss).
-                         */
-                        localDateTime?: string | null;
-                    };
-                    /**
-                     * Segment duration in minutes.
-                     */
-                    durationMinutes?: number | null;
-                    /**
-                     * Operating airline name.
-                     */
-                    airlineName?: string | null;
-                    /**
-                     * Operating airline logo URL.
-                     */
-                    airlineLogoUrl?: string | null;
-                    /**
-                     * Cabin class as labeled in the search results (e.g. 'Economy', 'Premium Economy', 'Business', 'First').
-                     */
-                    travelClass?: string | null;
-                    /**
-                     * Flight number including airline code (e.g. 'UA 2175', 'DL 1384').
-                     */
-                    flightNumber?: string | null;
-                    /**
-                     * Aircraft model.
-                     */
-                    aircraftModel?: string | null;
-                    /**
-                     * Legroom distance as reported by the airline (e.g. '32 in').
-                     */
-                    legroom?: string | null;
-                    /**
-                     * True when this segment is overnight.
-                     */
-                    isOvernight?: boolean | null;
-                    /**
-                     * True when this segment is frequently delayed.
-                     */
-                    isOftenDelayed?: boolean | null;
-                    /**
-                     * Estimated carbon emissions in kilograms.
-                     */
-                    carbonEmissionKg?: number | null;
-                }>;
-                /**
-                 * Layovers for this itinerary.
-                 */
-                layovers: Array<{
-                    /**
-                     * 3-letter IATA code of the layover airport (e.g. 'DFW', 'ORD').
-                     */
-                    iataCode?: string | null;
-                    /**
-                     * Layover airport name.
-                     */
-                    airportName?: string | null;
-                    /**
-                     * Layover duration in minutes.
-                     */
-                    durationMinutes?: number | null;
-                    /**
-                     * True when layover spans overnight.
-                     */
-                    isOvernight?: boolean | null;
-                }>;
-                /**
-                 * Total itinerary duration in minutes.
-                 */
-                totalDurationMinutes?: number | null;
-                /**
-                 * Total itinerary price in whole currency units.
-                 */
-                price?: number | null;
-                /**
-                 * Opaque booking token. Pass this in follow-up requests to retrieve booking options for this itinerary.
-                 */
-                bookingToken?: string | null;
-                /**
-                 * Trip type for this itinerary.
-                 */
-                flightType?: 'one_way' | 'round_trip' | 'multi_city' | null;
-                /**
-                 * Logo URL for the primary airline on this itinerary. For multi-airline itineraries this may be a generic multi-carrier logo.
-                 */
-                mainAirlineLogoUrl?: string | null;
-                /**
-                 * Carbon emissions summary for this itinerary.
-                 */
-                carbonEmissions?: {
-                    /**
-                     * Estimated emissions for this itinerary in kilograms.
-                     */
-                    thisFlightKg?: number | null;
-                    /**
-                     * Typical route emissions in kilograms.
-                     */
-                    typicalForRouteKg?: number | null;
-                    /**
-                     * Percent difference versus typical route emissions. Negative means lower than typical, positive means higher.
-                     */
-                    differencePercent?: number | null;
-                } | null;
-                /**
-                 * Full names of other airlines that also sell this itinerary (e.g. 'United', 'Korean Air').
-                 */
-                alsoSoldBy?: Array<string> | null;
-                /**
-                 * Full name of the airline operating the aircraft and crew, when it differs from the marketing airline (e.g. 'Envoy Air' operating on behalf of American Airlines).
-                 */
-                operatingCarrier?: string | null;
-            }>;
-            /**
-             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if no more pages.
-             */
-            nextPageToken?: string | null;
-            /**
-             * ISO 4217 currency code for prices in this response (e.g. 'USD', 'EUR', 'GBP').
-             */
-            currencyCode?: string | null;
-            /**
-             * Price-insight summary for this route query.
-             */
-            priceInsights?: {
-                /**
-                 * Lowest observed price for this query.
-                 */
-                lowestPrice?: number | null;
-                /**
-                 * How the current price compares to historical prices for this route.
-                 */
-                priceLevel?: 'low' | 'typical' | 'high' | null;
-                /**
-                 * Typical price range for this route in whole currency units.
-                 */
-                typicalPriceRange?: {
-                    /**
-                     * Lower bound of the typical price range.
-                     */
-                    lowerBound?: number | null;
-                    /**
-                     * Upper bound of the typical price range.
-                     */
-                    upperBound?: number | null;
-                } | null;
-                /**
-                 * Historical prices for this route.
-                 */
-                history: Array<{
-                    /**
-                     * Date this price was observed (e.g. '2024-09-19').
-                     */
-                    snapshotDate?: string | null;
-                    /**
-                     * Observed price in whole currency units.
-                     */
-                    price: number;
-                }>;
-            } | null;
-            /**
-             * Airports recognized for departure and arrival in this query.
-             */
-            airports: Array<{
-                /**
-                 * Departure airport options matched for this query.
-                 */
-                departure: Array<{
-                    /**
-                     * IATA airport code (e.g. 'JFK'). When the search targeted a metro area via an X- alias or Freebase ID input, this will be a Freebase ID (e.g. '/m/02_286') representing the metro rather than a single airport.
-                     */
-                    iataCode?: string | null;
-                    /**
-                     * Airport name.
-                     */
-                    name?: string | null;
-                    /**
-                     * City name.
-                     */
-                    city?: string | null;
-                    /**
-                     * ISO 3166-1 alpha-3 country code (e.g. 'USA', 'GBR').
-                     */
-                    countryCode?: string | null;
-                }>;
-                /**
-                 * Arrival airport options matched for this query.
-                 */
-                arrival: Array<{
-                    /**
-                     * IATA airport code (e.g. 'JFK'). When the search targeted a metro area via an X- alias or Freebase ID input, this will be a Freebase ID (e.g. '/m/02_286') representing the metro rather than a single airport.
-                     */
-                    iataCode?: string | null;
-                    /**
-                     * Airport name.
-                     */
-                    name?: string | null;
-                    /**
-                     * City name.
-                     */
-                    city?: string | null;
-                    /**
-                     * ISO 3166-1 alpha-3 country code (e.g. 'USA', 'GBR').
-                     */
-                    countryCode?: string | null;
-                }>;
-            }>;
-        };
-        chargeInfo: {
-            method: 'charged-now';
-            creditsCharged: number;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'charging-later';
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'charged-for-async-process';
-            creditsCharged: number;
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        } | {
-            method: 'free';
-            message: string;
-            /**
-             * Contains a link to get more credits, a warning message, and the remaining credit count.
-             */
-            lowCreditAlert?: {
-                /**
-                 * URL to top up credits or restart billing cycle to get fresh credits.
-                 */
-                getMoreCreditsUrl: string;
-                /**
-                 * Human-readable credits warning.
-                 */
-                message: string;
-                /**
-                 * Number of credits remaining in the current billing period.
-                 */
-                availableCredits: number;
-            } | null;
-        };
-        /**
-         * Warnings about extraneous fields in request
-         */
-        warnings?: Array<{
-            /**
-             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
-             */
-            field: string;
-            /**
-             * Warning message
-             */
-            message: string;
-        }> | null;
-    };
-};
-
-export type FlightSearchResponse = FlightSearchResponses[keyof FlightSearchResponses];
-
 export type FetchRealEstateListingsData = {
     body: {
         /**
@@ -60819,19 +59283,10 @@ export type FetchRealEstateListingsData = {
          */
         location: {
             type: 'raw';
-            /**
-             * Free-form location text. Accepts city, city + state/province, ZIP/postal code, or full address (e.g., 'Toronto, ON', 'Brooklyn NY', '10001', 'Trois-Rivières, QC'). Resolved via geocoding to a city + state/province before searching.
-             */
             rawQuery: string;
         } | {
             type: 'structured';
-            /**
-             * City name (e.g., 'Toronto', 'Trois-Rivières').
-             */
             city: string;
-            /**
-             * Two-letter US state code or Canadian province code (e.g., 'NY', 'CA', 'QC', 'ON').
-             */
             stateCode: string;
         };
         /**
@@ -61516,10 +59971,6 @@ export type FetchRealEstateListingsResponses = {
                  */
                 longitude?: number | null;
             }>;
-            /**
-             * Non-fatal advisories about how this page was served. For example, 'Sort \'priceAscending\' is applied from page 2 onwards.' when the requested sort cannot be honored on page 1. Omitted or null when there's nothing to flag.
-             */
-            warnings?: Array<string> | null;
         };
         chargeInfo: {
             method: 'charged-now';
@@ -74220,445 +72671,3 @@ export type GetCompanyRevenueResponses = {
 };
 
 export type GetCompanyRevenueResponse = GetCompanyRevenueResponses[keyof GetCompanyRevenueResponses];
-
-/**
- * RevealCompletedPayload
- *
- * Payload delivered when a contact reveal operation completes.
- */
-export type RevealCompletedWebhookPayload = {
-    emails: Array<{
-        email: string;
-        type: 'work' | 'personal' | 'other' | 'unknown' | 'generic';
-        status?: 'valid' | 'risky' | 'unknown' | 'invalid';
-    }>;
-    error?: string | null;
-    linkedin_url: string;
-    phone_numbers: Array<{
-        number: string;
-        type: 'mobile' | 'other' | 'unknown';
-    }>;
-    success: boolean;
-    task_id: string;
-};
-
-export type RevealCompletedWebhookRequest = {
-    body: RevealCompletedWebhookPayload;
-    key: 'reveal.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * SavedSearchRunCompletedPayload
- *
- * Payload delivered when a saved search run finishes.
- */
-export type SavedSearchRunCompletedWebhookPayload = {
-    saved_search_id: string;
-    saved_search_run_id: string;
-    started_at: string;
-    completed_at: string;
-    success: boolean;
-};
-
-export type SavedSearchRunCompletedWebhookRequest = {
-    body: SavedSearchRunCompletedWebhookPayload;
-    key: 'saved_search.run_completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * JobChangedPayload
- *
- * Payload delivered when tracked profiles are detected to have changed jobs.
- */
-export type JobChangedWebhookPayload = {
-    profiles: Array<{
-        id: string;
-        linkedinUrl: string;
-        movementDetails: {
-            discoveredAt: string;
-            newCompanyName?: string | null;
-            newCompanyLogoUrl?: string | null;
-            newCompanyOrgId?: string | null;
-            newCompanyLiSlug?: string | null;
-            newCompanyDomain?: string | null;
-            newJobTitle?: string | null;
-            oldCompanyName?: string | null;
-            oldCompanyLogoUrl?: string | null;
-            oldCompanyOrgId?: string | null;
-            oldCompanyLiSlug?: string | null;
-            oldCompanyDomain?: string | null;
-            oldJobTitle?: string | null;
-            startedInRoleAt?: string | null;
-            startedAtCompanyAt?: string | null;
-            movement: 'promoted' | 'lateral-move' | 'new-role' | 'changed' | 'no-change';
-        };
-    }>;
-};
-
-export type JobChangedWebhookRequest = {
-    body: JobChangedWebhookPayload;
-    key: 'job.changed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * BatchLiveEnrichCompletedPayload
- *
- * Payload delivered when a batch live enrichment job completes.
- */
-export type BatchLiveEnrichCompletedWebhookPayload = {
-    job_id: string;
-    type: 'PROFILE' | 'COMPANY';
-    success: boolean;
-    total_identifiers: number;
-    completed: number;
-    failed: number;
-    not_found: number;
-    malformed: number;
-};
-
-export type BatchLiveEnrichCompletedWebhookRequest = {
-    body: BatchLiveEnrichCompletedWebhookPayload;
-    key: 'batch_live_enrich.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * BatchContactEnrichCompletedPayload
- *
- * Payload delivered when a batch contact enrichment job completes.
- */
-export type BatchContactEnrichCompletedWebhookPayload = {
-    task_id: string;
-    success: boolean;
-    total: number;
-    completed: number;
-    failed: number;
-    error?: string | null;
-};
-
-export type BatchContactEnrichCompletedWebhookRequest = {
-    body: BatchContactEnrichCompletedWebhookPayload;
-    key: 'batch_contact_enrich.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * BatchContactEnrichV1CompletedPayload
- *
- * Payload delivered when a legacy batch contact enrichment job completes.
- */
-export type BatchContactEnrichV1CompletedWebhookPayload = {
-    task_id: string;
-    audience_id: string;
-    success: boolean;
-    total: number;
-    error?: string | null;
-};
-
-export type BatchContactEnrichV1CompletedWebhookRequest = {
-    body: BatchContactEnrichV1CompletedWebhookPayload;
-    key: 'batch_contact_enrich_v1.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * GitHubToLinkedInCompletedPayload
- *
- * Payload delivered when a GitHub-to-LinkedIn batch lookup completes.
- */
-export type GithubToLinkedinCompletedWebhookPayload = {
-    run_id: string;
-    success: boolean;
-    total: number;
-    failed_batches: number;
-    error?: string | null;
-};
-
-export type GithubToLinkedinCompletedWebhookRequest = {
-    body: GithubToLinkedinCompletedWebhookPayload;
-    key: 'github_to_linkedin.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * GitHubLookupCompletedPayload
- *
- * Payload delivered when a GitHub profile lookup completes.
- */
-export type GithubLookupCompletedWebhookPayload = {
-    run_id: string;
-    success: boolean;
-    total: number;
-    failed_batches: number;
-    error?: string | null;
-};
-
-export type GithubLookupCompletedWebhookRequest = {
-    body: GithubLookupCompletedWebhookPayload;
-    key: 'github_lookup.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * DomainLookupCompletedPayload
- *
- * Payload delivered when a domain lookup completes.
- */
-export type DomainLookupCompletedWebhookPayload = {
-    run_id: string;
-    success: boolean;
-    total: number;
-    resolved: number;
-    error?: string | null;
-};
-
-export type DomainLookupCompletedWebhookRequest = {
-    body: DomainLookupCompletedWebhookPayload;
-    key: 'domain_lookup.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * SocialMediaLookupCompletedPayload
- *
- * Payload delivered when a social media lookup completes.
- */
-export type SocialMediaLookupCompletedWebhookPayload = {
-    run_id: string;
-    success: boolean;
-    total: number;
-    error?: string | null;
-};
-
-export type SocialMediaLookupCompletedWebhookRequest = {
-    body: SocialMediaLookupCompletedWebhookPayload;
-    key: 'social_media_lookup.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * GoogleMapsSearchCompletedPayload
- *
- * Payload delivered when a Google Maps search completes.
- */
-export type GoogleMapsSearchCompletedWebhookPayload = {
-    search_id: string;
-    success: boolean;
-    total_results: number;
-    error?: string | null;
-};
-
-export type GoogleMapsSearchCompletedWebhookRequest = {
-    body: GoogleMapsSearchCompletedWebhookPayload;
-    key: 'google_maps_search.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * LocalBusinessSearchCompletedPayload
- *
- * Payload delivered when a local business search completes.
- */
-export type LocalBusinessSearchCompletedWebhookPayload = {
-    run_id: string;
-    success: boolean;
-    total_results: number;
-    error?: string | null;
-};
-
-export type LocalBusinessSearchCompletedWebhookRequest = {
-    body: LocalBusinessSearchCompletedWebhookPayload;
-    key: 'local_business_search.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * DepthChartCompletedPayload
- *
- * Payload delivered when a company depth chart generation completes.
- */
-export type DepthChartCompletedWebhookPayload = {
-    task_id: string;
-    success: boolean;
-    company_name?: string | null;
-    employee_count?: number | null;
-    error?: string | null;
-};
-
-export type DepthChartCompletedWebhookRequest = {
-    body: DepthChartCompletedWebhookPayload;
-    key: 'depth_chart.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * AudienceEnrichmentCompletedPayload
- *
- * Payload delivered when an audience enrichment process completes.
- */
-export type AudienceEnrichmentCompletedWebhookPayload = {
-    audience_id: string;
-    combined_enrichment_id: string;
-    success: boolean;
-    enriched_prospect_count?: number | null;
-    error?: string | null;
-};
-
-export type AudienceEnrichmentCompletedWebhookRequest = {
-    body: AudienceEnrichmentCompletedWebhookPayload;
-    key: 'audience.enrichment_completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * AudienceProspectExportCompletedPayload
- *
- * Payload delivered when an audience prospect CSV export completes.
- */
-export type AudienceProspectExportCompletedWebhookPayload = {
-    audience_id: string;
-    export_id?: string | null;
-    success: boolean;
-    total_rows?: number | null;
-    error?: string | null;
-};
-
-export type AudienceProspectExportCompletedWebhookRequest = {
-    body: AudienceProspectExportCompletedWebhookPayload;
-    key: 'audience.prospect_export_completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * AudienceCompanyExportCompletedPayload
- *
- * Payload delivered when an audience company CSV export completes.
- */
-export type AudienceCompanyExportCompletedWebhookPayload = {
-    audience_id: string;
-    export_id?: string | null;
-    success: boolean;
-    total_rows?: number | null;
-    error?: string | null;
-};
-
-export type AudienceCompanyExportCompletedWebhookRequest = {
-    body: AudienceCompanyExportCompletedWebhookPayload;
-    key: 'audience.company_export_completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * AudienceBuildCompletedPayload
- *
- * Payload delivered when an audience build process completes.
- */
-export type AudienceBuildCompletedWebhookPayload = {
-    audience_id: string;
-    success: boolean;
-    total_companies?: number | null;
-    total_prospects?: number | null;
-    error?: string | null;
-};
-
-export type AudienceBuildCompletedWebhookRequest = {
-    body: AudienceBuildCompletedWebhookPayload;
-    key: 'audience.build_completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * CombinedSearchCompletedPayload
- *
- * Payload delivered when an async combined search completes.
- */
-export type CombinedSearchCompletedWebhookPayload = {
-    search_id: string;
-    success: boolean;
-    error?: string | null;
-};
-
-export type CombinedSearchCompletedWebhookRequest = {
-    body: CombinedSearchCompletedWebhookPayload;
-    key: 'combined_search.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * SalesNavScrapeCompletedPayload
- *
- * Payload delivered when a Sales Navigator people scrape completes.
- */
-export type SalesNavScrapeCompletedWebhookPayload = {
-    task_id: string;
-    success: boolean;
-    total?: number | null;
-    error?: string | null;
-};
-
-export type SalesNavScrapeCompletedWebhookRequest = {
-    body: SalesNavScrapeCompletedWebhookPayload;
-    key: 'sales_nav_scrape.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * SalesNavLiteScrapeCompletedPayload
- *
- * Payload delivered when a Sales Navigator lite scrape completes.
- */
-export type SalesNavLiteScrapeCompletedWebhookPayload = {
-    task_id: string;
-    success: boolean;
-    total?: number | null;
-    error?: string | null;
-};
-
-export type SalesNavLiteScrapeCompletedWebhookRequest = {
-    body: SalesNavLiteScrapeCompletedWebhookPayload;
-    key: 'sales_nav_lite_scrape.completed';
-    path?: never;
-    query?: never;
-};
-
-/**
- * JobChangesProfilesAddedPayload
- *
- * Payload delivered when profiles are added to a job change tracking list.
- */
-export type JobChangesProfilesAddedWebhookPayload = {
-    list_id: string;
-    success: boolean;
-    total_added: number;
-    invalid_count?: number | null;
-    error?: string | null;
-};
-
-export type JobChangesProfilesAddedWebhookRequest = {
-    body: JobChangesProfilesAddedWebhookPayload;
-    key: 'job_changes.profiles_added';
-    path?: never;
-    query?: never;
-};

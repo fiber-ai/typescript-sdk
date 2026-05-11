@@ -465,24 +465,6 @@ export const zGetOrgCreditsResponse = z.object({
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
                 }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
-                getLiProfileLatestActivities: z.object({
-                    levels: z.array(z.object({
-                        limit: z.optional(z.union([
-                            z.number().gt(0),
-                            z.null()
-                        ])),
-                        centiCreditCost: z.number().gte(0)
-                    })).min(1)
-                }).default({ levels: [{ limit: null, centiCreditCost: 300 }] }),
-                getLiProfileLastActiveDate: z.object({
-                    levels: z.array(z.object({
-                        limit: z.optional(z.union([
-                            z.number().gt(0),
-                            z.null()
-                        ])),
-                        centiCreditCost: z.number().gte(0)
-                    })).min(1)
-                }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
                 getProfileLatestLiPost: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
@@ -860,16 +842,7 @@ export const zGetOrgCreditsResponse = z.object({
                         ])),
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
-                }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
-                mosaicRow: z.object({
-                    levels: z.array(z.object({
-                        limit: z.optional(z.union([
-                            z.number().gt(0),
-                            z.null()
-                        ])),
-                        centiCreditCost: z.number().gte(0)
-                    })).min(1)
-                }).default({ levels: [{ limit: null, centiCreditCost: 1000 }] })
+                }).default({ levels: [{ limit: null, centiCreditCost: 200 }] })
             }),
             z.null()
         ]))
@@ -1278,7 +1251,7 @@ export const zBuyCreditsResponse = z.object({
 export const zPollExhaustiveContactEnrichmentResultData = z.object({
     body: z.object({
         apiKey: z.string(),
-        taskId: z.string().min(1)
+        taskId: z.string()
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
@@ -2305,10 +2278,6 @@ export const zPollBatchLiveEnrichResponse = z.object({
                     ])),
                     websites: z.optional(z.union([
                         z.array(z.string()),
-                        z.null()
-                    ])),
-                    is_verified: z.optional(z.union([
-                        z.boolean(),
                         z.null()
                     ])),
                     current_job: z.optional(z.union([
@@ -4081,71 +4050,78 @@ export const zGithubToLinkedInPollingResponse = z.object({
         ]),
         data: z.array(z.object({
             githubUsername: z.string(),
-            customerProvidedId: z.optional(z.union([
+            customerProvidedId: z.union([
                 z.string(),
                 z.null()
-            ])),
+            ]),
             status: z.enum([
                 'NOT_STARTED',
                 'STARTED',
                 'DONE',
                 'FAILED'
             ]),
-            linkedInUrl: z.optional(z.union([
+            linkedInUrl: z.union([
                 z.url(),
                 z.null()
-            ])),
-            linkedInSlug: z.optional(z.union([
+            ]),
+            linkedInSlug: z.union([
                 z.string(),
                 z.null()
-            ])),
+            ]),
             confidenceOutOf10: z.int().gte(0).lte(10),
-            rationale: z.optional(z.union([
+            matchSource: z.enum([
+                'email',
+                'name-search',
+                'agent',
+                'web-search',
+                'not-found'
+            ]),
+            rationale: z.union([
                 z.string(),
                 z.null()
-            ])),
+            ]),
             extractedEmails: z.array(z.string()),
-            githubProfile: z.optional(z.union([
+            githubProfile: z.union([
                 z.object({
-                    name: z.optional(z.union([
+                    name: z.union([
                         z.string(),
                         z.null()
-                    ])),
-                    company: z.optional(z.union([
+                    ]),
+                    company: z.union([
                         z.string(),
                         z.null()
-                    ])),
-                    location: z.optional(z.union([
+                    ]),
+                    location: z.union([
                         z.string(),
                         z.null()
-                    ])),
-                    bio: z.optional(z.union([
+                    ]),
+                    bio: z.union([
                         z.string(),
                         z.null()
-                    ])),
-                    blog: z.optional(z.union([
+                    ]),
+                    blog: z.union([
                         z.string(),
                         z.null()
-                    ])),
-                    avatarUrl: z.optional(z.union([
+                    ]),
+                    avatarUrl: z.union([
                         z.string(),
                         z.null()
-                    ])),
-                    followers: z.optional(z.union([
+                    ]),
+                    followers: z.union([
                         z.int(),
                         z.null()
-                    ])),
-                    publicRepos: z.optional(z.union([
+                    ]),
+                    publicRepos: z.union([
                         z.int(),
                         z.null()
-                    ]))
+                    ])
                 }),
                 z.null()
-            ])),
-            errorMessage: z.optional(z.union([
+            ]),
+            errorMessage: z.union([
                 z.string(),
                 z.null()
-            ]))
+            ])
         })),
         nextCursor: z.optional(z.union([
             z.string(),
@@ -6273,86 +6249,6 @@ export const zGetTechnologiesResponse = z.object({
         ])),
         type: z.enum(['technology', 'platform'])
     })),
-    chargeInfo: z.union([
-        z.object({
-            method: z.enum(['charged-now']),
-            creditsCharged: z.number(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['charging-later']),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['charged-for-async-process']),
-            creditsCharged: z.number(),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['free']),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
-});
-
-export const zGetFlightRegionsData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.object({
-        apiKey: z.string()
-    })
-});
-
-/**
- * Default Response
- */
-export const zGetFlightRegionsResponse = z.object({
-    output: z.object({
-        regions: z.array(z.object({
-            apiCode: z.string(),
-            name: z.string(),
-            airportIataCodes: z.array(z.string().regex(/^[A-Z]{3}$/)).min(1),
-            freebaseId: z.string().regex(/^\/(?:m|g)\/[A-Za-z0-9_]+$/)
-        })).min(1)
-    }),
     chargeInfo: z.union([
         z.object({
             method: z.enum(['charged-now']),
@@ -15055,45 +14951,6 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     z.null()
                                 ]))
                             })),
-                            z.null()
-                        ]))
-                    }),
-                    z.null()
-                ])),
-                exactProfileV2: z.optional(z.union([
-                    z.object({
-                        anyOf: z.optional(z.union([
-                            z.array(z.union([
-                                z.object({
-                                    identifier: z.enum(['linkedin-slug']),
-                                    linkedin_slug: z.string().min(1)
-                                }),
-                                z.object({
-                                    identifier: z.enum(['linkedin-url']),
-                                    linkedin_url: z.url()
-                                }),
-                                z.object({
-                                    identifier: z.enum(['linkedin-user-id']),
-                                    user_id: z.string().min(1).regex(/^[0-9]+$/)
-                                })
-                            ])),
-                            z.null()
-                        ])),
-                        noneOf: z.optional(z.union([
-                            z.array(z.union([
-                                z.object({
-                                    identifier: z.enum(['linkedin-slug']),
-                                    linkedin_slug: z.string().min(1)
-                                }),
-                                z.object({
-                                    identifier: z.enum(['linkedin-url']),
-                                    linkedin_url: z.url()
-                                }),
-                                z.object({
-                                    identifier: z.enum(['linkedin-user-id']),
-                                    user_id: z.string().min(1).regex(/^[0-9]+$/)
-                                })
-                            ])),
                             z.null()
                         ]))
                     }),
@@ -37973,45 +37830,6 @@ export const zPeopleSearchData = z.object({
                 }),
                 z.null()
             ])),
-            exactProfileV2: z.optional(z.union([
-                z.object({
-                    anyOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
-                        z.null()
-                    ])),
-                    noneOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
-                        z.null()
-                    ]))
-                }),
-                z.null()
-            ])),
             startedInRole: z.optional(z.union([
                 z.object({
                     strategy: z.enum(['absolute']),
@@ -40969,10 +40787,6 @@ export const zPeopleSearchResponse = z.object({
                 z.array(z.string()),
                 z.null()
             ])),
-            is_verified: z.optional(z.union([
-                z.boolean(),
-                z.null()
-            ])),
             current_job: z.optional(z.union([
                 z.object({
                     linkedin_company_id: z.optional(z.union([
@@ -42279,45 +42093,6 @@ export const zPeopleSearchCountData = z.object({
                                 z.null()
                             ]))
                         })),
-                        z.null()
-                    ]))
-                }),
-                z.null()
-            ])),
-            exactProfileV2: z.optional(z.union([
-                z.object({
-                    anyOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
-                        z.null()
-                    ])),
-                    noneOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
                         z.null()
                     ]))
                 }),
@@ -52779,45 +52554,6 @@ export const zPaginatedCombinedSearchData = z.object({
                         }),
                         z.null()
                     ])),
-                    exactProfileV2: z.optional(z.union([
-                        z.object({
-                            anyOf: z.optional(z.union([
-                                z.array(z.union([
-                                    z.object({
-                                        identifier: z.enum(['linkedin-slug']),
-                                        linkedin_slug: z.string().min(1)
-                                    }),
-                                    z.object({
-                                        identifier: z.enum(['linkedin-url']),
-                                        linkedin_url: z.url()
-                                    }),
-                                    z.object({
-                                        identifier: z.enum(['linkedin-user-id']),
-                                        user_id: z.string().min(1).regex(/^[0-9]+$/)
-                                    })
-                                ])),
-                                z.null()
-                            ])),
-                            noneOf: z.optional(z.union([
-                                z.array(z.union([
-                                    z.object({
-                                        identifier: z.enum(['linkedin-slug']),
-                                        linkedin_slug: z.string().min(1)
-                                    }),
-                                    z.object({
-                                        identifier: z.enum(['linkedin-url']),
-                                        linkedin_url: z.url()
-                                    }),
-                                    z.object({
-                                        identifier: z.enum(['linkedin-user-id']),
-                                        user_id: z.string().min(1).regex(/^[0-9]+$/)
-                                    })
-                                ])),
-                                z.null()
-                            ]))
-                        }),
-                        z.null()
-                    ])),
                     startedInRole: z.optional(z.union([
                         z.object({
                             strategy: z.enum(['absolute']),
@@ -58711,10 +58447,6 @@ export const zPaginatedCombinedSearchResponse = z.object({
             ])),
             websites: z.optional(z.union([
                 z.array(z.string()),
-                z.null()
-            ])),
-            is_verified: z.optional(z.union([
-                z.boolean(),
                 z.null()
             ])),
             current_job: z.optional(z.union([
@@ -67380,45 +67112,6 @@ export const zCombinedSearchCountData = z.object({
                 }),
                 z.null()
             ])),
-            exactProfileV2: z.optional(z.union([
-                z.object({
-                    anyOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
-                        z.null()
-                    ])),
-                    noneOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
-                        z.null()
-                    ]))
-                }),
-                z.null()
-            ])),
             startedInRole: z.optional(z.union([
                 z.object({
                     strategy: z.enum(['absolute']),
@@ -70811,45 +70504,6 @@ export const zStealthFoundersSearchData = z.object({
                                     'intern'
                                 ])),
                                 keywords: z.optional(z.array(z.string())).default([])
-                            })
-                        ])),
-                        z.null()
-                    ]))
-                }),
-                z.null()
-            ])),
-            exactProfileV2: z.optional(z.union([
-                z.object({
-                    anyOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
-                        z.null()
-                    ])),
-                    noneOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
                             })
                         ])),
                         z.null()
@@ -74438,45 +74092,6 @@ export const zStealthFoundersCountData = z.object({
                 }),
                 z.null()
             ])),
-            exactProfileV2: z.optional(z.union([
-                z.object({
-                    anyOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
-                        z.null()
-                    ])),
-                    noneOf: z.optional(z.union([
-                        z.array(z.union([
-                            z.object({
-                                identifier: z.enum(['linkedin-slug']),
-                                linkedin_slug: z.string().min(1)
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-url']),
-                                linkedin_url: z.url()
-                            }),
-                            z.object({
-                                identifier: z.enum(['linkedin-user-id']),
-                                user_id: z.string().min(1).regex(/^[0-9]+$/)
-                            })
-                        ])),
-                        z.null()
-                    ]))
-                }),
-                z.null()
-            ])),
             startedInRole: z.optional(z.union([
                 z.object({
                     strategy: z.enum(['absolute']),
@@ -76812,122 +76427,6 @@ export const zSyncQuickContactRevealResponse = z.object({
     ]))
 });
 
-export const zLiteContactRevealData = z.object({
-    body: z.object({
-        apiKey: z.string(),
-        input: z.union([
-            z.object({
-                mode: z.enum(['linkedin']),
-                linkedinIdentifier: z.string().min(1),
-                fullName: z.optional(z.union([
-                    z.string().min(1),
-                    z.null()
-                ]))
-            }),
-            z.object({
-                mode: z.enum(['name-domain']),
-                fullName: z.string().min(1),
-                companyDomain: z.string().min(1)
-            })
-        ]),
-        enrichmentType: z.optional(z.object({
-            getWorkEmails: z.optional(z.boolean()).default(true),
-            getPersonalEmails: z.optional(z.boolean()).default(false)
-        })).default({ getWorkEmails: true, getPersonalEmails: false })
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-/**
- * Default Response
- */
-export const zLiteContactRevealResponse = z.object({
-    output: z.object({
-        profile: z.object({
-            emails: z.array(z.object({
-                emailAddress: z.optional(z.union([
-                    z.string().min(1),
-                    z.null()
-                ])),
-                type: z.optional(z.nullable(z.enum(['work', 'personal']))),
-                validationStatus: z.optional(z.nullable(z.enum([
-                    'valid',
-                    'risky',
-                    'unknown',
-                    'invalid'
-                ]))),
-                deliverabilityScore: z.optional(z.union([
-                    z.number().gte(0).lte(100),
-                    z.null()
-                ])),
-                isCatchAll: z.optional(z.union([
-                    z.boolean(),
-                    z.null()
-                ]))
-            })).default([])
-        })
-    }),
-    chargeInfo: z.union([
-        z.object({
-            method: z.enum(['charged-now']),
-            creditsCharged: z.number(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['charging-later']),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['charged-for-async-process']),
-            creditsCharged: z.number(),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['free']),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
-});
-
 export const zStartDepthChartData = z.object({
     body: z.object({
         apiKey: z.string(),
@@ -77830,10 +77329,6 @@ export const zProfileLiveEnrichResponse = z.object({
                 ])),
                 websites: z.optional(z.union([
                     z.array(z.string()),
-                    z.null()
-                ])),
-                is_verified: z.optional(z.union([
-                    z.boolean(),
                     z.null()
                 ])),
                 current_job: z.optional(z.union([
@@ -81388,10 +80883,6 @@ export const zReverseEmailLookupResponse = z.object({
                 z.array(z.string()),
                 z.null()
             ])),
-            is_verified: z.optional(z.union([
-                z.boolean(),
-                z.null()
-            ])),
             current_job: z.optional(z.union([
                 z.object({
                     linkedin_company_id: z.optional(z.union([
@@ -83460,10 +82951,6 @@ export const zKitchenSinkProfileResponse = z.object({
             ])),
             websites: z.optional(z.union([
                 z.array(z.string()),
-                z.null()
-            ])),
-            is_verified: z.optional(z.union([
-                z.boolean(),
                 z.null()
             ])),
             current_job: z.optional(z.union([
@@ -87689,10 +87176,6 @@ export const zKitchenSinkBulkProfileResponse = z.object({
             ])),
             websites: z.optional(z.union([
                 z.array(z.string()),
-                z.null()
-            ])),
-            is_verified: z.optional(z.union([
-                z.boolean(),
                 z.null()
             ])),
             current_job: z.optional(z.union([
@@ -103507,10 +102990,6 @@ export const zTextToCombinedSearchResponse = z.object({
                     z.array(z.string()),
                     z.null()
                 ])),
-                is_verified: z.optional(z.union([
-                    z.boolean(),
-                    z.null()
-                ])),
                 current_job: z.optional(z.union([
                     z.object({
                         linkedin_company_id: z.optional(z.union([
@@ -104588,10 +104067,6 @@ export const zJdToProfileSearchResponse = z.object({
             ])),
             websites: z.optional(z.union([
                 z.array(z.string()),
-                z.null()
-            ])),
-            is_verified: z.optional(z.union([
-                z.boolean(),
                 z.null()
             ])),
             current_job: z.optional(z.union([
@@ -120403,10 +119878,6 @@ export const zGithubToLinkedinSingleData = z.object({
     body: z.object({
         apiKey: z.string(),
         githubUsername: z.string().min(1),
-        context: z.optional(z.union([
-            z.string().min(1).max(1000),
-            z.null()
-        ])),
         outputType: z.optional(z.enum([
             'linkedin',
             'email',
@@ -120415,7 +119886,8 @@ export const zGithubToLinkedinSingleData = z.object({
         customerProvidedId: z.optional(z.union([
             z.string().min(1),
             z.null()
-        ]))
+        ])),
+        includeDebugTimings: z.optional(z.boolean()).default(false)
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
@@ -120427,58 +119899,105 @@ export const zGithubToLinkedinSingleData = z.object({
 export const zGithubToLinkedinSingleResponse = z.object({
     output: z.object({
         githubUsername: z.string(),
-        customerProvidedId: z.optional(z.union([
+        customerProvidedId: z.union([
             z.string(),
             z.null()
-        ])),
-        linkedInUrl: z.optional(z.union([
+        ]),
+        linkedInUrl: z.union([
             z.url(),
             z.null()
-        ])),
-        linkedInSlug: z.optional(z.union([
+        ]),
+        linkedInSlug: z.union([
             z.string(),
             z.null()
-        ])),
+        ]),
         confidenceOutOf10: z.int().gte(0).lte(10),
-        rationale: z.optional(z.union([
+        matchSource: z.enum([
+            'email',
+            'name-search',
+            'agent',
+            'web-search',
+            'not-found'
+        ]),
+        rationale: z.union([
             z.string(),
             z.null()
-        ])),
+        ]),
         extractedEmails: z.array(z.string()).default([]),
-        githubProfile: z.optional(z.union([
+        githubProfile: z.union([
             z.object({
-                name: z.optional(z.union([
+                name: z.union([
                     z.string(),
                     z.null()
-                ])),
-                company: z.optional(z.union([
+                ]),
+                company: z.union([
                     z.string(),
                     z.null()
-                ])),
-                location: z.optional(z.union([
+                ]),
+                location: z.union([
                     z.string(),
                     z.null()
-                ])),
-                bio: z.optional(z.union([
+                ]),
+                bio: z.union([
                     z.string(),
                     z.null()
-                ])),
-                blog: z.optional(z.union([
+                ]),
+                blog: z.union([
                     z.string(),
                     z.null()
-                ])),
-                avatarUrl: z.optional(z.union([
+                ]),
+                avatarUrl: z.union([
                     z.string(),
                     z.null()
-                ])),
-                followers: z.optional(z.union([
+                ]),
+                followers: z.union([
                     z.int(),
                     z.null()
-                ])),
-                publicRepos: z.optional(z.union([
+                ]),
+                publicRepos: z.union([
                     z.int(),
                     z.null()
-                ]))
+                ])
+            }),
+            z.null()
+        ]),
+        debugTimings: z.optional(z.union([
+            z.object({
+                lookupDurationMs: z.int().gte(0),
+                bootstrapDurationMs: z.int().gte(0),
+                resolverDurationMs: z.int().gte(0),
+                resolverStepDurationsSumMs: z.int().gte(0),
+                resolverUninstrumentedDurationMs: z.int().gte(0),
+                creditChargeDurationMs: z.optional(z.union([
+                    z.int().gte(0),
+                    z.null()
+                ])),
+                routeDurationMs: z.optional(z.union([
+                    z.int().gte(0),
+                    z.null()
+                ])),
+                resolverSteps: z.array(z.object({
+                    step: z.enum([
+                        'cache_bootstrap',
+                        'zen_cache_hit',
+                        'github_fetch',
+                        'email_waterfall',
+                        'kitchen_sink',
+                        'agent',
+                        'tavily_web_search'
+                    ]),
+                    durationMs: z.int().gte(0),
+                    outcome: z.enum([
+                        'hit',
+                        'miss',
+                        'skipped',
+                        'error'
+                    ]),
+                    detail: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ]))
+                }))
             }),
             z.null()
         ]))
@@ -121333,580 +120852,6 @@ export const zYoutubeChannelResponse = z.object({
     ]))
 });
 
-export const zFlightSearchData = z.object({
-    body: z.object({
-        apiKey: z.string(),
-        travelClass: z.optional(z.nullable(z.enum([
-            'economy',
-            'premiumEconomy',
-            'business',
-            'first'
-        ]))),
-        adults: z.optional(z.int().gte(1).lte(9)).default(1),
-        children: z.optional(z.int().gte(0).lte(8)).default(0),
-        infantsInSeat: z.optional(z.int().gte(0).lte(8)).default(0),
-        infantsOnLap: z.optional(z.int().gte(0).lte(8)).default(0),
-        maxStops: z.optional(z.union([
-            z.int().gte(0).lte(2),
-            z.null()
-        ])),
-        sortBy: z.optional(z.nullable(z.enum([
-            'top',
-            'price',
-            'departureTime',
-            'arrivalTime',
-            'duration',
-            'emissions'
-        ]))),
-        airlines: z.optional(z.union([
-            z.object({
-                include: z.optional(z.union([
-                    z.array(z.string()),
-                    z.null()
-                ])),
-                exclude: z.optional(z.union([
-                    z.array(z.string()),
-                    z.null()
-                ]))
-            }),
-            z.null()
-        ])),
-        minCarryOnBags: z.optional(z.union([
-            z.int().gte(0).lte(5),
-            z.null()
-        ])),
-        minCheckedBags: z.optional(z.union([
-            z.int().gte(0).lte(5),
-            z.null()
-        ])),
-        maxPrice: z.optional(z.union([
-            z.int().gte(1),
-            z.null()
-        ])),
-        outboundTimeWindow: z.optional(z.union([
-            z.object({
-                departure: z.optional(z.union([
-                    z.object({
-                        startHour: z.int().gte(0).lte(23),
-                        endHour: z.int().gte(0).lte(23)
-                    }),
-                    z.null()
-                ])),
-                arrival: z.optional(z.union([
-                    z.object({
-                        startHour: z.int().gte(0).lte(23),
-                        endHour: z.int().gte(0).lte(23)
-                    }),
-                    z.null()
-                ]))
-            }),
-            z.null()
-        ])),
-        returnTimeWindow: z.optional(z.union([
-            z.object({
-                departure: z.optional(z.union([
-                    z.object({
-                        startHour: z.int().gte(0).lte(23),
-                        endHour: z.int().gte(0).lte(23)
-                    }),
-                    z.null()
-                ])),
-                arrival: z.optional(z.union([
-                    z.object({
-                        startHour: z.int().gte(0).lte(23),
-                        endHour: z.int().gte(0).lte(23)
-                    }),
-                    z.null()
-                ]))
-            }),
-            z.null()
-        ])),
-        layoverDuration: z.optional(z.union([
-            z.object({
-                minMinutes: z.optional(z.union([
-                    z.int().gte(30).lte(1440),
-                    z.null()
-                ])),
-                maxMinutes: z.optional(z.union([
-                    z.int().gte(30).lte(1440),
-                    z.null()
-                ]))
-            }),
-            z.null()
-        ])),
-        maxFlightDurationMinutes: z.optional(z.union([
-            z.int().gte(30).lte(4320),
-            z.null()
-        ])),
-        connectingAirports: z.optional(z.union([
-            z.object({
-                include: z.optional(z.union([
-                    z.array(z.string()),
-                    z.null()
-                ])),
-                exclude: z.optional(z.union([
-                    z.array(z.string()),
-                    z.null()
-                ]))
-            }),
-            z.null()
-        ])),
-        onlyShowLowEmissionFlights: z.optional(z.boolean()).default(false),
-        showHidden: z.optional(z.boolean()).default(true),
-        hideSeparateTickets: z.optional(z.boolean()).default(false),
-        currencyCode: z.optional(z.string().regex(/^[A-Za-z]{3}$/)).default('USD'),
-        searchMarketCountryCode: z.optional(z.string().regex(/^[A-Za-z]{3}$/)).default('USA'),
-        languageCode: z.optional(z.string().regex(/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/)).default('en'),
-        nextPageToken: z.optional(z.union([
-            z.string(),
-            z.null()
-        ])),
-        trip: z.union([
-            z.object({
-                flightType: z.enum(['one_way']),
-                departureAirports: z.string(),
-                arrivalAirports: z.string(),
-                outboundDate: z.string().regex(/^(\d{4})-(\d{2})-(\d{2})$/)
-            }),
-            z.object({
-                flightType: z.enum(['round_trip']),
-                departureAirports: z.string(),
-                arrivalAirports: z.string(),
-                outboundDate: z.string().regex(/^(\d{4})-(\d{2})-(\d{2})$/),
-                returnDate: z.string().regex(/^(\d{4})-(\d{2})-(\d{2})$/)
-            }),
-            z.object({
-                flightType: z.enum(['multi_city']),
-                segments: z.array(z.object({
-                    departureAirports: z.string(),
-                    arrivalAirports: z.string(),
-                    outboundDate: z.string().regex(/^(\d{4})-(\d{2})-(\d{2})$/)
-                })).min(2).max(5)
-            })
-        ])
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-/**
- * Default Response
- */
-export const zFlightSearchResponse = z.object({
-    output: z.object({
-        bestFlights: z.array(z.object({
-            segments: z.array(z.object({
-                departureAirport: z.object({
-                    iataCode: z.optional(z.union([
-                        z.string().length(3),
-                        z.null()
-                    ])),
-                    name: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
-                    localDateTime: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ]))
-                }),
-                arrivalAirport: z.object({
-                    iataCode: z.optional(z.union([
-                        z.string().length(3),
-                        z.null()
-                    ])),
-                    name: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
-                    localDateTime: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ]))
-                }),
-                durationMinutes: z.optional(z.union([
-                    z.int(),
-                    z.null()
-                ])),
-                airlineName: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                airlineLogoUrl: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                travelClass: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                flightNumber: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                aircraftModel: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                legroom: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                isOvernight: z.optional(z.union([
-                    z.boolean(),
-                    z.null()
-                ])),
-                isOftenDelayed: z.optional(z.union([
-                    z.boolean(),
-                    z.null()
-                ])),
-                carbonEmissionKg: z.optional(z.union([
-                    z.number(),
-                    z.null()
-                ]))
-            })),
-            layovers: z.array(z.object({
-                iataCode: z.optional(z.union([
-                    z.string().length(3),
-                    z.null()
-                ])),
-                airportName: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                durationMinutes: z.optional(z.union([
-                    z.int(),
-                    z.null()
-                ])),
-                isOvernight: z.optional(z.union([
-                    z.boolean(),
-                    z.null()
-                ]))
-            })),
-            totalDurationMinutes: z.optional(z.union([
-                z.int(),
-                z.null()
-            ])),
-            price: z.optional(z.union([
-                z.int(),
-                z.null()
-            ])),
-            bookingToken: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
-            flightType: z.optional(z.nullable(z.enum([
-                'one_way',
-                'round_trip',
-                'multi_city'
-            ]))),
-            mainAirlineLogoUrl: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
-            carbonEmissions: z.optional(z.union([
-                z.object({
-                    thisFlightKg: z.optional(z.union([
-                        z.int(),
-                        z.null()
-                    ])),
-                    typicalForRouteKg: z.optional(z.union([
-                        z.int(),
-                        z.null()
-                    ])),
-                    differencePercent: z.optional(z.union([
-                        z.number(),
-                        z.null()
-                    ]))
-                }),
-                z.null()
-            ])),
-            alsoSoldBy: z.optional(z.union([
-                z.array(z.string()),
-                z.null()
-            ])),
-            operatingCarrier: z.optional(z.union([
-                z.string(),
-                z.null()
-            ]))
-        })),
-        otherFlights: z.array(z.object({
-            segments: z.array(z.object({
-                departureAirport: z.object({
-                    iataCode: z.optional(z.union([
-                        z.string().length(3),
-                        z.null()
-                    ])),
-                    name: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
-                    localDateTime: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ]))
-                }),
-                arrivalAirport: z.object({
-                    iataCode: z.optional(z.union([
-                        z.string().length(3),
-                        z.null()
-                    ])),
-                    name: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
-                    localDateTime: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ]))
-                }),
-                durationMinutes: z.optional(z.union([
-                    z.int(),
-                    z.null()
-                ])),
-                airlineName: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                airlineLogoUrl: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                travelClass: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                flightNumber: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                aircraftModel: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                legroom: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                isOvernight: z.optional(z.union([
-                    z.boolean(),
-                    z.null()
-                ])),
-                isOftenDelayed: z.optional(z.union([
-                    z.boolean(),
-                    z.null()
-                ])),
-                carbonEmissionKg: z.optional(z.union([
-                    z.number(),
-                    z.null()
-                ]))
-            })),
-            layovers: z.array(z.object({
-                iataCode: z.optional(z.union([
-                    z.string().length(3),
-                    z.null()
-                ])),
-                airportName: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                durationMinutes: z.optional(z.union([
-                    z.int(),
-                    z.null()
-                ])),
-                isOvernight: z.optional(z.union([
-                    z.boolean(),
-                    z.null()
-                ]))
-            })),
-            totalDurationMinutes: z.optional(z.union([
-                z.int(),
-                z.null()
-            ])),
-            price: z.optional(z.union([
-                z.int(),
-                z.null()
-            ])),
-            bookingToken: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
-            flightType: z.optional(z.nullable(z.enum([
-                'one_way',
-                'round_trip',
-                'multi_city'
-            ]))),
-            mainAirlineLogoUrl: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
-            carbonEmissions: z.optional(z.union([
-                z.object({
-                    thisFlightKg: z.optional(z.union([
-                        z.int(),
-                        z.null()
-                    ])),
-                    typicalForRouteKg: z.optional(z.union([
-                        z.int(),
-                        z.null()
-                    ])),
-                    differencePercent: z.optional(z.union([
-                        z.number(),
-                        z.null()
-                    ]))
-                }),
-                z.null()
-            ])),
-            alsoSoldBy: z.optional(z.union([
-                z.array(z.string()),
-                z.null()
-            ])),
-            operatingCarrier: z.optional(z.union([
-                z.string(),
-                z.null()
-            ]))
-        })),
-        nextPageToken: z.optional(z.union([
-            z.string(),
-            z.null()
-        ])),
-        currencyCode: z.optional(z.union([
-            z.string().regex(/^[A-Z]{3}$/),
-            z.null()
-        ])),
-        priceInsights: z.optional(z.union([
-            z.object({
-                lowestPrice: z.optional(z.union([
-                    z.int(),
-                    z.null()
-                ])),
-                priceLevel: z.optional(z.nullable(z.enum([
-                    'low',
-                    'typical',
-                    'high'
-                ]))),
-                typicalPriceRange: z.optional(z.union([
-                    z.object({
-                        lowerBound: z.optional(z.union([
-                            z.int(),
-                            z.null()
-                        ])),
-                        upperBound: z.optional(z.union([
-                            z.int(),
-                            z.null()
-                        ]))
-                    }),
-                    z.null()
-                ])),
-                history: z.array(z.object({
-                    snapshotDate: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
-                    price: z.int()
-                }))
-            }),
-            z.null()
-        ])),
-        airports: z.array(z.object({
-            departure: z.array(z.object({
-                iataCode: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                name: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                city: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                countryCode: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ]))
-            })),
-            arrival: z.array(z.object({
-                iataCode: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                name: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                city: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                countryCode: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ]))
-            }))
-        }))
-    }),
-    chargeInfo: z.union([
-        z.object({
-            method: z.enum(['charged-now']),
-            creditsCharged: z.number(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['charging-later']),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['charged-for-async-process']),
-            creditsCharged: z.number(),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        }),
-        z.object({
-            method: z.enum(['free']),
-            message: z.string(),
-            lowCreditAlert: z.optional(z.union([
-                z.object({
-                    getMoreCreditsUrl: z.url(),
-                    message: z.string(),
-                    availableCredits: z.number()
-                }),
-                z.null()
-            ]))
-        })
-    ]),
-    warnings: z.optional(z.union([
-        z.array(z.object({
-            field: z.string(),
-            message: z.string()
-        })),
-        z.null()
-    ]))
-});
-
 export const zFetchRealEstateListingsData = z.object({
     body: z.object({
         apiKey: z.string(),
@@ -122514,11 +121459,7 @@ export const zFetchRealEstateListingsResponse = z.object({
                 z.number(),
                 z.null()
             ]))
-        })),
-        warnings: z.optional(z.union([
-            z.array(z.string()),
-            z.null()
-        ]))
+        }))
     }),
     chargeInfo: z.union([
         z.object({
@@ -128089,431 +127030,4 @@ export const zGetCompanyRevenueResponse = z.object({
         })),
         z.null()
     ]))
-});
-
-export const zRevealCompletedWebhookRequest = z.object({
-    body: z.object({
-        emails: z.array(z.object({
-            email: z.string(),
-            type: z.enum([
-                'work',
-                'personal',
-                'other',
-                'unknown',
-                'generic'
-            ]),
-            status: z.optional(z.enum([
-                'valid',
-                'risky',
-                'unknown',
-                'invalid'
-            ]))
-        })),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ])),
-        linkedin_url: z.string(),
-        phone_numbers: z.array(z.object({
-            number: z.string(),
-            type: z.enum([
-                'mobile',
-                'other',
-                'unknown'
-            ])
-        })),
-        success: z.boolean(),
-        task_id: z.string()
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zSavedSearchRunCompletedWebhookRequest = z.object({
-    body: z.object({
-        saved_search_id: z.string(),
-        saved_search_run_id: z.string(),
-        started_at: z.string(),
-        completed_at: z.string(),
-        success: z.boolean()
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zJobChangedWebhookRequest = z.object({
-    body: z.object({
-        profiles: z.array(z.object({
-            id: z.string(),
-            linkedinUrl: z.string(),
-            movementDetails: z.object({
-                discoveredAt: z.string(),
-                newCompanyName: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                newCompanyLogoUrl: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                newCompanyOrgId: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                newCompanyLiSlug: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                newCompanyDomain: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                newJobTitle: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                oldCompanyName: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                oldCompanyLogoUrl: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                oldCompanyOrgId: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                oldCompanyLiSlug: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                oldCompanyDomain: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                oldJobTitle: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                startedInRoleAt: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                startedAtCompanyAt: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
-                movement: z.enum([
-                    'promoted',
-                    'lateral-move',
-                    'new-role',
-                    'changed',
-                    'no-change'
-                ])
-            })
-        }))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zBatchLiveEnrichCompletedWebhookRequest = z.object({
-    body: z.object({
-        job_id: z.string(),
-        type: z.enum(['PROFILE', 'COMPANY']),
-        success: z.boolean(),
-        total_identifiers: z.number(),
-        completed: z.number(),
-        failed: z.number(),
-        not_found: z.number(),
-        malformed: z.number()
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zBatchContactEnrichCompletedWebhookRequest = z.object({
-    body: z.object({
-        task_id: z.string().min(1),
-        success: z.boolean(),
-        total: z.number(),
-        completed: z.number(),
-        failed: z.number(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zBatchContactEnrichV1CompletedWebhookRequest = z.object({
-    body: z.object({
-        task_id: z.string().min(1),
-        audience_id: z.string().min(1),
-        success: z.boolean(),
-        total: z.number(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zGithubToLinkedinCompletedWebhookRequest = z.object({
-    body: z.object({
-        run_id: z.string().min(1),
-        success: z.boolean(),
-        total: z.number(),
-        failed_batches: z.number(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zGithubLookupCompletedWebhookRequest = z.object({
-    body: z.object({
-        run_id: z.string().min(1),
-        success: z.boolean(),
-        total: z.number(),
-        failed_batches: z.number(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zDomainLookupCompletedWebhookRequest = z.object({
-    body: z.object({
-        run_id: z.string().min(1),
-        success: z.boolean(),
-        total: z.number(),
-        resolved: z.number(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zSocialMediaLookupCompletedWebhookRequest = z.object({
-    body: z.object({
-        run_id: z.string().min(1),
-        success: z.boolean(),
-        total: z.number(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zGoogleMapsSearchCompletedWebhookRequest = z.object({
-    body: z.object({
-        search_id: z.string().min(1),
-        success: z.boolean(),
-        total_results: z.number(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zLocalBusinessSearchCompletedWebhookRequest = z.object({
-    body: z.object({
-        run_id: z.string().min(1),
-        success: z.boolean(),
-        total_results: z.number(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zDepthChartCompletedWebhookRequest = z.object({
-    body: z.object({
-        task_id: z.string().min(1),
-        success: z.boolean(),
-        company_name: z.optional(z.union([
-            z.string(),
-            z.null()
-        ])),
-        employee_count: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zAudienceEnrichmentCompletedWebhookRequest = z.object({
-    body: z.object({
-        audience_id: z.string().min(1),
-        combined_enrichment_id: z.string().min(1),
-        success: z.boolean(),
-        enriched_prospect_count: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zAudienceProspectExportCompletedWebhookRequest = z.object({
-    body: z.object({
-        audience_id: z.string().min(1),
-        export_id: z.optional(z.union([
-            z.string().min(1),
-            z.null()
-        ])),
-        success: z.boolean(),
-        total_rows: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zAudienceCompanyExportCompletedWebhookRequest = z.object({
-    body: z.object({
-        audience_id: z.string().min(1),
-        export_id: z.optional(z.union([
-            z.string().min(1),
-            z.null()
-        ])),
-        success: z.boolean(),
-        total_rows: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zAudienceBuildCompletedWebhookRequest = z.object({
-    body: z.object({
-        audience_id: z.string().min(1),
-        success: z.boolean(),
-        total_companies: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        total_prospects: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zCombinedSearchCompletedWebhookRequest = z.object({
-    body: z.object({
-        search_id: z.string().min(1),
-        success: z.boolean(),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zSalesNavScrapeCompletedWebhookRequest = z.object({
-    body: z.object({
-        task_id: z.string().min(1),
-        success: z.boolean(),
-        total: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zSalesNavLiteScrapeCompletedWebhookRequest = z.object({
-    body: z.object({
-        task_id: z.string().min(1),
-        success: z.boolean(),
-        total: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export const zJobChangesProfilesAddedWebhookRequest = z.object({
-    body: z.object({
-        list_id: z.string().min(1),
-        success: z.boolean(),
-        total_added: z.number(),
-        invalid_count: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        error: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
 });
