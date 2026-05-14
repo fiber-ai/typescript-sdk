@@ -458,6 +458,18 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
+                getLiProfileLatestActivities: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                getLiProfileLastActiveDate: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
                 getProfileLatestLiPost: {
                     levels: Array<{
                         limit?: number | null;
@@ -705,6 +717,12 @@ export type GetOrgCreditsResponses = {
                     }>;
                 };
                 flightSearch: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                mosaicRow: {
                     levels: Array<{
                         limit?: number | null;
                         centiCreditCost: number;
@@ -3096,6 +3114,7 @@ export type PollBatchLiveEnrichResponses = {
                     entity_urns?: Array<string> | null;
                     is_hiring?: boolean | null;
                     websites?: Array<string> | null;
+                    is_verified?: boolean | null;
                     current_job?: {
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
@@ -14605,6 +14624,28 @@ export type UpdateAudienceSearchParamsData = {
                     primary_slug?: string | null;
                 }> | null;
             } | null;
+            exactProfileV2?: {
+                anyOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+                noneOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+            } | null;
             startedInRole?: {
                 strategy: 'absolute';
                 range?: {
@@ -22373,6 +22414,28 @@ export type PeopleSearchData = {
                     primary_slug?: string | null;
                 }> | null;
             } | null;
+            exactProfileV2?: {
+                anyOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+                noneOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+            } | null;
             startedInRole?: {
                 strategy: 'absolute';
                 range?: {
@@ -23334,6 +23397,7 @@ export type PeopleSearchResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
+                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -23643,6 +23707,28 @@ export type PeopleSearchCountData = {
                 noneOf?: Array<{
                     profile_id?: string | null;
                     primary_slug?: string | null;
+                }> | null;
+            } | null;
+            exactProfileV2?: {
+                anyOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+                noneOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
                 }> | null;
             } | null;
             startedInRole?: {
@@ -25788,6 +25874,28 @@ export type PaginatedCombinedSearchData = {
                     noneOf?: Array<{
                         profile_id?: string | null;
                         primary_slug?: string | null;
+                    }> | null;
+                } | null;
+                exactProfileV2?: {
+                    anyOf?: Array<{
+                        identifier: 'linkedin-slug';
+                        linkedin_slug: string;
+                    } | {
+                        identifier: 'linkedin-url';
+                        linkedin_url: string;
+                    } | {
+                        identifier: 'linkedin-user-id';
+                        user_id: string;
+                    }> | null;
+                    noneOf?: Array<{
+                        identifier: 'linkedin-slug';
+                        linkedin_slug: string;
+                    } | {
+                        identifier: 'linkedin-url';
+                        linkedin_url: string;
+                    } | {
+                        identifier: 'linkedin-user-id';
+                        user_id: string;
                     }> | null;
                 } | null;
                 startedInRole?: {
@@ -28814,6 +28922,7 @@ export type PaginatedCombinedSearchResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
+                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -30750,6 +30859,28 @@ export type CombinedSearchCountData = {
                     primary_slug?: string | null;
                 }> | null;
             } | null;
+            exactProfileV2?: {
+                anyOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+                noneOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+            } | null;
             startedInRole?: {
                 strategy: 'absolute';
                 range?: {
@@ -31832,6 +31963,28 @@ export type StealthFoundersSearchData = {
                     type: 'dynamic-groups';
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
+                }> | null;
+            } | null;
+            exactProfileV2?: {
+                anyOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+                noneOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
                 }> | null;
             } | null;
             startedInRole?: {
@@ -32953,6 +33106,28 @@ export type StealthFoundersCountData = {
                     type: 'dynamic-groups';
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
+                }> | null;
+            } | null;
+            exactProfileV2?: {
+                anyOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
+                }> | null;
+                noneOf?: Array<{
+                    identifier: 'linkedin-slug';
+                    linkedin_slug: string;
+                } | {
+                    identifier: 'linkedin-url';
+                    linkedin_url: string;
+                } | {
+                    identifier: 'linkedin-user-id';
+                    user_id: string;
                 }> | null;
             } | null;
             startedInRole?: {
@@ -35335,6 +35510,7 @@ export type ProfileLiveEnrichResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
+                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -39480,6 +39656,7 @@ export type ReverseEmailLookupResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
+                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -40721,6 +40898,7 @@ export type KitchenSinkProfileResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
+                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -43662,6 +43840,7 @@ export type KitchenSinkBulkProfileResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
+                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -51282,6 +51461,7 @@ export type TextToCombinedSearchResponses = {
                     entity_urns?: Array<string> | null;
                     is_hiring?: boolean | null;
                     websites?: Array<string> | null;
+                    is_verified?: boolean | null;
                     current_job?: {
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
@@ -51766,6 +51946,7 @@ export type JdToProfileSearchResponses = {
                 entity_urns?: Array<string> | null;
                 is_hiring?: boolean | null;
                 websites?: Array<string> | null;
+                is_verified?: boolean | null;
                 current_job?: {
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;

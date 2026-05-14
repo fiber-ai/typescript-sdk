@@ -465,6 +465,24 @@ export const zGetOrgCreditsResponse = z.object({
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
                 }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                getLiProfileLatestActivities: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 300 }] }),
+                getLiProfileLastActiveDate: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
                 getProfileLatestLiPost: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
@@ -842,7 +860,16 @@ export const zGetOrgCreditsResponse = z.object({
                         ])),
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
-                }).default({ levels: [{ limit: null, centiCreditCost: 200 }] })
+                }).default({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                mosaicRow: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).default({ levels: [{ limit: null, centiCreditCost: 1000 }] })
             }),
             z.null()
         ]))
@@ -2278,6 +2305,10 @@ export const zPollBatchLiveEnrichResponse = z.object({
                     ])),
                     websites: z.optional(z.union([
                         z.array(z.string()),
+                        z.null()
+                    ])),
+                    is_verified: z.optional(z.union([
+                        z.boolean(),
                         z.null()
                     ])),
                     current_job: z.optional(z.union([
@@ -14951,6 +14982,45 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     z.null()
                                 ]))
                             })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                exactProfileV2: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.union([
+                                z.object({
+                                    identifier: z.enum(['linkedin-slug']),
+                                    linkedin_slug: z.string().min(1)
+                                }),
+                                z.object({
+                                    identifier: z.enum(['linkedin-url']),
+                                    linkedin_url: z.url()
+                                }),
+                                z.object({
+                                    identifier: z.enum(['linkedin-user-id']),
+                                    user_id: z.string().min(1).regex(/^[0-9]+$/)
+                                })
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.union([
+                                z.object({
+                                    identifier: z.enum(['linkedin-slug']),
+                                    linkedin_slug: z.string().min(1)
+                                }),
+                                z.object({
+                                    identifier: z.enum(['linkedin-url']),
+                                    linkedin_url: z.url()
+                                }),
+                                z.object({
+                                    identifier: z.enum(['linkedin-user-id']),
+                                    user_id: z.string().min(1).regex(/^[0-9]+$/)
+                                })
+                            ])),
                             z.null()
                         ]))
                     }),
@@ -37830,6 +37900,45 @@ export const zPeopleSearchData = z.object({
                 }),
                 z.null()
             ])),
+            exactProfileV2: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             startedInRole: z.optional(z.union([
                 z.object({
                     strategy: z.enum(['absolute']),
@@ -40787,6 +40896,10 @@ export const zPeopleSearchResponse = z.object({
                 z.array(z.string()),
                 z.null()
             ])),
+            is_verified: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
             current_job: z.optional(z.union([
                 z.object({
                     linkedin_company_id: z.optional(z.union([
@@ -42093,6 +42206,45 @@ export const zPeopleSearchCountData = z.object({
                                 z.null()
                             ]))
                         })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            exactProfileV2: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
                         z.null()
                     ]))
                 }),
@@ -52554,6 +52706,45 @@ export const zPaginatedCombinedSearchData = z.object({
                         }),
                         z.null()
                     ])),
+                    exactProfileV2: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.union([
+                                    z.object({
+                                        identifier: z.enum(['linkedin-slug']),
+                                        linkedin_slug: z.string().min(1)
+                                    }),
+                                    z.object({
+                                        identifier: z.enum(['linkedin-url']),
+                                        linkedin_url: z.url()
+                                    }),
+                                    z.object({
+                                        identifier: z.enum(['linkedin-user-id']),
+                                        user_id: z.string().min(1).regex(/^[0-9]+$/)
+                                    })
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.union([
+                                    z.object({
+                                        identifier: z.enum(['linkedin-slug']),
+                                        linkedin_slug: z.string().min(1)
+                                    }),
+                                    z.object({
+                                        identifier: z.enum(['linkedin-url']),
+                                        linkedin_url: z.url()
+                                    }),
+                                    z.object({
+                                        identifier: z.enum(['linkedin-user-id']),
+                                        user_id: z.string().min(1).regex(/^[0-9]+$/)
+                                    })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     startedInRole: z.optional(z.union([
                         z.object({
                             strategy: z.enum(['absolute']),
@@ -58447,6 +58638,10 @@ export const zPaginatedCombinedSearchResponse = z.object({
             ])),
             websites: z.optional(z.union([
                 z.array(z.string()),
+                z.null()
+            ])),
+            is_verified: z.optional(z.union([
+                z.boolean(),
                 z.null()
             ])),
             current_job: z.optional(z.union([
@@ -67112,6 +67307,45 @@ export const zCombinedSearchCountData = z.object({
                 }),
                 z.null()
             ])),
+            exactProfileV2: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             startedInRole: z.optional(z.union([
                 z.object({
                     strategy: z.enum(['absolute']),
@@ -70504,6 +70738,45 @@ export const zStealthFoundersSearchData = z.object({
                                     'intern'
                                 ])),
                                 keywords: z.optional(z.array(z.string())).default([])
+                            })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            exactProfileV2: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
                             })
                         ])),
                         z.null()
@@ -74092,6 +74365,45 @@ export const zStealthFoundersCountData = z.object({
                 }),
                 z.null()
             ])),
+            exactProfileV2: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.union([
+                            z.object({
+                                identifier: z.enum(['linkedin-slug']),
+                                linkedin_slug: z.string().min(1)
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-url']),
+                                linkedin_url: z.url()
+                            }),
+                            z.object({
+                                identifier: z.enum(['linkedin-user-id']),
+                                user_id: z.string().min(1).regex(/^[0-9]+$/)
+                            })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             startedInRole: z.optional(z.union([
                 z.object({
                     strategy: z.enum(['absolute']),
@@ -77329,6 +77641,10 @@ export const zProfileLiveEnrichResponse = z.object({
                 ])),
                 websites: z.optional(z.union([
                     z.array(z.string()),
+                    z.null()
+                ])),
+                is_verified: z.optional(z.union([
+                    z.boolean(),
                     z.null()
                 ])),
                 current_job: z.optional(z.union([
@@ -80883,6 +81199,10 @@ export const zReverseEmailLookupResponse = z.object({
                 z.array(z.string()),
                 z.null()
             ])),
+            is_verified: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
             current_job: z.optional(z.union([
                 z.object({
                     linkedin_company_id: z.optional(z.union([
@@ -82951,6 +83271,10 @@ export const zKitchenSinkProfileResponse = z.object({
             ])),
             websites: z.optional(z.union([
                 z.array(z.string()),
+                z.null()
+            ])),
+            is_verified: z.optional(z.union([
+                z.boolean(),
                 z.null()
             ])),
             current_job: z.optional(z.union([
@@ -87176,6 +87500,10 @@ export const zKitchenSinkBulkProfileResponse = z.object({
             ])),
             websites: z.optional(z.union([
                 z.array(z.string()),
+                z.null()
+            ])),
+            is_verified: z.optional(z.union([
+                z.boolean(),
                 z.null()
             ])),
             current_job: z.optional(z.union([
@@ -102990,6 +103318,10 @@ export const zTextToCombinedSearchResponse = z.object({
                     z.array(z.string()),
                     z.null()
                 ])),
+                is_verified: z.optional(z.union([
+                    z.boolean(),
+                    z.null()
+                ])),
                 current_job: z.optional(z.union([
                     z.object({
                         linkedin_company_id: z.optional(z.union([
@@ -104067,6 +104399,10 @@ export const zJdToProfileSearchResponse = z.object({
             ])),
             websites: z.optional(z.union([
                 z.array(z.string()),
+                z.null()
+            ])),
+            is_verified: z.optional(z.union([
+                z.boolean(),
                 z.null()
             ])),
             current_job: z.optional(z.union([
