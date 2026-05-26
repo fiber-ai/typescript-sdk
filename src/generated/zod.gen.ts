@@ -16026,6 +16026,22 @@ export const zUpdateAudienceSearchParamsData = z.object({
                         ]))
                     }),
                     z.null()
+                ])),
+                sort: z.optional(z.union([
+                    z.array(z.object({
+                        field: z.enum([
+                            'totalFunding',
+                            'lastRoundFunding',
+                            'lastFundedAt',
+                            'foundedAt',
+                            'followerCount',
+                            'jobPostingCount',
+                            'employeeCount',
+                            'revenueEstimate'
+                        ]),
+                        direction: z.enum(['asc', 'desc'])
+                    })).max(3),
+                    z.null()
                 ]))
             }),
             z.null()
@@ -19479,6 +19495,21 @@ export const zUpdateAudienceSearchParamsData = z.object({
                             z.null()
                         ]))
                     }),
+                    z.null()
+                ])),
+                sort: z.optional(z.union([
+                    z.array(z.object({
+                        field: z.enum([
+                            'followerCount',
+                            'connectionCount',
+                            'careerStartedAt',
+                            'dataUpdatedAt',
+                            'currentRoleStartedAt',
+                            'currentCompanyStartedAt',
+                            'jobCount'
+                        ]),
+                        direction: z.enum(['asc', 'desc'])
+                    })).max(3),
                     z.null()
                 ]))
             }),
@@ -27716,6 +27747,22 @@ export const zCompanySearchData = z.object({
                         z.null()
                     ]))
                 }),
+                z.null()
+            ])),
+            sort: z.optional(z.union([
+                z.array(z.object({
+                    field: z.enum([
+                        'totalFunding',
+                        'lastRoundFunding',
+                        'lastFundedAt',
+                        'foundedAt',
+                        'followerCount',
+                        'jobPostingCount',
+                        'employeeCount',
+                        'revenueEstimate'
+                    ]),
+                    direction: z.enum(['asc', 'desc'])
+                })).max(3),
                 z.null()
             ]))
         }),
@@ -38285,6 +38332,22 @@ export const zCompanyCountData = z.object({
                     ]))
                 }),
                 z.null()
+            ])),
+            sort: z.optional(z.union([
+                z.array(z.object({
+                    field: z.enum([
+                        'totalFunding',
+                        'lastRoundFunding',
+                        'lastFundedAt',
+                        'foundedAt',
+                        'followerCount',
+                        'jobPostingCount',
+                        'employeeCount',
+                        'revenueEstimate'
+                    ]),
+                    direction: z.enum(['asc', 'desc'])
+                })).max(3),
+                z.null()
             ]))
         }),
         companyExclusionListIDs: z.optional(z.array(z.string())).default([])
@@ -43433,6 +43496,21 @@ export const zPeopleSearchData = z.object({
                     ]))
                 }),
                 z.null()
+            ])),
+            sort: z.optional(z.union([
+                z.array(z.object({
+                    field: z.enum([
+                        'followerCount',
+                        'connectionCount',
+                        'careerStartedAt',
+                        'dataUpdatedAt',
+                        'currentRoleStartedAt',
+                        'currentCompanyStartedAt',
+                        'jobCount'
+                    ]),
+                    direction: z.enum(['asc', 'desc'])
+                })).max(3),
+                z.null()
             ]))
         })),
         pageSize: z.optional(z.int().gt(0).lte(1000)).default(25),
@@ -48027,6 +48105,21 @@ export const zPeopleSearchCountData = z.object({
                         z.null()
                     ]))
                 }),
+                z.null()
+            ])),
+            sort: z.optional(z.union([
+                z.array(z.object({
+                    field: z.enum([
+                        'followerCount',
+                        'connectionCount',
+                        'careerStartedAt',
+                        'dataUpdatedAt',
+                        'currentRoleStartedAt',
+                        'currentCompanyStartedAt',
+                        'jobCount'
+                    ]),
+                    direction: z.enum(['asc', 'desc'])
+                })).max(3),
                 z.null()
             ]))
         })),
@@ -55650,6 +55743,22 @@ export const zPaginatedCombinedSearchData = z.object({
                             ]))
                         }),
                         z.null()
+                    ])),
+                    sort: z.optional(z.union([
+                        z.array(z.object({
+                            field: z.enum([
+                                'totalFunding',
+                                'lastRoundFunding',
+                                'lastFundedAt',
+                                'foundedAt',
+                                'followerCount',
+                                'jobPostingCount',
+                                'employeeCount',
+                                'revenueEstimate'
+                            ]),
+                            direction: z.enum(['asc', 'desc'])
+                        })).max(3),
+                        z.null()
                     ]))
                 }),
                 pageSize: z.optional(z.union([
@@ -59117,6 +59226,21 @@ export const zPaginatedCombinedSearchData = z.object({
                                 z.null()
                             ]))
                         }),
+                        z.null()
+                    ])),
+                    sort: z.optional(z.union([
+                        z.array(z.object({
+                            field: z.enum([
+                                'followerCount',
+                                'connectionCount',
+                                'careerStartedAt',
+                                'dataUpdatedAt',
+                                'currentRoleStartedAt',
+                                'currentCompanyStartedAt',
+                                'jobCount'
+                            ]),
+                            direction: z.enum(['asc', 'desc'])
+                        })).max(3),
                         z.null()
                     ]))
                 })),
@@ -70919,6 +71043,22 @@ export const zCombinedSearchCountData = z.object({
                     ]))
                 }),
                 z.null()
+            ])),
+            sort: z.optional(z.union([
+                z.array(z.object({
+                    field: z.enum([
+                        'totalFunding',
+                        'lastRoundFunding',
+                        'lastFundedAt',
+                        'foundedAt',
+                        'followerCount',
+                        'jobPostingCount',
+                        'employeeCount',
+                        'revenueEstimate'
+                    ]),
+                    direction: z.enum(['asc', 'desc'])
+                })).max(3),
+                z.null()
             ]))
         }),
         profileParams: z.optional(z.object({
@@ -74370,6 +74510,21 @@ export const zCombinedSearchCountData = z.object({
                     ]))
                 }),
                 z.null()
+            ])),
+            sort: z.optional(z.union([
+                z.array(z.object({
+                    field: z.enum([
+                        'followerCount',
+                        'connectionCount',
+                        'careerStartedAt',
+                        'dataUpdatedAt',
+                        'currentRoleStartedAt',
+                        'currentCompanyStartedAt',
+                        'jobCount'
+                    ]),
+                    direction: z.enum(['asc', 'desc'])
+                })).max(3),
+                z.null()
             ]))
         })),
         companyExclusionListIDs: z.optional(z.union([
@@ -77772,6 +77927,21 @@ export const zStealthFoundersSearchData = z.object({
                         z.null()
                     ]))
                 }),
+                z.null()
+            ])),
+            sort: z.optional(z.union([
+                z.array(z.object({
+                    field: z.enum([
+                        'followerCount',
+                        'connectionCount',
+                        'careerStartedAt',
+                        'dataUpdatedAt',
+                        'currentRoleStartedAt',
+                        'currentCompanyStartedAt',
+                        'jobCount'
+                    ]),
+                    direction: z.enum(['asc', 'desc'])
+                })).max(3),
                 z.null()
             ]))
         })),
@@ -81646,6 +81816,21 @@ export const zStealthFoundersCountData = z.object({
                         z.null()
                     ]))
                 }),
+                z.null()
+            ])),
+            sort: z.optional(z.union([
+                z.array(z.object({
+                    field: z.enum([
+                        'followerCount',
+                        'connectionCount',
+                        'careerStartedAt',
+                        'dataUpdatedAt',
+                        'currentRoleStartedAt',
+                        'currentCompanyStartedAt',
+                        'jobCount'
+                    ]),
+                    direction: z.enum(['asc', 'desc'])
+                })).max(3),
                 z.null()
             ]))
         }))
@@ -105338,6 +105523,22 @@ export const zNlpSearchParseResponse = z.object({
                                 ]))
                             }),
                             z.null()
+                        ])),
+                        sort: z.optional(z.union([
+                            z.array(z.object({
+                                field: z.enum([
+                                    'totalFunding',
+                                    'lastRoundFunding',
+                                    'lastFundedAt',
+                                    'foundedAt',
+                                    'followerCount',
+                                    'jobPostingCount',
+                                    'employeeCount',
+                                    'revenueEstimate'
+                                ]),
+                                direction: z.enum(['asc', 'desc'])
+                            })).max(3),
+                            z.null()
                         ]))
                     }),
                     z.null()
@@ -108791,6 +108992,21 @@ export const zNlpSearchParseResponse = z.object({
                                     z.null()
                                 ]))
                             }),
+                            z.null()
+                        ])),
+                        sort: z.optional(z.union([
+                            z.array(z.object({
+                                field: z.enum([
+                                    'followerCount',
+                                    'connectionCount',
+                                    'careerStartedAt',
+                                    'dataUpdatedAt',
+                                    'currentRoleStartedAt',
+                                    'currentCompanyStartedAt',
+                                    'jobCount'
+                                ]),
+                                direction: z.enum(['asc', 'desc'])
+                            })).max(3),
                             z.null()
                         ]))
                     }),
@@ -116469,6 +116685,22 @@ export const zSlushieRunResponse = z.object({
                                 ]))
                             }),
                             z.null()
+                        ])),
+                        sort: z.optional(z.union([
+                            z.array(z.object({
+                                field: z.enum([
+                                    'totalFunding',
+                                    'lastRoundFunding',
+                                    'lastFundedAt',
+                                    'foundedAt',
+                                    'followerCount',
+                                    'jobPostingCount',
+                                    'employeeCount',
+                                    'revenueEstimate'
+                                ]),
+                                direction: z.enum(['asc', 'desc'])
+                            })).max(3),
+                            z.null()
                         ]))
                     }),
                     z.null()
@@ -119922,6 +120154,21 @@ export const zSlushieRunResponse = z.object({
                                     z.null()
                                 ]))
                             }),
+                            z.null()
+                        ])),
+                        sort: z.optional(z.union([
+                            z.array(z.object({
+                                field: z.enum([
+                                    'followerCount',
+                                    'connectionCount',
+                                    'careerStartedAt',
+                                    'dataUpdatedAt',
+                                    'currentRoleStartedAt',
+                                    'currentCompanyStartedAt',
+                                    'jobCount'
+                                ]),
+                                direction: z.enum(['asc', 'desc'])
+                            })).max(3),
                             z.null()
                         ]))
                     }),

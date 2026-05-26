@@ -16887,6 +16887,13 @@ export type UpdateAudienceSearchParamsData = {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
             } | null;
+            /**
+             * Sort order for company results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'totalFunding' | 'lastRoundFunding' | 'lastFundedAt' | 'foundedAt' | 'followerCount' | 'jobPostingCount' | 'employeeCount' | 'revenueEstimate';
+                direction: 'asc' | 'desc';
+            }> | null;
         } | null;
         /**
          * The search parameters to filter prospects.
@@ -17752,6 +17759,13 @@ export type UpdateAudienceSearchParamsData = {
                     isCurrentlyStudent?: boolean | null;
                 }> | null;
             } | null;
+            /**
+             * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                direction: 'asc' | 'desc';
+            }> | null;
         } | null;
     };
     path: {
@@ -20441,6 +20455,13 @@ export type CompanySearchData = {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
             } | null;
+            /**
+             * Sort order for company results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'totalFunding' | 'lastRoundFunding' | 'lastFundedAt' | 'foundedAt' | 'followerCount' | 'jobPostingCount' | 'employeeCount' | 'revenueEstimate';
+                direction: 'asc' | 'desc';
+            }> | null;
         };
         /**
          * The number of companies to return per page.
@@ -24010,6 +24031,13 @@ export type CompanyCountData = {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
             } | null;
+            /**
+             * Sort order for company results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'totalFunding' | 'lastRoundFunding' | 'lastFundedAt' | 'foundedAt' | 'followerCount' | 'jobPostingCount' | 'employeeCount' | 'revenueEstimate';
+                direction: 'asc' | 'desc';
+            }> | null;
         };
         /**
          * The IDs of company exclusion lists to filter out matching companies.
@@ -26012,6 +26040,13 @@ export type PeopleSearchData = {
                     isCurrentlyStudent?: boolean | null;
                 }> | null;
             } | null;
+            /**
+             * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                direction: 'asc' | 'desc';
+            }> | null;
         };
         /**
          * The number of profiles to return, if you need to get more results, you can paginate.
@@ -27410,6 +27445,13 @@ export type PeopleSearchCountData = {
                     isCurrentlyStudent?: boolean | null;
                 }> | null;
             } | null;
+            /**
+             * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                direction: 'asc' | 'desc';
+            }> | null;
         };
         /**
          * Filter people by the companies they are currently working for. If you want to search over many companies, we suggest using the Combined Search API, which is optimized for this use case.
@@ -28899,6 +28941,13 @@ export type PaginatedCombinedSearchData = {
                     anyOf?: Array<string> | null;
                     noneOf?: Array<string> | null;
                 } | null;
+                /**
+                 * Sort order for company results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+                 */
+                sort?: Array<{
+                    field: 'totalFunding' | 'lastRoundFunding' | 'lastFundedAt' | 'foundedAt' | 'followerCount' | 'jobPostingCount' | 'employeeCount' | 'revenueEstimate';
+                    direction: 'asc' | 'desc';
+                }> | null;
             };
             /**
              * The number of companies to return per page. Pass null if you only want profiles. NOTE: your companies search params will still get honored to find the profiles.
@@ -29775,6 +29824,13 @@ export type PaginatedCombinedSearchData = {
                         isCurrentlyStudent?: boolean | null;
                     }> | null;
                 } | null;
+                /**
+                 * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+                 */
+                sort?: Array<{
+                    field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                    direction: 'asc' | 'desc';
+                }> | null;
             };
             /**
              * The number of profiles to return per page.
@@ -34142,6 +34198,13 @@ export type CombinedSearchCountData = {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
             } | null;
+            /**
+             * Sort order for company results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'totalFunding' | 'lastRoundFunding' | 'lastFundedAt' | 'foundedAt' | 'followerCount' | 'jobPostingCount' | 'employeeCount' | 'revenueEstimate';
+                direction: 'asc' | 'desc';
+            }> | null;
         };
         /**
          * The profile search parameters. Returns profiles matching these filters who work/used to work at companies satisfying companyParams.
@@ -35007,6 +35070,13 @@ export type CombinedSearchCountData = {
                     isCurrentlyStudent?: boolean | null;
                 }> | null;
             } | null;
+            /**
+             * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                direction: 'asc' | 'desc';
+            }> | null;
         };
         /**
          * The IDs of company exclusion lists to filter out matching companies.
@@ -36102,6 +36172,13 @@ export type StealthFoundersSearchData = {
                     isCurrentlyStudent?: boolean | null;
                 }> | null;
             } | null;
+            /**
+             * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                direction: 'asc' | 'desc';
+            }> | null;
         };
         /**
          * Number of profiles to return per page.
@@ -37339,6 +37416,13 @@ export type StealthFoundersCountData = {
                     isCurrentlyStudent?: boolean | null;
                 }> | null;
             } | null;
+            /**
+             * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+             */
+            sort?: Array<{
+                field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                direction: 'asc' | 'desc';
+            }> | null;
         };
     };
     path?: never;
@@ -54829,6 +54913,13 @@ export type NlpSearchParseResponses = {
                         anyOf?: Array<string> | null;
                         noneOf?: Array<string> | null;
                     } | null;
+                    /**
+                     * Sort order for company results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+                     */
+                    sort?: Array<{
+                        field: 'totalFunding' | 'lastRoundFunding' | 'lastFundedAt' | 'foundedAt' | 'followerCount' | 'jobPostingCount' | 'employeeCount' | 'revenueEstimate';
+                        direction: 'asc' | 'desc';
+                    }> | null;
                 } | null;
                 /**
                  * Parsed people search filters. Null if query only targets companies.
@@ -55694,6 +55785,13 @@ export type NlpSearchParseResponses = {
                             isCurrentlyStudent?: boolean | null;
                         }> | null;
                     } | null;
+                    /**
+                     * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+                     */
+                    sort?: Array<{
+                        field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                        direction: 'asc' | 'desc';
+                    }> | null;
                 } | null;
             } | {
                 queryType: 'personLookup';
@@ -57239,6 +57337,13 @@ export type SlushieRunResponses = {
                         anyOf?: Array<string> | null;
                         noneOf?: Array<string> | null;
                     } | null;
+                    /**
+                     * Sort order for company results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+                     */
+                    sort?: Array<{
+                        field: 'totalFunding' | 'lastRoundFunding' | 'lastFundedAt' | 'foundedAt' | 'followerCount' | 'jobPostingCount' | 'employeeCount' | 'revenueEstimate';
+                        direction: 'asc' | 'desc';
+                    }> | null;
                 } | null;
                 /**
                  * Parsed people search filters. Null if query only targets companies.
@@ -58104,6 +58209,13 @@ export type SlushieRunResponses = {
                             isCurrentlyStudent?: boolean | null;
                         }> | null;
                     } | null;
+                    /**
+                     * Sort order for people results. Clauses are applied in order. Omit to use the default ranking. Note: changing the sort invalidates any existing cursor — start a new pagination run when the sort changes.
+                     */
+                    sort?: Array<{
+                        field: 'followerCount' | 'connectionCount' | 'careerStartedAt' | 'dataUpdatedAt' | 'currentRoleStartedAt' | 'currentCompanyStartedAt' | 'jobCount';
+                        direction: 'asc' | 'desc';
+                    }> | null;
                 } | null;
             } | {
                 queryType: 'personLookup';
