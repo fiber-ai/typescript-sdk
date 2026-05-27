@@ -15890,6 +15890,17 @@ export type UpdateAudienceSearchParamsData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -15907,6 +15918,17 @@ export type UpdateAudienceSearchParamsData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -16082,6 +16104,17 @@ export type UpdateAudienceSearchParamsData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -16153,6 +16186,17 @@ export type UpdateAudienceSearchParamsData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -16216,6 +16260,17 @@ export type UpdateAudienceSearchParamsData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -16584,6 +16639,17 @@ export type UpdateAudienceSearchParamsData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -16625,6 +16691,17 @@ export type UpdateAudienceSearchParamsData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -16658,6 +16735,17 @@ export type UpdateAudienceSearchParamsData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -17106,6 +17194,17 @@ export type UpdateAudienceSearchParamsData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -17123,6 +17222,17 @@ export type UpdateAudienceSearchParamsData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -19458,6 +19568,17 @@ export type CompanySearchData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -19475,6 +19596,17 @@ export type CompanySearchData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -19650,6 +19782,17 @@ export type CompanySearchData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -19721,6 +19864,17 @@ export type CompanySearchData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -19784,6 +19938,17 @@ export type CompanySearchData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -20152,6 +20317,17 @@ export type CompanySearchData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -20193,6 +20369,17 @@ export type CompanySearchData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -20226,6 +20413,17 @@ export type CompanySearchData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -23034,6 +23232,17 @@ export type CompanyCountData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -23051,6 +23260,17 @@ export type CompanyCountData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -23226,6 +23446,17 @@ export type CompanyCountData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -23297,6 +23528,17 @@ export type CompanyCountData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -23360,6 +23602,17 @@ export type CompanyCountData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -23728,6 +23981,17 @@ export type CompanyCountData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -23769,6 +24033,17 @@ export type CompanyCountData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -23802,6 +24077,17 @@ export type CompanyCountData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -25387,6 +25673,17 @@ export type PeopleSearchData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -25404,6 +25701,17 @@ export type PeopleSearchData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -26792,6 +27100,17 @@ export type PeopleSearchCountData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -26809,6 +27128,17 @@ export type PeopleSearchCountData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -27944,6 +28274,17 @@ export type PaginatedCombinedSearchData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -27961,6 +28302,17 @@ export type PaginatedCombinedSearchData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -28136,6 +28488,17 @@ export type PaginatedCombinedSearchData = {
                                 quantity: number;
                             };
                         } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
                             strategy: 'polygon';
                             vertices: Array<{
                                 latitude: number;
@@ -28207,6 +28570,17 @@ export type PaginatedCombinedSearchData = {
                                 quantity: number;
                             };
                         } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
                             strategy: 'polygon';
                             vertices: Array<{
                                 latitude: number;
@@ -28270,6 +28644,17 @@ export type PaginatedCombinedSearchData = {
                                 latitude: number;
                                 longitude: number;
                             };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
                             radius: {
                                 unit: 'miles';
                                 quantity: number;
@@ -28638,6 +29023,17 @@ export type PaginatedCombinedSearchData = {
                                 quantity: number;
                             };
                         } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
                             strategy: 'polygon';
                             vertices: Array<{
                                 latitude: number;
@@ -28679,6 +29075,17 @@ export type PaginatedCombinedSearchData = {
                                 quantity: number;
                             };
                         } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
                             strategy: 'polygon';
                             vertices: Array<{
                                 latitude: number;
@@ -28712,6 +29119,17 @@ export type PaginatedCombinedSearchData = {
                                 latitude: number;
                                 longitude: number;
                             };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
                             radius: {
                                 unit: 'miles';
                                 quantity: number;
@@ -29171,6 +29589,17 @@ export type PaginatedCombinedSearchData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -29188,6 +29617,17 @@ export type PaginatedCombinedSearchData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -33201,6 +33641,17 @@ export type CombinedSearchCountData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -33218,6 +33669,17 @@ export type CombinedSearchCountData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -33393,6 +33855,17 @@ export type CombinedSearchCountData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -33464,6 +33937,17 @@ export type CombinedSearchCountData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -33527,6 +34011,17 @@ export type CombinedSearchCountData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -33895,6 +34390,17 @@ export type CombinedSearchCountData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -33936,6 +34442,17 @@ export type CombinedSearchCountData = {
                             quantity: number;
                         };
                     } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
                         strategy: 'polygon';
                         vertices: Array<{
                             latitude: number;
@@ -33969,6 +34486,17 @@ export type CombinedSearchCountData = {
                             latitude: number;
                             longitude: number;
                         };
+                        radius: {
+                            unit: 'miles';
+                            quantity: number;
+                        } | {
+                            unit: 'kilometers';
+                            quantity: number;
+                        };
+                    } | {
+                        strategy: 'free-form-city';
+                        city: string;
+                        countryCode?: string | null;
                         radius: {
                             unit: 'miles';
                             quantity: number;
@@ -34417,6 +34945,17 @@ export type CombinedSearchCountData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -34434,6 +34973,17 @@ export type CombinedSearchCountData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -35624,6 +36174,17 @@ export type StealthFoundersSearchData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -35641,6 +36202,17 @@ export type StealthFoundersSearchData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -36868,6 +37440,17 @@ export type StealthFoundersCountData = {
                         quantity: number;
                     };
                 } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
                     strategy: 'polygon';
                     vertices: Array<{
                         latitude: number;
@@ -36885,6 +37468,17 @@ export type StealthFoundersCountData = {
                         latitude: number;
                         longitude: number;
                     };
+                    radius: {
+                        unit: 'miles';
+                        quantity: number;
+                    } | {
+                        unit: 'kilometers';
+                        quantity: number;
+                    };
+                } | {
+                    strategy: 'free-form-city';
+                    city: string;
+                    countryCode?: string | null;
                     radius: {
                         unit: 'miles';
                         quantity: number;
@@ -53916,6 +54510,17 @@ export type NlpSearchParseResponses = {
                                 quantity: number;
                             };
                         } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
                             strategy: 'polygon';
                             vertices: Array<{
                                 latitude: number;
@@ -53933,6 +54538,17 @@ export type NlpSearchParseResponses = {
                                 latitude: number;
                                 longitude: number;
                             };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
                             radius: {
                                 unit: 'miles';
                                 quantity: number;
@@ -54108,6 +54724,17 @@ export type NlpSearchParseResponses = {
                                     quantity: number;
                                 };
                             } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
                                 strategy: 'polygon';
                                 vertices: Array<{
                                     latitude: number;
@@ -54179,6 +54806,17 @@ export type NlpSearchParseResponses = {
                                     quantity: number;
                                 };
                             } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
                                 strategy: 'polygon';
                                 vertices: Array<{
                                     latitude: number;
@@ -54242,6 +54880,17 @@ export type NlpSearchParseResponses = {
                                     latitude: number;
                                     longitude: number;
                                 };
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
                                 radius: {
                                     unit: 'miles';
                                     quantity: number;
@@ -54610,6 +55259,17 @@ export type NlpSearchParseResponses = {
                                     quantity: number;
                                 };
                             } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
                                 strategy: 'polygon';
                                 vertices: Array<{
                                     latitude: number;
@@ -54651,6 +55311,17 @@ export type NlpSearchParseResponses = {
                                     quantity: number;
                                 };
                             } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
                                 strategy: 'polygon';
                                 vertices: Array<{
                                     latitude: number;
@@ -54684,6 +55355,17 @@ export type NlpSearchParseResponses = {
                                     latitude: number;
                                     longitude: number;
                                 };
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
                                 radius: {
                                     unit: 'miles';
                                     quantity: number;
@@ -55132,6 +55814,17 @@ export type NlpSearchParseResponses = {
                                 quantity: number;
                             };
                         } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
                             strategy: 'polygon';
                             vertices: Array<{
                                 latitude: number;
@@ -55149,6 +55842,17 @@ export type NlpSearchParseResponses = {
                                 latitude: number;
                                 longitude: number;
                             };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
                             radius: {
                                 unit: 'miles';
                                 quantity: number;
@@ -56340,6 +57044,17 @@ export type SlushieRunResponses = {
                                 quantity: number;
                             };
                         } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
                             strategy: 'polygon';
                             vertices: Array<{
                                 latitude: number;
@@ -56357,6 +57072,17 @@ export type SlushieRunResponses = {
                                 latitude: number;
                                 longitude: number;
                             };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
                             radius: {
                                 unit: 'miles';
                                 quantity: number;
@@ -56532,6 +57258,17 @@ export type SlushieRunResponses = {
                                     quantity: number;
                                 };
                             } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
                                 strategy: 'polygon';
                                 vertices: Array<{
                                     latitude: number;
@@ -56603,6 +57340,17 @@ export type SlushieRunResponses = {
                                     quantity: number;
                                 };
                             } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
                                 strategy: 'polygon';
                                 vertices: Array<{
                                     latitude: number;
@@ -56666,6 +57414,17 @@ export type SlushieRunResponses = {
                                     latitude: number;
                                     longitude: number;
                                 };
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
                                 radius: {
                                     unit: 'miles';
                                     quantity: number;
@@ -57034,6 +57793,17 @@ export type SlushieRunResponses = {
                                     quantity: number;
                                 };
                             } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
                                 strategy: 'polygon';
                                 vertices: Array<{
                                     latitude: number;
@@ -57075,6 +57845,17 @@ export type SlushieRunResponses = {
                                     quantity: number;
                                 };
                             } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
                                 strategy: 'polygon';
                                 vertices: Array<{
                                     latitude: number;
@@ -57108,6 +57889,17 @@ export type SlushieRunResponses = {
                                     latitude: number;
                                     longitude: number;
                                 };
+                                radius: {
+                                    unit: 'miles';
+                                    quantity: number;
+                                } | {
+                                    unit: 'kilometers';
+                                    quantity: number;
+                                };
+                            } | {
+                                strategy: 'free-form-city';
+                                city: string;
+                                countryCode?: string | null;
                                 radius: {
                                     unit: 'miles';
                                     quantity: number;
@@ -57556,6 +58348,17 @@ export type SlushieRunResponses = {
                                 quantity: number;
                             };
                         } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
                             strategy: 'polygon';
                             vertices: Array<{
                                 latitude: number;
@@ -57573,6 +58376,17 @@ export type SlushieRunResponses = {
                                 latitude: number;
                                 longitude: number;
                             };
+                            radius: {
+                                unit: 'miles';
+                                quantity: number;
+                            } | {
+                                unit: 'kilometers';
+                                quantity: number;
+                            };
+                        } | {
+                            strategy: 'free-form-city';
+                            city: string;
+                            countryCode?: string | null;
                             radius: {
                                 unit: 'miles';
                                 quantity: number;

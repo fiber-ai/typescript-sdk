@@ -9894,6 +9894,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     strategy: z.enum(['polygon']),
                                     vertices: z.array(z.object({
                                         latitude: z.number().gte(-90).lte(90),
@@ -9946,6 +9964,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                         latitude: z.number().gte(-90).lte(90),
                                         longitude: z.number().gte(-180).lte(180)
                                     }),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
                                     radius: z.union([
                                         z.object({
                                             unit: z.enum(['miles']),
@@ -10392,6 +10428,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -11016,6 +11070,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -11628,6 +11700,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                             latitude: z.number().gte(-90).lte(90),
                                             longitude: z.number().gte(-180).lte(180)
                                         }),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
                                         radius: z.union([
                                             z.object({
                                                 unit: z.enum(['miles']),
@@ -14218,6 +14308,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             strategy: z.enum(['polygon']),
                                             vertices: z.array(z.object({
                                                 latitude: z.number().gte(-90).lte(90),
@@ -14615,6 +14723,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             strategy: z.enum(['polygon']),
                                             vertices: z.array(z.object({
                                                 latitude: z.number().gte(-90).lte(90),
@@ -15000,6 +15126,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                                 latitude: z.number().gte(-90).lte(90),
                                                 longitude: z.number().gte(-180).lte(180)
                                             }),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
                                             radius: z.union([
                                                 z.object({
                                                     unit: z.enum(['miles']),
@@ -17112,6 +17256,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     strategy: z.enum(['polygon']),
                                     vertices: z.array(z.object({
                                         latitude: z.number().gte(-90).lte(90),
@@ -17164,6 +17326,24 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                         latitude: z.number().gte(-90).lte(90),
                                         longitude: z.number().gte(-180).lte(180)
                                     }),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
                                     radius: z.union([
                                         z.object({
                                             unit: z.enum(['miles']),
@@ -21616,6 +21796,24 @@ export const zCompanySearchData = z.object({
                                 ])
                             }),
                             z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 strategy: z.enum(['polygon']),
                                 vertices: z.array(z.object({
                                     latitude: z.number().gte(-90).lte(90),
@@ -21668,6 +21866,24 @@ export const zCompanySearchData = z.object({
                                     latitude: z.number().gte(-90).lte(90),
                                     longitude: z.number().gte(-180).lte(180)
                                 }),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
                                 radius: z.union([
                                     z.object({
                                         unit: z.enum(['miles']),
@@ -22114,6 +22330,24 @@ export const zCompanySearchData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     strategy: z.enum(['polygon']),
                                     vertices: z.array(z.object({
                                         latitude: z.number().gte(-90).lte(90),
@@ -22738,6 +22972,24 @@ export const zCompanySearchData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     strategy: z.enum(['polygon']),
                                     vertices: z.array(z.object({
                                         latitude: z.number().gte(-90).lte(90),
@@ -23350,6 +23602,24 @@ export const zCompanySearchData = z.object({
                                         latitude: z.number().gte(-90).lte(90),
                                         longitude: z.number().gte(-180).lte(180)
                                     }),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
                                     radius: z.union([
                                         z.object({
                                             unit: z.enum(['miles']),
@@ -25940,6 +26210,24 @@ export const zCompanySearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -26337,6 +26625,24 @@ export const zCompanySearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -26722,6 +27028,24 @@ export const zCompanySearchData = z.object({
                                             latitude: z.number().gte(-90).lte(90),
                                             longitude: z.number().gte(-180).lte(180)
                                         }),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
                                         radius: z.union([
                                             z.object({
                                                 unit: z.enum(['miles']),
@@ -32200,6 +32524,24 @@ export const zCompanyCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 strategy: z.enum(['polygon']),
                                 vertices: z.array(z.object({
                                     latitude: z.number().gte(-90).lte(90),
@@ -32252,6 +32594,24 @@ export const zCompanyCountData = z.object({
                                     latitude: z.number().gte(-90).lte(90),
                                     longitude: z.number().gte(-180).lte(180)
                                 }),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
                                 radius: z.union([
                                     z.object({
                                         unit: z.enum(['miles']),
@@ -32698,6 +33058,24 @@ export const zCompanyCountData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     strategy: z.enum(['polygon']),
                                     vertices: z.array(z.object({
                                         latitude: z.number().gte(-90).lte(90),
@@ -33322,6 +33700,24 @@ export const zCompanyCountData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     strategy: z.enum(['polygon']),
                                     vertices: z.array(z.object({
                                         latitude: z.number().gte(-90).lte(90),
@@ -33934,6 +34330,24 @@ export const zCompanyCountData = z.object({
                                         latitude: z.number().gte(-90).lte(90),
                                         longitude: z.number().gte(-180).lte(180)
                                     }),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
                                     radius: z.union([
                                         z.object({
                                             unit: z.enum(['miles']),
@@ -36524,6 +36938,24 @@ export const zCompanyCountData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -36921,6 +37353,24 @@ export const zCompanyCountData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -37306,6 +37756,24 @@ export const zCompanyCountData = z.object({
                                             latitude: z.number().gte(-90).lte(90),
                                             longitude: z.number().gte(-180).lte(180)
                                         }),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
                                         radius: z.union([
                                             z.object({
                                                 unit: z.enum(['miles']),
@@ -41112,6 +41580,24 @@ export const zPeopleSearchData = z.object({
                                 ])
                             }),
                             z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 strategy: z.enum(['polygon']),
                                 vertices: z.array(z.object({
                                     latitude: z.number().gte(-90).lte(90),
@@ -41164,6 +41650,24 @@ export const zPeopleSearchData = z.object({
                                     latitude: z.number().gte(-90).lte(90),
                                     longitude: z.number().gte(-180).lte(180)
                                 }),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
                                 radius: z.union([
                                     z.object({
                                         unit: z.enum(['miles']),
@@ -45722,6 +46226,24 @@ export const zPeopleSearchCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 strategy: z.enum(['polygon']),
                                 vertices: z.array(z.object({
                                     latitude: z.number().gte(-90).lte(90),
@@ -45774,6 +46296,24 @@ export const zPeopleSearchCountData = z.object({
                                     latitude: z.number().gte(-90).lte(90),
                                     longitude: z.number().gte(-180).lte(180)
                                 }),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
                                 radius: z.union([
                                     z.object({
                                         unit: z.enum(['miles']),
@@ -49611,6 +50151,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -49663,6 +50221,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                             latitude: z.number().gte(-90).lte(90),
                                             longitude: z.number().gte(-180).lte(180)
                                         }),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
                                         radius: z.union([
                                             z.object({
                                                 unit: z.enum(['miles']),
@@ -50109,6 +50685,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             strategy: z.enum(['polygon']),
                                             vertices: z.array(z.object({
                                                 latitude: z.number().gte(-90).lte(90),
@@ -50733,6 +51327,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             strategy: z.enum(['polygon']),
                                             vertices: z.array(z.object({
                                                 latitude: z.number().gte(-90).lte(90),
@@ -51345,6 +51957,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                                 latitude: z.number().gte(-90).lte(90),
                                                 longitude: z.number().gte(-180).lte(180)
                                             }),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
                                             radius: z.union([
                                                 z.object({
                                                     unit: z.enum(['miles']),
@@ -53935,6 +54565,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                                 ])
                                             }),
                                             z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
                                                 strategy: z.enum(['polygon']),
                                                 vertices: z.array(z.object({
                                                     latitude: z.number().gte(-90).lte(90),
@@ -54332,6 +54980,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                                 ])
                                             }),
                                             z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
                                                 strategy: z.enum(['polygon']),
                                                 vertices: z.array(z.object({
                                                     latitude: z.number().gte(-90).lte(90),
@@ -54717,6 +55383,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                                     latitude: z.number().gte(-90).lte(90),
                                                     longitude: z.number().gte(-180).lte(180)
                                                 }),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
                                                 radius: z.union([
                                                     z.object({
                                                         unit: z.enum(['miles']),
@@ -56843,6 +57527,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -56895,6 +57597,24 @@ export const zPaginatedCombinedSearchData = z.object({
                                             latitude: z.number().gte(-90).lte(90),
                                             longitude: z.number().gte(-180).lte(180)
                                         }),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
                                         radius: z.union([
                                             z.object({
                                                 unit: z.enum(['miles']),
@@ -64911,6 +65631,24 @@ export const zCombinedSearchCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 strategy: z.enum(['polygon']),
                                 vertices: z.array(z.object({
                                     latitude: z.number().gte(-90).lte(90),
@@ -64963,6 +65701,24 @@ export const zCombinedSearchCountData = z.object({
                                     latitude: z.number().gte(-90).lte(90),
                                     longitude: z.number().gte(-180).lte(180)
                                 }),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
                                 radius: z.union([
                                     z.object({
                                         unit: z.enum(['miles']),
@@ -65409,6 +66165,24 @@ export const zCombinedSearchCountData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     strategy: z.enum(['polygon']),
                                     vertices: z.array(z.object({
                                         latitude: z.number().gte(-90).lte(90),
@@ -66033,6 +66807,24 @@ export const zCombinedSearchCountData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     strategy: z.enum(['polygon']),
                                     vertices: z.array(z.object({
                                         latitude: z.number().gte(-90).lte(90),
@@ -66645,6 +67437,24 @@ export const zCombinedSearchCountData = z.object({
                                         latitude: z.number().gte(-90).lte(90),
                                         longitude: z.number().gte(-180).lte(180)
                                     }),
+                                    radius: z.union([
+                                        z.object({
+                                            unit: z.enum(['miles']),
+                                            quantity: z.number().gte(0).lte(12500)
+                                        }),
+                                        z.object({
+                                            unit: z.enum(['kilometers']),
+                                            quantity: z.number().gte(0).lte(20100)
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    strategy: z.enum(['free-form-city']),
+                                    city: z.string().min(1),
+                                    countryCode: z.optional(z.union([
+                                        z.string().length(3),
+                                        z.null()
+                                    ])),
                                     radius: z.union([
                                         z.object({
                                             unit: z.enum(['miles']),
@@ -69235,6 +70045,24 @@ export const zCombinedSearchCountData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -69632,6 +70460,24 @@ export const zCombinedSearchCountData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         strategy: z.enum(['polygon']),
                                         vertices: z.array(z.object({
                                             latitude: z.number().gte(-90).lte(90),
@@ -70017,6 +70863,24 @@ export const zCombinedSearchCountData = z.object({
                                             latitude: z.number().gte(-90).lte(90),
                                             longitude: z.number().gte(-180).lte(180)
                                         }),
+                                        radius: z.union([
+                                            z.object({
+                                                unit: z.enum(['miles']),
+                                                quantity: z.number().gte(0).lte(12500)
+                                            }),
+                                            z.object({
+                                                unit: z.enum(['kilometers']),
+                                                quantity: z.number().gte(0).lte(20100)
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        strategy: z.enum(['free-form-city']),
+                                        city: z.string().min(1),
+                                        countryCode: z.optional(z.union([
+                                            z.string().length(3),
+                                            z.null()
+                                        ])),
                                         radius: z.union([
                                             z.object({
                                                 unit: z.enum(['miles']),
@@ -72126,6 +72990,24 @@ export const zCombinedSearchCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 strategy: z.enum(['polygon']),
                                 vertices: z.array(z.object({
                                     latitude: z.number().gte(-90).lte(90),
@@ -72178,6 +73060,24 @@ export const zCombinedSearchCountData = z.object({
                                     latitude: z.number().gte(-90).lte(90),
                                     longitude: z.number().gte(-180).lte(180)
                                 }),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
                                 radius: z.union([
                                     z.object({
                                         unit: z.enum(['miles']),
@@ -75833,6 +76733,24 @@ export const zStealthFoundersSearchData = z.object({
                                 ])
                             }),
                             z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 strategy: z.enum(['polygon']),
                                 vertices: z.array(z.object({
                                     latitude: z.number().gte(-90).lte(90),
@@ -75885,6 +76803,24 @@ export const zStealthFoundersSearchData = z.object({
                                     latitude: z.number().gte(-90).lte(90),
                                     longitude: z.number().gte(-180).lte(180)
                                 }),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
                                 radius: z.union([
                                     z.object({
                                         unit: z.enum(['miles']),
@@ -79722,6 +80658,24 @@ export const zStealthFoundersCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 strategy: z.enum(['polygon']),
                                 vertices: z.array(z.object({
                                     latitude: z.number().gte(-90).lte(90),
@@ -79774,6 +80728,24 @@ export const zStealthFoundersCountData = z.object({
                                     latitude: z.number().gte(-90).lte(90),
                                     longitude: z.number().gte(-180).lte(180)
                                 }),
+                                radius: z.union([
+                                    z.object({
+                                        unit: z.enum(['miles']),
+                                        quantity: z.number().gte(0).lte(12500)
+                                    }),
+                                    z.object({
+                                        unit: z.enum(['kilometers']),
+                                        quantity: z.number().gte(0).lte(20100)
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                strategy: z.enum(['free-form-city']),
+                                city: z.string().min(1),
+                                countryCode: z.optional(z.union([
+                                    z.string().length(3),
+                                    z.null()
+                                ])),
                                 radius: z.union([
                                     z.object({
                                         unit: z.enum(['miles']),
@@ -99391,6 +100363,24 @@ export const zNlpSearchParseResponse = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             strategy: z.enum(['polygon']),
                                             vertices: z.array(z.object({
                                                 latitude: z.number().gte(-90).lte(90),
@@ -99443,6 +100433,24 @@ export const zNlpSearchParseResponse = z.object({
                                                 latitude: z.number().gte(-90).lte(90),
                                                 longitude: z.number().gte(-180).lte(180)
                                             }),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
                                             radius: z.union([
                                                 z.object({
                                                     unit: z.enum(['miles']),
@@ -99889,6 +100897,24 @@ export const zNlpSearchParseResponse = z.object({
                                                 ])
                                             }),
                                             z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
                                                 strategy: z.enum(['polygon']),
                                                 vertices: z.array(z.object({
                                                     latitude: z.number().gte(-90).lte(90),
@@ -100513,6 +101539,24 @@ export const zNlpSearchParseResponse = z.object({
                                                 ])
                                             }),
                                             z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
                                                 strategy: z.enum(['polygon']),
                                                 vertices: z.array(z.object({
                                                     latitude: z.number().gte(-90).lte(90),
@@ -101125,6 +102169,24 @@ export const zNlpSearchParseResponse = z.object({
                                                     latitude: z.number().gte(-90).lte(90),
                                                     longitude: z.number().gte(-180).lte(180)
                                                 }),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
                                                 radius: z.union([
                                                     z.object({
                                                         unit: z.enum(['miles']),
@@ -103715,6 +104777,24 @@ export const zNlpSearchParseResponse = z.object({
                                                     ])
                                                 }),
                                                 z.object({
+                                                    strategy: z.enum(['free-form-city']),
+                                                    city: z.string().min(1),
+                                                    countryCode: z.optional(z.union([
+                                                        z.string().length(3),
+                                                        z.null()
+                                                    ])),
+                                                    radius: z.union([
+                                                        z.object({
+                                                            unit: z.enum(['miles']),
+                                                            quantity: z.number().gte(0).lte(12500)
+                                                        }),
+                                                        z.object({
+                                                            unit: z.enum(['kilometers']),
+                                                            quantity: z.number().gte(0).lte(20100)
+                                                        })
+                                                    ])
+                                                }),
+                                                z.object({
                                                     strategy: z.enum(['polygon']),
                                                     vertices: z.array(z.object({
                                                         latitude: z.number().gte(-90).lte(90),
@@ -104112,6 +105192,24 @@ export const zNlpSearchParseResponse = z.object({
                                                     ])
                                                 }),
                                                 z.object({
+                                                    strategy: z.enum(['free-form-city']),
+                                                    city: z.string().min(1),
+                                                    countryCode: z.optional(z.union([
+                                                        z.string().length(3),
+                                                        z.null()
+                                                    ])),
+                                                    radius: z.union([
+                                                        z.object({
+                                                            unit: z.enum(['miles']),
+                                                            quantity: z.number().gte(0).lte(12500)
+                                                        }),
+                                                        z.object({
+                                                            unit: z.enum(['kilometers']),
+                                                            quantity: z.number().gte(0).lte(20100)
+                                                        })
+                                                    ])
+                                                }),
+                                                z.object({
                                                     strategy: z.enum(['polygon']),
                                                     vertices: z.array(z.object({
                                                         latitude: z.number().gte(-90).lte(90),
@@ -104497,6 +105595,24 @@ export const zNlpSearchParseResponse = z.object({
                                                         latitude: z.number().gte(-90).lte(90),
                                                         longitude: z.number().gte(-180).lte(180)
                                                     }),
+                                                    radius: z.union([
+                                                        z.object({
+                                                            unit: z.enum(['miles']),
+                                                            quantity: z.number().gte(0).lte(12500)
+                                                        }),
+                                                        z.object({
+                                                            unit: z.enum(['kilometers']),
+                                                            quantity: z.number().gte(0).lte(20100)
+                                                        })
+                                                    ])
+                                                }),
+                                                z.object({
+                                                    strategy: z.enum(['free-form-city']),
+                                                    city: z.string().min(1),
+                                                    countryCode: z.optional(z.union([
+                                                        z.string().length(3),
+                                                        z.null()
+                                                    ])),
                                                     radius: z.union([
                                                         z.object({
                                                             unit: z.enum(['miles']),
@@ -106609,6 +107725,24 @@ export const zNlpSearchParseResponse = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             strategy: z.enum(['polygon']),
                                             vertices: z.array(z.object({
                                                 latitude: z.number().gte(-90).lte(90),
@@ -106661,6 +107795,24 @@ export const zNlpSearchParseResponse = z.object({
                                                 latitude: z.number().gte(-90).lte(90),
                                                 longitude: z.number().gte(-180).lte(180)
                                             }),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
                                             radius: z.union([
                                                 z.object({
                                                     unit: z.enum(['miles']),
@@ -110553,6 +111705,24 @@ export const zSlushieRunResponse = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             strategy: z.enum(['polygon']),
                                             vertices: z.array(z.object({
                                                 latitude: z.number().gte(-90).lte(90),
@@ -110605,6 +111775,24 @@ export const zSlushieRunResponse = z.object({
                                                 latitude: z.number().gte(-90).lte(90),
                                                 longitude: z.number().gte(-180).lte(180)
                                             }),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
                                             radius: z.union([
                                                 z.object({
                                                     unit: z.enum(['miles']),
@@ -111051,6 +112239,24 @@ export const zSlushieRunResponse = z.object({
                                                 ])
                                             }),
                                             z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
                                                 strategy: z.enum(['polygon']),
                                                 vertices: z.array(z.object({
                                                     latitude: z.number().gte(-90).lte(90),
@@ -111675,6 +112881,24 @@ export const zSlushieRunResponse = z.object({
                                                 ])
                                             }),
                                             z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
                                                 strategy: z.enum(['polygon']),
                                                 vertices: z.array(z.object({
                                                     latitude: z.number().gte(-90).lte(90),
@@ -112287,6 +113511,24 @@ export const zSlushieRunResponse = z.object({
                                                     latitude: z.number().gte(-90).lte(90),
                                                     longitude: z.number().gte(-180).lte(180)
                                                 }),
+                                                radius: z.union([
+                                                    z.object({
+                                                        unit: z.enum(['miles']),
+                                                        quantity: z.number().gte(0).lte(12500)
+                                                    }),
+                                                    z.object({
+                                                        unit: z.enum(['kilometers']),
+                                                        quantity: z.number().gte(0).lte(20100)
+                                                    })
+                                                ])
+                                            }),
+                                            z.object({
+                                                strategy: z.enum(['free-form-city']),
+                                                city: z.string().min(1),
+                                                countryCode: z.optional(z.union([
+                                                    z.string().length(3),
+                                                    z.null()
+                                                ])),
                                                 radius: z.union([
                                                     z.object({
                                                         unit: z.enum(['miles']),
@@ -114877,6 +116119,24 @@ export const zSlushieRunResponse = z.object({
                                                     ])
                                                 }),
                                                 z.object({
+                                                    strategy: z.enum(['free-form-city']),
+                                                    city: z.string().min(1),
+                                                    countryCode: z.optional(z.union([
+                                                        z.string().length(3),
+                                                        z.null()
+                                                    ])),
+                                                    radius: z.union([
+                                                        z.object({
+                                                            unit: z.enum(['miles']),
+                                                            quantity: z.number().gte(0).lte(12500)
+                                                        }),
+                                                        z.object({
+                                                            unit: z.enum(['kilometers']),
+                                                            quantity: z.number().gte(0).lte(20100)
+                                                        })
+                                                    ])
+                                                }),
+                                                z.object({
                                                     strategy: z.enum(['polygon']),
                                                     vertices: z.array(z.object({
                                                         latitude: z.number().gte(-90).lte(90),
@@ -115274,6 +116534,24 @@ export const zSlushieRunResponse = z.object({
                                                     ])
                                                 }),
                                                 z.object({
+                                                    strategy: z.enum(['free-form-city']),
+                                                    city: z.string().min(1),
+                                                    countryCode: z.optional(z.union([
+                                                        z.string().length(3),
+                                                        z.null()
+                                                    ])),
+                                                    radius: z.union([
+                                                        z.object({
+                                                            unit: z.enum(['miles']),
+                                                            quantity: z.number().gte(0).lte(12500)
+                                                        }),
+                                                        z.object({
+                                                            unit: z.enum(['kilometers']),
+                                                            quantity: z.number().gte(0).lte(20100)
+                                                        })
+                                                    ])
+                                                }),
+                                                z.object({
                                                     strategy: z.enum(['polygon']),
                                                     vertices: z.array(z.object({
                                                         latitude: z.number().gte(-90).lte(90),
@@ -115659,6 +116937,24 @@ export const zSlushieRunResponse = z.object({
                                                         latitude: z.number().gte(-90).lte(90),
                                                         longitude: z.number().gte(-180).lte(180)
                                                     }),
+                                                    radius: z.union([
+                                                        z.object({
+                                                            unit: z.enum(['miles']),
+                                                            quantity: z.number().gte(0).lte(12500)
+                                                        }),
+                                                        z.object({
+                                                            unit: z.enum(['kilometers']),
+                                                            quantity: z.number().gte(0).lte(20100)
+                                                        })
+                                                    ])
+                                                }),
+                                                z.object({
+                                                    strategy: z.enum(['free-form-city']),
+                                                    city: z.string().min(1),
+                                                    countryCode: z.optional(z.union([
+                                                        z.string().length(3),
+                                                        z.null()
+                                                    ])),
                                                     radius: z.union([
                                                         z.object({
                                                             unit: z.enum(['miles']),
@@ -117771,6 +119067,24 @@ export const zSlushieRunResponse = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             strategy: z.enum(['polygon']),
                                             vertices: z.array(z.object({
                                                 latitude: z.number().gte(-90).lte(90),
@@ -117823,6 +119137,24 @@ export const zSlushieRunResponse = z.object({
                                                 latitude: z.number().gte(-90).lte(90),
                                                 longitude: z.number().gte(-180).lte(180)
                                             }),
+                                            radius: z.union([
+                                                z.object({
+                                                    unit: z.enum(['miles']),
+                                                    quantity: z.number().gte(0).lte(12500)
+                                                }),
+                                                z.object({
+                                                    unit: z.enum(['kilometers']),
+                                                    quantity: z.number().gte(0).lte(20100)
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
+                                            strategy: z.enum(['free-form-city']),
+                                            city: z.string().min(1),
+                                            countryCode: z.optional(z.union([
+                                                z.string().length(3),
+                                                z.null()
+                                            ])),
                                             radius: z.union([
                                                 z.object({
                                                     unit: z.enum(['miles']),
