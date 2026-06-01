@@ -40650,7 +40650,7 @@ export type ProfileLiveEnrichResponses = {
                 }> | null;
             };
             /**
-             * True when the profile is not found but we have the cached data in our database. In this case, you won't be charged.
+             * True when the profile is not found on LinkedIn but we have cached data in our database.
              */
             isCached404?: boolean | null;
         } | {
@@ -41335,7 +41335,7 @@ export type CompanyLiveEnrichResponses = {
                 revenue_usd_upper_bound?: string | null;
             };
             /**
-             * True when the company is not found but we have the cached data in our database. In this case, you won't be charged.
+             * True when the company is not found on LinkedIn but we have cached data in our database.
              */
             isCached404?: boolean | null;
         };
