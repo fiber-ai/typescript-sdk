@@ -6850,7 +6850,7 @@ export type SocialMediaLookupPollingResponses = {
                     rationale?: string | null;
                 }>;
                 /**
-                 * Error message if the lookup failed for this person.
+                 * Error message if the lookup failed for this person. Null on success.
                  */
                 errorMessage?: string | null;
             }>;
