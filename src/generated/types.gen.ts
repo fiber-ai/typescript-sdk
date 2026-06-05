@@ -7792,13 +7792,16 @@ export type AddCompaniesToExclusionListData = {
          */
         listId: string;
         /**
-         * The companies to add to the exclusion list. A maximum of 5000 companies can be added at a time.
+         * The companies to add to the exclusion list. A maximum of 5000 companies can be added at a time. Each entry needs a domain or a LinkedIn company URL; invalid entries are skipped and reported in the response without failing the request.
          */
         companies: Array<{
             /**
-             * A domain, like 'example.com' or 'https://example.com'
+             * A company domain, like 'example.com'.
              */
             domain?: string | null;
+            /**
+             * A LinkedIn company URL, like 'https://www.linkedin.com/company/google'.
+             */
             linkedinUrl?: string | null;
         }>;
     };
@@ -7936,6 +7939,22 @@ export type AddCompaniesToExclusionListResponses = {
              * Number of companies added to the exclusion list
              */
             companiesAdded: number;
+            /**
+             * Entries that could not be added because they had no valid company domain or LinkedIn company URL. Valid entries in the same request are still added.
+             */
+            invalidIdentifiers: Array<{
+                /**
+                 * The original entry as submitted.
+                 */
+                input: {
+                    domain?: string | null;
+                    linkedinUrl?: string | null;
+                };
+                /**
+                 * The specific reason this entry could not be added.
+                 */
+                reason: string;
+            }>;
         };
         chargeInfo: {
             method: 'charged-now';

@@ -5666,7 +5666,7 @@ export const zAddCompaniesToExclusionListData = z.object({
         listId: z.string(),
         companies: z.array(z.object({
             domain: z.optional(z.union([
-                z.string().regex(/^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/),
+                z.string(),
                 z.null()
             ])),
             linkedinUrl: z.optional(z.union([
@@ -5685,7 +5685,20 @@ export const zAddCompaniesToExclusionListData = z.object({
 export const zAddCompaniesToExclusionListResponse = z.object({
     output: z.object({
         listId: z.string(),
-        companiesAdded: z.number()
+        companiesAdded: z.number(),
+        invalidIdentifiers: z.array(z.object({
+            input: z.object({
+                domain: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
+                linkedinUrl: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ]))
+            }),
+            reason: z.string()
+        }))
     }),
     chargeInfo: z.union([
         z.object({
