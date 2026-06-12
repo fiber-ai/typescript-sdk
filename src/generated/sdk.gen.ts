@@ -266,7 +266,7 @@ export const githubToLinkedInPolling = <ThrowOnError extends boolean = false>(op
  *
  * Poll for the results of a social media lookup task.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  */
 export const socialMediaLookupPolling = <ThrowOnError extends boolean = false>(options: Options<SocialMediaLookupPollingData, ThrowOnError>) => (options.client ?? client).post<SocialMediaLookupPollingResponses, SocialMediaLookupPollingErrors, ThrowOnError>({
     url: '/v1/social-media-lookup/polling',
@@ -1177,7 +1177,7 @@ export const profileLiveEnrich = <ThrowOnError extends boolean = false>(options:
  *
  * Returns an enriched company with details for a given LinkedIn company identifier
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 600 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per company live fetch&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1233,9 +1233,11 @@ export const startBatchLiveEnrich = <ThrowOnError extends boolean = false>(optio
  *
  * Fetches recent posts from a LinkedIn profile. Returns a paginated feed of posts with optional cursor for pagination. Each page returns up to 50 posts.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const profilePostsLiveFetch = <ThrowOnError extends boolean = false>(options: Options<ProfilePostsLiveFetchData, ThrowOnError>) => (options.client ?? client).post<ProfilePostsLiveFetchResponses, ProfilePostsLiveFetchErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/profile-posts',
@@ -1251,9 +1253,11 @@ export const profilePostsLiveFetch = <ThrowOnError extends boolean = false>(opti
  *
  * Fetches recent posts from a LinkedIn company page. Returns a paginated feed of company posts. Each page contains up to 50 posts.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const companyPostsLiveFetch = <ThrowOnError extends boolean = false>(options: Options<CompanyPostsLiveFetchData, ThrowOnError>) => (options.client ?? client).post<CompanyPostsLiveFetchResponses, CompanyPostsLiveFetchErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/company-posts',
@@ -1269,9 +1273,11 @@ export const companyPostsLiveFetch = <ThrowOnError extends boolean = false>(opti
  *
  * Fetches paginated comments for a LinkedIn post. Each page contains up to 10 comments.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const postCommentsLiveFetch = <ThrowOnError extends boolean = false>(options: Options<PostCommentsLiveFetchData, ThrowOnError>) => (options.client ?? client).post<PostCommentsLiveFetchResponses, PostCommentsLiveFetchErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/post-comments',
@@ -1287,9 +1293,11 @@ export const postCommentsLiveFetch = <ThrowOnError extends boolean = false>(opti
  *
  * Fetches paginated reactions of a specific type for a LinkedIn post. Each page contains up to 10 reactions.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const postReactionsLiveFetch = <ThrowOnError extends boolean = false>(options: Options<PostReactionsLiveFetchData, ThrowOnError>) => (options.client ?? client).post<PostReactionsLiveFetchResponses, PostReactionsLiveFetchErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/post-reactions',
@@ -1305,9 +1313,11 @@ export const postReactionsLiveFetch = <ThrowOnError extends boolean = false>(opt
  *
  * Fetches comments made by a LinkedIn profile. Returns a paginated feed of comments with optional cursor for pagination. Each page returns up to 10 comments.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const profileCommentsLiveFetch = <ThrowOnError extends boolean = false>(options: Options<ProfileCommentsLiveFetchData, ThrowOnError>) => (options.client ?? client).post<ProfileCommentsLiveFetchResponses, ProfileCommentsLiveFetchErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/profile-comments',
@@ -1323,9 +1333,11 @@ export const profileCommentsLiveFetch = <ThrowOnError extends boolean = false>(o
  *
  * Fetches reactions made by a LinkedIn profile. Returns a paginated feed of reactions with optional cursor for pagination. Each page returns up to 10 reactions.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const profileReactionsLiveFetch = <ThrowOnError extends boolean = false>(options: Options<ProfileReactionsLiveFetchData, ThrowOnError>) => (options.client ?? client).post<ProfileReactionsLiveFetchResponses, ProfileReactionsLiveFetchErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/profile-reactions',
@@ -1341,9 +1353,11 @@ export const profileReactionsLiveFetch = <ThrowOnError extends boolean = false>(
  *
  * Fetches up to 30 of a person's most recent LinkedIn activities (posts, comments, reactions, shares, and reposts) in newest-first order. If you only need to know when a person was last active, use the lighter profile-last-activity-date endpoint instead.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const profileLatestActivitiesLiveFetch = <ThrowOnError extends boolean = false>(options: Options<ProfileLatestActivitiesLiveFetchData, ThrowOnError>) => (options.client ?? client).post<ProfileLatestActivitiesLiveFetchResponses, ProfileLatestActivitiesLiveFetchErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/profile-latest-activities',
@@ -1359,9 +1373,11 @@ export const profileLatestActivitiesLiveFetch = <ThrowOnError extends boolean = 
  *
  * Fetches the last date where the person made a publicly visible action on LinkedIn, such as a post, comment, reaction, or repost. This does not include logging in or other private actions.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const profileLastActivityDateLiveFetch = <ThrowOnError extends boolean = false>(options: Options<ProfileLastActivityDateLiveFetchData, ThrowOnError>) => (options.client ?? client).post<ProfileLastActivityDateLiveFetchResponses, ProfileLastActivityDateLiveFetchErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/profile-last-activity-date',
@@ -1391,9 +1407,11 @@ export const profileLastActivityDateLiveFetch = <ThrowOnError extends boolean = 
  * 4. **AND:** Evaluated after **NOT** but before **OR**.
  * 5. **OR:** Lowest precedence among Boolean operators.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const postSearchByKeywords = <ThrowOnError extends boolean = false>(options: Options<PostSearchByKeywordsData, ThrowOnError>) => (options.client ?? client).post<PostSearchByKeywordsResponses, PostSearchByKeywordsErrors, ThrowOnError>({
     url: '/v1/linkedin-live-fetch/posts/search',
@@ -1467,7 +1485,7 @@ export const reverseEmailLookup = <ThrowOnError extends boolean = false>(options
  *
  * Given an X (Twitter) handle, find the person's LinkedIn profile URL. Accepts bare handles (with or without '@') and full X / Twitter profile URLs.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per X→LinkedIn lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  *
@@ -1890,7 +1908,7 @@ export const githubToLinkedinSingle = <ThrowOnError extends boolean = false>(opt
  *
  * Use our AI agent to find social media profiles (Twitter, Instagram) for a person using name and optional context like LinkedIn URL, work email, company, and job title.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 3 credits per platform searched&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1908,7 +1926,7 @@ export const socialMediaLookupTrigger = <ThrowOnError extends boolean = false>(o
  *
  * Fetches the timestamped transcript for a YouTube video. Returns all transcript segments and the list of languages available. Provide a full YouTube URL or a bare 11-character video ID.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1926,7 +1944,7 @@ export const youtubeTranscript = <ThrowOnError extends boolean = false>(options:
  *
  * Fetches detailed metadata for a YouTube video including title, view count, like count, channel information, chapters, key moments, and available transcript languages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1944,7 +1962,7 @@ export const youtubeVideoDetails = <ThrowOnError extends boolean = false>(option
  *
  * Fetches a page of comments for a YouTube video. Returns comment text, author, like count, and reply count. Use `nextPageToken` from the response to paginate through additional pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1962,7 +1980,7 @@ export const youtubeVideoComments = <ThrowOnError extends boolean = false>(optio
  *
  * Searches YouTube for videos matching a query. Returns video titles, links, channel information, view counts, and durations.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -1980,7 +1998,7 @@ export const youtubeSearch = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Fetches metadata and videos for a YouTube channel. Returns subscriber count, description, video count, total views, and a paginated list of videos. Use `nextPageToken` from the response to paginate through additional video pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2016,7 +2034,7 @@ export const flightSearch = <ThrowOnError extends boolean = false>(options: Opti
  *
  * Fetches real estate listings by location and optional filters such as listing status, price ranges, home types, and property features. Data is available for all 50 US states, D.C., Puerto Rico, and all 13 Canadian provinces and territories.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  *
@@ -2430,7 +2448,7 @@ export const getTrackerOverview = <ThrowOnError extends boolean = false>(options
  *
  * Fetches profile information for a TikTok user including follower counts, bio, and account type.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2448,7 +2466,7 @@ export const tiktokProfile = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Fetches the latest videos for a TikTok user. Returns a paginated list of videos with engagement metrics. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2466,7 +2484,7 @@ export const tiktokUserVideos = <ThrowOnError extends boolean = false>(options: 
  *
  * Fetches the followers of a TikTok user. Returns a paginated list. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2484,7 +2502,7 @@ export const tiktokUserFollowers = <ThrowOnError extends boolean = false>(option
  *
  * Fetches the accounts that a TikTok user follows. Returns a paginated list. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2502,7 +2520,7 @@ export const tiktokUserFollowing = <ThrowOnError extends boolean = false>(option
  *
  * Fetches detailed information about a TikTok video including engagement metrics and video metadata.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2520,7 +2538,7 @@ export const tiktokVideoDetails = <ThrowOnError extends boolean = false>(options
  *
  * Fetches comments for a TikTok video. Returns a paginated list of comments. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2538,7 +2556,7 @@ export const tiktokVideoComments = <ThrowOnError extends boolean = false>(option
  *
  * Fetches replies to a TikTok comment. Returns a paginated list of replies. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2556,7 +2574,7 @@ export const tiktokCommentReplies = <ThrowOnError extends boolean = false>(optio
  *
  * Fetches the spoken word transcript for a TikTok video, broken into timed segments.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2574,7 +2592,7 @@ export const tiktokVideoTranscript = <ThrowOnError extends boolean = false>(opti
  *
  * Searches for TikTok users by name or keyword. Returns a paginated list of matching accounts. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2592,7 +2610,7 @@ export const tiktokSearchUsers = <ThrowOnError extends boolean = false>(options:
  *
  * Searches for TikTok videos by keyword or phrase. Returns a paginated list of matching videos. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2610,7 +2628,7 @@ export const tiktokSearchKeyword = <ThrowOnError extends boolean = false>(option
  *
  * Fetches videos for a TikTok hashtag along with hashtag metadata. Returns a paginated list of videos. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2628,7 +2646,7 @@ export const tiktokSearchHashtag = <ThrowOnError extends boolean = false>(option
  *
  * Searches TikTok and returns both matching videos and user accounts for a query in a single response. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2646,7 +2664,7 @@ export const tiktokUnifiedSearch = <ThrowOnError extends boolean = false>(option
  *
  * Fetches a list of popular TikTok creators. Optionally filter by country and sort order.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2664,7 +2682,7 @@ export const tiktokPopularCreators = <ThrowOnError extends boolean = false>(opti
  *
  * Fetches a list of currently popular songs/sounds on TikTok.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2682,7 +2700,7 @@ export const tiktokPopularSongs = <ThrowOnError extends boolean = false>(options
  *
  * Fetches the current TikTok trending feed. Returns a paginated list of trending videos. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2700,7 +2718,7 @@ export const tiktokTrendingFeed = <ThrowOnError extends boolean = false>(options
  *
  * Fetches details about a TikTok song/sound including title, artist, and usage statistics.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2718,7 +2736,7 @@ export const tiktokSongDetails = <ThrowOnError extends boolean = false>(options:
  *
  * Fetches TikTok videos that use a specific song/sound. Returns a paginated list. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2736,7 +2754,7 @@ export const tiktokSongVideos = <ThrowOnError extends boolean = false>(options: 
  *
  * List posts from a subreddit, optionally filtered by sort order and timeframe. Returns a paginated list of posts. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2754,7 +2772,7 @@ export const redditSubredditPosts = <ThrowOnError extends boolean = false>(optio
  *
  * Search posts within a subreddit by query, optionally filtered by sort order and timeframe. Returns a paginated list of posts. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2772,7 +2790,7 @@ export const redditSubredditSearch = <ThrowOnError extends boolean = false>(opti
  *
  * Fetch comments for a Reddit post by URL or `t3_<id>` identifier. Returns the parent post (when available) and a paginated, depth-first flat list of comments that includes nested replies. Each entry's `parentCommentId` is null for top-level comments or points at the parent comment for replies; group on `parentCommentId` to rebuild the thread tree. Use the `nextPageToken` field from the response to retrieve subsequent pages of top-level comments (their nested replies come along automatically).
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2790,7 +2808,7 @@ export const redditPostComments = <ThrowOnError extends boolean = false>(options
  *
  * Search Reddit posts across all subreddits by query, optionally filtered by sort order and timeframe. Returns a paginated list of posts. Use the `nextPageToken` field from the response to retrieve subsequent pages. Queries with no matching posts return an empty list and are not charged credits.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2808,7 +2826,7 @@ export const redditSearch = <ThrowOnError extends boolean = false>(options: Opti
  *
  * Fetches profile information for an Instagram user including follower counts, bio, and account type.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2826,7 +2844,7 @@ export const instagramProfile = <ThrowOnError extends boolean = false>(options: 
  *
  * Fetches the latest posts for an Instagram user. Returns a paginated list of posts with engagement metrics. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2844,7 +2862,7 @@ export const instagramUserPosts = <ThrowOnError extends boolean = false>(options
  *
  * Fetches the latest reels for an Instagram user. Returns a paginated list of reels with engagement metrics. Use the `nextPageToken` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2862,7 +2880,7 @@ export const instagramUserReels = <ThrowOnError extends boolean = false>(options
  *
  * Fetches details for a single Instagram post including caption, like count, and media URL. Accepts a full post URL (e.g. 'https://www.instagram.com/p/DVoDVg5DkXM/') or a bare shortcode (e.g. 'DVoDVg5DkXM').
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2880,7 +2898,7 @@ export const instagramPostDetails = <ThrowOnError extends boolean = false>(optio
  *
  * Fetches comments for an Instagram post. Returns a paginated list. Use the `nextPageToken` field from the response to retrieve subsequent pages. Accepts a full post URL (e.g. 'https://www.instagram.com/p/DVoDVg5DkXM/') or a bare shortcode (e.g. 'DVoDVg5DkXM').
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2898,7 +2916,7 @@ export const instagramPostComments = <ThrowOnError extends boolean = false>(opti
  *
  * Fetches the public profile for a Twitter/X user by handle. Returns follower/following counts, bio, verification status, and account metadata.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2916,7 +2934,7 @@ export const twitterProfile = <ThrowOnError extends boolean = false>(options: Op
  *
  * Fetches the latest tweets for a Twitter/X user. Returns a paginated list of tweets with engagement metrics. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2934,7 +2952,7 @@ export const twitterUserTweets = <ThrowOnError extends boolean = false>(options:
  *
  * Fetches a page of followers for a Twitter/X user. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2952,7 +2970,7 @@ export const twitterUserFollowers = <ThrowOnError extends boolean = false>(optio
  *
  * Fetches a page of accounts a Twitter/X user follows. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2970,7 +2988,7 @@ export const twitterUserFollowing = <ThrowOnError extends boolean = false>(optio
  *
  * Fetches details for a single tweet by its numeric ID. Returns full text, engagement metrics (likes, retweets, replies, views), and metadata.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per request&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -2988,7 +3006,7 @@ export const twitterTweetDetails = <ThrowOnError extends boolean = false>(option
  *
  * Fetches a page of replies to a tweet. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -3006,7 +3024,7 @@ export const twitterTweetReplies = <ThrowOnError extends boolean = false>(option
  *
  * Fetches a page of quote tweets for a tweet. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -3024,7 +3042,7 @@ export const twitterTweetQuotes = <ThrowOnError extends boolean = false>(options
  *
  * Fetches a page of users who retweeted a tweet. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -3042,7 +3060,7 @@ export const twitterTweetRetweeters = <ThrowOnError extends boolean = false>(opt
  *
  * Fetches a page of tweets that mention a Twitter/X user. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
@@ -3060,7 +3078,7 @@ export const twitterUserMentions = <ThrowOnError extends boolean = false>(option
  *
  * Searches for tweets matching a query. Supports standard Twitter search operators (e.g. 'TypeScript from:elonmusk lang:en'). Returns a paginated list of matching tweets. Use the `cursor` field from the response to retrieve subsequent pages.
  *
- * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per page of results&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
