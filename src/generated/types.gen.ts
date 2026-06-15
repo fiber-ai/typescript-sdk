@@ -74809,11 +74809,11 @@ export type RemoveTrackerPeopleData = {
              */
             linkedinUrl?: string | null;
             /**
-             * LinkedIn user ID
+             * A person's stable numeric identifier. This is NOT derived from their profile URL — retrieve it from a live enrichment lookup. Digits only.
              */
             linkedinUserId?: string | null;
             /**
-             * LinkedIn profile slug
+             * The handle in a profile URL — e.g. `williamhgates` in https://www.linkedin.com/in/williamhgates/.
              */
             linkedinSlug?: string | null;
         }>;
@@ -75112,11 +75112,11 @@ export type AddTrackerPeopleData = {
              */
             linkedinUrl?: string | null;
             /**
-             * LinkedIn user ID
+             * A person's stable numeric identifier. This is NOT derived from their profile URL — retrieve it from a live enrichment lookup. Digits only.
              */
             linkedinUserId?: string | null;
             /**
-             * LinkedIn profile slug
+             * The handle in a profile URL — e.g. `williamhgates` in https://www.linkedin.com/in/williamhgates/.
              */
             linkedinSlug?: string | null;
         }>;

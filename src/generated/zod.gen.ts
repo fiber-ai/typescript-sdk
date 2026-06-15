@@ -132081,7 +132081,7 @@ export const zRemoveTrackerPeopleData = z.object({
                 z.null()
             ])),
             linkedinUserId: z.optional(z.union([
-                z.string().min(1),
+                z.string().min(1).regex(/^\d+$/),
                 z.null()
             ])),
             linkedinSlug: z.optional(z.union([
@@ -132192,7 +132192,7 @@ export const zAddTrackerPeopleData = z.object({
                 z.null()
             ])),
             linkedinUserId: z.optional(z.union([
-                z.string().min(1),
+                z.string().min(1).regex(/^\d+$/),
                 z.null()
             ])),
             linkedinSlug: z.optional(z.union([
