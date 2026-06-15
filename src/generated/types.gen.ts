@@ -72273,11 +72273,11 @@ export type RemoveTrackerCompaniesData = {
              */
             linkedinUrl?: string | null;
             /**
-             * LinkedIn organization ID
+             * A company's stable numeric identifier. This is NOT derived from their company page URL — retrieve it from a live enrichment lookup. Digits only.
              */
             linkedinOrgId?: string | null;
             /**
-             * LinkedIn company slug
+             * The handle in a company page URL — e.g. `microsoft` in https://www.linkedin.com/company/microsoft/.
              */
             linkedinSlug?: string | null;
         }>;
@@ -72576,11 +72576,11 @@ export type AddTrackerCompaniesData = {
              */
             linkedinUrl?: string | null;
             /**
-             * LinkedIn organization ID
+             * A company's stable numeric identifier. This is NOT derived from their company page URL — retrieve it from a live enrichment lookup. Digits only.
              */
             linkedinOrgId?: string | null;
             /**
-             * LinkedIn company slug
+             * The handle in a company page URL — e.g. `microsoft` in https://www.linkedin.com/company/microsoft/.
              */
             linkedinSlug?: string | null;
         }>;
