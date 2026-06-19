@@ -120,7 +120,7 @@ export const pollExhaustiveContactEnrichmentResult = <ThrowOnError extends boole
 /**
  * Poll depth chart generation result
  *
- * Polls the status of a depth chart generation — a close analog to a company's internal org chart. Pass the report ID returned by /depth-chart/start. Returns the current status and, once complete, the depth chart aggregate with employee distribution across functions and seniority levels. Includes summary stats for each bucket, but does not list the people in each bucket.
+ * Retrieves the employee breakdown started by the `depth-chart/start` endpoint. Pass the report ID you received when you started the report. Returns the current status and, once complete, numerical counts of employees grouped by department, seniority, or both, plus a printable markdown summary in tabular format — useful for CLI output or for LLMs building reports. Returns summary stats per bucket, not the individual people in each bucket.
  *
  * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  */
@@ -1134,7 +1134,7 @@ export const liteContactReveal = <ThrowOnError extends boolean = false>(options:
 /**
  * Start depth chart generation
  *
- * Generates an organizational depth chart for a company — a close analog to the company's internal org chart. Classifies employees by function (Engineering, Sales, Marketing, etc.) and seniority level (Junior through Executive). This is asynchronous: call this endpoint to start generation, then poll /depth-chart/poll with the returned report ID. Processing typically takes 1-5 minutes depending on company size. Depth chart generation processes up to 10,000 employee profiles per report; larger companies are truncated to the most relevant profiles.
+ * Generates a breakdown of the number of employees at a given company by department/function (Engineering, Sales, Marketing, etc.), seniority (Junior through Executive), or both. This helps answer questions like, 'how many senior engineers does this company have?'. Asynchronous; use the polling endpoint to get your results. Processes up to 10,000 employees per report. This is a more thorough alternative to guessing a company's internal org chart.
  *
  * <span>⚡ <strong>Rate limit:</strong> 30 requests per 1 minute</span>
  */

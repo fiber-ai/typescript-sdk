@@ -45369,7 +45369,7 @@ export type CompanyLiveEnrichData = {
          */
         value: string;
         /**
-         * Whether to compute the company's historical employee count and recent growth trends. No additional cost, but may take longer.
+         * Whether to compute the company's overall employee count over time and recent growth trends. This returns total headcount through time, not a per-department breakdown — for per-department headcount, use the Depth Chart endpoints. No additional cost, but may take longer.
          */
         getHistoricalHeadcount?: boolean;
     };
