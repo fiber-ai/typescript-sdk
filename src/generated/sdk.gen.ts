@@ -1595,7 +1595,7 @@ export const googleMapsSearch = <ThrowOnError extends boolean = false>(options: 
  *
  * <span>💰 <strong>Cost:</strong> Pay per person: 2 credits per lookup, plus 2 additional credits when the liveFetch flag is set.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. LinkedIn live fetch credits only apply when the liveFetch flag is set.">ⓘ</span></span>
  *
- * <span>⏱ <strong>Recommended timeout:</strong> 30 seconds&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 30 seconds for this endpoint.">ⓘ</span></span>
+ * <span>⏱ <strong>Recommended timeout:</strong> 1 minute&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 1 minute for this endpoint.">ⓘ</span></span>
  */
 export const kitchenSinkProfile = <ThrowOnError extends boolean = false>(options: Options<KitchenSinkProfileData, ThrowOnError>) => (options.client ?? client).post<KitchenSinkProfileResponses, KitchenSinkProfileErrors, ThrowOnError>({
     url: '/v1/kitchen-sink/person',
@@ -1614,6 +1614,8 @@ export const kitchenSinkProfile = <ThrowOnError extends boolean = false>(options
  * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per company lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 30 seconds&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 30 seconds for this endpoint.">ⓘ</span></span>
  */
 export const kitchenSinkCompany = <ThrowOnError extends boolean = false>(options: Options<KitchenSinkCompanyData, ThrowOnError>) => (options.client ?? client).post<KitchenSinkCompanyResponses, KitchenSinkCompanyErrors, ThrowOnError>({
     url: '/v1/kitchen-sink/company',
@@ -1632,6 +1634,8 @@ export const kitchenSinkCompany = <ThrowOnError extends boolean = false>(options
  * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> Pay per person: 2 credits per lookup, plus 2 additional credits when the liveFetch flag is set.&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary. LinkedIn live fetch credits only apply when the liveFetch flag is set.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 3 minutes&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 3 minutes for this endpoint.">ⓘ</span></span>
  */
 export const kitchenSinkBulkProfile = <ThrowOnError extends boolean = false>(options: Options<KitchenSinkBulkProfileData, ThrowOnError>) => (options.client ?? client).post<KitchenSinkBulkProfileResponses, KitchenSinkBulkProfileErrors, ThrowOnError>({
     url: '/v1/kitchen-sink/bulk/profile',
@@ -1650,6 +1654,8 @@ export const kitchenSinkBulkProfile = <ThrowOnError extends boolean = false>(opt
  * <span>⚡ <strong>Rate limit:</strong> 60 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 2 credits per company lookup&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
+ *
+ * <span>⏱ <strong>Recommended timeout:</strong> 3 minutes&nbsp;<span title="Recommended timeout: set your HTTP client timeout to at least 3 minutes for this endpoint.">ⓘ</span></span>
  */
 export const kitchenSinkBulkCompany = <ThrowOnError extends boolean = false>(options: Options<KitchenSinkBulkCompanyData, ThrowOnError>) => (options.client ?? client).post<KitchenSinkBulkCompanyResponses, KitchenSinkBulkCompanyErrors, ThrowOnError>({
     url: '/v1/kitchen-sink/bulk/company',
