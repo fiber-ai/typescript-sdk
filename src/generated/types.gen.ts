@@ -1287,14 +1287,6 @@ export type TrackerSignal = {
      */
     observedAt: string;
     /**
-     * Webhook delivery status.
-     */
-    deliveryStatus: 'PENDING' | 'DELIVERED' | 'FAILED' | 'SKIPPED';
-    /**
-     * When the webhook was successfully delivered. Null when status is PENDING, FAILED, or SKIPPED.
-     */
-    deliveredAt: string | null;
-    /**
      * Credits charged for the tracker check that produced this signal, in centi-credits (100 = 1 credit).
      */
     centiCreditsCharged: number;

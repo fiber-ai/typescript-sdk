@@ -1680,16 +1680,6 @@ export const zTrackerSignal = z.object({
         zPersonCommentChange
     ])),
     observedAt: z.iso.datetime(),
-    deliveryStatus: z.enum([
-        'PENDING',
-        'DELIVERED',
-        'FAILED',
-        'SKIPPED'
-    ]),
-    deliveredAt: z.union([
-        z.iso.datetime(),
-        z.null()
-    ]),
     centiCreditsCharged: z.int().gte(0),
     isDummy: z.boolean()
 });
