@@ -105591,11 +105591,15 @@ export type AddTrackerPeopleResponses = {
     200: {
         output: {
             /**
-             * Number of people successfully added.
+             * Number of people fully resolved and added to the list.
              */
             added: number;
             /**
-             * Number skipped (duplicates or invalid).
+             * Number of people accepted and added to the list but whose profile is still being resolved in the background. They become fully tracked once resolution finishes (usually within minutes); a profile that turns out not to exist is dropped automatically.
+             */
+            pending: number;
+            /**
+             * Number of people not added because they were already in the list or appeared more than once in this request. People that could not be resolved are reported in invalidPeople, not here.
              */
             skipped: number;
             /**

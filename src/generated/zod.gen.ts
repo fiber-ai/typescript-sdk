@@ -220662,6 +220662,7 @@ export const zAddTrackerPeopleData = z.object({
 export const zAddTrackerPeopleResponse = z.object({
     output: z.object({
         added: z.int().gte(0),
+        pending: z.int().gte(0),
         skipped: z.int().gte(0),
         invalidPeople: z.array(z.object({
             index: z.int().gte(0),
