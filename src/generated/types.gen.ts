@@ -125,7 +125,9 @@ export type JobPostingWithKeyword = {
      */
     seniorityLevels?: Array<'Internship' | 'Entry level' | 'Associate' | 'Mid-Senior level' | 'Director' | 'Executive'> | null;
     /**
-     * Only alert for these location types. Omit for any.
+     * Only alert for these location types. Omit for any. Deprecated.
+     *
+     * @deprecated
      */
     locationTypes?: Array<'remote' | 'on_site' | 'hybrid'> | null;
     /**
@@ -713,7 +715,9 @@ export type JobPostingWithKeywordResponse = {
      */
     seniorityLevels?: Array<'Internship' | 'Entry level' | 'Associate' | 'Mid-Senior level' | 'Director' | 'Executive'> | null;
     /**
-     * Only alert for these location types. Omit for any.
+     * Only alert for these location types. Omit for any. Deprecated.
+     *
+     * @deprecated
      */
     locationTypes?: Array<'remote' | 'on_site' | 'hybrid'> | null;
     /**
@@ -28487,7 +28491,9 @@ export type JobPostingSearchData = {
                 upperBound?: number | null;
             } | null;
             /**
-             * Array of work location types
+             * Filter by work location type. Deprecated.
+             *
+             * @deprecated
              */
             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
             /**
@@ -29004,7 +29010,9 @@ export type JobPostingSearchCountData = {
                 upperBound?: number | null;
             } | null;
             /**
-             * Array of work location types
+             * Filter by work location type. Deprecated.
+             *
+             * @deprecated
              */
             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
             /**
