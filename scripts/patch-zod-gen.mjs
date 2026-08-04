@@ -2,18 +2,34 @@
 /**
  * Patch src/generated/zod.gen.ts after openapi-ts generation.
  *
- * @hey-api/openapi-ts (≤ 0.90.x) emits `.default({})` on parent z.object(...)
- * schemas whose children chain `.optional(...).default(<primitive>)`. In
- * Zod 4 the inner `.default()` makes those fields *required* in the output
- * type, so the outer `.default({})` no longer satisfies the overload and
- * tsc/rollup-plugin-dts refuse to compile the file.
+ * @hey-api/openapi-ts renders an OpenAPI `default` as a Zod 4 `.default(...)`
+ * call, but the two mean different things. OpenAPI — and Zod 3, which the
+ * backend uses to declare these schemas — treats a default as raw *input* that
+ * still gets parsed, so a partial default picks up the schema's own inner
+ * defaults. Zod 4's `.default()` instead returns the value verbatim and types
+ * it against the schema's *output*, so any default that omits a field carrying
+ * its own `.default()` fails to compile:
  *
- * Every problematic site is wrapped in `z.optional(...)` or
- * `z.union([..., z.null()])`, so the outer `.default({})` is a no-op for the
- * SDK request roundtrip — `undefined` and `{}` serialize identically when
- * omitted from JSON bodies, and the parent union already accepts both.
- * Consumers calling `.parse(...)` directly will see `undefined` instead of
- * `{}` for the affected fields, but the API request is unchanged.
+ *   category: z.optional(z.union([
+ *     z.object({
+ *       propertyCategory: z.enum(['hotel']),
+ *       freeCancellation: z.optional(z.boolean()).default(false),
+ *       // ...
+ *     }),
+ *     // ...
+ *   ])).default({ propertyCategory: 'hotel' })
+ *   // TS2769: missing freeCancellation, specialOffers, ecoCertified
+ *
+ * `.prefault()` is Zod 4's name for the Zod 3 behaviour: it validates against
+ * the input type and runs the value through the schema. Rewriting `.default(`
+ * to `.prefault(` therefore compiles, and also makes the SDK's runtime
+ * validation agree with what the API does for an omitted field — parsing an
+ * absent `category` now yields the three booleans the type promises instead of
+ * a bare `{ propertyCategory: 'hotel' }`.
+ *
+ * This supersedes the previous approach of stripping `.default({})` outright,
+ * which only matched empty object literals (so partial defaults still broke the
+ * build) and silently discarded the default instead of honouring it.
  *
  * Run via `npm run generate` (postgenerate hook).
  */
@@ -35,19 +51,20 @@ if (!existsSync(TARGET)) {
 
 const before = readFileSync(TARGET, "utf8");
 
-// `.default({})` is always the offender — there's no legitimate reason to
-// default a complex schema to an empty object literal. Strip every occurrence
-// regardless of preceding token (`)})`, `})`, `]))`, etc).
-const after = before.replace(/\.default\(\{\}\)/g, "");
+// Every `.default(` in this file is a Zod method call — the generator never
+// emits the token inside a string literal or a doc comment — so a global
+// rewrite is safe.
+const DEFAULT_CALL = /\.default\(/g;
+const occurrences = (before.match(DEFAULT_CALL) ?? []).length;
 
-if (after === before) {
-  console.log("[patch-zod-gen] no .default({}) sites found — already patched");
+if (occurrences === 0) {
+  console.log("[patch-zod-gen] no .default( sites found — already patched");
   process.exit(0);
 }
 
-const removed =
-  (before.match(/\.default\(\{\}\)/g) ?? []).length -
-  (after.match(/\.default\(\{\}\)/g) ?? []).length;
+const after = before.replace(DEFAULT_CALL, ".prefault(");
 
 writeFileSync(TARGET, after, "utf8");
-console.log(`[patch-zod-gen] stripped ${removed} .default({}) call(s) from zod.gen.ts`);
+console.log(
+  `[patch-zod-gen] rewrote ${occurrences} .default( call(s) to .prefault( in zod.gen.ts`
+);
