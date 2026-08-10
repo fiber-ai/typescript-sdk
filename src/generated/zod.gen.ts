@@ -3869,7 +3869,25 @@ export const zGetOrgCreditsResponse = z.object({
                         ])),
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
-                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] })
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                financialInstrumentLookup: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                emailToLinkedinMiss: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 100 }] })
             }),
             z.null()
         ]))
@@ -21795,6 +21813,131 @@ export const zUpdateAudienceSearchParamsData = z.object({
                     z.null()
                 ])),
                 currentJobs: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        allOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                everWorkedAt: z.optional(z.union([
                     z.object({
                         anyOf: z.optional(z.union([
                             z.array(z.object({
@@ -49014,6 +49157,131 @@ export const zPeopleSearchData = z.object({
                 }),
                 z.null()
             ])),
+            everWorkedAt: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    allOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             languages: z.optional(z.union([
                 z.object({
                     anyOf: z.optional(z.union([
@@ -56015,6 +56283,131 @@ export const zPeopleSearchCountData = z.object({
                 z.null()
             ])),
             currentJobs: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    allOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            everWorkedAt: z.optional(z.union([
                 z.object({
                     anyOf: z.optional(z.union([
                         z.array(z.object({
@@ -69920,6 +70313,131 @@ export const zPaginatedCombinedSearchData = z.object({
                         z.null()
                     ])),
                     currentJobs: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            allOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    everWorkedAt: z.optional(z.union([
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({
@@ -88223,6 +88741,131 @@ export const zCombinedSearchCountData = z.object({
                 }),
                 z.null()
             ])),
+            everWorkedAt: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    allOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             languages: z.optional(z.union([
                 z.object({
                     anyOf: z.optional(z.union([
@@ -94314,6 +94957,131 @@ export const zStealthFoundersSearchData = z.object({
                 z.null()
             ])),
             currentJobs: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    allOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            everWorkedAt: z.optional(z.union([
                 z.object({
                     anyOf: z.optional(z.union([
                         z.array(z.object({
@@ -100710,6 +101478,131 @@ export const zStealthFoundersCountData = z.object({
                 z.null()
             ])),
             currentJobs: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    allOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            jobTitle: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            company: z.optional(z.union([
+                                z.object({
+                                    linkedin_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.string(),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    names: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    source: z.optional(z.nullable(z.enum(['csv'])))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            everWorkedAt: z.optional(z.union([
                 z.object({
                     anyOf: z.optional(z.union([
                         z.array(z.object({
@@ -146871,6 +147764,131 @@ export const zNlpSearchParseResponse = z.object({
                             }),
                             z.null()
                         ])),
+                        everWorkedAt: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        jobTitle: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        company: z.optional(z.union([
+                                            z.object({
+                                                linkedin_id: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                li_org_id: z.string(),
+                                                preferred_name: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                names: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                linkedin_primary_slug: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                domains: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                logo_url: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                source: z.optional(z.nullable(z.enum(['csv'])))
+                                            }),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ])),
+                                allOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        jobTitle: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        company: z.optional(z.union([
+                                            z.object({
+                                                linkedin_id: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                li_org_id: z.string(),
+                                                preferred_name: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                names: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                linkedin_primary_slug: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                domains: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                logo_url: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                source: z.optional(z.nullable(z.enum(['csv'])))
+                                            }),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        jobTitle: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        company: z.optional(z.union([
+                                            z.object({
+                                                linkedin_id: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                li_org_id: z.string(),
+                                                preferred_name: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                names: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                linkedin_primary_slug: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                domains: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                logo_url: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                source: z.optional(z.nullable(z.enum(['csv'])))
+                                            }),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
                         languages: z.optional(z.union([
                             z.object({
                                 anyOf: z.optional(z.union([
@@ -160710,6 +161728,131 @@ export const zSlushieRunResponse = z.object({
                             z.null()
                         ])),
                         currentJobs: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        jobTitle: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        company: z.optional(z.union([
+                                            z.object({
+                                                linkedin_id: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                li_org_id: z.string(),
+                                                preferred_name: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                names: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                linkedin_primary_slug: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                domains: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                logo_url: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                source: z.optional(z.nullable(z.enum(['csv'])))
+                                            }),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ])),
+                                allOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        jobTitle: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        company: z.optional(z.union([
+                                            z.object({
+                                                linkedin_id: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                li_org_id: z.string(),
+                                                preferred_name: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                names: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                linkedin_primary_slug: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                domains: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                logo_url: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                source: z.optional(z.nullable(z.enum(['csv'])))
+                                            }),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        jobTitle: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        company: z.optional(z.union([
+                                            z.object({
+                                                linkedin_id: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                li_org_id: z.string(),
+                                                preferred_name: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                names: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                linkedin_primary_slug: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                domains: z.optional(z.union([
+                                                    z.array(z.string()),
+                                                    z.null()
+                                                ])),
+                                                logo_url: z.optional(z.union([
+                                                    z.string(),
+                                                    z.null()
+                                                ])),
+                                                source: z.optional(z.nullable(z.enum(['csv'])))
+                                            }),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
+                        everWorkedAt: z.optional(z.union([
                             z.object({
                                 anyOf: z.optional(z.union([
                                     z.array(z.object({
@@ -178785,6 +179928,131 @@ export const zCreateSavedSearchData = z.object({
                         }),
                         z.null()
                     ])),
+                    everWorkedAt: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            allOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     languages: z.optional(z.union([
                         z.object({
                             anyOf: z.optional(z.union([
@@ -192430,6 +193698,131 @@ export const zCreateSavedSearchData = z.object({
                         z.null()
                     ])),
                     currentJobs: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            allOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    everWorkedAt: z.optional(z.union([
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({
@@ -206451,6 +207844,131 @@ export const zGetSavedSearchResponse = z.object({
                     }),
                     z.null()
                 ])),
+                everWorkedAt: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        allOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
                 languages: z.optional(z.union([
                     z.object({
                         anyOf: z.optional(z.union([
@@ -220225,6 +221743,131 @@ export const zGetSavedSearchRunResponse = z.object({
                         z.null()
                     ])),
                     currentJobs: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            allOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    everWorkedAt: z.optional(z.union([
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({
@@ -234365,6 +236008,131 @@ export const zUpdateSavedSearchData = z.object({
                     z.null()
                 ])),
                 currentJobs: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        allOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                jobTitle: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
+                                ])),
+                                company: z.optional(z.union([
+                                    z.object({
+                                        linkedin_id: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        li_org_id: z.string(),
+                                        preferred_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        names: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        linkedin_primary_slug: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        domains: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        logo_url: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        source: z.optional(z.nullable(z.enum(['csv'])))
+                                    }),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                everWorkedAt: z.optional(z.union([
                     z.object({
                         anyOf: z.optional(z.union([
                             z.array(z.object({
@@ -257044,6 +258812,131 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                         z.null()
                     ])),
                     currentJobs: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            allOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    jobTitle: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    company: z.optional(z.union([
+                                        z.object({
+                                            linkedin_id: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            li_org_id: z.string(),
+                                            preferred_name: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            names: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            linkedin_primary_slug: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            domains: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            logo_url: z.optional(z.union([
+                                                z.string(),
+                                                z.null()
+                                            ])),
+                                            source: z.optional(z.nullable(z.enum(['csv'])))
+                                        }),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    everWorkedAt: z.optional(z.union([
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({

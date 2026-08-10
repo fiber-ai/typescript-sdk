@@ -3968,6 +3968,18 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
+                financialInstrumentLookup: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                emailToLinkedinMiss: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
             } | null;
         }>;
         chargeInfo: {
@@ -24789,6 +24801,47 @@ export type UpdateAudienceSearchParamsData = {
                     } | null;
                 }> | null;
             } | null;
+            everWorkedAt?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
             languages?: {
                 anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
                 allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
@@ -33800,6 +33853,47 @@ export type PeopleSearchData = {
                     } | null;
                 }> | null;
             } | null;
+            everWorkedAt?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
             languages?: {
                 anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
                 allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
@@ -35511,6 +35605,47 @@ export type PeopleSearchCountData = {
                 }> | null;
             } | null;
             currentJobs?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
+            everWorkedAt?: {
                 anyOf?: Array<{
                     jobTitle?: Array<string> | null;
                     company?: {
@@ -38369,6 +38504,47 @@ export type PaginatedCombinedSearchData = {
                     }> | null;
                 } | null;
                 currentJobs?: {
+                    anyOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                everWorkedAt?: {
                     anyOf?: Array<{
                         jobTitle?: Array<string> | null;
                         company?: {
@@ -44441,6 +44617,47 @@ export type CombinedSearchCountData = {
                     } | null;
                 }> | null;
             } | null;
+            everWorkedAt?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
             languages?: {
                 anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
                 allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
@@ -45956,6 +46173,47 @@ export type StealthFoundersSearchData = {
                 }> | null;
             } | null;
             currentJobs?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
+            everWorkedAt?: {
                 anyOf?: Array<{
                     jobTitle?: Array<string> | null;
                     company?: {
@@ -47544,6 +47802,47 @@ export type StealthFoundersCountData = {
                 }> | null;
             } | null;
             currentJobs?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
+            everWorkedAt?: {
                 anyOf?: Array<{
                     jobTitle?: Array<string> | null;
                     company?: {
@@ -71478,6 +71777,47 @@ export type NlpSearchParseResponses = {
                             } | null;
                         }> | null;
                     } | null;
+                    everWorkedAt?: {
+                        anyOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                        allOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                    } | null;
                     languages?: {
                         anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
                         allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
@@ -74358,6 +74698,47 @@ export type SlushieRunResponses = {
                         }> | null;
                     } | null;
                     currentJobs?: {
+                        anyOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                        allOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                    } | null;
+                    everWorkedAt?: {
                         anyOf?: Array<{
                             jobTitle?: Array<string> | null;
                             company?: {
@@ -79525,6 +79906,47 @@ export type CreateSavedSearchData = {
                         } | null;
                     }> | null;
                 } | null;
+                everWorkedAt?: {
+                    anyOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                } | null;
                 languages?: {
                     anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
                     allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
@@ -82043,6 +82465,47 @@ export type CreateSavedSearchData = {
                     }> | null;
                 } | null;
                 currentJobs?: {
+                    anyOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                } | null;
+                everWorkedAt?: {
                     anyOf?: Array<{
                         jobTitle?: Array<string> | null;
                         company?: {
@@ -85082,6 +85545,47 @@ export type GetSavedSearchResponses = {
                         } | null;
                     }> | null;
                 } | null;
+                everWorkedAt?: {
+                    anyOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    allOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        jobTitle?: Array<string> | null;
+                        company?: {
+                            linkedin_id?: string | null;
+                            li_org_id: string;
+                            preferred_name?: string | null;
+                            names?: Array<string> | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            logo_url?: string | null;
+                            source?: 'csv' | null;
+                        } | null;
+                    }> | null;
+                } | null;
                 languages?: {
                     anyOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
                     allOf?: Array<'Afrikaans' | 'Akan' | 'Albanian' | 'Alsatian' | 'Amharic' | 'Arabic' | 'Armenian' | 'Assamese' | 'Assyrian' | 'Awadhi' | 'Azerbaijani' | 'Balinese' | 'Balochi' | 'Bambara' | 'Basque' | 'Belarusian' | 'Bemba' | 'Bengali' | 'Bhojpuri' | 'Bisaya' | 'Bosnian' | 'Breton' | 'Bulgarian' | 'Burmese' | 'Cantonese' | 'Catalan' | 'Cebuano' | 'Croatian' | 'Czech' | 'Danish' | 'Dari' | 'Dhivehi' | 'Dholuo' | 'Dogri' | 'Dutch' | 'Dzongkha' | 'Efik' | 'English' | 'Esperanto' | 'Estonian' | 'Ewe' | 'Fante' | 'Faroese' | 'Fijian' | 'Finnish' | 'Flemish' | 'Fon' | 'French' | 'Frisian' | 'Fula' | 'Ga' | 'Galician' | 'Garhwali' | 'Georgian' | 'German' | 'Greek' | 'Guarani' | 'Gujarati' | 'Haitian Creole' | 'Hakka' | 'Haryanvi' | 'Hausa' | 'Hawaiian' | 'Hebrew' | 'Hiligaynon' | 'Hindi' | 'Hindko' | 'Hmong' | 'Hungarian' | 'Iban' | 'Ibibio' | 'Icelandic' | 'Igala' | 'Igbo' | 'Ilocano' | 'Indonesian' | 'Irish' | 'Italian' | 'Japanese' | 'Javanese' | 'Kabyle' | 'Kamba' | 'Kannada' | 'Kapampangan' | 'Kashmiri' | 'Kazakh' | 'Khmer' | 'Kikuyu' | 'Kinyarwanda' | 'Kirundi' | 'Kongo' | 'Konkani' | 'Korean' | 'Krio' | 'Kurdish' | 'Kutchi' | 'Kyrgyz' | 'Lao' | 'Latin' | 'Latvian' | 'Limburgish' | 'Lingala' | 'Lithuanian' | 'Lozi' | 'Luganda' | 'Luhya' | 'Luxembourgish' | 'Macedonian' | 'Magahi' | 'Maithili' | 'Malagasy' | 'Malay' | 'Malayalam' | 'Maltese' | 'Mandarin' | 'Mandinka' | 'Manipuri' | 'Maori' | 'Marathi' | 'Marwari' | 'Mauritian Creole' | 'Minangkabau' | 'Mongolian' | 'Montenegrin' | 'Navajo' | 'Nepali' | 'Newar' | 'North Frisian' | 'Northern Ndebele' | 'Northern Sotho' | 'Norwegian' | 'Nyanja' | 'Odia' | 'Oromo' | 'Ovambo' | 'Papiamento' | 'Pashto' | 'Persian' | 'Polish' | 'Portuguese' | 'Punjabi' | 'Putonghua' | 'Quechua' | 'Rajasthani' | 'Romanian' | 'Russian' | 'Samoan' | 'Sanskrit' | 'Saraiki' | 'Saurashtra' | 'Scottish Gaelic' | 'Serbian' | 'Shanghainese' | 'Shona' | 'Sign Languages' | 'Sindhi' | 'Sinhalese' | 'Slovak' | 'Slovenian' | 'Soga' | 'Somali' | 'Southern Min' | 'Southern Ndebele' | 'Southern Sotho' | 'Spanish' | 'Sranan Tongo' | 'Sundanese' | 'Swahili' | 'Swazi' | 'Swedish' | 'Tagalog/Filipino' | 'Taiwanese Hokkien' | 'Tajik' | 'Tamazight' | 'Tamil' | 'Tatar' | 'Telugu' | 'Teochew' | 'Tetum' | 'Thai' | 'Tibetan' | 'Tigrinya' | 'Tok Pisin' | 'Tongan' | 'Tsonga' | 'Tswana' | 'Tulu' | 'Tumbuka' | 'Turkish' | 'Turkmen' | 'Twi' | 'Ukrainian' | 'Urdu' | 'Uyghur' | 'Uzbek' | 'Valencian' | 'Venda' | 'Vietnamese' | 'Waray' | 'Welsh' | 'Wolof' | 'Xhosa' | 'Yiddish' | 'Yoruba' | 'Zulu'> | null;
@@ -87933,6 +88437,47 @@ export type GetSavedSearchRunResponses = {
                         }> | null;
                     } | null;
                     currentJobs?: {
+                        anyOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                        allOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                    } | null;
+                    everWorkedAt?: {
                         anyOf?: Array<{
                             jobTitle?: Array<string> | null;
                             company?: {
@@ -91461,6 +92006,47 @@ export type UpdateSavedSearchData = {
                 }> | null;
             } | null;
             currentJobs?: {
+                anyOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                allOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+                noneOf?: Array<{
+                    jobTitle?: Array<string> | null;
+                    company?: {
+                        linkedin_id?: string | null;
+                        li_org_id: string;
+                        preferred_name?: string | null;
+                        names?: Array<string> | null;
+                        linkedin_primary_slug?: string | null;
+                        domains?: Array<string> | null;
+                        logo_url?: string | null;
+                        source?: 'csv' | null;
+                    } | null;
+                }> | null;
+            } | null;
+            everWorkedAt?: {
                 anyOf?: Array<{
                     jobTitle?: Array<string> | null;
                     company?: {
@@ -101277,6 +101863,47 @@ export type GetLatestSavedSearchRunResponses = {
                         }> | null;
                     } | null;
                     currentJobs?: {
+                        anyOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                        allOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            jobTitle?: Array<string> | null;
+                            company?: {
+                                linkedin_id?: string | null;
+                                li_org_id: string;
+                                preferred_name?: string | null;
+                                names?: Array<string> | null;
+                                linkedin_primary_slug?: string | null;
+                                domains?: Array<string> | null;
+                                logo_url?: string | null;
+                                source?: 'csv' | null;
+                            } | null;
+                        }> | null;
+                    } | null;
+                    everWorkedAt?: {
                         anyOf?: Array<{
                             jobTitle?: Array<string> | null;
                             company?: {
