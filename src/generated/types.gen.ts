@@ -131680,11 +131680,11 @@ export type TwitterUserFollowersData = {
          */
         apiKey: string;
         /**
-         * Twitter/X handle to fetch followers for. Accepts with or without a leading '@'.
+         * Twitter/X handle to fetch followers for. Accepts a bare handle with or without a leading '@' (e.g. 'elonmusk' or '@elonmusk') or a full profile URL (e.g. 'https://x.com/elonmusk' or 'https://twitter.com/elonmusk').
          */
         handle: string;
         /**
-         * Pagination cursor from a previous response to retrieve the next page of followers. Omit for the first page.
+         * Pagination cursor from a previous response to retrieve the next page of followers. Omit for the first page. Use each cursor promptly to fetch the next page — cursors may become invalid if reused after a long delay.
          */
         cursor?: string | null;
     };
@@ -131825,7 +131825,7 @@ export type TwitterUserFollowersResponses = {
     200: {
         output: {
             /**
-             * List of followers for this page.
+             * Followers for this page. Early pages may over-represent more recent followers; paginate further for broader coverage of the follower list.
              */
             users: Array<{
                 /**
@@ -131862,7 +131862,7 @@ export type TwitterUserFollowersResponses = {
                 profileImageUrl?: string | null;
             }>;
             /**
-             * Cursor to retrieve the next page of followers. Pass as `cursor` in the next request. Null if there are no more pages.
+             * Cursor to retrieve the next page of followers. Pass as `cursor` in the next request. Null when no more followers are available for this handle.
              */
             nextCursor?: string | null;
         };
