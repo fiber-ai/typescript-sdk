@@ -1938,7 +1938,7 @@ export const skillsTypeahead = <ThrowOnError extends boolean = false>(options: O
  *
  * Checks if a given email is likely to bounce using a waterfall of strategies. Works for catch-all email addresses, which are increasingly common yet hard for other APIs to validate.
  *
- * <span>⚡ <strong>Rate limit:</strong> 10 requests per 1 minute</span>
+ * <span>⚡ <strong>Rate limit:</strong> 300 requests per 1 minute</span>
  *
  * <span>💰 <strong>Cost:</strong> 1 credit per email validation&nbsp;<span title="Pricing shown is default pricing. Actual pricing may vary.">ⓘ</span></span>
  */
