@@ -107032,7 +107032,15 @@ export const zSyncTurboContactEnrichmentData = z.object({
             getWorkEmails: true,
             getPersonalEmails: true,
             getPhoneNumbers: true
-        })
+        }),
+        patience: z.optional(z.nullable(z.enum([
+            'MINIMUM',
+            'LOW',
+            'MEDIUM',
+            'HIGH',
+            'EXTREME',
+            'MAXIMUM'
+        ])))
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
@@ -107274,7 +107282,18 @@ export const zSyncQuickContactRevealData = z.object({
             getPersonalEmails: true,
             getPhoneNumbers: true
         }),
-        validateEmails: z.optional(z.boolean()).prefault(true)
+        patience: z.optional(z.nullable(z.enum([
+            'MINIMUM',
+            'LOW',
+            'MEDIUM',
+            'HIGH',
+            'EXTREME',
+            'MAXIMUM'
+        ]))),
+        validateEmails: z.optional(z.union([
+            z.boolean(),
+            z.null()
+        ]))
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
@@ -107408,7 +107427,15 @@ export const zLiteContactRevealData = z.object({
             getWorkEmails: true,
             getPersonalEmails: false,
             getPhoneNumbers: false
-        })
+        }),
+        patience: z.optional(z.nullable(z.enum([
+            'MINIMUM',
+            'LOW',
+            'MEDIUM',
+            'HIGH',
+            'EXTREME',
+            'MAXIMUM'
+        ])))
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())

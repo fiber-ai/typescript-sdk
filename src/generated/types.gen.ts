@@ -52094,6 +52094,10 @@ export type SyncTurboContactEnrichmentData = {
             getPersonalEmails?: boolean;
             getPhoneNumbers?: boolean;
         };
+        /**
+         * How long to wait for email deliverability validation after a contact is found. Higher patience increases average response time but improves deliverability accuracy. MINIMUM is the least thorough bounce-detection option.
+         */
+        patience?: 'MINIMUM' | 'LOW' | 'MEDIUM' | 'HIGH' | 'EXTREME' | 'MAXIMUM' | null;
     };
     path?: never;
     query?: never;
@@ -52706,9 +52710,15 @@ export type SyncQuickContactRevealData = {
             getPhoneNumbers?: boolean;
         };
         /**
-         * Whether to bounce-validate emails before returning them. Disabling this speeds up responses. No additional cost either way.
+         * How long to wait for email deliverability validation after a contact is found. Higher patience increases average response time but improves deliverability accuracy. MINIMUM is the least thorough bounce-detection option.
          */
-        validateEmails?: boolean;
+        patience?: 'MINIMUM' | 'LOW' | 'MEDIUM' | 'HIGH' | 'EXTREME' | 'MAXIMUM' | null;
+        /**
+         * Deprecated — use `patience` instead. When false, maps to patience: MINIMUM. Ignored if `patience` is also provided.
+         *
+         * @deprecated
+         */
+        validateEmails?: boolean | null;
     };
     path?: never;
     query?: never;
@@ -53032,6 +53042,10 @@ export type LiteContactRevealData = {
             getPersonalEmails?: boolean;
             getPhoneNumbers?: boolean;
         };
+        /**
+         * How long to wait for email deliverability validation after a contact is found. Higher patience increases average response time but improves deliverability accuracy. MINIMUM is the least thorough bounce-detection option.
+         */
+        patience?: 'MINIMUM' | 'LOW' | 'MEDIUM' | 'HIGH' | 'EXTREME' | 'MAXIMUM' | null;
     };
     path?: never;
     query?: never;
