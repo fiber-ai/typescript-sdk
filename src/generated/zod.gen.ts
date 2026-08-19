@@ -6805,7 +6805,7 @@ export const zPollBatchContactDetailsResponse = z.object({
         pageResults: z.array(z.object({
             inputs: z.object({
                 linkedinUrl: z.object({
-                    value: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?<slug>[^\/\\?,#]+)\/?(?:[\?,#].*)?/)
+                    value: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?:[^\/\\?,#]+)\/?(?:[\?,#].*)?/)
                 })
             }),
             outputs: z.optional(z.union([
@@ -10397,7 +10397,7 @@ export const zRemoveCompanyFromExclusionListData = z.object({
                 z.null()
             ])).prefault([]),
             linkedinUrls: z.optional(z.union([
-                z.array(z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?<slug>[^\/\?#]+)\/?(\?.*)?(#.*)?$/)).prefault([]),
+                z.array(z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?:[^\/\?#]+)\/?(\?.*)?(#.*)?$/)).prefault([]),
                 z.null()
             ])).prefault([])
         })
@@ -47146,7 +47146,7 @@ export const zJobPostingSearchData = z.object({
                 }),
                 z.object({
                     identifier: z.enum(['linkedinUrl']),
-                    value: z.array(z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?<slug>[^\/\?#]+)\/?(\?.*)?(#.*)?$/))
+                    value: z.array(z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?:[^\/\?#]+)\/?(\?.*)?(#.*)?$/))
                 }),
                 z.object({
                     identifier: z.enum(['linkedinOrgID']),
@@ -48097,7 +48097,7 @@ export const zJobPostingSearchCountData = z.object({
                 }),
                 z.object({
                     identifier: z.enum(['linkedinUrl']),
-                    value: z.array(z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?<slug>[^\/\?#]+)\/?(\?.*)?(#.*)?$/))
+                    value: z.array(z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?:[^\/\?#]+)\/?(\?.*)?(#.*)?$/))
                 }),
                 z.object({
                     identifier: z.enum(['linkedinOrgID']),
@@ -80243,7 +80243,7 @@ export const zBulkCompanyLogosData = z.object({
             }),
             z.object({
                 type: z.enum(['linkedinUrls']),
-                linkedinUrls: z.array(z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?<slug>[^\/\?#]+)\/?(\?.*)?(#.*)?$/)).min(1).max(10000)
+                linkedinUrls: z.array(z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?:[^\/\?#]+)\/?(\?.*)?(#.*)?$/)).min(1).max(10000)
             }),
             z.object({
                 type: z.enum(['liOrgIds']),
@@ -80271,7 +80271,7 @@ export const zBulkCompanyLogosResponse = z.object({
             z.object({
                 type: z.enum(['linkedinUrls']),
                 data: z.array(z.object({
-                    linkedinUrl: z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?<slug>[^\/\?#]+)\/?(\?.*)?(#.*)?$/),
+                    linkedinUrl: z.url().regex(/^(https?:\/\/)?(\w+\.)?linkedin\.\w+(\.\w+)?\/(company|company-beta|showcase|organization|school|companies)\/(?:[^\/\?#]+)\/?(\?.*)?(#.*)?$/),
                     logoUrl: z.url()
                 })).max(10000)
             }),
@@ -80460,7 +80460,7 @@ export const zCompanyLogoResponse = z.object({
 export const zBulkProfilePicData = z.object({
     body: z.object({
         apiKey: z.string(),
-        linkedinUrls: z.array(z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?<slug>[^\/\\?,#]+)\/?(?:[\?,#].*)?/)).min(1).max(10000)
+        linkedinUrls: z.array(z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?:[^\/\\?,#]+)\/?(?:[\?,#].*)?/)).min(1).max(10000)
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
@@ -80472,7 +80472,7 @@ export const zBulkProfilePicData = z.object({
 export const zBulkProfilePicResponse = z.object({
     output: z.object({
         data: z.array(z.object({
-            linkedinUrl: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?<slug>[^\/\\?,#]+)\/?(?:[\?,#].*)?/),
+            linkedinUrl: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?:[^\/\\?,#]+)\/?(?:[\?,#].*)?/),
             profilePicFound: z.boolean(),
             profilePic: z.union([
                 z.string(),
@@ -112649,7 +112649,7 @@ export const zStartBatchContactDetailsData = z.object({
         apiKey: z.string(),
         personDetails: z.array(z.object({
             linkedinUrl: z.object({
-                value: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?<slug>[^\/\\?,#]+)\/?(?:[\?,#].*)?/)
+                value: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?:[^\/\\?,#]+)\/?(?:[\?,#].*)?/)
             })
         })).min(1).max(2000),
         enrichmentTypes: z.optional(z.object({
@@ -262354,7 +262354,7 @@ export const zAddProfilesToListData = z.object({
         apiKey: z.string(),
         jobChangeListId: z.string(),
         profiles: z.array(z.object({
-            linkedinUrl: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?<slug>[^\/\\?,#]+)\/?(?:[\?,#].*)?/)
+            linkedinUrl: z.string().regex(/^(?:https?:\/\/)?(?:[a-z]+\.)?linkedin\.[a-z]{2,}\/(?:in|sales\/lead|talent\/profile)\/(?:[^\/\\?,#]+)\/?(?:[\?,#].*)?/)
         })).min(1).max(5000)
     }),
     path: z.optional(z.never()),
