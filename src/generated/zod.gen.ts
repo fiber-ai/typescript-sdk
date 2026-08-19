@@ -94446,6 +94446,4233 @@ export const zCombinedSearchCountResponse = z.object({
     ]))
 });
 
+export const zQuickCompanyResolveData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        companies: z.array(z.union([
+            z.object({
+                identifier: z.enum(['linkedinUrl']),
+                value: z.string().min(1)
+            }),
+            z.object({
+                identifier: z.enum(['linkedinSlug']),
+                value: z.string().min(1)
+            }),
+            z.object({
+                identifier: z.enum(['linkedinOrgId']),
+                value: z.string().min(1).regex(/^\d+$/)
+            }),
+            z.object({
+                identifier: z.enum(['domain']),
+                value: z.string().min(1)
+            })
+        ])).min(1).max(100)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zQuickCompanyResolveResponse = z.object({
+    output: z.object({
+        data: z.array(z.object({
+            identifier: z.enum([
+                'linkedinUrl',
+                'linkedinSlug',
+                'linkedinOrgId',
+                'domain'
+            ]),
+            value: z.string(),
+            found: z.boolean(),
+            company: z.optional(z.union([
+                z.object({
+                    linkedin_id: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    accelerator_statuses: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    accelerators: z.optional(z.union([
+                        z.array(z.object({
+                            id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            tags: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            year: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            batch: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            founders: z.optional(z.union([
+                                z.array(z.object({
+                                    full_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    bio: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    job_title: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    is_active: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
+                                    ])),
+                                    email_address: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    facebook_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    twitter_handle: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    linkedin_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    github_username: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            description: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            one_liner: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            company_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            company_domain: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            accelerator_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            accelerator_domain: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    blog_urls: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    custom_data: z.optional(z.union([
+                        z.record(z.string(), z.string()),
+                        z.null()
+                    ])),
+                    domains: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    emails: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    phone_numbers: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    employee_count_consensus: z.optional(z.union([
+                        z.object({
+                            gte: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            lte: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    facebook_urls: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    fortune_rankings: z.optional(z.union([
+                        z.array(z.object({
+                            list: z.enum(['fortune-500-usa']),
+                            year: z.number(),
+                            rank: z.number()
+                        })),
+                        z.null()
+                    ])),
+                    founded_on_consensus: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    github_usernames: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    instagram_handles: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    latest_funding_consensus: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    linkedin_slugs: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    linkedin_primary_slug: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    li_org_id: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    li_category: z.optional(z.nullable(z.enum([
+                        'W',
+                        'S',
+                        'C'
+                    ]))),
+                    li_job_posts_stats: z.optional(z.union([
+                        z.object({
+                            total_count: z.number(),
+                            seniority_stats: z.optional(z.union([
+                                z.object({
+                                    'Entry level': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Director: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Associate: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Mid-Senior level': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Internship: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Executive: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Not Applicable': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    }))
+                                }),
+                                z.null()
+                            ])),
+                            employment_type_stats: z.optional(z.union([
+                                z.object({
+                                    'Full-time': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Temporary: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Internship: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Contract: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Part-time': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Volunteer: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Other: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    }))
+                                }),
+                                z.null()
+                            ])),
+                            country_location_stats: z.optional(z.union([
+                                z.object({
+                                    USA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GBR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    FRA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    IND: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BRA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    DEU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ESP: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CAN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    AUS: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NLD: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ITA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ZAF: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BEL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CHN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TUR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MEX: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CHE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NOR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ARE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SWE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    POL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    IDN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ARG: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PRT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    COL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CHL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PAK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    DNK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    JPN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NGA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SGP: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PER: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NZL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    AUT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    IRL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MYS: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BGD: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    EGY: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ISR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SAU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PHL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    FIN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    IRN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ROU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CZE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GRC: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    HKG: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    HUN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    KEN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MAR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    VNM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    RUS: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    UKR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ECU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    THA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LKA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    KOR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BGR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GHA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SRB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TWN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    HRV: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LTU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PRI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SVK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TUN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    EST: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    VEN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CRI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PAN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    URY: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LBN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LUX: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CYP: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NPL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    JOR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SVN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MTQ: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    QAT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GLP: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    UGA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    DZA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GTM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CMR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LVA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    DOM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    AZE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GEO: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SEN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TZA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ZWE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    KWT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MLT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    OMN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BOL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SLV: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ARM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PRY: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    IRQ: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    KHM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BIH: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    AGO: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BHR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ALB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    KAZ: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CIV: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ETH: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MUS: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ZMB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MKD: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    COD: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BLR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MOZ: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    REU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TTO: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GUF: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ISL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MMR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    HND: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    RWA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MDG: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BEN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    UZB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NAM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BWA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MDA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    JEY: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NIC: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SDN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    JAM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    IMN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BFA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MNG: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MNE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MCO: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TGO: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    AFG: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LBY: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    XKX: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CYM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MWI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SOM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PNG: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MDV: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MLI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GIN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PSE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GAB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LIE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    HTI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SYR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BRB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    YEM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GGY: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NCL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    AND: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SUR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MYT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    KGZ: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BHS: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GIB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    COG: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    FJI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BLM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CUW: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CUB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SLE: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BLZ: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NER: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LBR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    VIR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PYF: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GUM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MRT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ABW: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SYC: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GUY: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LSO: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SWZ: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SSD: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LCA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MAC: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SMR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    LAO: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BRN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TCD: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BMU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    VGB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PRK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BTN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BDI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    FRO: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TJK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GMB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    STP: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ANT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    VCT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    DJI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CPV: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TKM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ATG: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TCA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    KNA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GRD: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ASM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    VUT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GNQ: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GRL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SXM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MNP: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    COM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TLS: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SJM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CAF: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    DMA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MAF: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    WSM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BES: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MHL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    AIA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TON: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    COK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SLB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SPM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    GNB: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ATA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TUV: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ALA: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    IOT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ERI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PLW: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    FSM: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NRU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    PCN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    FLK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    MSR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    VAT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    KIR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SHN: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NIU: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    WLF: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    HMD: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CXR: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    NFK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ATF: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    CCK: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    SGS: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    BVT: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    UMI: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    ESH: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    TKL: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    }))
+                                }),
+                                z.null()
+                            ])),
+                            puree_job_functions_stats: z.optional(z.union([
+                                z.object({
+                                    'Arts and Design': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Business Development': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Community & Social Services': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Consulting: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Education: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Engineering: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Entrepreneurship: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Healthcare Services': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Human Resources': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Information Technology': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Legal: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Military & Protective Services': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Operations: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Program & Product Management': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Real Estate': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Sales: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Support: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Administrative: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Finance: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Marketing: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Purchasing: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Product Management': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Advertising: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Analyst: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Customer Service': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Distribution: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Design: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'General Business': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Management: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Manufacturing: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Other: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Public Relations': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Project Management': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Production: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Quality Assurance': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Research: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Science: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Supply Chain': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Training: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Health Care Provider': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Accounting: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Art / Creative': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Strategy / Planning': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Writing / Editing': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    }))
+                                }),
+                                z.null()
+                            ])),
+                            standard_industries_stats: z.optional(z.union([
+                                z.object({
+                                    'Administrative Services': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Aerospace & Military': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Artificial Intelligence': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Arts & Music': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Automotive: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Business Services': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Cloud: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Construction: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Consulting: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Consumer Goods': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Consumer Services': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Design: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Education: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Energy: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Entertainment: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Environmental: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Events: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Farming & Agriculture': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Finance: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Food & Beverage': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Gaming: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Government: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Hardware: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Healthcare: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Hospitality: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Industrials: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Information Technology': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Insurance: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Legal: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Life Sciences': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Logistics: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Manufacturing: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Marketing & Advertising': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Media: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Mining: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Nonprofit: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Publishing: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Real Estate': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Retail: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Science & Engineering': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Security: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Software: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Sports: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Telecom: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Trade: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Transportation: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Travel & Tourism': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Utilities: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    'Venture Capital': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    }))
+                                }),
+                                z.null()
+                            ])),
+                            job_location_type_stats: z.optional(z.union([
+                                z.object({
+                                    'On-site': z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Remote: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    })),
+                                    Hybrid: z.optional(z.object({
+                                        count: z.number(),
+                                        fraction: z.number()
+                                    }))
+                                }),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    li_description: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    li_follower_count: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    li_headline: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    li_industries: z.optional(z.union([
+                        z.array(z.object({
+                            id: z.string(),
+                            name: z.string(),
+                            primary: z.optional(z.union([
+                                z.boolean(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    li_locations: z.optional(z.union([
+                        z.array(z.object({
+                            address: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            is_primary: z.optional(z.union([
+                                z.boolean(),
+                                z.null()
+                            ])),
+                            location: z.optional(z.union([
+                                z.object({
+                                    street_address: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    neighborhood: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    city: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    state_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    state_code: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    county: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    postal_code: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    country_code: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    country_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    coordinates: z.optional(z.union([
+                                        z.object({
+                                            lat: z.number(),
+                                            lon: z.number()
+                                        }),
+                                        z.null()
+                                    ])),
+                                    timezone: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    full_address: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    formatted_address: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    li_specialties: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    location_consensus: z.optional(z.union([
+                        z.object({
+                            street_address: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            neighborhood: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            city: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            state_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            state_code: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            county: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            postal_code: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            country_code: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            country_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            coordinates: z.optional(z.union([
+                                z.object({
+                                    lat: z.number(),
+                                    lon: z.number()
+                                }),
+                                z.null()
+                            ])),
+                            timezone: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            full_address: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            formatted_address: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    locations_stats: z.optional(z.union([
+                        z.object({
+                            USA: z.optional(z.number()),
+                            GBR: z.optional(z.number()),
+                            FRA: z.optional(z.number()),
+                            IND: z.optional(z.number()),
+                            BRA: z.optional(z.number()),
+                            DEU: z.optional(z.number()),
+                            ESP: z.optional(z.number()),
+                            CAN: z.optional(z.number()),
+                            AUS: z.optional(z.number()),
+                            NLD: z.optional(z.number()),
+                            ITA: z.optional(z.number()),
+                            ZAF: z.optional(z.number()),
+                            BEL: z.optional(z.number()),
+                            CHN: z.optional(z.number()),
+                            TUR: z.optional(z.number()),
+                            MEX: z.optional(z.number()),
+                            CHE: z.optional(z.number()),
+                            NOR: z.optional(z.number()),
+                            ARE: z.optional(z.number()),
+                            SWE: z.optional(z.number()),
+                            POL: z.optional(z.number()),
+                            IDN: z.optional(z.number()),
+                            ARG: z.optional(z.number()),
+                            PRT: z.optional(z.number()),
+                            COL: z.optional(z.number()),
+                            CHL: z.optional(z.number()),
+                            PAK: z.optional(z.number()),
+                            DNK: z.optional(z.number()),
+                            JPN: z.optional(z.number()),
+                            NGA: z.optional(z.number()),
+                            SGP: z.optional(z.number()),
+                            PER: z.optional(z.number()),
+                            NZL: z.optional(z.number()),
+                            AUT: z.optional(z.number()),
+                            IRL: z.optional(z.number()),
+                            MYS: z.optional(z.number()),
+                            BGD: z.optional(z.number()),
+                            EGY: z.optional(z.number()),
+                            ISR: z.optional(z.number()),
+                            SAU: z.optional(z.number()),
+                            PHL: z.optional(z.number()),
+                            FIN: z.optional(z.number()),
+                            IRN: z.optional(z.number()),
+                            ROU: z.optional(z.number()),
+                            CZE: z.optional(z.number()),
+                            GRC: z.optional(z.number()),
+                            HKG: z.optional(z.number()),
+                            HUN: z.optional(z.number()),
+                            KEN: z.optional(z.number()),
+                            MAR: z.optional(z.number()),
+                            VNM: z.optional(z.number()),
+                            RUS: z.optional(z.number()),
+                            UKR: z.optional(z.number()),
+                            ECU: z.optional(z.number()),
+                            THA: z.optional(z.number()),
+                            LKA: z.optional(z.number()),
+                            KOR: z.optional(z.number()),
+                            BGR: z.optional(z.number()),
+                            GHA: z.optional(z.number()),
+                            SRB: z.optional(z.number()),
+                            TWN: z.optional(z.number()),
+                            HRV: z.optional(z.number()),
+                            LTU: z.optional(z.number()),
+                            PRI: z.optional(z.number()),
+                            SVK: z.optional(z.number()),
+                            TUN: z.optional(z.number()),
+                            EST: z.optional(z.number()),
+                            VEN: z.optional(z.number()),
+                            CRI: z.optional(z.number()),
+                            PAN: z.optional(z.number()),
+                            URY: z.optional(z.number()),
+                            LBN: z.optional(z.number()),
+                            LUX: z.optional(z.number()),
+                            CYP: z.optional(z.number()),
+                            NPL: z.optional(z.number()),
+                            JOR: z.optional(z.number()),
+                            SVN: z.optional(z.number()),
+                            MTQ: z.optional(z.number()),
+                            QAT: z.optional(z.number()),
+                            GLP: z.optional(z.number()),
+                            UGA: z.optional(z.number()),
+                            DZA: z.optional(z.number()),
+                            GTM: z.optional(z.number()),
+                            CMR: z.optional(z.number()),
+                            LVA: z.optional(z.number()),
+                            DOM: z.optional(z.number()),
+                            AZE: z.optional(z.number()),
+                            GEO: z.optional(z.number()),
+                            SEN: z.optional(z.number()),
+                            TZA: z.optional(z.number()),
+                            ZWE: z.optional(z.number()),
+                            KWT: z.optional(z.number()),
+                            MLT: z.optional(z.number()),
+                            OMN: z.optional(z.number()),
+                            BOL: z.optional(z.number()),
+                            SLV: z.optional(z.number()),
+                            ARM: z.optional(z.number()),
+                            PRY: z.optional(z.number()),
+                            IRQ: z.optional(z.number()),
+                            KHM: z.optional(z.number()),
+                            BIH: z.optional(z.number()),
+                            AGO: z.optional(z.number()),
+                            BHR: z.optional(z.number()),
+                            ALB: z.optional(z.number()),
+                            KAZ: z.optional(z.number()),
+                            CIV: z.optional(z.number()),
+                            ETH: z.optional(z.number()),
+                            MUS: z.optional(z.number()),
+                            ZMB: z.optional(z.number()),
+                            MKD: z.optional(z.number()),
+                            COD: z.optional(z.number()),
+                            BLR: z.optional(z.number()),
+                            MOZ: z.optional(z.number()),
+                            REU: z.optional(z.number()),
+                            TTO: z.optional(z.number()),
+                            GUF: z.optional(z.number()),
+                            ISL: z.optional(z.number()),
+                            MMR: z.optional(z.number()),
+                            HND: z.optional(z.number()),
+                            RWA: z.optional(z.number()),
+                            MDG: z.optional(z.number()),
+                            BEN: z.optional(z.number()),
+                            UZB: z.optional(z.number()),
+                            NAM: z.optional(z.number()),
+                            BWA: z.optional(z.number()),
+                            MDA: z.optional(z.number()),
+                            JEY: z.optional(z.number()),
+                            NIC: z.optional(z.number()),
+                            SDN: z.optional(z.number()),
+                            JAM: z.optional(z.number()),
+                            IMN: z.optional(z.number()),
+                            BFA: z.optional(z.number()),
+                            MNG: z.optional(z.number()),
+                            MNE: z.optional(z.number()),
+                            MCO: z.optional(z.number()),
+                            TGO: z.optional(z.number()),
+                            AFG: z.optional(z.number()),
+                            LBY: z.optional(z.number()),
+                            XKX: z.optional(z.number()),
+                            CYM: z.optional(z.number()),
+                            MWI: z.optional(z.number()),
+                            SOM: z.optional(z.number()),
+                            PNG: z.optional(z.number()),
+                            MDV: z.optional(z.number()),
+                            MLI: z.optional(z.number()),
+                            GIN: z.optional(z.number()),
+                            PSE: z.optional(z.number()),
+                            GAB: z.optional(z.number()),
+                            LIE: z.optional(z.number()),
+                            HTI: z.optional(z.number()),
+                            SYR: z.optional(z.number()),
+                            BRB: z.optional(z.number()),
+                            YEM: z.optional(z.number()),
+                            GGY: z.optional(z.number()),
+                            NCL: z.optional(z.number()),
+                            AND: z.optional(z.number()),
+                            SUR: z.optional(z.number()),
+                            MYT: z.optional(z.number()),
+                            KGZ: z.optional(z.number()),
+                            BHS: z.optional(z.number()),
+                            GIB: z.optional(z.number()),
+                            COG: z.optional(z.number()),
+                            FJI: z.optional(z.number()),
+                            BLM: z.optional(z.number()),
+                            CUW: z.optional(z.number()),
+                            CUB: z.optional(z.number()),
+                            SLE: z.optional(z.number()),
+                            BLZ: z.optional(z.number()),
+                            NER: z.optional(z.number()),
+                            LBR: z.optional(z.number()),
+                            VIR: z.optional(z.number()),
+                            PYF: z.optional(z.number()),
+                            GUM: z.optional(z.number()),
+                            MRT: z.optional(z.number()),
+                            ABW: z.optional(z.number()),
+                            SYC: z.optional(z.number()),
+                            GUY: z.optional(z.number()),
+                            LSO: z.optional(z.number()),
+                            SWZ: z.optional(z.number()),
+                            SSD: z.optional(z.number()),
+                            LCA: z.optional(z.number()),
+                            MAC: z.optional(z.number()),
+                            SMR: z.optional(z.number()),
+                            LAO: z.optional(z.number()),
+                            BRN: z.optional(z.number()),
+                            TCD: z.optional(z.number()),
+                            BMU: z.optional(z.number()),
+                            VGB: z.optional(z.number()),
+                            PRK: z.optional(z.number()),
+                            BTN: z.optional(z.number()),
+                            BDI: z.optional(z.number()),
+                            FRO: z.optional(z.number()),
+                            TJK: z.optional(z.number()),
+                            GMB: z.optional(z.number()),
+                            STP: z.optional(z.number()),
+                            ANT: z.optional(z.number()),
+                            VCT: z.optional(z.number()),
+                            DJI: z.optional(z.number()),
+                            CPV: z.optional(z.number()),
+                            TKM: z.optional(z.number()),
+                            ATG: z.optional(z.number()),
+                            TCA: z.optional(z.number()),
+                            KNA: z.optional(z.number()),
+                            GRD: z.optional(z.number()),
+                            ASM: z.optional(z.number()),
+                            VUT: z.optional(z.number()),
+                            GNQ: z.optional(z.number()),
+                            GRL: z.optional(z.number()),
+                            SXM: z.optional(z.number()),
+                            MNP: z.optional(z.number()),
+                            COM: z.optional(z.number()),
+                            TLS: z.optional(z.number()),
+                            SJM: z.optional(z.number()),
+                            CAF: z.optional(z.number()),
+                            DMA: z.optional(z.number()),
+                            MAF: z.optional(z.number()),
+                            WSM: z.optional(z.number()),
+                            BES: z.optional(z.number()),
+                            MHL: z.optional(z.number()),
+                            AIA: z.optional(z.number()),
+                            TON: z.optional(z.number()),
+                            COK: z.optional(z.number()),
+                            SLB: z.optional(z.number()),
+                            SPM: z.optional(z.number()),
+                            GNB: z.optional(z.number()),
+                            ATA: z.optional(z.number()),
+                            TUV: z.optional(z.number()),
+                            ALA: z.optional(z.number()),
+                            IOT: z.optional(z.number()),
+                            ERI: z.optional(z.number()),
+                            PLW: z.optional(z.number()),
+                            FSM: z.optional(z.number()),
+                            NRU: z.optional(z.number()),
+                            PCN: z.optional(z.number()),
+                            FLK: z.optional(z.number()),
+                            MSR: z.optional(z.number()),
+                            VAT: z.optional(z.number()),
+                            KIR: z.optional(z.number()),
+                            SHN: z.optional(z.number()),
+                            NIU: z.optional(z.number()),
+                            WLF: z.optional(z.number()),
+                            HMD: z.optional(z.number()),
+                            CXR: z.optional(z.number()),
+                            NFK: z.optional(z.number()),
+                            ATF: z.optional(z.number()),
+                            CCK: z.optional(z.number()),
+                            SGS: z.optional(z.number()),
+                            BVT: z.optional(z.number()),
+                            UMI: z.optional(z.number()),
+                            ESH: z.optional(z.number()),
+                            TKL: z.optional(z.number()),
+                            'X-SOUTH_ASIA': z.optional(z.number()),
+                            'X-SOUTH_EAST_EUROPE': z.optional(z.number()),
+                            'X-NORTHERN_AFRICA': z.optional(z.number()),
+                            'X-PACIFIC': z.optional(z.number()),
+                            'X-SOUTH_WEST_EUROPE': z.optional(z.number()),
+                            'X-SOUTHERN_AFRICA': z.optional(z.number()),
+                            'X-WEST_INDIES': z.optional(z.number()),
+                            'X-SOUTH_AMERICA': z.optional(z.number()),
+                            'X-SOUTH_WEST_ASIA': z.optional(z.number()),
+                            'X-CENTRAL_EUROPE': z.optional(z.number()),
+                            'X-EASTERN_EUROPE': z.optional(z.number()),
+                            'X-WESTERN_EUROPE': z.optional(z.number()),
+                            'X-CENTRAL_AMERICA': z.optional(z.number()),
+                            'X-WESTERN_AFRICA': z.optional(z.number()),
+                            'X-SOUTH_ATLANTIC_OCEAN': z.optional(z.number()),
+                            'X-SOUTH_EAST_ASIA': z.optional(z.number()),
+                            'X-CENTRAL_AFRICA': z.optional(z.number()),
+                            'X-NORTH_AMERICA': z.optional(z.number()),
+                            'X-EAST_ASIA': z.optional(z.number()),
+                            'X-NORTHERN_EUROPE': z.optional(z.number()),
+                            'X-EASTERN_AFRICA': z.optional(z.number()),
+                            'X-SOUTHERN_INDIAN_OCEAN': z.optional(z.number()),
+                            'X-SOUTHERN_EUROPE': z.optional(z.number()),
+                            'X-CENTRAL_ASIA': z.optional(z.number()),
+                            'X-NORTHERN_ASIA': z.optional(z.number()),
+                            'X-ASIA': z.optional(z.number()),
+                            'X-EUROPE': z.optional(z.number()),
+                            'X-AFRICA': z.optional(z.number()),
+                            'X-OCEANIA': z.optional(z.number()),
+                            'X-AMERICAS': z.optional(z.number()),
+                            'X-ANTARCTICA': z.optional(z.number()),
+                            'X-ATLANTIC_OCEAN': z.optional(z.number()),
+                            'X-INDIAN_OCEAN': z.optional(z.number()),
+                            'X-MIDDLE_EAST': z.optional(z.number()),
+                            'X-MENA': z.optional(z.number()),
+                            'X-EMEA': z.optional(z.number()),
+                            'X-EUROPEAN_UNION': z.optional(z.number()),
+                            'X-EFTA': z.optional(z.number()),
+                            'X-APAC': z.optional(z.number()),
+                            'X-LATAM': z.optional(z.number()),
+                            'X-ANGLOSPHERE': z.optional(z.number()),
+                            'X-DACH': z.optional(z.number()),
+                            'X-NORDICS': z.optional(z.number()),
+                            'X-BENELUX': z.optional(z.number()),
+                            'X-GCC': z.optional(z.number()),
+                            'X-BRICS': z.optional(z.number()),
+                            'X-G20': z.optional(z.number()),
+                            'X-OECD': z.optional(z.number()),
+                            'X-SANCTIONED': z.optional(z.number())
+                        }),
+                        z.null()
+                    ])),
+                    market_cap_usd: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    naics_codes: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    names: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    preferred_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    preferred_name_word_count: z.optional(z.union([
+                        z.int(),
+                        z.null()
+                    ])),
+                    revenue_estimate: z.optional(z.union([
+                        z.object({
+                            sources: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            fiscal_year: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ])),
+                            value_usd: z.object({
+                                gte: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                lte: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })
+                        }),
+                        z.null()
+                    ])),
+                    standard_industries: z.optional(z.union([
+                        z.array(z.enum([
+                            'Administrative Services',
+                            'Aerospace & Military',
+                            'Artificial Intelligence',
+                            'Arts & Music',
+                            'Automotive',
+                            'Business Services',
+                            'Cloud',
+                            'Construction',
+                            'Consulting',
+                            'Consumer Goods',
+                            'Consumer Services',
+                            'Design',
+                            'Education',
+                            'Energy',
+                            'Entertainment',
+                            'Environmental',
+                            'Events',
+                            'Farming & Agriculture',
+                            'Finance',
+                            'Food & Beverage',
+                            'Gaming',
+                            'Government',
+                            'Hardware',
+                            'Healthcare',
+                            'Hospitality',
+                            'Industrials',
+                            'Information Technology',
+                            'Insurance',
+                            'Legal',
+                            'Life Sciences',
+                            'Logistics',
+                            'Manufacturing',
+                            'Marketing & Advertising',
+                            'Media',
+                            'Mining',
+                            'Nonprofit',
+                            'Publishing',
+                            'Real Estate',
+                            'Retail',
+                            'Science & Engineering',
+                            'Security',
+                            'Software',
+                            'Sports',
+                            'Telecom',
+                            'Trade',
+                            'Transportation',
+                            'Travel & Tourism',
+                            'Utilities',
+                            'Venture Capital'
+                        ])),
+                        z.null()
+                    ])),
+                    status_consensus: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    stock_info_consensus: z.optional(z.union([
+                        z.object({
+                            ticker: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            exchange: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    tags: z.optional(z.union([
+                        z.array(z.enum([
+                            'raised-from-top-vc',
+                            'is-government',
+                            'is-school',
+                            'venture-backed-startup'
+                        ])),
+                        z.null()
+                    ])),
+                    total_funding_consensus: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    twitter_handles: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    websites: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    wellfound_slugs: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    youtube_urls: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    role_count_matches: z.optional(z.union([
+                        z.array(z.object({
+                            numMatchingEmployees: z.union([
+                                z.object({
+                                    type: z.enum(['exact']),
+                                    value: z.number()
+                                }),
+                                z.object({
+                                    type: z.enum(['all'])
+                                }),
+                                z.object({
+                                    type: z.enum(['none'])
+                                }),
+                                z.object({
+                                    type: z.enum(['not-matched'])
+                                })
+                            ])
+                        })),
+                        z.null()
+                    ])),
+                    num_matching_locations: z.optional(z.union([
+                        z.object({
+                            num_offices_matched: z.number(),
+                            matched_offices: z.array(z.object({
+                                address: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
+                                is_primary: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
+                                ])),
+                                location: z.optional(z.union([
+                                    z.object({
+                                        street_address: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        neighborhood: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        city: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        state_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        state_code: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        county: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        postal_code: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        country_code: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        country_name: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        coordinates: z.optional(z.union([
+                                            z.object({
+                                                lat: z.number(),
+                                                lon: z.number()
+                                            }),
+                                            z.null()
+                                        ])),
+                                        timezone: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        full_address: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ])),
+                                        formatted_address: z.optional(z.union([
+                                            z.string(),
+                                            z.null()
+                                        ]))
+                                    }),
+                                    z.null()
+                                ]))
+                            }))
+                        }),
+                        z.null()
+                    ])),
+                    linkedin_ids: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    last_sort_key: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    relevance_score: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    technology_spend_usd: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    historical_headcount: z.optional(z.union([
+                        z.object({
+                            latest_snapshot_date: z.iso.date(),
+                            snapshots: z.array(z.object({
+                                date: z.iso.date(),
+                                employees: z.int()
+                            })),
+                            growth: z.object({
+                                '1m': z.optional(z.union([
+                                    z.object({
+                                        percent: z.number(),
+                                        quantity: z.int()
+                                    }),
+                                    z.null()
+                                ])),
+                                '2m': z.optional(z.union([
+                                    z.object({
+                                        percent: z.number(),
+                                        quantity: z.int()
+                                    }),
+                                    z.null()
+                                ])),
+                                '3m': z.optional(z.union([
+                                    z.object({
+                                        percent: z.number(),
+                                        quantity: z.int()
+                                    }),
+                                    z.null()
+                                ])),
+                                '6m': z.optional(z.union([
+                                    z.object({
+                                        percent: z.number(),
+                                        quantity: z.int()
+                                    }),
+                                    z.null()
+                                ])),
+                                '12m': z.optional(z.union([
+                                    z.object({
+                                        percent: z.number(),
+                                        quantity: z.int()
+                                    }),
+                                    z.null()
+                                ])),
+                                '18m': z.optional(z.union([
+                                    z.object({
+                                        percent: z.number(),
+                                        quantity: z.int()
+                                    }),
+                                    z.null()
+                                ])),
+                                '24m': z.optional(z.union([
+                                    z.object({
+                                        percent: z.number(),
+                                        quantity: z.int()
+                                    }),
+                                    z.null()
+                                ])),
+                                '36m': z.optional(z.union([
+                                    z.object({
+                                        percent: z.number(),
+                                        quantity: z.int()
+                                    }),
+                                    z.null()
+                                ]))
+                            })
+                        }),
+                        z.null()
+                    ])),
+                    cik_numbers: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    cage_codes: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    duns_numbers: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    num_li_locations: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    location_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    crunchbase_slug: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    primary_role: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    roles: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    short_description: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    long_description: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    is_subsidiary: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    parent: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    num_funding_rounds: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    funding_rounds: z.optional(z.union([
+                        z.array(z.object({
+                            round_type: z.optional(z.nullable(z.enum([
+                                'angel',
+                                'convertible_note',
+                                'corporate_round',
+                                'debt_financing',
+                                'equity_crowdfunding',
+                                'grant',
+                                'initial_coin_offering',
+                                'non_equity_assistance',
+                                'post_ipo_debt',
+                                'post_ipo_equity',
+                                'post_ipo_secondary',
+                                'pre_seed',
+                                'private_equity',
+                                'product_crowdfunding',
+                                'secondary_market',
+                                'seed',
+                                'series_a',
+                                'series_b',
+                                'series_c',
+                                'series_d',
+                                'series_e',
+                                'series_f',
+                                'series_g',
+                                'series_h',
+                                'series_i',
+                                'series_j',
+                                'series_unknown',
+                                'undisclosed'
+                            ]))),
+                            announced_on_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            raised_amount_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            post_money_valuation_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    num_exits: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    investors: z.optional(z.union([
+                        z.array(z.object({
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            entity_type: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            investor_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            linkedin_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            investor_types: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    acquisitions: z.optional(z.union([
+                        z.array(z.object({
+                            price_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            acquiree_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            acquisition_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    best_funding_round: z.optional(z.union([
+                        z.object({
+                            round_type: z.optional(z.nullable(z.enum([
+                                'angel',
+                                'convertible_note',
+                                'corporate_round',
+                                'debt_financing',
+                                'equity_crowdfunding',
+                                'grant',
+                                'initial_coin_offering',
+                                'non_equity_assistance',
+                                'post_ipo_debt',
+                                'post_ipo_equity',
+                                'post_ipo_secondary',
+                                'pre_seed',
+                                'private_equity',
+                                'product_crowdfunding',
+                                'secondary_market',
+                                'seed',
+                                'series_a',
+                                'series_b',
+                                'series_c',
+                                'series_d',
+                                'series_e',
+                                'series_f',
+                                'series_g',
+                                'series_h',
+                                'series_i',
+                                'series_j',
+                                'series_unknown',
+                                'undisclosed'
+                            ]))),
+                            announced_on_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            raised_amount_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            post_money_valuation_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    funding_stage: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    alt_industries: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    alt_keywords: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    alt_description: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    employee_trends: z.optional(z.union([
+                        z.array(z.object({
+                            functions: z.optional(z.nullable(z.enum([
+                                '_all_employees',
+                                'information_technology',
+                                'administrative',
+                                'marketing',
+                                'human_resources',
+                                'product_management',
+                                'support',
+                                'education',
+                                'operations',
+                                'finance',
+                                'media_and_commmunication',
+                                'business_development',
+                                'data_science',
+                                'entrepreneurship',
+                                'arts_and_design',
+                                'sales',
+                                'engineering',
+                                'consulting',
+                                'accounting',
+                                'legal'
+                            ]))),
+                            current_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            changes: z.optional(z.union([
+                                z.array(z.object({
+                                    count_end: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    count_start: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    months_back: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    end_of_period: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    numeric_change: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    percent_change: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    start_of_period: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    logo_url: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    similar_companies: z.optional(z.union([
+                        z.array(z.object({
+                            name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            industries: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            employee_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            revenue: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    full_funding_rounds: z.optional(z.union([
+                        z.array(z.object({
+                            investors: z.optional(z.union([
+                                z.array(z.object({
+                                    is_lead: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
+                                    ])),
+                                    investor_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    investor_type: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    investor_domain: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    investor_categories: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    investor_linkedin_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    investor_linkedin_org_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            round_city: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            round_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            round_type: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            round_state: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            investor_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            round_raised_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            round_country_code: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            round_valuation_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    funding_round_stats: z.optional(z.union([
+                        z.object({
+                            round_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            total_raised_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            peak_valuation_usd: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            unique_investor_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            individual_investor_stats: z.optional(z.union([
+                                z.array(z.object({
+                                    investor_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    investor_type: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    investor_domain: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    investment_count: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    participated_round_types: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            unique_personal_investor_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            unique_organizational_investor_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    investment_stats: z.optional(z.union([
+                        z.object({
+                            investments_by_stage: z.optional(z.union([
+                                z.array(z.object({
+                                    stage: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    lead_rate: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    lead_count: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    total_count: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    share_of_portfolio: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    last_investment_date: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            lead_investment_rate: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            lead_investment_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            total_investment_count: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            last_investment_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    is_investor: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    investor_type: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    investor_categories: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    technologies_used: z.optional(z.union([
+                        z.array(z.object({
+                            name: z.string()
+                        })),
+                        z.null()
+                    ])),
+                    platforms: z.optional(z.union([
+                        z.object({
+                            ecommerce: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            cms: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            crm: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            marketing: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ])),
+                            payment: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ]))
+        }))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zQuickPersonResolveData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        people: z.array(z.union([
+            z.object({
+                identifier: z.enum(['linkedinUrl']),
+                value: z.string().min(1)
+            }),
+            z.object({
+                identifier: z.enum(['linkedinSlug']),
+                value: z.string().min(1)
+            }),
+            z.object({
+                identifier: z.enum(['linkedinUserId']),
+                value: z.string().min(1).regex(/^\d+$/)
+            }),
+            z.object({
+                identifier: z.enum(['entityUrn']),
+                value: z.string().min(1)
+            })
+        ])).min(1).max(100)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zQuickPersonResolveResponse = z.object({
+    output: z.object({
+        data: z.array(z.object({
+            identifier: z.enum([
+                'linkedinUrl',
+                'linkedinSlug',
+                'linkedinUserId',
+                'entityUrn'
+            ]),
+            value: z.string(),
+            found: z.boolean(),
+            person: z.optional(z.union([
+                z.object({
+                    articles: z.optional(z.union([
+                        z.array(z.object({
+                            id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            date_published: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    certifications: z.optional(z.union([
+                        z.array(z.object({
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            credential_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            verify_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            summary: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            linkedin_company_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            company_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    connection_count: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    courses: z.optional(z.union([
+                        z.array(z.object({
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            course_number: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            association: z.optional(z.null())
+                        })),
+                        z.null()
+                    ])),
+                    dob: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    education: z.optional(z.union([
+                        z.array(z.object({
+                            school_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            school_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            field_of_study_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            field_of_study_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            degree: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            grade: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            activities: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            notes: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    experiences: z.optional(z.union([
+                        z.array(z.object({
+                            linkedin_company_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            is_current: z.optional(z.union([
+                                z.boolean(),
+                                z.null()
+                            ])),
+                            company_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            locality: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            summary: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            seniority: z.optional(z.nullable(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
+                            ]))),
+                            job_function: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
+                                ])),
+                                z.null()
+                            ])),
+                            employment_type: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Full-time',
+                                    'Temporary',
+                                    'Internship',
+                                    'Contract',
+                                    'Part-time',
+                                    'Volunteer',
+                                    'Other'
+                                ])),
+                                z.null()
+                            ])),
+                            academic_qualification: z.optional(z.union([
+                                z.array(z.enum([
+                                    'High School',
+                                    'Associate Degree',
+                                    'Bachelor Degree'
+                                ])),
+                                z.null()
+                            ])),
+                            company_start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            company_end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    first_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    follower_count: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    headline: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    industry_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    inferred_location: z.optional(z.union([
+                        z.object({
+                            street_address: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            neighborhood: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            city: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            state_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            state_code: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            county: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            postal_code: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            country_code: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            country_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            coordinates: z.optional(z.union([
+                                z.object({
+                                    lat: z.number(),
+                                    lon: z.number()
+                                }),
+                                z.null()
+                            ])),
+                            timezone: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            full_address: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            formatted_address: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    interests: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    last_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    locality: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    patents: z.optional(z.union([
+                        z.array(z.object({
+                            id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            country: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            number: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            description: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    profile_pic: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    projects: z.optional(z.union([
+                        z.array(z.object({
+                            project_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            project_title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            project_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            project_summary: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            is_current: z.optional(z.union([
+                                z.boolean(),
+                                z.null()
+                            ])),
+                            start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    publications: z.optional(z.union([
+                        z.array(z.object({
+                            collaborators: z.optional(z.union([
+                                z.array(z.object({
+                                    name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            publisher: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            summary: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    skills: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    primary_slug: z.string(),
+                    slugs: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    summary: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    url: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    user_id: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    volunteering: z.optional(z.union([
+                        z.array(z.object({
+                            role: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            is_current: z.optional(z.union([
+                                z.boolean(),
+                                z.null()
+                            ])),
+                            cause: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            summary: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            linkedin_company_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            company_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    tenures: z.optional(z.union([
+                        z.array(z.object({
+                            linkedin_company_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            company_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            date_range: z.object({
+                                gte: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
+                                lte: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ]))
+                            }),
+                            range_length_days: z.optional(z.union([
+                                z.number(),
+                                z.null()
+                            ])),
+                            titles: z.array(z.string()),
+                            localities: z.array(z.string())
+                        })),
+                        z.null()
+                    ])),
+                    career_began_at: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    tags: z.optional(z.union([
+                        z.array(z.enum([
+                            'student',
+                            'attended-top-us-university',
+                            'attended-top-global-university',
+                            'second-time-founder',
+                            'deep-technical-background',
+                            'major-tech-company-experience',
+                            'fortune-500-executive',
+                            'recently-changed-companies',
+                            'recently-promoted',
+                            'decision-maker',
+                            'c-suite',
+                            'experienced-executive',
+                            'phd',
+                            'influencer',
+                            'board-member'
+                        ])),
+                        z.null()
+                    ])),
+                    entity_urn: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    open_to_work: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    premium: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    influencer: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    organizations: z.optional(z.union([
+                        z.array(z.object({
+                            name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    entity_urns: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    is_hiring: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    websites: z.optional(z.union([
+                        z.array(z.string()),
+                        z.null()
+                    ])),
+                    is_verified: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    verifications: z.optional(z.union([
+                        z.object({
+                            is_verified: z.optional(z.union([
+                                z.boolean(),
+                                z.null()
+                            ])),
+                            joined_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            verification_types: z.optional(z.union([
+                                z.array(z.object({
+                                    title: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    subtitle: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    description: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    is_top_voice: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ])),
+                    current_job: z.optional(z.union([
+                        z.object({
+                            linkedin_company_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            is_current: z.optional(z.union([
+                                z.boolean(),
+                                z.null()
+                            ])),
+                            company_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            locality: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            summary: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            seniority: z.optional(z.nullable(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
+                            ]))),
+                            job_function: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
+                                ])),
+                                z.null()
+                            ])),
+                            employment_type: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Full-time',
+                                    'Temporary',
+                                    'Internship',
+                                    'Contract',
+                                    'Part-time',
+                                    'Volunteer',
+                                    'Other'
+                                ])),
+                                z.null()
+                            ])),
+                            academic_qualification: z.optional(z.union([
+                                z.array(z.enum([
+                                    'High School',
+                                    'Associate Degree',
+                                    'Bachelor Degree'
+                                ])),
+                                z.null()
+                            ])),
+                            company_start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            company_end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    custom_data: z.optional(z.union([
+                        z.record(z.string(), z.string()),
+                        z.null()
+                    ])),
+                    relevance_score: z.optional(z.union([
+                        z.number(),
+                        z.null()
+                    ])),
+                    last_sort_key: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    last_updated_at: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    languages: z.optional(z.union([
+                        z.array(z.object({
+                            name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            proficiency_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            proficiency_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    detailed_education: z.optional(z.union([
+                        z.array(z.object({
+                            school_details: z.optional(z.union([
+                                z.object({
+                                    linkedin_ids: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            school_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            school_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            field_of_study_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            field_of_study_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            degree: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            grade: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            activities: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            notes: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    detailed_work_experiences: z.optional(z.union([
+                        z.array(z.object({
+                            company_details: z.optional(z.union([
+                                z.object({
+                                    linkedin_ids: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    li_org_id: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    linkedin_primary_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    domains: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    preferred_name: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            linkedin_company_id: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            is_current: z.optional(z.union([
+                                z.boolean(),
+                                z.null()
+                            ])),
+                            company_name: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            locality: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            summary: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            title: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            seniority: z.optional(z.nullable(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
+                            ]))),
+                            job_function: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
+                                ])),
+                                z.null()
+                            ])),
+                            employment_type: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Full-time',
+                                    'Temporary',
+                                    'Internship',
+                                    'Contract',
+                                    'Part-time',
+                                    'Volunteer',
+                                    'Other'
+                                ])),
+                                z.null()
+                            ])),
+                            academic_qualification: z.optional(z.union([
+                                z.array(z.enum([
+                                    'High School',
+                                    'Associate Degree',
+                                    'Bachelor Degree'
+                                ])),
+                                z.null()
+                            ])),
+                            company_start_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            company_end_date: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ]))
+        }))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zStealthFoundersSearchData = z.object({
     body: z.object({
         apiKey: z.string(),

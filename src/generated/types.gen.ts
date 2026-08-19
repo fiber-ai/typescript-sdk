@@ -48790,6 +48790,2947 @@ export type CombinedSearchCountResponses = {
 
 export type CombinedSearchCountResponse = CombinedSearchCountResponses[keyof CombinedSearchCountResponses];
 
+export type QuickCompanyResolveData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Companies to resolve. Each entry is an { identifier, value } pair where identifier is "linkedinSlug", "linkedinOrgId", "linkedinUrl", or "domain". Max 100 per request. You are charged only for the ones that resolve.
+         */
+        companies: Array<{
+            identifier: 'linkedinUrl';
+            /**
+             * LinkedIn company URL (e.g. 'https://www.linkedin.com/company/openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinSlug';
+            /**
+             * LinkedIn company slug (e.g. 'openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinOrgId';
+            /**
+             * LinkedIn numeric organization ID (e.g. '11130470').
+             */
+            value: string;
+        } | {
+            identifier: 'domain';
+            /**
+             * Company website domain (e.g. 'openai.com').
+             */
+            value: string;
+        }>;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/company-resolve';
+};
+
+export type QuickCompanyResolveErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type QuickCompanyResolveError = QuickCompanyResolveErrors[keyof QuickCompanyResolveErrors];
+
+export type QuickCompanyResolveResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            data: Array<{
+                /**
+                 * The identifier type you supplied, echoed back.
+                 */
+                identifier: 'linkedinUrl' | 'linkedinSlug' | 'linkedinOrgId' | 'domain';
+                /**
+                 * The identifier value you supplied, echoed back.
+                 */
+                value: string;
+                found: boolean;
+                company?: {
+                    linkedin_id?: string | null;
+                    accelerator_statuses?: Array<string> | null;
+                    accelerators?: Array<{
+                        id?: string | null;
+                        slug?: string | null;
+                        tags?: Array<string> | null;
+                        year?: number | null;
+                        batch?: string | null;
+                        founders?: Array<{
+                            full_name?: string | null;
+                            bio?: string | null;
+                            job_title?: string | null;
+                            is_active?: boolean | null;
+                            email_address?: string | null;
+                            facebook_url?: string | null;
+                            twitter_handle?: string | null;
+                            linkedin_slug?: string | null;
+                            github_username?: string | null;
+                        }> | null;
+                        description?: string | null;
+                        one_liner?: string | null;
+                        company_name?: string | null;
+                        company_domain?: string | null;
+                        accelerator_name?: string | null;
+                        accelerator_domain?: string | null;
+                    }> | null;
+                    blog_urls?: Array<string> | null;
+                    custom_data?: {
+                        [key: string]: string;
+                    } | null;
+                    domains?: Array<string> | null;
+                    emails?: Array<string> | null;
+                    phone_numbers?: Array<string> | null;
+                    employee_count_consensus?: {
+                        gte?: number | null;
+                        lte?: number | null;
+                    } | null;
+                    facebook_urls?: Array<string> | null;
+                    fortune_rankings?: Array<{
+                        list: 'fortune-500-usa';
+                        year: number;
+                        rank: number;
+                    }> | null;
+                    founded_on_consensus?: string | null;
+                    github_usernames?: Array<string> | null;
+                    instagram_handles?: Array<string> | null;
+                    latest_funding_consensus?: number | null;
+                    linkedin_slugs?: Array<string> | null;
+                    linkedin_primary_slug?: string | null;
+                    li_org_id?: string | null;
+                    li_category?: 'W' | 'S' | 'C' | null;
+                    li_job_posts_stats?: {
+                        total_count: number;
+                        seniority_stats?: {
+                            'Entry level'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Director?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Associate?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Mid-Senior level'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Internship?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Executive?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Not Applicable'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                        } | null;
+                        employment_type_stats?: {
+                            'Full-time'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Temporary?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Internship?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Contract?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Part-time'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Volunteer?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Other?: {
+                                count: number;
+                                fraction: number;
+                            };
+                        } | null;
+                        country_location_stats?: {
+                            USA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GBR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            FRA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            IND?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BRA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            DEU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ESP?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CAN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            AUS?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NLD?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ITA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ZAF?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BEL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CHN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TUR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MEX?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CHE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NOR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ARE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SWE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            POL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            IDN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ARG?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PRT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            COL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CHL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PAK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            DNK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            JPN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NGA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SGP?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PER?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NZL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            AUT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            IRL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MYS?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BGD?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            EGY?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ISR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SAU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PHL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            FIN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            IRN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ROU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CZE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GRC?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            HKG?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            HUN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            KEN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MAR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            VNM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            RUS?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            UKR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ECU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            THA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LKA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            KOR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BGR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GHA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SRB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TWN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            HRV?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LTU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PRI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SVK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TUN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            EST?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            VEN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CRI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PAN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            URY?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LBN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LUX?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CYP?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NPL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            JOR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SVN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MTQ?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            QAT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GLP?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            UGA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            DZA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GTM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CMR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LVA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            DOM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            AZE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GEO?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SEN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TZA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ZWE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            KWT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MLT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            OMN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BOL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SLV?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ARM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PRY?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            IRQ?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            KHM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BIH?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            AGO?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BHR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ALB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            KAZ?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CIV?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ETH?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MUS?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ZMB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MKD?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            COD?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BLR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MOZ?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            REU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TTO?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GUF?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ISL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MMR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            HND?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            RWA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MDG?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BEN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            UZB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NAM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BWA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MDA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            JEY?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NIC?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SDN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            JAM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            IMN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BFA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MNG?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MNE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MCO?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TGO?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            AFG?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LBY?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            XKX?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CYM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MWI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SOM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PNG?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MDV?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MLI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GIN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PSE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GAB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LIE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            HTI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SYR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BRB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            YEM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GGY?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NCL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            AND?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SUR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MYT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            KGZ?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BHS?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GIB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            COG?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            FJI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BLM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CUW?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CUB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SLE?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BLZ?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NER?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LBR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            VIR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PYF?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GUM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MRT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ABW?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SYC?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GUY?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LSO?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SWZ?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SSD?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LCA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MAC?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SMR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            LAO?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BRN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TCD?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BMU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            VGB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PRK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BTN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BDI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            FRO?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TJK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GMB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            STP?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ANT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            VCT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            DJI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CPV?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TKM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ATG?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TCA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            KNA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GRD?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ASM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            VUT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GNQ?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GRL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SXM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MNP?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            COM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TLS?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SJM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CAF?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            DMA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MAF?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            WSM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BES?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MHL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            AIA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TON?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            COK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SLB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SPM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            GNB?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ATA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TUV?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ALA?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            IOT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ERI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PLW?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            FSM?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NRU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            PCN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            FLK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            MSR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            VAT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            KIR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SHN?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NIU?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            WLF?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            HMD?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CXR?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            NFK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ATF?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            CCK?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            SGS?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            BVT?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            UMI?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            ESH?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            TKL?: {
+                                count: number;
+                                fraction: number;
+                            };
+                        } | null;
+                        puree_job_functions_stats?: {
+                            'Arts and Design'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Business Development'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Community & Social Services'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Consulting?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Education?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Engineering?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Entrepreneurship?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Healthcare Services'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Human Resources'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Information Technology'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Legal?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Military & Protective Services'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Operations?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Program & Product Management'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Real Estate'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Sales?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Support?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Administrative?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Finance?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Marketing?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Purchasing?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Product Management'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Advertising?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Analyst?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Customer Service'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Distribution?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Design?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'General Business'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Management?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Manufacturing?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Other?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Public Relations'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Project Management'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Production?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Quality Assurance'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Research?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Science?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Supply Chain'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Training?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Health Care Provider'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Accounting?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Art / Creative'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Strategy / Planning'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Writing / Editing'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                        } | null;
+                        standard_industries_stats?: {
+                            'Administrative Services'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Aerospace & Military'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Artificial Intelligence'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Arts & Music'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Automotive?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Business Services'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Cloud?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Construction?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Consulting?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Consumer Goods'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Consumer Services'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Design?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Education?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Energy?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Entertainment?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Environmental?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Events?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Farming & Agriculture'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Finance?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Food & Beverage'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Gaming?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Government?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Hardware?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Healthcare?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Hospitality?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Industrials?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Information Technology'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Insurance?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Legal?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Life Sciences'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Logistics?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Manufacturing?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Marketing & Advertising'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Media?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Mining?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Nonprofit?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Publishing?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Real Estate'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Retail?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Science & Engineering'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Security?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Software?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Sports?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Telecom?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Trade?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Transportation?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Travel & Tourism'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Utilities?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            'Venture Capital'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                        } | null;
+                        job_location_type_stats?: {
+                            'On-site'?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Remote?: {
+                                count: number;
+                                fraction: number;
+                            };
+                            Hybrid?: {
+                                count: number;
+                                fraction: number;
+                            };
+                        } | null;
+                    } | null;
+                    li_description?: string | null;
+                    li_follower_count?: number | null;
+                    li_headline?: string | null;
+                    li_industries?: Array<{
+                        id: string;
+                        name: string;
+                        primary?: boolean | null;
+                    }> | null;
+                    li_locations?: Array<{
+                        address?: string | null;
+                        is_primary?: boolean | null;
+                        location?: {
+                            street_address?: string | null;
+                            neighborhood?: string | null;
+                            city?: string | null;
+                            state_name?: string | null;
+                            state_code?: string | null;
+                            county?: string | null;
+                            postal_code?: string | null;
+                            country_code?: string | null;
+                            country_name?: string | null;
+                            coordinates?: {
+                                lat: number;
+                                lon: number;
+                            } | null;
+                            timezone?: string | null;
+                            full_address?: string | null;
+                            formatted_address?: string | null;
+                        } | null;
+                    }> | null;
+                    li_specialties?: Array<string> | null;
+                    location_consensus?: {
+                        street_address?: string | null;
+                        neighborhood?: string | null;
+                        city?: string | null;
+                        state_name?: string | null;
+                        state_code?: string | null;
+                        county?: string | null;
+                        postal_code?: string | null;
+                        country_code?: string | null;
+                        country_name?: string | null;
+                        coordinates?: {
+                            lat: number;
+                            lon: number;
+                        } | null;
+                        timezone?: string | null;
+                        full_address?: string | null;
+                        formatted_address?: string | null;
+                    } | null;
+                    locations_stats?: {
+                        USA?: number;
+                        GBR?: number;
+                        FRA?: number;
+                        IND?: number;
+                        BRA?: number;
+                        DEU?: number;
+                        ESP?: number;
+                        CAN?: number;
+                        AUS?: number;
+                        NLD?: number;
+                        ITA?: number;
+                        ZAF?: number;
+                        BEL?: number;
+                        CHN?: number;
+                        TUR?: number;
+                        MEX?: number;
+                        CHE?: number;
+                        NOR?: number;
+                        ARE?: number;
+                        SWE?: number;
+                        POL?: number;
+                        IDN?: number;
+                        ARG?: number;
+                        PRT?: number;
+                        COL?: number;
+                        CHL?: number;
+                        PAK?: number;
+                        DNK?: number;
+                        JPN?: number;
+                        NGA?: number;
+                        SGP?: number;
+                        PER?: number;
+                        NZL?: number;
+                        AUT?: number;
+                        IRL?: number;
+                        MYS?: number;
+                        BGD?: number;
+                        EGY?: number;
+                        ISR?: number;
+                        SAU?: number;
+                        PHL?: number;
+                        FIN?: number;
+                        IRN?: number;
+                        ROU?: number;
+                        CZE?: number;
+                        GRC?: number;
+                        HKG?: number;
+                        HUN?: number;
+                        KEN?: number;
+                        MAR?: number;
+                        VNM?: number;
+                        RUS?: number;
+                        UKR?: number;
+                        ECU?: number;
+                        THA?: number;
+                        LKA?: number;
+                        KOR?: number;
+                        BGR?: number;
+                        GHA?: number;
+                        SRB?: number;
+                        TWN?: number;
+                        HRV?: number;
+                        LTU?: number;
+                        PRI?: number;
+                        SVK?: number;
+                        TUN?: number;
+                        EST?: number;
+                        VEN?: number;
+                        CRI?: number;
+                        PAN?: number;
+                        URY?: number;
+                        LBN?: number;
+                        LUX?: number;
+                        CYP?: number;
+                        NPL?: number;
+                        JOR?: number;
+                        SVN?: number;
+                        MTQ?: number;
+                        QAT?: number;
+                        GLP?: number;
+                        UGA?: number;
+                        DZA?: number;
+                        GTM?: number;
+                        CMR?: number;
+                        LVA?: number;
+                        DOM?: number;
+                        AZE?: number;
+                        GEO?: number;
+                        SEN?: number;
+                        TZA?: number;
+                        ZWE?: number;
+                        KWT?: number;
+                        MLT?: number;
+                        OMN?: number;
+                        BOL?: number;
+                        SLV?: number;
+                        ARM?: number;
+                        PRY?: number;
+                        IRQ?: number;
+                        KHM?: number;
+                        BIH?: number;
+                        AGO?: number;
+                        BHR?: number;
+                        ALB?: number;
+                        KAZ?: number;
+                        CIV?: number;
+                        ETH?: number;
+                        MUS?: number;
+                        ZMB?: number;
+                        MKD?: number;
+                        COD?: number;
+                        BLR?: number;
+                        MOZ?: number;
+                        REU?: number;
+                        TTO?: number;
+                        GUF?: number;
+                        ISL?: number;
+                        MMR?: number;
+                        HND?: number;
+                        RWA?: number;
+                        MDG?: number;
+                        BEN?: number;
+                        UZB?: number;
+                        NAM?: number;
+                        BWA?: number;
+                        MDA?: number;
+                        JEY?: number;
+                        NIC?: number;
+                        SDN?: number;
+                        JAM?: number;
+                        IMN?: number;
+                        BFA?: number;
+                        MNG?: number;
+                        MNE?: number;
+                        MCO?: number;
+                        TGO?: number;
+                        AFG?: number;
+                        LBY?: number;
+                        XKX?: number;
+                        CYM?: number;
+                        MWI?: number;
+                        SOM?: number;
+                        PNG?: number;
+                        MDV?: number;
+                        MLI?: number;
+                        GIN?: number;
+                        PSE?: number;
+                        GAB?: number;
+                        LIE?: number;
+                        HTI?: number;
+                        SYR?: number;
+                        BRB?: number;
+                        YEM?: number;
+                        GGY?: number;
+                        NCL?: number;
+                        AND?: number;
+                        SUR?: number;
+                        MYT?: number;
+                        KGZ?: number;
+                        BHS?: number;
+                        GIB?: number;
+                        COG?: number;
+                        FJI?: number;
+                        BLM?: number;
+                        CUW?: number;
+                        CUB?: number;
+                        SLE?: number;
+                        BLZ?: number;
+                        NER?: number;
+                        LBR?: number;
+                        VIR?: number;
+                        PYF?: number;
+                        GUM?: number;
+                        MRT?: number;
+                        ABW?: number;
+                        SYC?: number;
+                        GUY?: number;
+                        LSO?: number;
+                        SWZ?: number;
+                        SSD?: number;
+                        LCA?: number;
+                        MAC?: number;
+                        SMR?: number;
+                        LAO?: number;
+                        BRN?: number;
+                        TCD?: number;
+                        BMU?: number;
+                        VGB?: number;
+                        PRK?: number;
+                        BTN?: number;
+                        BDI?: number;
+                        FRO?: number;
+                        TJK?: number;
+                        GMB?: number;
+                        STP?: number;
+                        ANT?: number;
+                        VCT?: number;
+                        DJI?: number;
+                        CPV?: number;
+                        TKM?: number;
+                        ATG?: number;
+                        TCA?: number;
+                        KNA?: number;
+                        GRD?: number;
+                        ASM?: number;
+                        VUT?: number;
+                        GNQ?: number;
+                        GRL?: number;
+                        SXM?: number;
+                        MNP?: number;
+                        COM?: number;
+                        TLS?: number;
+                        SJM?: number;
+                        CAF?: number;
+                        DMA?: number;
+                        MAF?: number;
+                        WSM?: number;
+                        BES?: number;
+                        MHL?: number;
+                        AIA?: number;
+                        TON?: number;
+                        COK?: number;
+                        SLB?: number;
+                        SPM?: number;
+                        GNB?: number;
+                        ATA?: number;
+                        TUV?: number;
+                        ALA?: number;
+                        IOT?: number;
+                        ERI?: number;
+                        PLW?: number;
+                        FSM?: number;
+                        NRU?: number;
+                        PCN?: number;
+                        FLK?: number;
+                        MSR?: number;
+                        VAT?: number;
+                        KIR?: number;
+                        SHN?: number;
+                        NIU?: number;
+                        WLF?: number;
+                        HMD?: number;
+                        CXR?: number;
+                        NFK?: number;
+                        ATF?: number;
+                        CCK?: number;
+                        SGS?: number;
+                        BVT?: number;
+                        UMI?: number;
+                        ESH?: number;
+                        TKL?: number;
+                        'X-SOUTH_ASIA'?: number;
+                        'X-SOUTH_EAST_EUROPE'?: number;
+                        'X-NORTHERN_AFRICA'?: number;
+                        'X-PACIFIC'?: number;
+                        'X-SOUTH_WEST_EUROPE'?: number;
+                        'X-SOUTHERN_AFRICA'?: number;
+                        'X-WEST_INDIES'?: number;
+                        'X-SOUTH_AMERICA'?: number;
+                        'X-SOUTH_WEST_ASIA'?: number;
+                        'X-CENTRAL_EUROPE'?: number;
+                        'X-EASTERN_EUROPE'?: number;
+                        'X-WESTERN_EUROPE'?: number;
+                        'X-CENTRAL_AMERICA'?: number;
+                        'X-WESTERN_AFRICA'?: number;
+                        'X-SOUTH_ATLANTIC_OCEAN'?: number;
+                        'X-SOUTH_EAST_ASIA'?: number;
+                        'X-CENTRAL_AFRICA'?: number;
+                        'X-NORTH_AMERICA'?: number;
+                        'X-EAST_ASIA'?: number;
+                        'X-NORTHERN_EUROPE'?: number;
+                        'X-EASTERN_AFRICA'?: number;
+                        'X-SOUTHERN_INDIAN_OCEAN'?: number;
+                        'X-SOUTHERN_EUROPE'?: number;
+                        'X-CENTRAL_ASIA'?: number;
+                        'X-NORTHERN_ASIA'?: number;
+                        'X-ASIA'?: number;
+                        'X-EUROPE'?: number;
+                        'X-AFRICA'?: number;
+                        'X-OCEANIA'?: number;
+                        'X-AMERICAS'?: number;
+                        'X-ANTARCTICA'?: number;
+                        'X-ATLANTIC_OCEAN'?: number;
+                        'X-INDIAN_OCEAN'?: number;
+                        'X-MIDDLE_EAST'?: number;
+                        'X-MENA'?: number;
+                        'X-EMEA'?: number;
+                        'X-EUROPEAN_UNION'?: number;
+                        'X-EFTA'?: number;
+                        'X-APAC'?: number;
+                        'X-LATAM'?: number;
+                        'X-ANGLOSPHERE'?: number;
+                        'X-DACH'?: number;
+                        'X-NORDICS'?: number;
+                        'X-BENELUX'?: number;
+                        'X-GCC'?: number;
+                        'X-BRICS'?: number;
+                        'X-G20'?: number;
+                        'X-OECD'?: number;
+                        'X-SANCTIONED'?: number;
+                    } | null;
+                    market_cap_usd?: number | null;
+                    naics_codes?: Array<string> | null;
+                    names?: Array<string> | null;
+                    preferred_name?: string | null;
+                    preferred_name_word_count?: number | null;
+                    revenue_estimate?: {
+                        sources?: Array<string> | null;
+                        fiscal_year?: number | null;
+                        value_usd: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        };
+                    } | null;
+                    standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                    status_consensus?: string | null;
+                    stock_info_consensus?: {
+                        ticker?: string | null;
+                        exchange?: string | null;
+                    } | null;
+                    tags?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
+                    total_funding_consensus?: number | null;
+                    twitter_handles?: Array<string> | null;
+                    websites?: Array<string> | null;
+                    wellfound_slugs?: Array<string> | null;
+                    youtube_urls?: Array<string> | null;
+                    role_count_matches?: Array<{
+                        numMatchingEmployees: {
+                            type: 'exact';
+                            value: number;
+                        } | {
+                            type: 'all';
+                        } | {
+                            type: 'none';
+                        } | {
+                            type: 'not-matched';
+                        };
+                    }> | null;
+                    num_matching_locations?: {
+                        num_offices_matched: number;
+                        matched_offices: Array<{
+                            address?: string | null;
+                            is_primary?: boolean | null;
+                            location?: {
+                                street_address?: string | null;
+                                neighborhood?: string | null;
+                                city?: string | null;
+                                state_name?: string | null;
+                                state_code?: string | null;
+                                county?: string | null;
+                                postal_code?: string | null;
+                                country_code?: string | null;
+                                country_name?: string | null;
+                                coordinates?: {
+                                    lat: number;
+                                    lon: number;
+                                } | null;
+                                timezone?: string | null;
+                                full_address?: string | null;
+                                formatted_address?: string | null;
+                            } | null;
+                        }>;
+                    } | null;
+                    linkedin_ids?: Array<string> | null;
+                    last_sort_key?: string | null;
+                    relevance_score?: number | null;
+                    technology_spend_usd?: number | null;
+                    historical_headcount?: {
+                        latest_snapshot_date: string;
+                        snapshots: Array<{
+                            date: string;
+                            employees: number;
+                        }>;
+                        growth: {
+                            '1m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '2m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '3m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '6m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '12m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '18m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '24m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                            '36m'?: {
+                                percent: number;
+                                quantity: number;
+                            } | null;
+                        };
+                    } | null;
+                    cik_numbers?: Array<string> | null;
+                    cage_codes?: Array<string> | null;
+                    duns_numbers?: Array<string> | null;
+                    num_li_locations?: number | null;
+                    location_name?: string | null;
+                    crunchbase_slug?: string | null;
+                    primary_role?: string | null;
+                    roles?: Array<string> | null;
+                    short_description?: string | null;
+                    long_description?: string | null;
+                    is_subsidiary?: boolean | null;
+                    parent?: string | null;
+                    num_funding_rounds?: number | null;
+                    funding_rounds?: Array<{
+                        round_type?: 'angel' | 'convertible_note' | 'corporate_round' | 'debt_financing' | 'equity_crowdfunding' | 'grant' | 'initial_coin_offering' | 'non_equity_assistance' | 'post_ipo_debt' | 'post_ipo_equity' | 'post_ipo_secondary' | 'pre_seed' | 'private_equity' | 'product_crowdfunding' | 'secondary_market' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j' | 'series_unknown' | 'undisclosed' | null;
+                        announced_on_date?: string | null;
+                        raised_amount_usd?: number | null;
+                        post_money_valuation_usd?: number | null;
+                    }> | null;
+                    num_exits?: number | null;
+                    investors?: Array<{
+                        logo_url?: string | null;
+                        entity_type?: string | null;
+                        investor_name?: string | null;
+                        linkedin_slug?: string | null;
+                        investor_types?: Array<string> | null;
+                    }> | null;
+                    acquisitions?: Array<{
+                        price_usd?: number | null;
+                        acquiree_name?: string | null;
+                        acquisition_date?: string | null;
+                    }> | null;
+                    best_funding_round?: {
+                        round_type?: 'angel' | 'convertible_note' | 'corporate_round' | 'debt_financing' | 'equity_crowdfunding' | 'grant' | 'initial_coin_offering' | 'non_equity_assistance' | 'post_ipo_debt' | 'post_ipo_equity' | 'post_ipo_secondary' | 'pre_seed' | 'private_equity' | 'product_crowdfunding' | 'secondary_market' | 'seed' | 'series_a' | 'series_b' | 'series_c' | 'series_d' | 'series_e' | 'series_f' | 'series_g' | 'series_h' | 'series_i' | 'series_j' | 'series_unknown' | 'undisclosed' | null;
+                        announced_on_date?: string | null;
+                        raised_amount_usd?: number | null;
+                        post_money_valuation_usd?: number | null;
+                    } | null;
+                    funding_stage?: string | null;
+                    alt_industries?: Array<string> | null;
+                    alt_keywords?: Array<string> | null;
+                    alt_description?: string | null;
+                    employee_trends?: Array<{
+                        functions?: '_all_employees' | 'information_technology' | 'administrative' | 'marketing' | 'human_resources' | 'product_management' | 'support' | 'education' | 'operations' | 'finance' | 'media_and_commmunication' | 'business_development' | 'data_science' | 'entrepreneurship' | 'arts_and_design' | 'sales' | 'engineering' | 'consulting' | 'accounting' | 'legal' | null;
+                        current_count?: number | null;
+                        changes?: Array<{
+                            count_end?: number | null;
+                            count_start?: number | null;
+                            months_back?: number | null;
+                            end_of_period?: string | null;
+                            numeric_change?: number | null;
+                            percent_change?: number | null;
+                            start_of_period?: string | null;
+                        }> | null;
+                    }> | null;
+                    logo_url?: string | null;
+                    similar_companies?: Array<{
+                        name?: string | null;
+                        industries?: Array<string> | null;
+                        employee_count?: number | null;
+                        revenue?: number | null;
+                        logo_url?: string | null;
+                    }> | null;
+                    full_funding_rounds?: Array<{
+                        investors?: Array<{
+                            is_lead?: boolean | null;
+                            investor_name?: string | null;
+                            investor_type?: string | null;
+                            investor_domain?: string | null;
+                            investor_categories?: Array<string> | null;
+                            investor_linkedin_url?: string | null;
+                            investor_linkedin_org_id?: string | null;
+                        }> | null;
+                        round_city?: string | null;
+                        round_date?: string | null;
+                        round_type?: string | null;
+                        round_state?: string | null;
+                        investor_count?: number | null;
+                        round_raised_usd?: number | null;
+                        round_country_code?: string | null;
+                        round_valuation_usd?: number | null;
+                    }> | null;
+                    funding_round_stats?: {
+                        round_count?: number | null;
+                        total_raised_usd?: number | null;
+                        peak_valuation_usd?: number | null;
+                        unique_investor_count?: number | null;
+                        individual_investor_stats?: Array<{
+                            investor_name?: string | null;
+                            investor_type?: string | null;
+                            investor_domain?: string | null;
+                            investment_count?: number | null;
+                            participated_round_types?: Array<string> | null;
+                        }> | null;
+                        unique_personal_investor_count?: number | null;
+                        unique_organizational_investor_count?: number | null;
+                    } | null;
+                    investment_stats?: {
+                        investments_by_stage?: Array<{
+                            stage?: string | null;
+                            lead_rate?: number | null;
+                            lead_count?: number | null;
+                            total_count?: number | null;
+                            share_of_portfolio?: number | null;
+                            last_investment_date?: string | null;
+                        }> | null;
+                        lead_investment_rate?: number | null;
+                        lead_investment_count?: number | null;
+                        total_investment_count?: number | null;
+                        last_investment_date?: string | null;
+                    } | null;
+                    is_investor?: boolean | null;
+                    investor_type?: string | null;
+                    investor_categories?: Array<string> | null;
+                    technologies_used?: Array<{
+                        name: string;
+                    }> | null;
+                    platforms?: {
+                        ecommerce?: Array<string> | null;
+                        cms?: Array<string> | null;
+                        crm?: Array<string> | null;
+                        marketing?: Array<string> | null;
+                        payment?: Array<string> | null;
+                    } | null;
+                } | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type QuickCompanyResolveResponse = QuickCompanyResolveResponses[keyof QuickCompanyResolveResponses];
+
+export type QuickPersonResolveData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * People to resolve. Each entry is an { identifier, value } pair where identifier is "linkedinSlug", "linkedinUserId", "linkedinUrl", or "entityUrn". Max 100 per request. You are charged only for the ones that resolve.
+         */
+        people: Array<{
+            identifier: 'linkedinUrl';
+            /**
+             * LinkedIn profile URL (e.g. 'https://www.linkedin.com/in/williamhgates').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinSlug';
+            /**
+             * LinkedIn profile slug (e.g. 'williamhgates').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinUserId';
+            /**
+             * LinkedIn numeric user ID (e.g. '251749025'). This is NOT derived from the profile URL.
+             */
+            value: string;
+        } | {
+            identifier: 'entityUrn';
+            /**
+             * LinkedIn entity URN (e.g. 'ACoAAA8BYqEBCGLg_vT_ca6mMEqkpp9nVffJ3hc'). The opaque id LinkedIn uses internally.
+             */
+            value: string;
+        }>;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/person-resolve';
+};
+
+export type QuickPersonResolveErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type QuickPersonResolveError = QuickPersonResolveErrors[keyof QuickPersonResolveErrors];
+
+export type QuickPersonResolveResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            data: Array<{
+                /**
+                 * The identifier type you supplied, echoed back.
+                 */
+                identifier: 'linkedinUrl' | 'linkedinSlug' | 'linkedinUserId' | 'entityUrn';
+                /**
+                 * The identifier value you supplied, echoed back.
+                 */
+                value: string;
+                found: boolean;
+                person?: {
+                    articles?: Array<{
+                        id?: string | null;
+                        title?: string | null;
+                        date_published?: string | null;
+                    }> | null;
+                    certifications?: Array<{
+                        title?: string | null;
+                        credential_id?: string | null;
+                        verify_url?: string | null;
+                        summary?: string | null;
+                        linkedin_company_id?: string | null;
+                        company_name?: string | null;
+                        date?: string | null;
+                    }> | null;
+                    connection_count?: number | null;
+                    courses?: Array<{
+                        title?: string | null;
+                        course_number?: string | null;
+                        association?: null;
+                    }> | null;
+                    dob?: string | null;
+                    education?: Array<{
+                        school_id?: string | null;
+                        school_name?: string | null;
+                        field_of_study_id?: string | null;
+                        field_of_study_name?: string | null;
+                        degree?: string | null;
+                        grade?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        activities?: string | null;
+                        notes?: string | null;
+                    }> | null;
+                    experiences?: Array<{
+                        linkedin_company_id?: string | null;
+                        is_current?: boolean | null;
+                        company_name?: string | null;
+                        locality?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        seniority?: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | null;
+                        job_function?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        employment_type?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        academic_qualification?: Array<'High School' | 'Associate Degree' | 'Bachelor Degree'> | null;
+                        company_start_date?: string | null;
+                        company_end_date?: string | null;
+                    }> | null;
+                    first_name?: string | null;
+                    follower_count?: number | null;
+                    headline?: string | null;
+                    industry_name?: string | null;
+                    inferred_location?: {
+                        street_address?: string | null;
+                        neighborhood?: string | null;
+                        city?: string | null;
+                        state_name?: string | null;
+                        state_code?: string | null;
+                        county?: string | null;
+                        postal_code?: string | null;
+                        country_code?: string | null;
+                        country_name?: string | null;
+                        coordinates?: {
+                            lat: number;
+                            lon: number;
+                        } | null;
+                        timezone?: string | null;
+                        full_address?: string | null;
+                        formatted_address?: string | null;
+                    } | null;
+                    interests?: Array<string> | null;
+                    last_name?: string | null;
+                    locality?: string | null;
+                    name?: string | null;
+                    patents?: Array<{
+                        id?: string | null;
+                        title?: string | null;
+                        country?: string | null;
+                        number?: string | null;
+                        description?: string | null;
+                        url?: string | null;
+                        date?: string | null;
+                    }> | null;
+                    profile_pic?: string | null;
+                    projects?: Array<{
+                        project_id?: string | null;
+                        project_title?: string | null;
+                        project_url?: string | null;
+                        project_summary?: string | null;
+                        is_current?: boolean | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                    }> | null;
+                    publications?: Array<{
+                        collaborators?: Array<{
+                            name?: string | null;
+                            url?: string | null;
+                        }> | null;
+                        date?: string | null;
+                        id?: string | null;
+                        publisher?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        url?: string | null;
+                    }> | null;
+                    skills?: Array<string> | null;
+                    primary_slug: string;
+                    slugs?: Array<string> | null;
+                    summary?: string | null;
+                    url?: string | null;
+                    user_id?: string | null;
+                    volunteering?: Array<{
+                        role?: string | null;
+                        is_current?: boolean | null;
+                        cause?: string | null;
+                        summary?: string | null;
+                        linkedin_company_id?: string | null;
+                        company_name?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                    }> | null;
+                    tenures?: Array<{
+                        linkedin_company_id?: string | null;
+                        company_name?: string | null;
+                        date_range: {
+                            gte?: string | null;
+                            lte?: string | null;
+                        };
+                        range_length_days?: number | null;
+                        titles: Array<string>;
+                        localities: Array<string>;
+                    }> | null;
+                    career_began_at?: string | null;
+                    tags?: Array<'student' | 'attended-top-us-university' | 'attended-top-global-university' | 'second-time-founder' | 'deep-technical-background' | 'major-tech-company-experience' | 'fortune-500-executive' | 'recently-changed-companies' | 'recently-promoted' | 'decision-maker' | 'c-suite' | 'experienced-executive' | 'phd' | 'influencer' | 'board-member'> | null;
+                    entity_urn?: string | null;
+                    open_to_work?: boolean | null;
+                    premium?: boolean | null;
+                    influencer?: boolean | null;
+                    organizations?: Array<{
+                        name?: string | null;
+                        end_date?: string | null;
+                        title?: string | null;
+                        start_date?: string | null;
+                    }> | null;
+                    entity_urns?: Array<string> | null;
+                    is_hiring?: boolean | null;
+                    websites?: Array<string> | null;
+                    is_verified?: boolean | null;
+                    verifications?: {
+                        is_verified?: boolean | null;
+                        joined_date?: string | null;
+                        verification_types?: Array<{
+                            title?: string | null;
+                            subtitle?: string | null;
+                            description?: string | null;
+                        }> | null;
+                    } | null;
+                    is_top_voice?: boolean | null;
+                    current_job?: {
+                        linkedin_company_id?: string | null;
+                        is_current?: boolean | null;
+                        company_name?: string | null;
+                        locality?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        seniority?: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | null;
+                        job_function?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        employment_type?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        academic_qualification?: Array<'High School' | 'Associate Degree' | 'Bachelor Degree'> | null;
+                        company_start_date?: string | null;
+                        company_end_date?: string | null;
+                    } | null;
+                    custom_data?: {
+                        [key: string]: string;
+                    } | null;
+                    relevance_score?: number | null;
+                    last_sort_key?: string | null;
+                    last_updated_at?: string | null;
+                    languages?: Array<{
+                        name?: string | null;
+                        proficiency_id?: string | null;
+                        proficiency_name?: string | null;
+                    }> | null;
+                    detailed_education?: Array<{
+                        school_details?: {
+                            linkedin_ids?: Array<string> | null;
+                            li_org_id?: string | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            preferred_name?: string | null;
+                        } | null;
+                        school_id?: string | null;
+                        school_name?: string | null;
+                        field_of_study_id?: string | null;
+                        field_of_study_name?: string | null;
+                        degree?: string | null;
+                        grade?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        activities?: string | null;
+                        notes?: string | null;
+                    }> | null;
+                    detailed_work_experiences?: Array<{
+                        company_details?: {
+                            linkedin_ids?: Array<string> | null;
+                            li_org_id?: string | null;
+                            linkedin_primary_slug?: string | null;
+                            domains?: Array<string> | null;
+                            preferred_name?: string | null;
+                        } | null;
+                        crunchbase_slug?: string | null;
+                        linkedin_company_id?: string | null;
+                        is_current?: boolean | null;
+                        company_name?: string | null;
+                        locality?: string | null;
+                        start_date?: string | null;
+                        end_date?: string | null;
+                        summary?: string | null;
+                        title?: string | null;
+                        seniority?: 'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive' | null;
+                        job_function?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        employment_type?: Array<'Full-time' | 'Temporary' | 'Internship' | 'Contract' | 'Part-time' | 'Volunteer' | 'Other'> | null;
+                        academic_qualification?: Array<'High School' | 'Associate Degree' | 'Bachelor Degree'> | null;
+                        company_start_date?: string | null;
+                        company_end_date?: string | null;
+                    }> | null;
+                } | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type QuickPersonResolveResponse = QuickPersonResolveResponses[keyof QuickPersonResolveResponses];
+
 export type StealthFoundersSearchData = {
     body: {
         /**
