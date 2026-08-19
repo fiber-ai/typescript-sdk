@@ -293332,7 +293332,7 @@ export const zTwitterSearchResponse = z.object({
 
 export const zGetCompanyRevenueData = z.object({
     body: z.object({
-        apiKey: z.string().min(1),
+        apiKey: z.string(),
         companyMetadata: z.object({
             name: z.optional(z.union([
                 z.string().min(1),

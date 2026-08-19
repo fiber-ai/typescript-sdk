@@ -144037,6 +144037,9 @@ export type TwitterSearchResponse = TwitterSearchResponses[keyof TwitterSearchRe
 
 export type GetCompanyRevenueData = {
     body: {
+        /**
+         * Your Fiber API key
+         */
         apiKey: string;
         companyMetadata: {
             /**
