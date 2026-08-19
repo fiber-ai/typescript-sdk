@@ -5364,6 +5364,275 @@ export type BuyCreditsResponses = {
 
 export type BuyCreditsResponse = BuyCreditsResponses[keyof BuyCreditsResponses];
 
+export type CardsAttachData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Single-use Stripe shared payment token (`spt_...`) authorizing exactly one card handoff. Mint it on the buyer side (see https://docs.stripe.com/agentic-commerce/concepts/shared-payment-tokens); each request must submit a freshly-minted token.
+         */
+        sharedPaymentGrantedToken: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/cards/attach';
+};
+
+export type CardsAttachErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        status: 'rejected';
+        reason: 'org_not_found' | 'already_attached' | 'attach_in_progress' | 'not_cardless_trial' | 'trial_ended' | 'spt_invalid' | 'card_declined' | 'rate_limited' | 'service_unavailable' | 'payment_provider_error' | 'internal_error' | 'billing_profile_conflict';
+        message: string;
+    } | {
+        message: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        status: 'rejected';
+        reason: 'org_not_found' | 'already_attached' | 'attach_in_progress' | 'not_cardless_trial' | 'trial_ended' | 'spt_invalid' | 'card_declined' | 'rate_limited' | 'service_unavailable' | 'payment_provider_error' | 'internal_error' | 'billing_profile_conflict';
+        message: string;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        status: 'rejected';
+        reason: 'org_not_found' | 'already_attached' | 'attach_in_progress' | 'not_cardless_trial' | 'trial_ended' | 'spt_invalid' | 'card_declined' | 'rate_limited' | 'service_unavailable' | 'payment_provider_error' | 'internal_error' | 'billing_profile_conflict';
+        message: string;
+    };
+    /**
+     * Default Response
+     */
+    409: {
+        status: 'rejected';
+        reason: 'org_not_found' | 'already_attached' | 'attach_in_progress' | 'not_cardless_trial' | 'trial_ended' | 'spt_invalid' | 'card_declined' | 'rate_limited' | 'service_unavailable' | 'payment_provider_error' | 'internal_error' | 'billing_profile_conflict';
+        message: string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        status: 'rejected';
+        reason: 'org_not_found' | 'already_attached' | 'attach_in_progress' | 'not_cardless_trial' | 'trial_ended' | 'spt_invalid' | 'card_declined' | 'rate_limited' | 'service_unavailable' | 'payment_provider_error' | 'internal_error' | 'billing_profile_conflict';
+        message: string;
+    } | {
+        message: string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        status: 'rejected';
+        reason: 'org_not_found' | 'already_attached' | 'attach_in_progress' | 'not_cardless_trial' | 'trial_ended' | 'spt_invalid' | 'card_declined' | 'rate_limited' | 'service_unavailable' | 'payment_provider_error' | 'internal_error' | 'billing_profile_conflict';
+        message: string;
+    } | {
+        message: string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type CardsAttachError = CardsAttachErrors[keyof CardsAttachErrors];
+
+export type CardsAttachResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            status: 'attached';
+            /**
+             * Additional free trial credits granted by this call. Zero when the organization was already at its trial credit ceiling (e.g. re-attaching after the ceiling was already reached).
+             */
+            creditsGranted: number;
+            /**
+             * Free trial credit ceiling after this call — the maximum credits the organization can spend on the trial before it needs a paid top-up.
+             */
+            totalCreditsUnlocked: number;
+            /**
+             * Display-only metadata for the card that was verified in this call. This is not a saved payment method — future paid top-ups must submit a freshly-minted shared payment token.
+             */
+            paymentMethod: {
+                /**
+                 * Card network (e.g. 'visa', 'mastercard'). Null when unavailable.
+                 */
+                brand?: string | null;
+                /**
+                 * Last four digits of the card. Null when unavailable.
+                 */
+                last4?: string | null;
+            };
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type CardsAttachResponse = CardsAttachResponses[keyof CardsAttachResponses];
+
 export type GetAllApiKeysData = {
     body: {
         /**

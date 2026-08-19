@@ -4450,6 +4450,111 @@ export const zBuyCreditsResponse = z.object({
     ]))
 });
 
+export const zCardsAttachData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        sharedPaymentGrantedToken: z.string().min(1).regex(/^spt_/)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zCardsAttachResponse = z.object({
+    output: z.object({
+        status: z.enum(['attached']),
+        creditsGranted: z.int(),
+        totalCreditsUnlocked: z.int(),
+        paymentMethod: z.object({
+            brand: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            last4: z.optional(z.union([
+                z.string(),
+                z.null()
+            ]))
+        })
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zGetAllApiKeysData = z.object({
     body: z.object({
         apiKey: z.string(),
