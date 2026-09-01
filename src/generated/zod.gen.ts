@@ -131,6 +131,14 @@ export const zJobPostingWithKeyword = z.object({
         ])).min(1),
         z.null()
     ])),
+    modalities: z.optional(z.union([
+        z.array(z.enum([
+            'On-site',
+            'Remote',
+            'Hybrid'
+        ])).min(1),
+        z.null()
+    ])),
     locationTypes: z.optional(z.union([
         z.array(z.enum([
             'remote',
@@ -731,6 +739,14 @@ export const zJobPostingWithKeywordResponse = z.object({
         ])).min(1),
         z.null()
     ])),
+    modalities: z.optional(z.union([
+        z.array(z.enum([
+            'On-site',
+            'Remote',
+            'Hybrid'
+        ])).min(1),
+        z.null()
+    ])),
     locationTypes: z.optional(z.union([
         z.array(z.enum([
             'remote',
@@ -1286,7 +1302,11 @@ export const zCompanyLocationChange = z.object({
         z.string(),
         z.null()
     ])),
-    changeType: z.optional(z.nullable(z.enum(['added'])))
+    changeType: z.optional(z.nullable(z.enum(['added']))),
+    officeMapUrl: z.optional(z.union([
+        z.string(),
+        z.null()
+    ]))
 });
 
 export const zLocationDeltaChange = z.object({
@@ -1560,12 +1580,12 @@ export const zTrackedEmployeeChange = z.object({
 
 export const zInvestorChange = z.object({
     name: z.string(),
-    uuid: z.optional(z.union([
+    type: z.array(z.string()),
+    linkedinSlug: z.optional(z.union([
         z.string(),
         z.null()
     ])),
-    type: z.array(z.string()),
-    linkedinSlug: z.optional(z.union([
+    investorLinkedinUrl: z.optional(z.union([
         z.string(),
         z.null()
     ])),
@@ -1765,6 +1785,10 @@ export const zTrackerSignalOutput = z.object({
     sources: z.array(z.string()),
     methodology: z.string().min(1),
     observedAt: z.iso.datetime(),
+    eventDate: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
     centiCreditsCharged: z.int().gte(0),
     isDummy: z.boolean()
 });
@@ -3868,6 +3892,33 @@ export const zGetOrgCreditsResponse = z.object({
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
                 }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                searchYelp: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                getYelpPage: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                getYelpReviews: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
                 getDepartmentSize: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
@@ -3903,7 +3954,7 @@ export const zGetOrgCreditsResponse = z.object({
                         ])),
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
-                }).prefault({ levels: [{ limit: null, centiCreditCost: 100 }] }),
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 0 }] }),
                 talentFlow: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
@@ -3930,7 +3981,16 @@ export const zGetOrgCreditsResponse = z.object({
                         ])),
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
-                }).prefault({ levels: [{ limit: null, centiCreditCost: 400 }] })
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 400 }] }),
+                getCompanyFromRankingList: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 100 }] })
             }),
             z.null()
         ]))
@@ -4353,8 +4413,15 @@ export const zUpdateAutoTopupSettingsResponse = z.object({
 export const zBuyCreditsData = z.object({
     body: z.object({
         apiKey: z.string(),
-        subscriptionId: z.string().min(1),
-        creditsToBuy: z.int().gte(1000).lte(1000000),
+        subscriptionId: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ])),
+        creditsToBuy: z.int().gte(100).lte(1000000),
+        sharedPaymentGrantedToken: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ])),
         idempotencyKey: z.optional(z.union([
             z.string().min(1).max(255),
             z.null()
@@ -5231,6 +5298,256 @@ export const zResetApiKeyUsageResponse = z.object({
     ]))
 });
 
+export const zCreateSandboxApiKeyData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        name: z.string().min(1).max(100)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zCreateSandboxApiKeyResponse = z.object({
+    output: z.object({
+        id: z.string(),
+        name: z.string(),
+        prefix: z.string(),
+        expiresAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
+        maxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        creditsUsed: z.number().gte(0),
+        createdAt: z.iso.datetime(),
+        isRevoked: z.boolean(),
+        apiKey: z.string()
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zListApiRequestsData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        from: z.optional(z.union([
+            z.iso.datetime(),
+            z.null()
+        ])),
+        to: z.optional(z.union([
+            z.iso.datetime(),
+            z.null()
+        ])),
+        routePath: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        method: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        statusCode: z.optional(z.union([
+            z.int(),
+            z.null()
+        ])),
+        errorCode: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        cursor: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        pageSize: z.optional(z.int().gte(1).lte(100)).prefault(25)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zListApiRequestsResponse = z.object({
+    output: z.object({
+        apiRequests: z.array(z.object({
+            id: z.string(),
+            organizationId: z.string(),
+            createdAt: z.iso.datetime(),
+            method: z.string(),
+            routePath: z.string(),
+            statusCode: z.int(),
+            durationMs: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            errorCode: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            request: z.optional(z.unknown())
+        })),
+        nextCursor: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        hasMore: z.boolean(),
+        retentionDays: z.int()
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zListWebhookEventTypesData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),
@@ -5459,6 +5776,8 @@ export const zCreateWebhookEndpointData = z.object({
             'sales_nav_lite_scrape.completed',
             'job_changes.profiles_added',
             'tracker.signal_detected',
+            'tracker.list_run_completed',
+            'tracker.list_run_upcoming',
             'mosaic.completed'
         ])).min(1),
         description: z.optional(z.union([
@@ -5794,6 +6113,8 @@ export const zUpdateWebhookEndpointData = z.object({
                 'sales_nav_lite_scrape.completed',
                 'job_changes.profiles_added',
                 'tracker.signal_detected',
+                'tracker.list_run_completed',
+                'tracker.list_run_upcoming',
                 'mosaic.completed'
             ])).min(1),
             z.null()
@@ -6028,6 +6349,8 @@ export const zSendTestWebhookEventData = z.object({
             'sales_nav_lite_scrape.completed',
             'job_changes.profiles_added',
             'tracker.signal_detected',
+            'tracker.list_run_completed',
+            'tracker.list_run_upcoming',
             'mosaic.completed'
         ])
     }),
@@ -6254,6 +6577,10 @@ export const zAccountVerifyOtpResponse = z.object({
     output: z.object({
         status: z.enum(['created']),
         apiKey: z.string(),
+        sandboxApiKey: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
         creditsAwarded: z.int().gte(0),
         organizationId: z.string(),
         message: z.string()
@@ -7219,10 +7546,6 @@ export const zPollBatchLiveEnrichResponse = z.object({
                         z.string(),
                         z.null()
                     ])),
-                    industry_name: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
                     inferred_location: z.optional(z.union([
                         z.object({
                             street_address: z.optional(z.union([
@@ -7743,6 +8066,10 @@ export const zPollBatchLiveEnrichResponse = z.object({
                         z.string(),
                         z.null()
                     ])),
+                    industry_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
                     last_updated_at: z.optional(z.union([
                         z.string(),
                         z.null()
@@ -7857,12 +8184,74 @@ export const zPollBatchLiveEnrichResponse = z.object({
                                     preferred_name: z.optional(z.union([
                                         z.string(),
                                         z.null()
+                                    ])),
+                                    crunchbase_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    standard_industries: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'Administrative Services',
+                                            'Aerospace & Military',
+                                            'Artificial Intelligence',
+                                            'Arts & Music',
+                                            'Automotive',
+                                            'Business Services',
+                                            'Cloud',
+                                            'Construction',
+                                            'Consulting',
+                                            'Consumer Goods',
+                                            'Consumer Services',
+                                            'Design',
+                                            'Education',
+                                            'Energy',
+                                            'Entertainment',
+                                            'Environmental',
+                                            'Events',
+                                            'Farming & Agriculture',
+                                            'Finance',
+                                            'Food & Beverage',
+                                            'Gaming',
+                                            'Government',
+                                            'Hardware',
+                                            'Healthcare',
+                                            'Hospitality',
+                                            'Industrials',
+                                            'Information Technology',
+                                            'Insurance',
+                                            'Legal',
+                                            'Life Sciences',
+                                            'Logistics',
+                                            'Manufacturing',
+                                            'Marketing & Advertising',
+                                            'Media',
+                                            'Mining',
+                                            'Nonprofit',
+                                            'Publishing',
+                                            'Real Estate',
+                                            'Retail',
+                                            'Science & Engineering',
+                                            'Security',
+                                            'Software',
+                                            'Sports',
+                                            'Telecom',
+                                            'Trade',
+                                            'Transportation',
+                                            'Travel & Tourism',
+                                            'Utilities',
+                                            'Venture Capital'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    li_industries: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
                                     ]))
                                 }),
-                                z.null()
-                            ])),
-                            crunchbase_slug: z.optional(z.union([
-                                z.string(),
                                 z.null()
                             ])),
                             linkedin_company_id: z.optional(z.union([
@@ -15448,7 +15837,7 @@ export const zUpdateAudienceSearchParamsData = z.object({
                     z.object({
                         anyOf: z.optional(z.union([
                             z.array(z.object({
-                                list: z.enum(['fortune-500-usa']),
+                                list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                 range: z.object({
                                     low: z.number(),
                                     high: z.number(),
@@ -16104,6 +16493,14 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -16746,6 +17143,14 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -17382,6 +17787,14 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     z.null()
                                 ])),
                                 jobLocationType: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
                                     z.array(z.enum([
                                         'On-site',
                                         'Remote',
@@ -17890,6 +18303,42 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -18467,6 +18916,42 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -19010,6 +19495,42 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                 z.object({
                                     rule: z.enum(['location-type']),
                                     locationType: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
                                         'On-site',
                                         'Remote',
                                         'Hybrid'
@@ -30103,7 +30624,7 @@ export const zCompanySearchData = z.object({
                 z.object({
                     anyOf: z.optional(z.union([
                         z.array(z.object({
-                            list: z.enum(['fortune-500-usa']),
+                            list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                             range: z.object({
                                 low: z.number(),
                                 high: z.number(),
@@ -30759,6 +31280,14 @@ export const zCompanySearchData = z.object({
                                     'Hybrid'
                                 ])),
                                 z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
                             ]))
                         })),
                         z.null()
@@ -31401,6 +31930,14 @@ export const zCompanySearchData = z.object({
                                     'Hybrid'
                                 ])),
                                 z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
                             ]))
                         })),
                         z.null()
@@ -32037,6 +32574,14 @@ export const zCompanySearchData = z.object({
                                 z.null()
                             ])),
                             jobLocationType: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
                                 z.array(z.enum([
                                     'On-site',
                                     'Remote',
@@ -32545,6 +33090,42 @@ export const zCompanySearchData = z.object({
                                 ])
                             }),
                             z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 rule: z.enum(['industry']),
                                 industry: z.enum([
                                     'Administrative Services',
@@ -33122,6 +33703,42 @@ export const zCompanySearchData = z.object({
                                 ])
                             }),
                             z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 rule: z.enum(['industry']),
                                 industry: z.enum([
                                     'Administrative Services',
@@ -33665,6 +34282,42 @@ export const zCompanySearchData = z.object({
                             z.object({
                                 rule: z.enum(['location-type']),
                                 locationType: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
                                     'On-site',
                                     'Remote',
                                     'Hybrid'
@@ -36334,7 +36987,7 @@ export const zCompanySearchResponse = z.object({
             ])),
             fortune_rankings: z.optional(z.union([
                 z.array(z.object({
-                    list: z.enum(['fortune-500-usa']),
+                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                     year: z.number(),
                     rank: z.number()
                 })),
@@ -40968,7 +41621,7 @@ export const zCompanyCountData = z.object({
                 z.object({
                     anyOf: z.optional(z.union([
                         z.array(z.object({
-                            list: z.enum(['fortune-500-usa']),
+                            list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                             range: z.object({
                                 low: z.number(),
                                 high: z.number(),
@@ -41624,6 +42277,14 @@ export const zCompanyCountData = z.object({
                                     'Hybrid'
                                 ])),
                                 z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
                             ]))
                         })),
                         z.null()
@@ -42266,6 +42927,14 @@ export const zCompanyCountData = z.object({
                                     'Hybrid'
                                 ])),
                                 z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
                             ]))
                         })),
                         z.null()
@@ -42902,6 +43571,14 @@ export const zCompanyCountData = z.object({
                                 z.null()
                             ])),
                             jobLocationType: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
                                 z.array(z.enum([
                                     'On-site',
                                     'Remote',
@@ -43410,6 +44087,42 @@ export const zCompanyCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 rule: z.enum(['industry']),
                                 industry: z.enum([
                                     'Administrative Services',
@@ -43987,6 +44700,42 @@ export const zCompanyCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 rule: z.enum(['industry']),
                                 industry: z.enum([
                                     'Administrative Services',
@@ -44530,6 +45279,42 @@ export const zCompanyCountData = z.object({
                             z.object({
                                 rule: z.enum(['location-type']),
                                 locationType: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
                                     'On-site',
                                     'Remote',
                                     'Hybrid'
@@ -47370,6 +48155,14 @@ export const zJobPostingSearchData = z.object({
                 }),
                 z.null()
             ])),
+            jobModality: z.optional(z.union([
+                z.array(z.enum([
+                    'On-site',
+                    'Remote',
+                    'Hybrid'
+                ])),
+                z.null()
+            ])),
             jobLocationType: z.optional(z.union([
                 z.array(z.enum([
                     'On-site',
@@ -47998,6 +48791,11 @@ export const zJobPostingSearchResponse = z.object({
                 'Remote',
                 'Hybrid'
             ]))),
+            modality: z.optional(z.nullable(z.enum([
+                'On-site',
+                'Remote',
+                'Hybrid'
+            ]))),
             status: z.enum(['active', 'closed'])
         })),
         nextCursor: z.optional(z.union([
@@ -48319,6 +49117,14 @@ export const zJobPostingSearchCountData = z.object({
                         z.null()
                     ]))
                 }),
+                z.null()
+            ])),
+            jobModality: z.optional(z.union([
+                z.array(z.enum([
+                    'On-site',
+                    'Remote',
+                    'Hybrid'
+                ])),
                 z.null()
             ])),
             jobLocationType: z.optional(z.union([
@@ -55150,10 +55956,6 @@ export const zPeopleSearchResponse = z.object({
                 z.string(),
                 z.null()
             ])),
-            industry_name: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
             inferred_location: z.optional(z.union([
                 z.object({
                     street_address: z.optional(z.union([
@@ -55674,6 +56476,10 @@ export const zPeopleSearchResponse = z.object({
                 z.string(),
                 z.null()
             ])),
+            industry_name: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
             last_updated_at: z.optional(z.union([
                 z.string(),
                 z.null()
@@ -55788,12 +56594,74 @@ export const zPeopleSearchResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            standard_industries: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Administrative Services',
+                                    'Aerospace & Military',
+                                    'Artificial Intelligence',
+                                    'Arts & Music',
+                                    'Automotive',
+                                    'Business Services',
+                                    'Cloud',
+                                    'Construction',
+                                    'Consulting',
+                                    'Consumer Goods',
+                                    'Consumer Services',
+                                    'Design',
+                                    'Education',
+                                    'Energy',
+                                    'Entertainment',
+                                    'Environmental',
+                                    'Events',
+                                    'Farming & Agriculture',
+                                    'Finance',
+                                    'Food & Beverage',
+                                    'Gaming',
+                                    'Government',
+                                    'Hardware',
+                                    'Healthcare',
+                                    'Hospitality',
+                                    'Industrials',
+                                    'Information Technology',
+                                    'Insurance',
+                                    'Legal',
+                                    'Life Sciences',
+                                    'Logistics',
+                                    'Manufacturing',
+                                    'Marketing & Advertising',
+                                    'Media',
+                                    'Mining',
+                                    'Nonprofit',
+                                    'Publishing',
+                                    'Real Estate',
+                                    'Retail',
+                                    'Science & Engineering',
+                                    'Security',
+                                    'Software',
+                                    'Sports',
+                                    'Telecom',
+                                    'Trade',
+                                    'Transportation',
+                                    'Travel & Tourism',
+                                    'Utilities',
+                                    'Venture Capital'
+                                ])),
+                                z.null()
+                            ])),
+                            li_industries: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
                             ]))
                         }),
-                        z.null()
-                    ])),
-                    crunchbase_slug: z.optional(z.union([
-                        z.string(),
                         z.null()
                     ])),
                     linkedin_company_id: z.optional(z.union([
@@ -63952,7 +64820,7 @@ export const zPaginatedCombinedSearchData = z.object({
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({
-                                    list: z.enum(['fortune-500-usa']),
+                                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                     range: z.object({
                                         low: z.number(),
                                         high: z.number(),
@@ -64608,6 +65476,14 @@ export const zPaginatedCombinedSearchData = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -65250,6 +66126,14 @@ export const zPaginatedCombinedSearchData = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -65886,6 +66770,14 @@ export const zPaginatedCombinedSearchData = z.object({
                                         z.null()
                                     ])),
                                     jobLocationType: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
                                         z.array(z.enum([
                                             'On-site',
                                             'Remote',
@@ -66394,6 +67286,42 @@ export const zPaginatedCombinedSearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -66971,6 +67899,42 @@ export const zPaginatedCombinedSearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -67514,6 +68478,42 @@ export const zPaginatedCombinedSearchData = z.object({
                                     z.object({
                                         rule: z.enum(['location-type']),
                                         locationType: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
                                             'On-site',
                                             'Remote',
                                             'Hybrid'
@@ -76302,7 +77302,7 @@ export const zPaginatedCombinedSearchResponse = z.object({
             ])),
             fortune_rankings: z.optional(z.union([
                 z.array(z.object({
-                    list: z.enum(['fortune-500-usa']),
+                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                     year: z.number(),
                     rank: z.number()
                 })),
@@ -79380,10 +80380,6 @@ export const zPaginatedCombinedSearchResponse = z.object({
                 z.string(),
                 z.null()
             ])),
-            industry_name: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
             inferred_location: z.optional(z.union([
                 z.object({
                     street_address: z.optional(z.union([
@@ -79904,6 +80900,10 @@ export const zPaginatedCombinedSearchResponse = z.object({
                 z.string(),
                 z.null()
             ])),
+            industry_name: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
             last_updated_at: z.optional(z.union([
                 z.string(),
                 z.null()
@@ -80018,12 +81018,74 @@ export const zPaginatedCombinedSearchResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            standard_industries: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Administrative Services',
+                                    'Aerospace & Military',
+                                    'Artificial Intelligence',
+                                    'Arts & Music',
+                                    'Automotive',
+                                    'Business Services',
+                                    'Cloud',
+                                    'Construction',
+                                    'Consulting',
+                                    'Consumer Goods',
+                                    'Consumer Services',
+                                    'Design',
+                                    'Education',
+                                    'Energy',
+                                    'Entertainment',
+                                    'Environmental',
+                                    'Events',
+                                    'Farming & Agriculture',
+                                    'Finance',
+                                    'Food & Beverage',
+                                    'Gaming',
+                                    'Government',
+                                    'Hardware',
+                                    'Healthcare',
+                                    'Hospitality',
+                                    'Industrials',
+                                    'Information Technology',
+                                    'Insurance',
+                                    'Legal',
+                                    'Life Sciences',
+                                    'Logistics',
+                                    'Manufacturing',
+                                    'Marketing & Advertising',
+                                    'Media',
+                                    'Mining',
+                                    'Nonprofit',
+                                    'Publishing',
+                                    'Real Estate',
+                                    'Retail',
+                                    'Science & Engineering',
+                                    'Security',
+                                    'Software',
+                                    'Sports',
+                                    'Telecom',
+                                    'Trade',
+                                    'Transportation',
+                                    'Travel & Tourism',
+                                    'Utilities',
+                                    'Venture Capital'
+                                ])),
+                                z.null()
+                            ])),
+                            li_industries: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
                             ]))
                         }),
-                        z.null()
-                    ])),
-                    crunchbase_slug: z.optional(z.union([
-                        z.string(),
                         z.null()
                     ])),
                     linkedin_company_id: z.optional(z.union([
@@ -82279,7 +83341,7 @@ export const zCombinedSearchCountData = z.object({
                 z.object({
                     anyOf: z.optional(z.union([
                         z.array(z.object({
-                            list: z.enum(['fortune-500-usa']),
+                            list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                             range: z.object({
                                 low: z.number(),
                                 high: z.number(),
@@ -82935,6 +83997,14 @@ export const zCombinedSearchCountData = z.object({
                                     'Hybrid'
                                 ])),
                                 z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
                             ]))
                         })),
                         z.null()
@@ -83577,6 +84647,14 @@ export const zCombinedSearchCountData = z.object({
                                     'Hybrid'
                                 ])),
                                 z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
                             ]))
                         })),
                         z.null()
@@ -84213,6 +85291,14 @@ export const zCombinedSearchCountData = z.object({
                                 z.null()
                             ])),
                             jobLocationType: z.optional(z.union([
+                                z.array(z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ])),
+                                z.null()
+                            ])),
+                            jobModality: z.optional(z.union([
                                 z.array(z.enum([
                                     'On-site',
                                     'Remote',
@@ -84721,6 +85807,42 @@ export const zCombinedSearchCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 rule: z.enum(['industry']),
                                 industry: z.enum([
                                     'Administrative Services',
@@ -85298,6 +86420,42 @@ export const zCombinedSearchCountData = z.object({
                                 ])
                             }),
                             z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
                                 rule: z.enum(['industry']),
                                 industry: z.enum([
                                     'Administrative Services',
@@ -85841,6 +86999,42 @@ export const zCombinedSearchCountData = z.object({
                             z.object({
                                 rule: z.enum(['location-type']),
                                 locationType: z.enum([
+                                    'On-site',
+                                    'Remote',
+                                    'Hybrid'
+                                ]),
+                                range: z.union([
+                                    z.object({
+                                        type: z.enum(['count-range']),
+                                        range: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.object({
+                                        type: z.enum(['percent-range']),
+                                        rangeInHundredths: z.object({
+                                            lowerBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            upperBound: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    })
+                                ])
+                            }),
+                            z.object({
+                                rule: z.enum(['modality']),
+                                modality: z.enum([
                                     'On-site',
                                     'Remote',
                                     'Hybrid'
@@ -94730,7 +95924,7 @@ export const zQuickCompanyResolveResponse = z.object({
                     ])),
                     fortune_rankings: z.optional(z.union([
                         z.array(z.object({
-                            list: z.enum(['fortune-500-usa']),
+                            list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                             year: z.number(),
                             rank: z.number()
                         })),
@@ -97930,10 +99124,6 @@ export const zQuickPersonResolveResponse = z.object({
                         z.string(),
                         z.null()
                     ])),
-                    industry_name: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
                     inferred_location: z.optional(z.union([
                         z.object({
                             street_address: z.optional(z.union([
@@ -98454,6 +99644,10 @@ export const zQuickPersonResolveResponse = z.object({
                         z.string(),
                         z.null()
                     ])),
+                    industry_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
                     last_updated_at: z.optional(z.union([
                         z.string(),
                         z.null()
@@ -98568,12 +99762,74 @@ export const zQuickPersonResolveResponse = z.object({
                                     preferred_name: z.optional(z.union([
                                         z.string(),
                                         z.null()
+                                    ])),
+                                    crunchbase_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    standard_industries: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'Administrative Services',
+                                            'Aerospace & Military',
+                                            'Artificial Intelligence',
+                                            'Arts & Music',
+                                            'Automotive',
+                                            'Business Services',
+                                            'Cloud',
+                                            'Construction',
+                                            'Consulting',
+                                            'Consumer Goods',
+                                            'Consumer Services',
+                                            'Design',
+                                            'Education',
+                                            'Energy',
+                                            'Entertainment',
+                                            'Environmental',
+                                            'Events',
+                                            'Farming & Agriculture',
+                                            'Finance',
+                                            'Food & Beverage',
+                                            'Gaming',
+                                            'Government',
+                                            'Hardware',
+                                            'Healthcare',
+                                            'Hospitality',
+                                            'Industrials',
+                                            'Information Technology',
+                                            'Insurance',
+                                            'Legal',
+                                            'Life Sciences',
+                                            'Logistics',
+                                            'Manufacturing',
+                                            'Marketing & Advertising',
+                                            'Media',
+                                            'Mining',
+                                            'Nonprofit',
+                                            'Publishing',
+                                            'Real Estate',
+                                            'Retail',
+                                            'Science & Engineering',
+                                            'Security',
+                                            'Software',
+                                            'Sports',
+                                            'Telecom',
+                                            'Trade',
+                                            'Transportation',
+                                            'Travel & Tourism',
+                                            'Utilities',
+                                            'Venture Capital'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    li_industries: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
                                     ]))
                                 }),
-                                z.null()
-                            ])),
-                            crunchbase_slug: z.optional(z.union([
-                                z.string(),
                                 z.null()
                             ])),
                             linkedin_company_id: z.optional(z.union([
@@ -98697,6 +99953,146 @@ export const zQuickPersonResolveResponse = z.object({
                         z.null()
                     ]))
                 }),
+                z.null()
+            ]))
+        }))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zListCompanyRankingsData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        rankings: z.object({
+            list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
+            year: z.optional(z.union([
+                z.int().gte(2024).lte(2026),
+                z.null()
+            ])),
+            rankRange: z.object({
+                low: z.int().gte(1),
+                high: z.int().gte(1)
+            })
+        })
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zListCompanyRankingsResponse = z.object({
+    output: z.object({
+        list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
+        year: z.int(),
+        companies: z.array(z.object({
+            name: z.string().min(1),
+            rank: z.int().gte(1),
+            domain: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            ticker: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            headquarters: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            countryCode: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            revenueUsd: z.optional(z.union([
+                z.number(),
+                z.null()
+            ])),
+            profitsUsd: z.optional(z.union([
+                z.number(),
+                z.null()
+            ])),
+            marketCapUsd: z.optional(z.union([
+                z.number(),
+                z.null()
+            ])),
+            employeeCount: z.optional(z.union([
+                z.number(),
                 z.null()
             ]))
         }))
@@ -111489,7 +112885,15 @@ export const zSyncTurboContactEnrichmentResponse = z.object({
 export const zPremiumPhoneRevealData = z.object({
     body: z.object({
         apiKey: z.string(),
-        linkedinUrl: z.string().min(1)
+        linkedinUrl: z.string().min(1),
+        patience: z.optional(z.nullable(z.enum([
+            'MINIMUM',
+            'LOW',
+            'MEDIUM',
+            'HIGH',
+            'EXTREME',
+            'MAXIMUM'
+        ])))
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
@@ -112424,6 +113828,181 @@ export const zGetTalentFlowResponse = z.object({
     ]))
 });
 
+export const zGetTalentFlowRivalsData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        company: z.union([
+            z.object({
+                identifier: z.enum(['linkedinUrl']),
+                value: z.string().min(1)
+            }),
+            z.object({
+                identifier: z.enum(['linkedinSlug']),
+                value: z.string().min(1)
+            }),
+            z.object({
+                identifier: z.enum(['linkedinOrgId']),
+                value: z.string().min(1).regex(/^\d+$/)
+            }),
+            z.object({
+                identifier: z.enum(['domain']),
+                value: z.string().min(1)
+            })
+        ]),
+        dateRange: z.object({
+            lowerBound: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            upperBound: z.optional(z.union([
+                z.string(),
+                z.null()
+            ]))
+        }),
+        numCompaniesPerSide: z.optional(z.int().gte(1).lte(50)).prefault(10)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zGetTalentFlowRivalsResponse = z.object({
+    output: z.object({
+        company: z.object({
+            name: z.string(),
+            linkedinOrgId: z.string(),
+            domains: z.array(z.string()),
+            linkedinSlug: z.optional(z.union([
+                z.string(),
+                z.null()
+            ]))
+        }),
+        window: z.object({
+            after: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            before: z.optional(z.union([
+                z.string(),
+                z.null()
+            ]))
+        }),
+        numCompaniesPerSide: z.int().gte(1),
+        joinersCount: z.int().gte(0),
+        leaversCount: z.int().gte(0),
+        rivals: z.array(z.object({
+            companyName: z.string(),
+            domain: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            linkedinUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            linkedinOrgId: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            gainedCount: z.int().gte(0),
+            lostCount: z.int().gte(0),
+            netCount: z.int(),
+            totalMovesCount: z.int().gte(0),
+            stage: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            totalFundingUsd: z.optional(z.union([
+                z.number(),
+                z.null()
+            ])),
+            valuationUsd: z.optional(z.union([
+                z.number(),
+                z.null()
+            ]))
+        })),
+        generatedAt: z.string(),
+        markdownSummary: z.string()
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zStartMosaicData = z.object({
     body: z.object({
         apiKey: z.string(),
@@ -113126,10 +114705,6 @@ export const zProfileLiveEnrichResponse = z.object({
                     z.string(),
                     z.null()
                 ])),
-                industry_name: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
                 inferred_location: z.optional(z.union([
                     z.object({
                         street_address: z.optional(z.union([
@@ -113650,6 +115225,10 @@ export const zProfileLiveEnrichResponse = z.object({
                     z.string(),
                     z.null()
                 ])),
+                industry_name: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
                 last_updated_at: z.optional(z.union([
                     z.string(),
                     z.null()
@@ -113764,12 +115343,74 @@ export const zProfileLiveEnrichResponse = z.object({
                                 preferred_name: z.optional(z.union([
                                     z.string(),
                                     z.null()
+                                ])),
+                                crunchbase_slug: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
+                                logo_url: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
+                                standard_industries: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Administrative Services',
+                                        'Aerospace & Military',
+                                        'Artificial Intelligence',
+                                        'Arts & Music',
+                                        'Automotive',
+                                        'Business Services',
+                                        'Cloud',
+                                        'Construction',
+                                        'Consulting',
+                                        'Consumer Goods',
+                                        'Consumer Services',
+                                        'Design',
+                                        'Education',
+                                        'Energy',
+                                        'Entertainment',
+                                        'Environmental',
+                                        'Events',
+                                        'Farming & Agriculture',
+                                        'Finance',
+                                        'Food & Beverage',
+                                        'Gaming',
+                                        'Government',
+                                        'Hardware',
+                                        'Healthcare',
+                                        'Hospitality',
+                                        'Industrials',
+                                        'Information Technology',
+                                        'Insurance',
+                                        'Legal',
+                                        'Life Sciences',
+                                        'Logistics',
+                                        'Manufacturing',
+                                        'Marketing & Advertising',
+                                        'Media',
+                                        'Mining',
+                                        'Nonprofit',
+                                        'Publishing',
+                                        'Real Estate',
+                                        'Retail',
+                                        'Science & Engineering',
+                                        'Security',
+                                        'Software',
+                                        'Sports',
+                                        'Telecom',
+                                        'Trade',
+                                        'Transportation',
+                                        'Travel & Tourism',
+                                        'Utilities',
+                                        'Venture Capital'
+                                    ])),
+                                    z.null()
+                                ])),
+                                li_industries: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
                                 ]))
                             }),
-                            z.null()
-                        ])),
-                        crunchbase_slug: z.optional(z.union([
-                            z.string(),
                             z.null()
                         ])),
                         linkedin_company_id: z.optional(z.union([
@@ -117120,10 +118761,6 @@ export const zReverseEmailLookupResponse = z.object({
                 z.string(),
                 z.null()
             ])),
-            industry_name: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
             inferred_location: z.optional(z.union([
                 z.object({
                     street_address: z.optional(z.union([
@@ -117644,6 +119281,10 @@ export const zReverseEmailLookupResponse = z.object({
                 z.string(),
                 z.null()
             ])),
+            industry_name: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
             last_updated_at: z.optional(z.union([
                 z.string(),
                 z.null()
@@ -117758,12 +119399,74 @@ export const zReverseEmailLookupResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            standard_industries: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Administrative Services',
+                                    'Aerospace & Military',
+                                    'Artificial Intelligence',
+                                    'Arts & Music',
+                                    'Automotive',
+                                    'Business Services',
+                                    'Cloud',
+                                    'Construction',
+                                    'Consulting',
+                                    'Consumer Goods',
+                                    'Consumer Services',
+                                    'Design',
+                                    'Education',
+                                    'Energy',
+                                    'Entertainment',
+                                    'Environmental',
+                                    'Events',
+                                    'Farming & Agriculture',
+                                    'Finance',
+                                    'Food & Beverage',
+                                    'Gaming',
+                                    'Government',
+                                    'Hardware',
+                                    'Healthcare',
+                                    'Hospitality',
+                                    'Industrials',
+                                    'Information Technology',
+                                    'Insurance',
+                                    'Legal',
+                                    'Life Sciences',
+                                    'Logistics',
+                                    'Manufacturing',
+                                    'Marketing & Advertising',
+                                    'Media',
+                                    'Mining',
+                                    'Nonprofit',
+                                    'Publishing',
+                                    'Real Estate',
+                                    'Retail',
+                                    'Science & Engineering',
+                                    'Security',
+                                    'Software',
+                                    'Sports',
+                                    'Telecom',
+                                    'Trade',
+                                    'Transportation',
+                                    'Travel & Tourism',
+                                    'Utilities',
+                                    'Venture Capital'
+                                ])),
+                                z.null()
+                            ])),
+                            li_industries: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
                             ]))
                         }),
-                        z.null()
-                    ])),
-                    crunchbase_slug: z.optional(z.union([
-                        z.string(),
                         z.null()
                     ])),
                     linkedin_company_id: z.optional(z.union([
@@ -118248,10 +119951,6 @@ export const zLiteReverseEmailLookupResponse = z.object({
                 z.string(),
                 z.null()
             ])),
-            industry_name: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
             inferred_location: z.optional(z.union([
                 z.object({
                     street_address: z.optional(z.union([
@@ -118772,6 +120471,10 @@ export const zLiteReverseEmailLookupResponse = z.object({
                 z.string(),
                 z.null()
             ])),
+            industry_name: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
             last_updated_at: z.optional(z.union([
                 z.string(),
                 z.null()
@@ -118886,12 +120589,74 @@ export const zLiteReverseEmailLookupResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            standard_industries: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Administrative Services',
+                                    'Aerospace & Military',
+                                    'Artificial Intelligence',
+                                    'Arts & Music',
+                                    'Automotive',
+                                    'Business Services',
+                                    'Cloud',
+                                    'Construction',
+                                    'Consulting',
+                                    'Consumer Goods',
+                                    'Consumer Services',
+                                    'Design',
+                                    'Education',
+                                    'Energy',
+                                    'Entertainment',
+                                    'Environmental',
+                                    'Events',
+                                    'Farming & Agriculture',
+                                    'Finance',
+                                    'Food & Beverage',
+                                    'Gaming',
+                                    'Government',
+                                    'Hardware',
+                                    'Healthcare',
+                                    'Hospitality',
+                                    'Industrials',
+                                    'Information Technology',
+                                    'Insurance',
+                                    'Legal',
+                                    'Life Sciences',
+                                    'Logistics',
+                                    'Manufacturing',
+                                    'Marketing & Advertising',
+                                    'Media',
+                                    'Mining',
+                                    'Nonprofit',
+                                    'Publishing',
+                                    'Real Estate',
+                                    'Retail',
+                                    'Science & Engineering',
+                                    'Security',
+                                    'Software',
+                                    'Sports',
+                                    'Telecom',
+                                    'Trade',
+                                    'Transportation',
+                                    'Travel & Tourism',
+                                    'Utilities',
+                                    'Venture Capital'
+                                ])),
+                                z.null()
+                            ])),
+                            li_industries: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
                             ]))
                         }),
-                        z.null()
-                    ])),
-                    crunchbase_slug: z.optional(z.union([
-                        z.string(),
                         z.null()
                     ])),
                     linkedin_company_id: z.optional(z.union([
@@ -119375,10 +121140,6 @@ export const zReversePhoneLookupResponse = z.object({
                         z.null()
                     ])),
                     headline: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
-                    industry_name: z.optional(z.union([
                         z.string(),
                         z.null()
                     ])),
@@ -119902,6 +121663,10 @@ export const zReversePhoneLookupResponse = z.object({
                         z.string(),
                         z.null()
                     ])),
+                    industry_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
                     last_updated_at: z.optional(z.union([
                         z.string(),
                         z.null()
@@ -120016,12 +121781,74 @@ export const zReversePhoneLookupResponse = z.object({
                                     preferred_name: z.optional(z.union([
                                         z.string(),
                                         z.null()
+                                    ])),
+                                    crunchbase_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    standard_industries: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'Administrative Services',
+                                            'Aerospace & Military',
+                                            'Artificial Intelligence',
+                                            'Arts & Music',
+                                            'Automotive',
+                                            'Business Services',
+                                            'Cloud',
+                                            'Construction',
+                                            'Consulting',
+                                            'Consumer Goods',
+                                            'Consumer Services',
+                                            'Design',
+                                            'Education',
+                                            'Energy',
+                                            'Entertainment',
+                                            'Environmental',
+                                            'Events',
+                                            'Farming & Agriculture',
+                                            'Finance',
+                                            'Food & Beverage',
+                                            'Gaming',
+                                            'Government',
+                                            'Hardware',
+                                            'Healthcare',
+                                            'Hospitality',
+                                            'Industrials',
+                                            'Information Technology',
+                                            'Insurance',
+                                            'Legal',
+                                            'Life Sciences',
+                                            'Logistics',
+                                            'Manufacturing',
+                                            'Marketing & Advertising',
+                                            'Media',
+                                            'Mining',
+                                            'Nonprofit',
+                                            'Publishing',
+                                            'Real Estate',
+                                            'Retail',
+                                            'Science & Engineering',
+                                            'Security',
+                                            'Software',
+                                            'Sports',
+                                            'Telecom',
+                                            'Trade',
+                                            'Transportation',
+                                            'Travel & Tourism',
+                                            'Utilities',
+                                            'Venture Capital'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    li_industries: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
                                     ]))
                                 }),
-                                z.null()
-                            ])),
-                            crunchbase_slug: z.optional(z.union([
-                                z.string(),
                                 z.null()
                             ])),
                             linkedin_company_id: z.optional(z.union([
@@ -122007,10 +123834,6 @@ export const zKitchenSinkProfileResponse = z.object({
                 z.string(),
                 z.null()
             ])),
-            industry_name: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
             inferred_location: z.optional(z.union([
                 z.object({
                     street_address: z.optional(z.union([
@@ -122531,6 +124354,10 @@ export const zKitchenSinkProfileResponse = z.object({
                 z.string(),
                 z.null()
             ])),
+            industry_name: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
             last_updated_at: z.optional(z.union([
                 z.string(),
                 z.null()
@@ -122645,12 +124472,74 @@ export const zKitchenSinkProfileResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            standard_industries: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Administrative Services',
+                                    'Aerospace & Military',
+                                    'Artificial Intelligence',
+                                    'Arts & Music',
+                                    'Automotive',
+                                    'Business Services',
+                                    'Cloud',
+                                    'Construction',
+                                    'Consulting',
+                                    'Consumer Goods',
+                                    'Consumer Services',
+                                    'Design',
+                                    'Education',
+                                    'Energy',
+                                    'Entertainment',
+                                    'Environmental',
+                                    'Events',
+                                    'Farming & Agriculture',
+                                    'Finance',
+                                    'Food & Beverage',
+                                    'Gaming',
+                                    'Government',
+                                    'Hardware',
+                                    'Healthcare',
+                                    'Hospitality',
+                                    'Industrials',
+                                    'Information Technology',
+                                    'Insurance',
+                                    'Legal',
+                                    'Life Sciences',
+                                    'Logistics',
+                                    'Manufacturing',
+                                    'Marketing & Advertising',
+                                    'Media',
+                                    'Mining',
+                                    'Nonprofit',
+                                    'Publishing',
+                                    'Real Estate',
+                                    'Retail',
+                                    'Science & Engineering',
+                                    'Security',
+                                    'Software',
+                                    'Sports',
+                                    'Telecom',
+                                    'Trade',
+                                    'Transportation',
+                                    'Travel & Tourism',
+                                    'Utilities',
+                                    'Venture Capital'
+                                ])),
+                                z.null()
+                            ])),
+                            li_industries: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
                             ]))
                         }),
-                        z.null()
-                    ])),
-                    crunchbase_slug: z.optional(z.union([
-                        z.string(),
                         z.null()
                     ])),
                     linkedin_company_id: z.optional(z.union([
@@ -123058,7 +124947,7 @@ export const zKitchenSinkCompanyResponse = z.object({
             ])),
             fortune_rankings: z.optional(z.union([
                 z.array(z.object({
-                    list: z.enum(['fortune-500-usa']),
+                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                     year: z.number(),
                     rank: z.number()
                 })),
@@ -126326,10 +128215,6 @@ export const zKitchenSinkBulkProfileResponse = z.object({
                 z.string(),
                 z.null()
             ])),
-            industry_name: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
             inferred_location: z.optional(z.union([
                 z.object({
                     street_address: z.optional(z.union([
@@ -126850,6 +128735,10 @@ export const zKitchenSinkBulkProfileResponse = z.object({
                 z.string(),
                 z.null()
             ])),
+            industry_name: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
             last_updated_at: z.optional(z.union([
                 z.string(),
                 z.null()
@@ -126964,12 +128853,74 @@ export const zKitchenSinkBulkProfileResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            standard_industries: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Administrative Services',
+                                    'Aerospace & Military',
+                                    'Artificial Intelligence',
+                                    'Arts & Music',
+                                    'Automotive',
+                                    'Business Services',
+                                    'Cloud',
+                                    'Construction',
+                                    'Consulting',
+                                    'Consumer Goods',
+                                    'Consumer Services',
+                                    'Design',
+                                    'Education',
+                                    'Energy',
+                                    'Entertainment',
+                                    'Environmental',
+                                    'Events',
+                                    'Farming & Agriculture',
+                                    'Finance',
+                                    'Food & Beverage',
+                                    'Gaming',
+                                    'Government',
+                                    'Hardware',
+                                    'Healthcare',
+                                    'Hospitality',
+                                    'Industrials',
+                                    'Information Technology',
+                                    'Insurance',
+                                    'Legal',
+                                    'Life Sciences',
+                                    'Logistics',
+                                    'Manufacturing',
+                                    'Marketing & Advertising',
+                                    'Media',
+                                    'Mining',
+                                    'Nonprofit',
+                                    'Publishing',
+                                    'Real Estate',
+                                    'Retail',
+                                    'Science & Engineering',
+                                    'Security',
+                                    'Software',
+                                    'Sports',
+                                    'Telecom',
+                                    'Trade',
+                                    'Transportation',
+                                    'Travel & Tourism',
+                                    'Utilities',
+                                    'Venture Capital'
+                                ])),
+                                z.null()
+                            ])),
+                            li_industries: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
                             ]))
                         }),
-                        z.null()
-                    ])),
-                    crunchbase_slug: z.optional(z.union([
-                        z.string(),
                         z.null()
                     ])),
                     linkedin_company_id: z.optional(z.union([
@@ -127379,7 +129330,7 @@ export const zKitchenSinkBulkCompanyResponse = z.object({
             ])),
             fortune_rankings: z.optional(z.union([
                 z.array(z.object({
-                    list: z.enum(['fortune-500-usa']),
+                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                     year: z.number(),
                     rank: z.number()
                 })),
@@ -130870,7 +132821,15 @@ export const zEmailBounceDetectionResponse = z.object({
 export const zValidatePhoneNumberData = z.object({
     body: z.object({
         apiKey: z.string(),
-        phoneNumber: z.string()
+        phoneNumber: z.string(),
+        patience: z.optional(z.nullable(z.enum([
+            'MINIMUM',
+            'LOW',
+            'MEDIUM',
+            'HIGH',
+            'EXTREME',
+            'MAXIMUM'
+        ])))
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
@@ -132771,7 +134730,7 @@ export const zNlpSearchParseResponse = z.object({
                             z.object({
                                 anyOf: z.optional(z.union([
                                     z.array(z.object({
-                                        list: z.enum(['fortune-500-usa']),
+                                        list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                         range: z.object({
                                             low: z.number(),
                                             high: z.number(),
@@ -133427,6 +135386,14 @@ export const zNlpSearchParseResponse = z.object({
                                                 'Hybrid'
                                             ])),
                                             z.null()
+                                        ])),
+                                        jobModality: z.optional(z.union([
+                                            z.array(z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ])),
+                                            z.null()
                                         ]))
                                     })),
                                     z.null()
@@ -134069,6 +136036,14 @@ export const zNlpSearchParseResponse = z.object({
                                                 'Hybrid'
                                             ])),
                                             z.null()
+                                        ])),
+                                        jobModality: z.optional(z.union([
+                                            z.array(z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ])),
+                                            z.null()
                                         ]))
                                     })),
                                     z.null()
@@ -134705,6 +136680,14 @@ export const zNlpSearchParseResponse = z.object({
                                             z.null()
                                         ])),
                                         jobLocationType: z.optional(z.union([
+                                            z.array(z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ])),
+                                            z.null()
+                                        ])),
+                                        jobModality: z.optional(z.union([
                                             z.array(z.enum([
                                                 'On-site',
                                                 'Remote',
@@ -135213,6 +137196,42 @@ export const zNlpSearchParseResponse = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            rule: z.enum(['modality']),
+                                            modality: z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ]),
+                                            range: z.union([
+                                                z.object({
+                                                    type: z.enum(['count-range']),
+                                                    range: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                }),
+                                                z.object({
+                                                    type: z.enum(['percent-range']),
+                                                    rangeInHundredths: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             rule: z.enum(['industry']),
                                             industry: z.enum([
                                                 'Administrative Services',
@@ -135790,6 +137809,42 @@ export const zNlpSearchParseResponse = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            rule: z.enum(['modality']),
+                                            modality: z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ]),
+                                            range: z.union([
+                                                z.object({
+                                                    type: z.enum(['count-range']),
+                                                    range: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                }),
+                                                z.object({
+                                                    type: z.enum(['percent-range']),
+                                                    rangeInHundredths: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             rule: z.enum(['industry']),
                                             industry: z.enum([
                                                 'Administrative Services',
@@ -136333,6 +138388,42 @@ export const zNlpSearchParseResponse = z.object({
                                         z.object({
                                             rule: z.enum(['location-type']),
                                             locationType: z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ]),
+                                            range: z.union([
+                                                z.object({
+                                                    type: z.enum(['count-range']),
+                                                    range: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                }),
+                                                z.object({
+                                                    type: z.enum(['percent-range']),
+                                                    rangeInHundredths: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
+                                            rule: z.enum(['modality']),
+                                            modality: z.enum([
                                                 'On-site',
                                                 'Remote',
                                                 'Hybrid'
@@ -146869,7 +148960,7 @@ export const zSlushieRunResponse = z.object({
                             z.object({
                                 anyOf: z.optional(z.union([
                                     z.array(z.object({
-                                        list: z.enum(['fortune-500-usa']),
+                                        list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                         range: z.object({
                                             low: z.number(),
                                             high: z.number(),
@@ -147525,6 +149616,14 @@ export const zSlushieRunResponse = z.object({
                                                 'Hybrid'
                                             ])),
                                             z.null()
+                                        ])),
+                                        jobModality: z.optional(z.union([
+                                            z.array(z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ])),
+                                            z.null()
                                         ]))
                                     })),
                                     z.null()
@@ -148167,6 +150266,14 @@ export const zSlushieRunResponse = z.object({
                                                 'Hybrid'
                                             ])),
                                             z.null()
+                                        ])),
+                                        jobModality: z.optional(z.union([
+                                            z.array(z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ])),
+                                            z.null()
                                         ]))
                                     })),
                                     z.null()
@@ -148803,6 +150910,14 @@ export const zSlushieRunResponse = z.object({
                                             z.null()
                                         ])),
                                         jobLocationType: z.optional(z.union([
+                                            z.array(z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ])),
+                                            z.null()
+                                        ])),
+                                        jobModality: z.optional(z.union([
                                             z.array(z.enum([
                                                 'On-site',
                                                 'Remote',
@@ -149311,6 +151426,42 @@ export const zSlushieRunResponse = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            rule: z.enum(['modality']),
+                                            modality: z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ]),
+                                            range: z.union([
+                                                z.object({
+                                                    type: z.enum(['count-range']),
+                                                    range: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                }),
+                                                z.object({
+                                                    type: z.enum(['percent-range']),
+                                                    rangeInHundredths: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             rule: z.enum(['industry']),
                                             industry: z.enum([
                                                 'Administrative Services',
@@ -149888,6 +152039,42 @@ export const zSlushieRunResponse = z.object({
                                             ])
                                         }),
                                         z.object({
+                                            rule: z.enum(['modality']),
+                                            modality: z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ]),
+                                            range: z.union([
+                                                z.object({
+                                                    type: z.enum(['count-range']),
+                                                    range: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                }),
+                                                z.object({
+                                                    type: z.enum(['percent-range']),
+                                                    rangeInHundredths: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
                                             rule: z.enum(['industry']),
                                             industry: z.enum([
                                                 'Administrative Services',
@@ -150431,6 +152618,42 @@ export const zSlushieRunResponse = z.object({
                                         z.object({
                                             rule: z.enum(['location-type']),
                                             locationType: z.enum([
+                                                'On-site',
+                                                'Remote',
+                                                'Hybrid'
+                                            ]),
+                                            range: z.union([
+                                                z.object({
+                                                    type: z.enum(['count-range']),
+                                                    range: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                }),
+                                                z.object({
+                                                    type: z.enum(['percent-range']),
+                                                    rangeInHundredths: z.object({
+                                                        lowerBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ])),
+                                                        upperBound: z.optional(z.union([
+                                                            z.int(),
+                                                            z.null()
+                                                        ]))
+                                                    })
+                                                })
+                                            ])
+                                        }),
+                                        z.object({
+                                            rule: z.enum(['modality']),
+                                            modality: z.enum([
                                                 'On-site',
                                                 'Remote',
                                                 'Hybrid'
@@ -159273,7 +161496,7 @@ export const zSlushieRunResponse = z.object({
                     ])),
                     fortune_rankings: z.optional(z.union([
                         z.array(z.object({
-                            list: z.enum(['fortune-500-usa']),
+                            list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                             year: z.number(),
                             rank: z.number()
                         })),
@@ -162354,10 +164577,6 @@ export const zSlushieRunResponse = z.object({
                         z.string(),
                         z.null()
                     ])),
-                    industry_name: z.optional(z.union([
-                        z.string(),
-                        z.null()
-                    ])),
                     inferred_location: z.optional(z.union([
                         z.object({
                             street_address: z.optional(z.union([
@@ -162878,6 +165097,10 @@ export const zSlushieRunResponse = z.object({
                         z.string(),
                         z.null()
                     ])),
+                    industry_name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
                     last_updated_at: z.optional(z.union([
                         z.string(),
                         z.null()
@@ -162992,12 +165215,74 @@ export const zSlushieRunResponse = z.object({
                                     preferred_name: z.optional(z.union([
                                         z.string(),
                                         z.null()
+                                    ])),
+                                    crunchbase_slug: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    logo_url: z.optional(z.union([
+                                        z.string(),
+                                        z.null()
+                                    ])),
+                                    standard_industries: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'Administrative Services',
+                                            'Aerospace & Military',
+                                            'Artificial Intelligence',
+                                            'Arts & Music',
+                                            'Automotive',
+                                            'Business Services',
+                                            'Cloud',
+                                            'Construction',
+                                            'Consulting',
+                                            'Consumer Goods',
+                                            'Consumer Services',
+                                            'Design',
+                                            'Education',
+                                            'Energy',
+                                            'Entertainment',
+                                            'Environmental',
+                                            'Events',
+                                            'Farming & Agriculture',
+                                            'Finance',
+                                            'Food & Beverage',
+                                            'Gaming',
+                                            'Government',
+                                            'Hardware',
+                                            'Healthcare',
+                                            'Hospitality',
+                                            'Industrials',
+                                            'Information Technology',
+                                            'Insurance',
+                                            'Legal',
+                                            'Life Sciences',
+                                            'Logistics',
+                                            'Manufacturing',
+                                            'Marketing & Advertising',
+                                            'Media',
+                                            'Mining',
+                                            'Nonprofit',
+                                            'Publishing',
+                                            'Real Estate',
+                                            'Retail',
+                                            'Science & Engineering',
+                                            'Security',
+                                            'Software',
+                                            'Sports',
+                                            'Telecom',
+                                            'Trade',
+                                            'Transportation',
+                                            'Travel & Tourism',
+                                            'Utilities',
+                                            'Venture Capital'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    li_industries: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
                                     ]))
                                 }),
-                                z.null()
-                            ])),
-                            crunchbase_slug: z.optional(z.union([
-                                z.string(),
                                 z.null()
                             ])),
                             linkedin_company_id: z.optional(z.union([
@@ -164957,7 +167242,7 @@ export const zCreateSavedSearchData = z.object({
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({
-                                    list: z.enum(['fortune-500-usa']),
+                                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                     range: z.object({
                                         low: z.number(),
                                         high: z.number(),
@@ -165613,6 +167898,14 @@ export const zCreateSavedSearchData = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -166255,6 +168548,14 @@ export const zCreateSavedSearchData = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -166891,6 +169192,14 @@ export const zCreateSavedSearchData = z.object({
                                         z.null()
                                     ])),
                                     jobLocationType: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
                                         z.array(z.enum([
                                             'On-site',
                                             'Remote',
@@ -167399,6 +169708,42 @@ export const zCreateSavedSearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -167976,6 +170321,42 @@ export const zCreateSavedSearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -168519,6 +170900,42 @@ export const zCreateSavedSearchData = z.object({
                                     z.object({
                                         rule: z.enum(['location-type']),
                                         locationType: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
                                             'On-site',
                                             'Remote',
                                             'Hybrid'
@@ -178854,7 +181271,7 @@ export const zCreateSavedSearchData = z.object({
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({
-                                    list: z.enum(['fortune-500-usa']),
+                                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                     range: z.object({
                                         low: z.number(),
                                         high: z.number(),
@@ -179510,6 +181927,14 @@ export const zCreateSavedSearchData = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -180152,6 +182577,14 @@ export const zCreateSavedSearchData = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -180788,6 +183221,14 @@ export const zCreateSavedSearchData = z.object({
                                         z.null()
                                     ])),
                                     jobLocationType: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
                                         z.array(z.enum([
                                             'On-site',
                                             'Remote',
@@ -181296,6 +183737,42 @@ export const zCreateSavedSearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -181873,6 +184350,42 @@ export const zCreateSavedSearchData = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -182416,6 +184929,42 @@ export const zCreateSavedSearchData = z.object({
                                     z.object({
                                         rule: z.enum(['location-type']),
                                         locationType: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
                                             'On-site',
                                             'Remote',
                                             'Hybrid'
@@ -192879,7 +195428,7 @@ export const zGetSavedSearchResponse = z.object({
                     z.object({
                         anyOf: z.optional(z.union([
                             z.array(z.object({
-                                list: z.enum(['fortune-500-usa']),
+                                list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                 range: z.object({
                                     low: z.number(),
                                     high: z.number(),
@@ -193535,6 +196084,14 @@ export const zGetSavedSearchResponse = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -194177,6 +196734,14 @@ export const zGetSavedSearchResponse = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -194813,6 +197378,14 @@ export const zGetSavedSearchResponse = z.object({
                                     z.null()
                                 ])),
                                 jobLocationType: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
                                     z.array(z.enum([
                                         'On-site',
                                         'Remote',
@@ -195321,6 +197894,42 @@ export const zGetSavedSearchResponse = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -195898,6 +198507,42 @@ export const zGetSavedSearchResponse = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -196441,6 +199086,42 @@ export const zGetSavedSearchResponse = z.object({
                                 z.object({
                                     rule: z.enum(['location-type']),
                                     locationType: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
                                         'On-site',
                                         'Remote',
                                         'Hybrid'
@@ -206912,7 +209593,7 @@ export const zGetSavedSearchRunResponse = z.object({
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({
-                                    list: z.enum(['fortune-500-usa']),
+                                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                     range: z.object({
                                         low: z.number(),
                                         high: z.number(),
@@ -207568,6 +210249,14 @@ export const zGetSavedSearchRunResponse = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -208210,6 +210899,14 @@ export const zGetSavedSearchRunResponse = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -208846,6 +211543,14 @@ export const zGetSavedSearchRunResponse = z.object({
                                         z.null()
                                     ])),
                                     jobLocationType: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
                                         z.array(z.enum([
                                             'On-site',
                                             'Remote',
@@ -209354,6 +212059,42 @@ export const zGetSavedSearchRunResponse = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -209931,6 +212672,42 @@ export const zGetSavedSearchRunResponse = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -210474,6 +213251,42 @@ export const zGetSavedSearchRunResponse = z.object({
                                     z.object({
                                         rule: z.enum(['location-type']),
                                         locationType: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
                                             'On-site',
                                             'Remote',
                                             'Hybrid'
@@ -221183,7 +223996,7 @@ export const zUpdateSavedSearchData = z.object({
                     z.object({
                         anyOf: z.optional(z.union([
                             z.array(z.object({
-                                list: z.enum(['fortune-500-usa']),
+                                list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                 range: z.object({
                                     low: z.number(),
                                     high: z.number(),
@@ -221839,6 +224652,14 @@ export const zUpdateSavedSearchData = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -222481,6 +225302,14 @@ export const zUpdateSavedSearchData = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -223117,6 +225946,14 @@ export const zUpdateSavedSearchData = z.object({
                                     z.null()
                                 ])),
                                 jobLocationType: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
                                     z.array(z.enum([
                                         'On-site',
                                         'Remote',
@@ -223625,6 +226462,42 @@ export const zUpdateSavedSearchData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -224202,6 +227075,42 @@ export const zUpdateSavedSearchData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -224745,6 +227654,42 @@ export const zUpdateSavedSearchData = z.object({
                                 z.object({
                                     rule: z.enum(['location-type']),
                                     locationType: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
                                         'On-site',
                                         'Remote',
                                         'Hybrid'
@@ -234078,10 +237023,6 @@ export const zGetCurrentProfilesInSavedSearchResponse = z.object({
                 z.string(),
                 z.null()
             ])),
-            industry_name: z.optional(z.union([
-                z.string(),
-                z.null()
-            ])),
             inferred_location: z.optional(z.union([
                 z.object({
                     street_address: z.optional(z.union([
@@ -234602,6 +237543,10 @@ export const zGetCurrentProfilesInSavedSearchResponse = z.object({
                 z.string(),
                 z.null()
             ])),
+            industry_name: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
             last_updated_at: z.optional(z.union([
                 z.string(),
                 z.null()
@@ -234716,12 +237661,74 @@ export const zGetCurrentProfilesInSavedSearchResponse = z.object({
                             preferred_name: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            crunchbase_slug: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            logo_url: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            standard_industries: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Administrative Services',
+                                    'Aerospace & Military',
+                                    'Artificial Intelligence',
+                                    'Arts & Music',
+                                    'Automotive',
+                                    'Business Services',
+                                    'Cloud',
+                                    'Construction',
+                                    'Consulting',
+                                    'Consumer Goods',
+                                    'Consumer Services',
+                                    'Design',
+                                    'Education',
+                                    'Energy',
+                                    'Entertainment',
+                                    'Environmental',
+                                    'Events',
+                                    'Farming & Agriculture',
+                                    'Finance',
+                                    'Food & Beverage',
+                                    'Gaming',
+                                    'Government',
+                                    'Hardware',
+                                    'Healthcare',
+                                    'Hospitality',
+                                    'Industrials',
+                                    'Information Technology',
+                                    'Insurance',
+                                    'Legal',
+                                    'Life Sciences',
+                                    'Logistics',
+                                    'Manufacturing',
+                                    'Marketing & Advertising',
+                                    'Media',
+                                    'Mining',
+                                    'Nonprofit',
+                                    'Publishing',
+                                    'Real Estate',
+                                    'Retail',
+                                    'Science & Engineering',
+                                    'Security',
+                                    'Software',
+                                    'Sports',
+                                    'Telecom',
+                                    'Trade',
+                                    'Transportation',
+                                    'Travel & Tourism',
+                                    'Utilities',
+                                    'Venture Capital'
+                                ])),
+                                z.null()
+                            ])),
+                            li_industries: z.optional(z.union([
+                                z.array(z.string()),
+                                z.null()
                             ]))
                         }),
-                        z.null()
-                    ])),
-                    crunchbase_slug: z.optional(z.union([
-                        z.string(),
                         z.null()
                     ])),
                     linkedin_company_id: z.optional(z.union([
@@ -235097,7 +238104,7 @@ export const zGetCurrentCompaniesInSavedSearchResponse = z.object({
             ])),
             fortune_rankings: z.optional(z.union([
                 z.array(z.object({
-                    list: z.enum(['fortune-500-usa']),
+                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                     year: z.number(),
                     rank: z.number()
                 })),
@@ -238290,10 +241297,6 @@ export const zGetSavedSearchRunProfilesResponse = z.object({
                     z.string(),
                     z.null()
                 ])),
-                industry_name: z.optional(z.union([
-                    z.string(),
-                    z.null()
-                ])),
                 inferred_location: z.optional(z.union([
                     z.object({
                         street_address: z.optional(z.union([
@@ -238814,6 +241817,10 @@ export const zGetSavedSearchRunProfilesResponse = z.object({
                     z.string(),
                     z.null()
                 ])),
+                industry_name: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
                 last_updated_at: z.optional(z.union([
                     z.string(),
                     z.null()
@@ -238928,12 +241935,74 @@ export const zGetSavedSearchRunProfilesResponse = z.object({
                                 preferred_name: z.optional(z.union([
                                     z.string(),
                                     z.null()
+                                ])),
+                                crunchbase_slug: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
+                                logo_url: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
+                                standard_industries: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Administrative Services',
+                                        'Aerospace & Military',
+                                        'Artificial Intelligence',
+                                        'Arts & Music',
+                                        'Automotive',
+                                        'Business Services',
+                                        'Cloud',
+                                        'Construction',
+                                        'Consulting',
+                                        'Consumer Goods',
+                                        'Consumer Services',
+                                        'Design',
+                                        'Education',
+                                        'Energy',
+                                        'Entertainment',
+                                        'Environmental',
+                                        'Events',
+                                        'Farming & Agriculture',
+                                        'Finance',
+                                        'Food & Beverage',
+                                        'Gaming',
+                                        'Government',
+                                        'Hardware',
+                                        'Healthcare',
+                                        'Hospitality',
+                                        'Industrials',
+                                        'Information Technology',
+                                        'Insurance',
+                                        'Legal',
+                                        'Life Sciences',
+                                        'Logistics',
+                                        'Manufacturing',
+                                        'Marketing & Advertising',
+                                        'Media',
+                                        'Mining',
+                                        'Nonprofit',
+                                        'Publishing',
+                                        'Real Estate',
+                                        'Retail',
+                                        'Science & Engineering',
+                                        'Security',
+                                        'Software',
+                                        'Sports',
+                                        'Telecom',
+                                        'Trade',
+                                        'Transportation',
+                                        'Travel & Tourism',
+                                        'Utilities',
+                                        'Venture Capital'
+                                    ])),
+                                    z.null()
+                                ])),
+                                li_industries: z.optional(z.union([
+                                    z.array(z.string()),
+                                    z.null()
                                 ]))
                             }),
-                            z.null()
-                        ])),
-                        crunchbase_slug: z.optional(z.union([
-                            z.string(),
                             z.null()
                         ])),
                         linkedin_company_id: z.optional(z.union([
@@ -239313,7 +242382,7 @@ export const zGetSavedSearchRunCompaniesResponse = z.object({
                 ])),
                 fortune_rankings: z.optional(z.union([
                     z.array(z.object({
-                        list: z.enum(['fortune-500-usa']),
+                        list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                         year: z.number(),
                         rank: z.number()
                     })),
@@ -243993,7 +247062,7 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                         z.object({
                             anyOf: z.optional(z.union([
                                 z.array(z.object({
-                                    list: z.enum(['fortune-500-usa']),
+                                    list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                     range: z.object({
                                         low: z.number(),
                                         high: z.number(),
@@ -244649,6 +247718,14 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -245291,6 +248368,14 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                             'Hybrid'
                                         ])),
                                         z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
                                     ]))
                                 })),
                                 z.null()
@@ -245927,6 +249012,14 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                         z.null()
                                     ])),
                                     jobLocationType: z.optional(z.union([
+                                        z.array(z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ])),
+                                        z.null()
+                                    ])),
+                                    jobModality: z.optional(z.union([
                                         z.array(z.enum([
                                             'On-site',
                                             'Remote',
@@ -246435,6 +249528,42 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -247012,6 +250141,42 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                         ])
                                     }),
                                     z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
                                         rule: z.enum(['industry']),
                                         industry: z.enum([
                                             'Administrative Services',
@@ -247555,6 +250720,42 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                     z.object({
                                         rule: z.enum(['location-type']),
                                         locationType: z.enum([
+                                            'On-site',
+                                            'Remote',
+                                            'Hybrid'
+                                        ]),
+                                        range: z.union([
+                                            z.object({
+                                                type: z.enum(['count-range']),
+                                                range: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            }),
+                                            z.object({
+                                                type: z.enum(['percent-range']),
+                                                rangeInHundredths: z.object({
+                                                    lowerBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ])),
+                                                    upperBound: z.optional(z.union([
+                                                        z.int(),
+                                                        z.null()
+                                                    ]))
+                                                })
+                                            })
+                                        ])
+                                    }),
+                                    z.object({
+                                        rule: z.enum(['modality']),
+                                        modality: z.enum([
                                             'On-site',
                                             'Remote',
                                             'Hybrid'
@@ -260088,6 +263289,471 @@ export const zHotelPropertyResponse = z.object({
     ]))
 });
 
+export const zYelpSearchData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        categories: z.optional(z.union([
+            z.array(z.string().min(1)).max(5),
+            z.null()
+        ])),
+        location: z.string().min(1),
+        sortBy: z.optional(z.nullable(z.enum([
+            'relevance',
+            'highestRated',
+            'mostReviewed'
+        ]))),
+        nextPageToken: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ]))
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zYelpSearchResponse = z.object({
+    output: z.object({
+        businesses: z.array(z.object({
+            placeId: z.string(),
+            name: z.string(),
+            url: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            rating: z.optional(z.union([
+                z.number().gte(0).lte(5),
+                z.null()
+            ])),
+            reviewCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            phoneNumber: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            priceLevel: z.optional(z.union([
+                z.int().gte(1).lte(4),
+                z.null()
+            ])),
+            categories: z.array(z.string()),
+            neighborhood: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            thumbnailUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ]))
+        })),
+        nextPageToken: z.optional(z.union([
+            z.string(),
+            z.null()
+        ]))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zYelpPlaceData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        placeId: z.string().min(1)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zYelpPlaceResponse = z.object({
+    output: z.object({
+        place: z.object({
+            placeId: z.string(),
+            slug: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            name: z.string(),
+            url: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            rating: z.optional(z.union([
+                z.number().gte(0).lte(5),
+                z.null()
+            ])),
+            reviewCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            isClaimed: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
+            priceLevel: z.optional(z.union([
+                z.int().gte(1).lte(4),
+                z.null()
+            ])),
+            phoneNumber: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            address: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            websiteUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            directionsUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            categories: z.array(z.string()),
+            neighborhoods: z.array(z.string()),
+            countryCode: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            openingHours: z.array(z.object({
+                dayOfWeek: z.enum([
+                    'monday',
+                    'tuesday',
+                    'wednesday',
+                    'thursday',
+                    'friday',
+                    'saturday',
+                    'sunday'
+                ]),
+                hours: z.string()
+            })),
+            services: z.array(z.object({
+                name: z.string(),
+                isActive: z.boolean()
+            })),
+            imageUrls: z.array(z.string())
+        })
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zYelpReviewsData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        placeId: z.string().min(1),
+        sortBy: z.optional(z.nullable(z.enum([
+            'relevance',
+            'newestFirst',
+            'oldestFirst',
+            'highestRated',
+            'lowestRated',
+            'elitesFirst'
+        ]))),
+        ratings: z.optional(z.union([
+            z.array(z.int().gte(1).lte(5)).max(5),
+            z.null()
+        ])),
+        keywords: z.optional(z.union([
+            z.array(z.string().min(1)).max(5),
+            z.null()
+        ])),
+        languageCode: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ])),
+        nextPageToken: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ]))
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zYelpReviewsResponse = z.object({
+    output: z.object({
+        reviews: z.array(z.object({
+            authorName: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            authorLocation: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            authorIsElite: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
+            rating: z.int().gte(1).lte(5),
+            date: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            text: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            languageCode: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            photoUrls: z.array(z.string()),
+            usefulCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            funnyCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            coolCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ]))
+        })),
+        totalReviewCount: z.optional(z.union([
+            z.int(),
+            z.null()
+        ])),
+        nextPageToken: z.optional(z.union([
+            z.string(),
+            z.null()
+        ]))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zFetchRealEstateListingsData = z.object({
     body: z.object({
         apiKey: z.string(),
@@ -264825,7 +268491,7 @@ export const zCreateTrackerCompanyListData = z.object({
                     z.object({
                         anyOf: z.optional(z.union([
                             z.array(z.object({
-                                list: z.enum(['fortune-500-usa']),
+                                list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                 range: z.object({
                                     low: z.number(),
                                     high: z.number(),
@@ -265481,6 +269147,14 @@ export const zCreateTrackerCompanyListData = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -266123,6 +269797,14 @@ export const zCreateTrackerCompanyListData = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -266759,6 +270441,14 @@ export const zCreateTrackerCompanyListData = z.object({
                                     z.null()
                                 ])),
                                 jobLocationType: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
                                     z.array(z.enum([
                                         'On-site',
                                         'Remote',
@@ -267267,6 +270957,42 @@ export const zCreateTrackerCompanyListData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -267844,6 +271570,42 @@ export const zCreateTrackerCompanyListData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -268387,6 +272149,42 @@ export const zCreateTrackerCompanyListData = z.object({
                                 z.object({
                                     rule: z.enum(['location-type']),
                                     locationType: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
                                         'On-site',
                                         'Remote',
                                         'Hybrid'
@@ -280217,7 +284015,7 @@ export const zCreateTrackerPersonListData = z.object({
                     z.object({
                         anyOf: z.optional(z.union([
                             z.array(z.object({
-                                list: z.enum(['fortune-500-usa']),
+                                list: z.enum(['fortune-500-usa', 'forbes-global-2000']),
                                 range: z.object({
                                     low: z.number(),
                                     high: z.number(),
@@ -280873,6 +284671,14 @@ export const zCreateTrackerPersonListData = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -281515,6 +285321,14 @@ export const zCreateTrackerPersonListData = z.object({
                                         'Hybrid'
                                     ])),
                                     z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
                                 ]))
                             })),
                             z.null()
@@ -282151,6 +285965,14 @@ export const zCreateTrackerPersonListData = z.object({
                                     z.null()
                                 ])),
                                 jobLocationType: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ])),
+                                    z.null()
+                                ])),
+                                jobModality: z.optional(z.union([
                                     z.array(z.enum([
                                         'On-site',
                                         'Remote',
@@ -282659,6 +286481,42 @@ export const zCreateTrackerPersonListData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -283236,6 +287094,42 @@ export const zCreateTrackerPersonListData = z.object({
                                     ])
                                 }),
                                 z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
                                     rule: z.enum(['industry']),
                                     industry: z.enum([
                                         'Administrative Services',
@@ -283779,6 +287673,42 @@ export const zCreateTrackerPersonListData = z.object({
                                 z.object({
                                     rule: z.enum(['location-type']),
                                     locationType: z.enum([
+                                        'On-site',
+                                        'Remote',
+                                        'Hybrid'
+                                    ]),
+                                    range: z.union([
+                                        z.object({
+                                            type: z.enum(['count-range']),
+                                            range: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.object({
+                                            type: z.enum(['percent-range']),
+                                            rangeInHundredths: z.object({
+                                                lowerBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                upperBound: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        })
+                                    ])
+                                }),
+                                z.object({
+                                    rule: z.enum(['modality']),
+                                    modality: z.enum([
                                         'On-site',
                                         'Remote',
                                         'Hybrid'
@@ -293946,6 +297876,10 @@ export const zTrackerSignalDetectedWebhookRequest = z.object({
                 name: z.optional(z.union([
                     z.string().min(1),
                     z.null()
+                ])),
+                linkedinUrl: z.optional(z.union([
+                    z.string().min(1),
+                    z.null()
                 ]))
             })
         }),
@@ -293994,6 +297928,34 @@ export const zTrackerSignalDetectedWebhookRequest = z.object({
             creditsCharged: z.number().gte(0),
             billingMethod: z.enum(['per_notification', 'per_check'])
         })
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export const zTrackerListRunCompletedWebhookRequest = z.object({
+    body: z.object({
+        success: z.literal(true),
+        listId: z.string().min(1),
+        listName: z.string().min(1),
+        entityType: z.enum(['company', 'person']),
+        entityCount: z.int().gte(0),
+        refreshedAt: z.iso.datetime(),
+        nextRefreshAt: z.iso.datetime(),
+        refreshIntervalDays: z.int().gte(1)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export const zTrackerListRunUpcomingWebhookRequest = z.object({
+    body: z.object({
+        success: z.literal(true),
+        listId: z.string().min(1),
+        listName: z.string().min(1),
+        entityType: z.enum(['company', 'person']),
+        expectedRefreshAt: z.iso.datetime(),
+        refreshIntervalDays: z.int().gte(1)
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())

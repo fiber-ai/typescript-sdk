@@ -4,7 +4,7 @@ export type ClientOptions = {
     baseUrl: 'https://api.fiber.ai' | (string & {});
 };
 
-export type Webhooks = RevealCompletedWebhookRequest | SavedSearchRunCompletedWebhookRequest | SavedSearchRunUpcomingWebhookRequest | JobChangedWebhookRequest | BatchLiveEnrichCompletedWebhookRequest | BatchContactEnrichCompletedWebhookRequest | BatchContactEnrichV1CompletedWebhookRequest | GithubToLinkedinCompletedWebhookRequest | GithubLookupCompletedWebhookRequest | DomainLookupCompletedWebhookRequest | SocialMediaLookupCompletedWebhookRequest | GoogleMapsSearchCompletedWebhookRequest | LocalBusinessSearchCompletedWebhookRequest | DepthChartCompletedWebhookRequest | AudienceEnrichmentCompletedWebhookRequest | AudienceProspectExportCompletedWebhookRequest | AudienceCompanyExportCompletedWebhookRequest | AudienceBuildCompletedWebhookRequest | CombinedSearchCompletedWebhookRequest | SalesNavScrapeCompletedWebhookRequest | SalesNavLiteScrapeCompletedWebhookRequest | JobChangesProfilesAddedWebhookRequest | TrackerSignalDetectedWebhookRequest | MosaicCompletedWebhookRequest;
+export type Webhooks = RevealCompletedWebhookRequest | SavedSearchRunCompletedWebhookRequest | SavedSearchRunUpcomingWebhookRequest | JobChangedWebhookRequest | BatchLiveEnrichCompletedWebhookRequest | BatchContactEnrichCompletedWebhookRequest | BatchContactEnrichV1CompletedWebhookRequest | GithubToLinkedinCompletedWebhookRequest | GithubLookupCompletedWebhookRequest | DomainLookupCompletedWebhookRequest | SocialMediaLookupCompletedWebhookRequest | GoogleMapsSearchCompletedWebhookRequest | LocalBusinessSearchCompletedWebhookRequest | DepthChartCompletedWebhookRequest | AudienceEnrichmentCompletedWebhookRequest | AudienceProspectExportCompletedWebhookRequest | AudienceCompanyExportCompletedWebhookRequest | AudienceBuildCompletedWebhookRequest | CombinedSearchCompletedWebhookRequest | SalesNavScrapeCompletedWebhookRequest | SalesNavLiteScrapeCompletedWebhookRequest | JobChangesProfilesAddedWebhookRequest | TrackerSignalDetectedWebhookRequest | TrackerListRunCompletedWebhookRequest | TrackerListRunUpcomingWebhookRequest | MosaicCompletedWebhookRequest;
 
 /**
  * Headcount crossed threshold
@@ -125,7 +125,11 @@ export type JobPostingWithKeyword = {
      */
     seniorityLevels?: Array<'Internship' | 'Entry level' | 'Associate' | 'Mid-Senior level' | 'Director' | 'Executive'> | null;
     /**
-     * Only alert for these location types. Omit for any. Deprecated.
+     * Only alert for these job modalities. Omit for any.
+     */
+    modalities?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+    /**
+     * Deprecated. Use modalities instead.
      *
      * @deprecated
      */
@@ -715,7 +719,11 @@ export type JobPostingWithKeywordResponse = {
      */
     seniorityLevels?: Array<'Internship' | 'Entry level' | 'Associate' | 'Mid-Senior level' | 'Director' | 'Executive'> | null;
     /**
-     * Only alert for these location types. Omit for any. Deprecated.
+     * Only alert for these job modalities. Omit for any.
+     */
+    modalities?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+    /**
+     * Deprecated. Use modalities instead.
      *
      * @deprecated
      */
@@ -1303,9 +1311,13 @@ export type TrackerSignalOutput = {
      */
     methodology: string;
     /**
-     * When the signal was detected.
+     * When we detected the signal. For backfilled signals this reflects the detection time, not when the event happened — use `eventDate` for the real-world event date.
      */
     observedAt: string;
+    /**
+     * The real-world date the underlying event occurred (e.g. when a job was posted, a funding round announced, or a hire started), taken from `changeData`. Use this for time-series analysis. Null for signal types that have no associated event date, such as headcount or status changes.
+     */
+    eventDate?: string | null;
     /**
      * Credits charged for the tracker check that produced this signal, in centi-credits (100 = 1 credit).
      */
@@ -1410,6 +1422,10 @@ export type CompanyLocationChange = {
      * Marks a location as newly added. New office alerts report only net-new locations, so this is always 'added'; the field is unset in other location signals.
      */
     changeType?: 'added' | null;
+    /**
+     * Map link for this specific office location, when there is enough address data to build one.
+     */
+    officeMapUrl?: string | null;
 };
 
 export type JobPostingChange = {
@@ -1696,10 +1712,6 @@ export type InvestorChange = {
      */
     name: string;
     /**
-     * Unique identifier
-     */
-    uuid?: string | null;
-    /**
      * Investor types
      */
     type: Array<string>;
@@ -1707,6 +1719,10 @@ export type InvestorChange = {
      * Investor LinkedIn profile slug
      */
     linkedinSlug?: string | null;
+    /**
+     * Full LinkedIn URL for the investor.
+     */
+    investorLinkedinUrl?: string | null;
     /**
      * Reference URL
      */
@@ -3985,6 +4001,24 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
+                searchYelp: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                getYelpPage: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                getYelpReviews: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
                 getDepartmentSize: {
                     levels: Array<{
                         limit?: number | null;
@@ -4022,6 +4056,12 @@ export type GetOrgCreditsResponses = {
                     }>;
                 };
                 fetchCompanyEmployee: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                getCompanyFromRankingList: {
                     levels: Array<{
                         limit?: number | null;
                         centiCreditCost: number;
@@ -5084,13 +5124,17 @@ export type BuyCreditsData = {
          */
         apiKey: string;
         /**
-         * The subscription to add credits to. An organization can have multiple subscriptions, each with its own credit balance.
+         * The subscription to add credits to. Required when the organization has more than one subscription, or when charging a saved payment method. Must be omitted when paying with a one-time payment authorization; sending both is rejected.
          */
-        subscriptionId: string;
+        subscriptionId?: string | null;
         /**
-         * Number of credits to purchase. This will immediately charge your saved payment method.
+         * Number of credits to purchase. One-time payment authorizations require at least 100 credits. Saved-card purchases require at least 1,000 credits.
          */
         creditsToBuy: number;
+        /**
+         * A one-time payment authorization from your payment provider. When set, this purchase charges that authorization instead of a saved card. Each purchase needs a freshly minted authorization.
+         */
+        sharedPaymentGrantedToken?: string | null;
         /**
          * A unique key to safely retry a purchase. If a request fails or times out, resend with the same key to avoid being charged twice. When omitted, each call is a new purchase.
          */
@@ -5131,36 +5175,10 @@ export type BuyCreditsErrors = {
          */
         message: string;
         /**
-         * Present on 402 responses. Contains a link to get more credits.
+         * Why the payment was declined, when the reason is known — for example 'insufficient_funds' or 'expired_card'.
          */
-        outOfCreditsAlert?: {
-            /**
-             * URL to top up credits or restart billing cycle to get fresh credits.
-             */
-            getMoreCreditsUrl: string;
-            /**
-             * Human-readable credits warning.
-             */
-            message: string;
-            /**
-             * Number of credits remaining in the current billing period.
-             */
-            availableCredits: number;
-        } | null;
-        [key: string]: unknown | string | {
-            /**
-             * URL to top up credits or restart billing cycle to get fresh credits.
-             */
-            getMoreCreditsUrl: string;
-            /**
-             * Human-readable credits warning.
-             */
-            message: string;
-            /**
-             * Number of credits remaining in the current billing period.
-             */
-            availableCredits: number;
-        } | null | undefined;
+        declineCode?: string | null;
+        [key: string]: unknown | string | string | null | undefined;
     };
     /**
      * Default Response
@@ -7488,6 +7506,669 @@ export type ResetApiKeyUsageResponses = {
 
 export type ResetApiKeyUsageResponse = ResetApiKeyUsageResponses[keyof ResetApiKeyUsageResponses];
 
+export type CreateSandboxApiKeyData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Human-readable label to identify this key later (e.g. 'CI runner', 'local dev').
+         */
+        name: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/api-keys/create-sandbox';
+};
+
+export type CreateSandboxApiKeyErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type CreateSandboxApiKeyError = CreateSandboxApiKeyErrors[keyof CreateSandboxApiKeyErrors];
+
+export type CreateSandboxApiKeyResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * id of your api key. This or prefix can be used to identify the key.
+             */
+            id: string;
+            /**
+             * Name of your api key.
+             */
+            name: string;
+            /**
+             * Non secret prefix of your api key. Used for identification.
+             */
+            prefix: string;
+            /**
+             * When the key expires. Null implies key never expires.
+             */
+            expiresAt: string | null;
+            /**
+             * The lifetime credit ceiling for this key. Null implies key has no per-key credit limit.
+             */
+            maxCredits: number | null;
+            /**
+             * Credits consumed by this key so far over its lifetime.
+             */
+            creditsUsed: number;
+            /**
+             * When the key was created, as an ISO 8601 timestamp.
+             */
+            createdAt: string;
+            /**
+             * Whether the key has been revoked. Revoked keys can no longer authenticate. Only ever true in listings that include revoked keys.
+             */
+            isRevoked: boolean;
+            /**
+             * The plaintext sandbox API key (starts with sk_test_). Shown once — store it securely, it cannot be retrieved later.
+             */
+            apiKey: string;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type CreateSandboxApiKeyResponse = CreateSandboxApiKeyResponses[keyof CreateSandboxApiKeyResponses];
+
+export type ListApiRequestsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Only return requests received at or after this ISO 8601 timestamp. Logs are retained for 7 days, so earlier timestamps simply return nothing.
+         */
+        from?: string | null;
+        /**
+         * Only return requests received strictly before this ISO 8601 timestamp.
+         */
+        to?: string | null;
+        /**
+         * Only return requests to this exact route template, e.g. "/v1/person/search".
+         */
+        routePath?: string | null;
+        /**
+         * Only return requests using this HTTP method, e.g. "POST".
+         */
+        method?: string | null;
+        /**
+         * Only return requests that returned this exact status code.
+         */
+        statusCode?: number | null;
+        /**
+         * Only return the request carrying this error correlation code.
+         */
+        errorCode?: string | null;
+        /**
+         * The cursor from where to start fetching the next page of results. Provide the `nextCursor` from the previous response to continue from there. Keep the same filters as the call that produced the cursor — reusing a cursor while changing filters silently skips rows.
+         */
+        cursor?: string | null;
+        /**
+         * The number of results to fetch per page.
+         */
+        pageSize?: number;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/api-requests';
+};
+
+export type ListApiRequestsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type ListApiRequestsError = ListApiRequestsErrors[keyof ListApiRequestsErrors];
+
+export type ListApiRequestsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Your past API requests, newest first.
+             */
+            apiRequests: Array<{
+                /**
+                 * Unique id of this logged request. Quote it in support requests to identify a specific call.
+                 */
+                id: string;
+                /**
+                 * Your organization's id.
+                 */
+                organizationId: string;
+                /**
+                 * When the request was received, as an ISO 8601 timestamp.
+                 */
+                createdAt: string;
+                /**
+                 * HTTP method, e.g. "POST".
+                 */
+                method: string;
+                /**
+                 * The route template that handled the request, e.g. "/v1/person/search"
+                 */
+                routePath: string;
+                /**
+                 * HTTP status code returned to you.
+                 */
+                statusCode: number;
+                /**
+                 * How long the request took to process, in milliseconds, measured from receipt to just before the response was written.
+                 */
+                durationMs?: number | null;
+                /**
+                 * Correlation code included in the response body when a request fails. Quote it in support requests.
+                 */
+                errorCode?: string | null;
+                /**
+                 * The input you sent with this call.
+                 */
+                request?: unknown;
+            }>;
+            /**
+             * The pagination cursor for the next page of results. Null if there are no more results.
+             */
+            nextCursor?: string | null;
+            /**
+             * Whether there are more results to fetch.
+             */
+            hasMore: boolean;
+            /**
+             * How many days of request history are retained. Requests older than this have been purged and cannot be returned.
+             */
+            retentionDays: number;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type ListApiRequestsResponse = ListApiRequestsResponses[keyof ListApiRequestsResponses];
+
 export type ListWebhookEventTypesData = {
     body?: never;
     path?: never;
@@ -8095,7 +8776,7 @@ export type CreateWebhookEndpointData = {
         /**
          * The event types to subscribe this endpoint to. Retrieve the full list of available event types from the webhook event types endpoint.
          */
-        eventTypes: Array<'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'mosaic.completed'>;
+        eventTypes: Array<'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'mosaic.completed'>;
         /**
          * An optional human-readable label for this endpoint.
          */
@@ -8992,7 +9673,7 @@ export type UpdateWebhookEndpointData = {
         /**
          * A new set of event types to subscribe this endpoint to.
          */
-        eventTypes?: Array<'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'mosaic.completed'> | null;
+        eventTypes?: Array<'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'mosaic.completed'> | null;
         /**
          * A new human-readable label for this endpoint.
          */
@@ -9588,7 +10269,7 @@ export type SendTestWebhookEventData = {
         /**
          * The event type to send an example payload for. Retrieve available event types from the webhook event types endpoint.
          */
-        eventType: 'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'mosaic.completed';
+        eventType: 'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'mosaic.completed';
     };
     path: {
         /**
@@ -9872,7 +10553,7 @@ export type SendTestWebhookEventResponse = SendTestWebhookEventResponses[keyof S
 export type AccountSendOtpData = {
     body: {
         /**
-         * Work email address to send the verification code to.
+         * Work email to start signup. A one-time code is sent here; pass it to POST /v1/account/verify-otp with the returned verificationId.
          */
         email: string;
         /**
@@ -10369,9 +11050,13 @@ export type AccountVerifyOtpResponses = {
         output: {
             status: 'created';
             /**
-             * The API key for the new trial organization. Store it securely — it cannot be retrieved later.
+             * The live API key for the new trial organization (starts with sk_live_). Store it securely — it cannot be retrieved later.
              */
             apiKey: string;
+            /**
+             * Companion sandbox API key (starts with sk_test_...) for local development and integration tests. Null if it was not minted at signup — create one via POST /v1/api-keys/create-sandbox.
+             */
+            sandboxApiKey?: string | null;
             /**
              * Number of credits granted with this trial.
              */
@@ -12126,7 +12811,6 @@ export type PollBatchLiveEnrichResponses = {
                     first_name?: string | null;
                     follower_count?: number | null;
                     headline?: string | null;
-                    industry_name?: string | null;
                     inferred_location?: {
                         street_address?: string | null;
                         neighborhood?: string | null;
@@ -12254,6 +12938,7 @@ export type PollBatchLiveEnrichResponses = {
                     } | null;
                     relevance_score?: number | null;
                     last_sort_key?: string | null;
+                    industry_name?: string | null;
                     last_updated_at?: string | null;
                     languages?: Array<{
                         name?: string | null;
@@ -12286,8 +12971,11 @@ export type PollBatchLiveEnrichResponses = {
                             linkedin_primary_slug?: string | null;
                             domains?: Array<string> | null;
                             preferred_name?: string | null;
+                            crunchbase_slug?: string | null;
+                            logo_url?: string | null;
+                            standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                            li_industries?: Array<string> | null;
                         } | null;
-                        crunchbase_slug?: string | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
                         company_name?: string | null;
@@ -26292,7 +26980,7 @@ export type UpdateAudienceSearchParamsData = {
             } | null;
             fortuneRankings?: {
                 anyOf?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     range: {
                         low: number;
                         high: number;
@@ -26383,6 +27071,7 @@ export type UpdateAudienceSearchParamsData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 allOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -26465,6 +27154,7 @@ export type UpdateAudienceSearchParamsData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 noneOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -26547,6 +27237,7 @@ export type UpdateAudienceSearchParamsData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
             } | null;
             jobPostingStats?: {
@@ -26637,6 +27328,22 @@ export type UpdateAudienceSearchParamsData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -26740,6 +27447,22 @@ export type UpdateAudienceSearchParamsData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -26829,6 +27552,22 @@ export type UpdateAudienceSearchParamsData = {
                 } | {
                     rule: 'location-type';
                     locationType: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
                     range: {
                         type: 'count-range';
                         range: {
@@ -30524,7 +31263,7 @@ export type CompanySearchData = {
             } | null;
             fortuneRankings?: {
                 anyOf?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     range: {
                         low: number;
                         high: number;
@@ -30615,6 +31354,7 @@ export type CompanySearchData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 allOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -30697,6 +31437,7 @@ export type CompanySearchData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 noneOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -30779,6 +31520,7 @@ export type CompanySearchData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
             } | null;
             jobPostingStats?: {
@@ -30869,6 +31611,22 @@ export type CompanySearchData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -30972,6 +31730,22 @@ export type CompanySearchData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -31061,6 +31835,22 @@ export type CompanySearchData = {
                 } | {
                     rule: 'location-type';
                     locationType: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
                     range: {
                         type: 'count-range';
                         range: {
@@ -31528,7 +32318,7 @@ export type CompanySearchData = {
          */
         companyExclusionListIDs?: Array<string>;
         /**
-         * When true, returns an estimated total count of matching companies in the response. The count does not account for exclusion lists.
+         * When true, returns an estimated total count of matching companies in the response and charges one additional count credit. The count does not account for exclusion lists.
          */
         includeCount?: boolean | null;
     };
@@ -31708,7 +32498,7 @@ export type CompanySearchResponses = {
                 } | null;
                 facebook_urls?: Array<string> | null;
                 fortune_rankings?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     year: number;
                     rank: number;
                 }> | null;
@@ -34249,7 +35039,7 @@ export type CompanyCountData = {
             } | null;
             fortuneRankings?: {
                 anyOf?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     range: {
                         low: number;
                         high: number;
@@ -34340,6 +35130,7 @@ export type CompanyCountData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 allOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -34422,6 +35213,7 @@ export type CompanyCountData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 noneOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -34504,6 +35296,7 @@ export type CompanyCountData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
             } | null;
             jobPostingStats?: {
@@ -34594,6 +35387,22 @@ export type CompanyCountData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -34697,6 +35506,22 @@ export type CompanyCountData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -34786,6 +35611,22 @@ export type CompanyCountData = {
                 } | {
                     rule: 'location-type';
                     locationType: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
                     range: {
                         type: 'count-range';
                         range: {
@@ -35613,7 +36454,11 @@ export type JobPostingSearchData = {
                 upperBound?: number | null;
             } | null;
             /**
-             * Filter by work location type. Deprecated.
+             * Lets you find jobs that are on-site, remote, or hybrid. Pass several values to match any of them.
+             */
+            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+            /**
+             * Deprecated. Use jobModality instead.
              *
              * @deprecated
              */
@@ -35892,9 +36737,15 @@ export type JobPostingSearchResponses = {
                     formatted_address?: string | null;
                 } | null;
                 /**
-                 * Work location type
+                 * Deprecated. Use modality instead.
+                 *
+                 * @deprecated
                  */
                 job_location_type?: 'On-site' | 'Remote' | 'Hybrid' | null;
+                /**
+                 * Whether the job is on-site, remote, or hybrid.
+                 */
+                modality?: 'On-site' | 'Remote' | 'Hybrid' | null;
                 /**
                  * Job status
                  */
@@ -36132,7 +36983,11 @@ export type JobPostingSearchCountData = {
                 upperBound?: number | null;
             } | null;
             /**
-             * Filter by work location type. Deprecated.
+             * Lets you find jobs that are on-site, remote, or hybrid. Pass several values to match any of them.
+             */
+            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+            /**
+             * Deprecated. Use jobModality instead.
              *
              * @deprecated
              */
@@ -37792,7 +38647,7 @@ export type PeopleSearchData = {
          */
         companyExclusionListIDs?: Array<string> | null;
         /**
-         * When true, returns an estimated total count of matching prospects in the response. The count does not account for exclusion lists.
+         * When true, returns an estimated total count of matching prospects in the response and charges one additional count credit. The count does not account for exclusion lists.
          */
         includeCount?: boolean | null;
     };
@@ -37985,7 +38840,6 @@ export type PeopleSearchResponses = {
                 first_name?: string | null;
                 follower_count?: number | null;
                 headline?: string | null;
-                industry_name?: string | null;
                 inferred_location?: {
                     street_address?: string | null;
                     neighborhood?: string | null;
@@ -38113,6 +38967,7 @@ export type PeopleSearchResponses = {
                 } | null;
                 relevance_score?: number | null;
                 last_sort_key?: string | null;
+                industry_name?: string | null;
                 last_updated_at?: string | null;
                 languages?: Array<{
                     name?: string | null;
@@ -38145,8 +39000,11 @@ export type PeopleSearchResponses = {
                         linkedin_primary_slug?: string | null;
                         domains?: Array<string> | null;
                         preferred_name?: string | null;
+                        crunchbase_slug?: string | null;
+                        logo_url?: string | null;
+                        standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        li_industries?: Array<string> | null;
                     } | null;
-                    crunchbase_slug?: string | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
                     company_name?: string | null;
@@ -39664,7 +40522,7 @@ export type PeopleSearchCountData = {
          */
         companyExclusionListIDs?: Array<string> | null;
         /**
-         * When true, returns an estimated total count of matching prospects in the response. The count does not account for exclusion lists.
+         * When true, returns an estimated total count of matching prospects in the response and charges one additional count credit. The count does not account for exclusion lists.
          */
         includeCount?: boolean | null;
     };
@@ -40288,7 +41146,7 @@ export type PaginatedCombinedSearchData = {
                 } | null;
                 fortuneRankings?: {
                     anyOf?: Array<{
-                        list: 'fortune-500-usa';
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
                         range: {
                             low: number;
                             high: number;
@@ -40379,6 +41237,7 @@ export type PaginatedCombinedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                     allOf?: Array<{
                         jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -40461,6 +41320,7 @@ export type PaginatedCombinedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                     noneOf?: Array<{
                         jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -40543,6 +41403,7 @@ export type PaginatedCombinedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                 } | null;
                 jobPostingStats?: {
@@ -40633,6 +41494,22 @@ export type PaginatedCombinedSearchData = {
                             };
                         };
                     } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
                         rule: 'industry';
                         industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                         range: {
@@ -40736,6 +41613,22 @@ export type PaginatedCombinedSearchData = {
                             };
                         };
                     } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
                         rule: 'industry';
                         industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                         range: {
@@ -40825,6 +41718,22 @@ export type PaginatedCombinedSearchData = {
                     } | {
                         rule: 'location-type';
                         locationType: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
                         range: {
                             type: 'count-range';
                             range: {
@@ -42808,7 +43717,7 @@ export type PaginatedCombinedSearchResponses = {
                 } | null;
                 facebook_urls?: Array<string> | null;
                 fortune_rankings?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     year: number;
                     rank: number;
                 }> | null;
@@ -44915,7 +45824,6 @@ export type PaginatedCombinedSearchResponses = {
                 first_name?: string | null;
                 follower_count?: number | null;
                 headline?: string | null;
-                industry_name?: string | null;
                 inferred_location?: {
                     street_address?: string | null;
                     neighborhood?: string | null;
@@ -45043,6 +45951,7 @@ export type PaginatedCombinedSearchResponses = {
                 } | null;
                 relevance_score?: number | null;
                 last_sort_key?: string | null;
+                industry_name?: string | null;
                 last_updated_at?: string | null;
                 languages?: Array<{
                     name?: string | null;
@@ -45075,8 +45984,11 @@ export type PaginatedCombinedSearchResponses = {
                         linkedin_primary_slug?: string | null;
                         domains?: Array<string> | null;
                         preferred_name?: string | null;
+                        crunchbase_slug?: string | null;
+                        logo_url?: string | null;
+                        standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        li_industries?: Array<string> | null;
                     } | null;
-                    crunchbase_slug?: string | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
                     company_name?: string | null;
@@ -46460,7 +47372,7 @@ export type CombinedSearchCountData = {
             } | null;
             fortuneRankings?: {
                 anyOf?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     range: {
                         low: number;
                         high: number;
@@ -46551,6 +47463,7 @@ export type CombinedSearchCountData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 allOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -46633,6 +47546,7 @@ export type CombinedSearchCountData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 noneOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -46715,6 +47629,7 @@ export type CombinedSearchCountData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
             } | null;
             jobPostingStats?: {
@@ -46805,6 +47720,22 @@ export type CombinedSearchCountData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -46908,6 +47839,22 @@ export type CombinedSearchCountData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -46997,6 +47944,22 @@ export type CombinedSearchCountData = {
                 } | {
                     rule: 'location-type';
                     locationType: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
                     range: {
                         type: 'count-range';
                         range: {
@@ -49280,7 +50243,7 @@ export type QuickCompanyResolveResponses = {
                     } | null;
                     facebook_urls?: Array<string> | null;
                     fortune_rankings?: Array<{
-                        list: 'fortune-500-usa';
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
                         year: number;
                         rank: number;
                     }> | null;
@@ -51695,7 +52658,6 @@ export type QuickPersonResolveResponses = {
                     first_name?: string | null;
                     follower_count?: number | null;
                     headline?: string | null;
-                    industry_name?: string | null;
                     inferred_location?: {
                         street_address?: string | null;
                         neighborhood?: string | null;
@@ -51823,6 +52785,7 @@ export type QuickPersonResolveResponses = {
                     } | null;
                     relevance_score?: number | null;
                     last_sort_key?: string | null;
+                    industry_name?: string | null;
                     last_updated_at?: string | null;
                     languages?: Array<{
                         name?: string | null;
@@ -51855,8 +52818,11 @@ export type QuickPersonResolveResponses = {
                             linkedin_primary_slug?: string | null;
                             domains?: Array<string> | null;
                             preferred_name?: string | null;
+                            crunchbase_slug?: string | null;
+                            logo_url?: string | null;
+                            standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                            li_industries?: Array<string> | null;
                         } | null;
-                        crunchbase_slug?: string | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
                         company_name?: string | null;
@@ -51999,6 +52965,345 @@ export type QuickPersonResolveResponses = {
 };
 
 export type QuickPersonResolveResponse = QuickPersonResolveResponses[keyof QuickPersonResolveResponses];
+
+export type ListCompanyRankingsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        rankings: {
+            list: 'fortune-500-usa' | 'forbes-global-2000';
+            /**
+             * Edition year of the list. Omit to get the most recent year available.
+             */
+            year?: number | null;
+            /**
+             * Inclusive rank range of companies to download. Note: the Fortune 500 edition actually holds the top 1000 companies, so you can request ranks past 500 (e.g. up to 1000).
+             */
+            rankRange: {
+                /**
+                 * First rank to include, where 1 is the top-ranked company.
+                 */
+                low: number;
+                /**
+                 * Last rank to include.
+                 */
+                high: number;
+            };
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/company-rankings';
+};
+
+export type ListCompanyRankingsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type ListCompanyRankingsError = ListCompanyRankingsErrors[keyof ListCompanyRankingsErrors];
+
+export type ListCompanyRankingsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            list: 'fortune-500-usa' | 'forbes-global-2000';
+            /**
+             * Edition year of the returned list.
+             */
+            year: number;
+            /**
+             * Companies in rank order (rank 1 first).
+             */
+            companies: Array<{
+                /**
+                 * Company name as published on the list.
+                 */
+                name: string;
+                /**
+                 * Position on the list for this edition (1 = top ranked).
+                 */
+                rank: number;
+                /**
+                 * Primary company domain, e.g. 'example.com'.
+                 */
+                domain?: string | null;
+                /**
+                 * Stock ticker symbol (e.g. 'AAPL'), when the company is publicly traded.
+                 */
+                ticker?: string | null;
+                /**
+                 * Where the company is based. The exact format varies by list.
+                 */
+                headquarters?: string | null;
+                /**
+                 * ISO 3166-1 alpha-3 country code of the headquarters country (e.g. 'USA').
+                 */
+                countryCode?: string | null;
+                /**
+                 * Annual revenue in US dollars.
+                 */
+                revenueUsd?: number | null;
+                /**
+                 * Annual profits in US dollars.
+                 */
+                profitsUsd?: number | null;
+                /**
+                 * Market capitalization in US dollars.
+                 */
+                marketCapUsd?: number | null;
+                /**
+                 * Number of employees.
+                 */
+                employeeCount?: number | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type ListCompanyRankingsResponse = ListCompanyRankingsResponses[keyof ListCompanyRankingsResponses];
 
 export type StealthFoundersSearchData = {
     body: {
@@ -55604,6 +56909,10 @@ export type PremiumPhoneRevealData = {
          * LinkedIn profile identifier. Accepts a full URL, a bare slug, or a LinkedIn entity URN.
          */
         linkedinUrl: string;
+        /**
+         * How long to wait for phone-number verification after a number is found. Higher patience increases average response time but improves identity and reachability accuracy. MINIMUM is the least thorough verification option.
+         */
+        patience?: 'MINIMUM' | 'LOW' | 'MEDIUM' | 'HIGH' | 'EXTREME' | 'MAXIMUM' | null;
     };
     path?: never;
     query?: never;
@@ -57837,6 +59146,414 @@ export type GetTalentFlowResponses = {
 
 export type GetTalentFlowResponse = GetTalentFlowResponses[keyof GetTalentFlowResponses];
 
+export type GetTalentFlowRivalsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Company to analyze. Set identifier to 'linkedinUrl', 'linkedinSlug', 'linkedinOrgId', or 'domain' and provide the corresponding value.
+         */
+        company: {
+            identifier: 'linkedinUrl';
+            /**
+             * LinkedIn company URL (e.g. 'https://www.linkedin.com/company/openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinSlug';
+            /**
+             * LinkedIn company slug (e.g. 'openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinOrgId';
+            /**
+             * LinkedIn numeric organization ID (e.g. '11130470').
+             */
+            value: string;
+        } | {
+            identifier: 'domain';
+            /**
+             * Company website domain (e.g. 'openai.com').
+             */
+            value: string;
+        };
+        dateRange: {
+            lowerBound?: string | null;
+            upperBound?: string | null;
+        };
+        /**
+         * Number of top donor and acceptor companies to include. Donors are companies the analyzed company gained the most people from; acceptors are companies it lost the most people to. Overlapping companies are combined, so the rival list may hold fewer than twice this number.
+         */
+        numCompaniesPerSide?: number;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/talent-flow/rivals';
+};
+
+export type GetTalentFlowRivalsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type GetTalentFlowRivalsError = GetTalentFlowRivalsErrors[keyof GetTalentFlowRivalsErrors];
+
+export type GetTalentFlowRivalsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Company that was analyzed.
+             */
+            company: {
+                /**
+                 * Company name.
+                 */
+                name: string;
+                /**
+                 * LinkedIn organization ID (e.g. '1441' for Google).
+                 */
+                linkedinOrgId: string;
+                /**
+                 * Company website domains.
+                 */
+                domains: Array<string>;
+                /**
+                 * LinkedIn company slug (e.g. 'anthropic').
+                 */
+                linkedinSlug?: string | null;
+            };
+            /**
+             * Time window for the analysis.
+             */
+            window: {
+                /**
+                 * Start of the analysis window (YYYY-MM-DD). Null means no lower bound.
+                 */
+                after?: string | null;
+                /**
+                 * End of the analysis window (YYYY-MM-DD). Null means no upper bound.
+                 */
+                before?: string | null;
+            };
+            /**
+             * Requested number of donor and acceptor companies per side.
+             */
+            numCompaniesPerSide: number;
+            /**
+             * Number of people who joined the analyzed company within the window.
+             */
+            joinersCount: number;
+            /**
+             * Number of people who left the analyzed company within the window.
+             */
+            leaversCount: number;
+            /**
+             * Companies trading the most talent with the analyzed company, sorted by total two-way moves (gained plus lost) descending. Includes up to `numCompaniesPerSide` top donors (companies it hires from most) and up to `numCompaniesPerSide` top acceptors (companies its alumni join most); overlapping companies are combined into one entry.
+             */
+            rivals: Array<{
+                /**
+                 * Rival company name.
+                 */
+                companyName: string;
+                /**
+                 * Rival company website domain (e.g. 'stripe.com').
+                 */
+                domain?: string | null;
+                /**
+                 * Rival company LinkedIn URL.
+                 */
+                linkedinUrl?: string | null;
+                /**
+                 * Rival company LinkedIn organization ID.
+                 */
+                linkedinOrgId?: string | null;
+                /**
+                 * People who left this company to join the analyzed company within the window.
+                 */
+                gainedCount: number;
+                /**
+                 * People who left the analyzed company to join this company within the window.
+                 */
+                lostCount: number;
+                /**
+                 * gainedCount minus lostCount. Positive means the analyzed company gained more talent from this company than it lost to it.
+                 */
+                netCount: number;
+                /**
+                 * Total two-way moves with this company (gainedCount plus lostCount).
+                 */
+                totalMovesCount: number;
+                /**
+                 * Rival company funding stage (e.g. 'Series A', 'IPO').
+                 */
+                stage?: string | null;
+                /**
+                 * Rival company total funding raised in USD, if available.
+                 */
+                totalFundingUsd?: number | null;
+                /**
+                 * Rival company latest known valuation in USD, if available.
+                 */
+                valuationUsd?: number | null;
+            }>;
+            /**
+             * ISO 8601 timestamp when the report was generated.
+             */
+            generatedAt: string;
+            /**
+             * Human-readable markdown summary of the report, including a rival table.
+             */
+            markdownSummary: string;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type GetTalentFlowRivalsResponse = GetTalentFlowRivalsResponses[keyof GetTalentFlowRivalsResponses];
+
 export type StartMosaicData = {
     body: {
         /**
@@ -59227,7 +60944,6 @@ export type ProfileLiveEnrichResponses = {
                 first_name?: string | null;
                 follower_count?: number | null;
                 headline?: string | null;
-                industry_name?: string | null;
                 inferred_location?: {
                     street_address?: string | null;
                     neighborhood?: string | null;
@@ -59355,6 +61071,7 @@ export type ProfileLiveEnrichResponses = {
                 } | null;
                 relevance_score?: number | null;
                 last_sort_key?: string | null;
+                industry_name?: string | null;
                 last_updated_at?: string | null;
                 languages?: Array<{
                     name?: string | null;
@@ -59387,8 +61104,11 @@ export type ProfileLiveEnrichResponses = {
                         linkedin_primary_slug?: string | null;
                         domains?: Array<string> | null;
                         preferred_name?: string | null;
+                        crunchbase_slug?: string | null;
+                        logo_url?: string | null;
+                        standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        li_industries?: Array<string> | null;
                     } | null;
-                    crunchbase_slug?: string | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
                     company_name?: string | null;
@@ -64160,7 +65880,6 @@ export type ReverseEmailLookupResponses = {
                 first_name?: string | null;
                 follower_count?: number | null;
                 headline?: string | null;
-                industry_name?: string | null;
                 inferred_location?: {
                     street_address?: string | null;
                     neighborhood?: string | null;
@@ -64288,6 +66007,7 @@ export type ReverseEmailLookupResponses = {
                 } | null;
                 relevance_score?: number | null;
                 last_sort_key?: string | null;
+                industry_name?: string | null;
                 last_updated_at?: string | null;
                 languages?: Array<{
                     name?: string | null;
@@ -64320,8 +66040,11 @@ export type ReverseEmailLookupResponses = {
                         linkedin_primary_slug?: string | null;
                         domains?: Array<string> | null;
                         preferred_name?: string | null;
+                        crunchbase_slug?: string | null;
+                        logo_url?: string | null;
+                        standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        li_industries?: Array<string> | null;
                     } | null;
-                    crunchbase_slug?: string | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
                     company_name?: string | null;
@@ -64680,7 +66403,6 @@ export type LiteReverseEmailLookupResponses = {
                 first_name?: string | null;
                 follower_count?: number | null;
                 headline?: string | null;
-                industry_name?: string | null;
                 inferred_location?: {
                     street_address?: string | null;
                     neighborhood?: string | null;
@@ -64808,6 +66530,7 @@ export type LiteReverseEmailLookupResponses = {
                 } | null;
                 relevance_score?: number | null;
                 last_sort_key?: string | null;
+                industry_name?: string | null;
                 last_updated_at?: string | null;
                 languages?: Array<{
                     name?: string | null;
@@ -64840,8 +66563,11 @@ export type LiteReverseEmailLookupResponses = {
                         linkedin_primary_slug?: string | null;
                         domains?: Array<string> | null;
                         preferred_name?: string | null;
+                        crunchbase_slug?: string | null;
+                        logo_url?: string | null;
+                        standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        li_industries?: Array<string> | null;
                     } | null;
-                    crunchbase_slug?: string | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
                     company_name?: string | null;
@@ -65202,7 +66928,6 @@ export type ReversePhoneLookupResponses = {
                     first_name?: string | null;
                     follower_count?: number | null;
                     headline?: string | null;
-                    industry_name?: string | null;
                     inferred_location?: {
                         street_address?: string | null;
                         neighborhood?: string | null;
@@ -65330,6 +67055,7 @@ export type ReversePhoneLookupResponses = {
                     } | null;
                     relevance_score?: number | null;
                     last_sort_key?: string | null;
+                    industry_name?: string | null;
                     last_updated_at?: string | null;
                     languages?: Array<{
                         name?: string | null;
@@ -65362,8 +67088,11 @@ export type ReversePhoneLookupResponses = {
                             linkedin_primary_slug?: string | null;
                             domains?: Array<string> | null;
                             preferred_name?: string | null;
+                            crunchbase_slug?: string | null;
+                            logo_url?: string | null;
+                            standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                            li_industries?: Array<string> | null;
                         } | null;
-                        crunchbase_slug?: string | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
                         company_name?: string | null;
@@ -66660,7 +68389,6 @@ export type KitchenSinkProfileResponses = {
                 first_name?: string | null;
                 follower_count?: number | null;
                 headline?: string | null;
-                industry_name?: string | null;
                 inferred_location?: {
                     street_address?: string | null;
                     neighborhood?: string | null;
@@ -66788,6 +68516,7 @@ export type KitchenSinkProfileResponses = {
                 } | null;
                 relevance_score?: number | null;
                 last_sort_key?: string | null;
+                industry_name?: string | null;
                 last_updated_at?: string | null;
                 languages?: Array<{
                     name?: string | null;
@@ -66820,8 +68549,11 @@ export type KitchenSinkProfileResponses = {
                         linkedin_primary_slug?: string | null;
                         domains?: Array<string> | null;
                         preferred_name?: string | null;
+                        crunchbase_slug?: string | null;
+                        logo_url?: string | null;
+                        standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        li_industries?: Array<string> | null;
                     } | null;
-                    crunchbase_slug?: string | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
                     company_name?: string | null;
@@ -67209,7 +68941,7 @@ export type KitchenSinkCompanyResponses = {
                 } | null;
                 facebook_urls?: Array<string> | null;
                 fortune_rankings?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     year: number;
                     rank: number;
                 }> | null;
@@ -69704,7 +71436,6 @@ export type KitchenSinkBulkProfileResponses = {
                 first_name?: string | null;
                 follower_count?: number | null;
                 headline?: string | null;
-                industry_name?: string | null;
                 inferred_location?: {
                     street_address?: string | null;
                     neighborhood?: string | null;
@@ -69832,6 +71563,7 @@ export type KitchenSinkBulkProfileResponses = {
                 } | null;
                 relevance_score?: number | null;
                 last_sort_key?: string | null;
+                industry_name?: string | null;
                 last_updated_at?: string | null;
                 languages?: Array<{
                     name?: string | null;
@@ -69864,8 +71596,11 @@ export type KitchenSinkBulkProfileResponses = {
                         linkedin_primary_slug?: string | null;
                         domains?: Array<string> | null;
                         preferred_name?: string | null;
+                        crunchbase_slug?: string | null;
+                        logo_url?: string | null;
+                        standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        li_industries?: Array<string> | null;
                     } | null;
-                    crunchbase_slug?: string | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
                     company_name?: string | null;
@@ -70255,7 +71990,7 @@ export type KitchenSinkBulkCompanyResponses = {
                 } | null;
                 facebook_urls?: Array<string> | null;
                 fortune_rankings?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     year: number;
                     rank: number;
                 }> | null;
@@ -73898,6 +75633,10 @@ export type ValidatePhoneNumberData = {
          * Phone number to validate. E.164 (e.g. +14155551234) is recommended; other formats with spaces, dashes, or parentheses are accepted.
          */
         phoneNumber: string;
+        /**
+         * How long to wait for phone-number verification after a number is found. Higher patience increases average response time but improves identity and reachability accuracy. MINIMUM is the least thorough verification option.
+         */
+        patience?: 'MINIMUM' | 'LOW' | 'MEDIUM' | 'HIGH' | 'EXTREME' | 'MAXIMUM' | null;
     };
     path?: never;
     query?: never;
@@ -74728,7 +76467,7 @@ export type NlpSearchParseResponses = {
                     } | null;
                     fortuneRankings?: {
                         anyOf?: Array<{
-                            list: 'fortune-500-usa';
+                            list: 'fortune-500-usa' | 'forbes-global-2000';
                             range: {
                                 low: number;
                                 high: number;
@@ -74819,6 +76558,7 @@ export type NlpSearchParseResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                         allOf?: Array<{
                             jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -74901,6 +76641,7 @@ export type NlpSearchParseResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                         noneOf?: Array<{
                             jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -74983,6 +76724,7 @@ export type NlpSearchParseResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                     } | null;
                     jobPostingStats?: {
@@ -75073,6 +76815,22 @@ export type NlpSearchParseResponses = {
                                 };
                             };
                         } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
                             rule: 'industry';
                             industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                             range: {
@@ -75176,6 +76934,22 @@ export type NlpSearchParseResponses = {
                                 };
                             };
                         } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
                             rule: 'industry';
                             industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                             range: {
@@ -75265,6 +77039,22 @@ export type NlpSearchParseResponses = {
                         } | {
                             rule: 'location-type';
                             locationType: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
                             range: {
                                 type: 'count-range';
                                 range: {
@@ -77781,7 +79571,7 @@ export type SlushieRunResponses = {
                     } | null;
                     fortuneRankings?: {
                         anyOf?: Array<{
-                            list: 'fortune-500-usa';
+                            list: 'fortune-500-usa' | 'forbes-global-2000';
                             range: {
                                 low: number;
                                 high: number;
@@ -77872,6 +79662,7 @@ export type SlushieRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                         allOf?: Array<{
                             jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -77954,6 +79745,7 @@ export type SlushieRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                         noneOf?: Array<{
                             jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -78036,6 +79828,7 @@ export type SlushieRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                     } | null;
                     jobPostingStats?: {
@@ -78126,6 +79919,22 @@ export type SlushieRunResponses = {
                                 };
                             };
                         } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
                             rule: 'industry';
                             industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                             range: {
@@ -78229,6 +80038,22 @@ export type SlushieRunResponses = {
                                 };
                             };
                         } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
                             rule: 'industry';
                             industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                             range: {
@@ -78318,6 +80143,22 @@ export type SlushieRunResponses = {
                         } | {
                             rule: 'location-type';
                             locationType: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
                             range: {
                                 type: 'count-range';
                                 range: {
@@ -80240,7 +82081,7 @@ export type SlushieRunResponses = {
                     } | null;
                     facebook_urls?: Array<string> | null;
                     fortune_rankings?: Array<{
-                        list: 'fortune-500-usa';
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
                         year: number;
                         rank: number;
                     }> | null;
@@ -82355,7 +84196,6 @@ export type SlushieRunResponses = {
                     first_name?: string | null;
                     follower_count?: number | null;
                     headline?: string | null;
-                    industry_name?: string | null;
                     inferred_location?: {
                         street_address?: string | null;
                         neighborhood?: string | null;
@@ -82483,6 +84323,7 @@ export type SlushieRunResponses = {
                     } | null;
                     relevance_score?: number | null;
                     last_sort_key?: string | null;
+                    industry_name?: string | null;
                     last_updated_at?: string | null;
                     languages?: Array<{
                         name?: string | null;
@@ -82515,8 +84356,11 @@ export type SlushieRunResponses = {
                             linkedin_primary_slug?: string | null;
                             domains?: Array<string> | null;
                             preferred_name?: string | null;
+                            crunchbase_slug?: string | null;
+                            logo_url?: string | null;
+                            standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                            li_industries?: Array<string> | null;
                         } | null;
-                        crunchbase_slug?: string | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
                         company_name?: string | null;
@@ -83037,7 +84881,7 @@ export type CreateSavedSearchData = {
                 } | null;
                 fortuneRankings?: {
                     anyOf?: Array<{
-                        list: 'fortune-500-usa';
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
                         range: {
                             low: number;
                             high: number;
@@ -83128,6 +84972,7 @@ export type CreateSavedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                     allOf?: Array<{
                         jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -83210,6 +85055,7 @@ export type CreateSavedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                     noneOf?: Array<{
                         jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -83292,6 +85138,7 @@ export type CreateSavedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                 } | null;
                 jobPostingStats?: {
@@ -83382,6 +85229,22 @@ export type CreateSavedSearchData = {
                             };
                         };
                     } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
                         rule: 'industry';
                         industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                         range: {
@@ -83485,6 +85348,22 @@ export type CreateSavedSearchData = {
                             };
                         };
                     } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
                         rule: 'industry';
                         industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                         range: {
@@ -83574,6 +85453,22 @@ export type CreateSavedSearchData = {
                     } | {
                         rule: 'location-type';
                         locationType: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
                         range: {
                             type: 'count-range';
                             range: {
@@ -85719,7 +87614,7 @@ export type CreateSavedSearchData = {
                 } | null;
                 fortuneRankings?: {
                     anyOf?: Array<{
-                        list: 'fortune-500-usa';
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
                         range: {
                             low: number;
                             high: number;
@@ -85810,6 +87705,7 @@ export type CreateSavedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                     allOf?: Array<{
                         jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -85892,6 +87788,7 @@ export type CreateSavedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                     noneOf?: Array<{
                         jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -85974,6 +87871,7 @@ export type CreateSavedSearchData = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                 } | null;
                 jobPostingStats?: {
@@ -86064,6 +87962,22 @@ export type CreateSavedSearchData = {
                             };
                         };
                     } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
                         rule: 'industry';
                         industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                         range: {
@@ -86167,6 +88081,22 @@ export type CreateSavedSearchData = {
                             };
                         };
                     } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
                         rule: 'industry';
                         industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                         range: {
@@ -86256,6 +88186,22 @@ export type CreateSavedSearchData = {
                     } | {
                         rule: 'location-type';
                         locationType: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
                         range: {
                             type: 'count-range';
                             range: {
@@ -88852,7 +90798,7 @@ export type GetSavedSearchResponses = {
                 } | null;
                 fortuneRankings?: {
                     anyOf?: Array<{
-                        list: 'fortune-500-usa';
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
                         range: {
                             low: number;
                             high: number;
@@ -88943,6 +90889,7 @@ export type GetSavedSearchResponses = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                     allOf?: Array<{
                         jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -89025,6 +90972,7 @@ export type GetSavedSearchResponses = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                     noneOf?: Array<{
                         jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -89107,6 +91055,7 @@ export type GetSavedSearchResponses = {
                         jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                         industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                        jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                     }> | null;
                 } | null;
                 jobPostingStats?: {
@@ -89197,6 +91146,22 @@ export type GetSavedSearchResponses = {
                             };
                         };
                     } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
                         rule: 'industry';
                         industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                         range: {
@@ -89300,6 +91265,22 @@ export type GetSavedSearchResponses = {
                             };
                         };
                     } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
                         rule: 'industry';
                         industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                         range: {
@@ -89389,6 +91370,22 @@ export type GetSavedSearchResponses = {
                     } | {
                         rule: 'location-type';
                         locationType: 'On-site' | 'Remote' | 'Hybrid';
+                        range: {
+                            type: 'count-range';
+                            range: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        } | {
+                            type: 'percent-range';
+                            rangeInHundredths: {
+                                lowerBound?: number | null;
+                                upperBound?: number | null;
+                            };
+                        };
+                    } | {
+                        rule: 'modality';
+                        modality: 'On-site' | 'Remote' | 'Hybrid';
                         range: {
                             type: 'count-range';
                             range: {
@@ -91876,7 +93873,7 @@ export type GetSavedSearchRunResponses = {
                     } | null;
                     fortuneRankings?: {
                         anyOf?: Array<{
-                            list: 'fortune-500-usa';
+                            list: 'fortune-500-usa' | 'forbes-global-2000';
                             range: {
                                 low: number;
                                 high: number;
@@ -91967,6 +93964,7 @@ export type GetSavedSearchRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                         allOf?: Array<{
                             jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -92049,6 +94047,7 @@ export type GetSavedSearchRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                         noneOf?: Array<{
                             jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -92131,6 +94130,7 @@ export type GetSavedSearchRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                     } | null;
                     jobPostingStats?: {
@@ -92221,6 +94221,22 @@ export type GetSavedSearchRunResponses = {
                                 };
                             };
                         } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
                             rule: 'industry';
                             industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                             range: {
@@ -92324,6 +94340,22 @@ export type GetSavedSearchRunResponses = {
                                 };
                             };
                         } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
                             rule: 'industry';
                             industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                             range: {
@@ -92413,6 +94445,22 @@ export type GetSavedSearchRunResponses = {
                         } | {
                             rule: 'location-type';
                             locationType: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
                             range: {
                                 type: 'count-range';
                                 range: {
@@ -95533,7 +97581,7 @@ export type UpdateSavedSearchData = {
             } | null;
             fortuneRankings?: {
                 anyOf?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     range: {
                         low: number;
                         high: number;
@@ -95624,6 +97672,7 @@ export type UpdateSavedSearchData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 allOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -95706,6 +97755,7 @@ export type UpdateSavedSearchData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 noneOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -95788,6 +97838,7 @@ export type UpdateSavedSearchData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
             } | null;
             jobPostingStats?: {
@@ -95878,6 +97929,22 @@ export type UpdateSavedSearchData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -95981,6 +98048,22 @@ export type UpdateSavedSearchData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -96070,6 +98153,22 @@ export type UpdateSavedSearchData = {
                 } | {
                     rule: 'location-type';
                     locationType: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
                     range: {
                         type: 'count-range';
                         range: {
@@ -99297,7 +101396,6 @@ export type GetCurrentProfilesInSavedSearchResponses = {
                 first_name?: string | null;
                 follower_count?: number | null;
                 headline?: string | null;
-                industry_name?: string | null;
                 inferred_location?: {
                     street_address?: string | null;
                     neighborhood?: string | null;
@@ -99425,6 +101523,7 @@ export type GetCurrentProfilesInSavedSearchResponses = {
                 } | null;
                 relevance_score?: number | null;
                 last_sort_key?: string | null;
+                industry_name?: string | null;
                 last_updated_at?: string | null;
                 languages?: Array<{
                     name?: string | null;
@@ -99457,8 +101556,11 @@ export type GetCurrentProfilesInSavedSearchResponses = {
                         linkedin_primary_slug?: string | null;
                         domains?: Array<string> | null;
                         preferred_name?: string | null;
+                        crunchbase_slug?: string | null;
+                        logo_url?: string | null;
+                        standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                        li_industries?: Array<string> | null;
                     } | null;
-                    crunchbase_slug?: string | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
                     company_name?: string | null;
@@ -99811,7 +101913,7 @@ export type GetCurrentCompaniesInSavedSearchResponses = {
                 } | null;
                 facebook_urls?: Array<string> | null;
                 fortune_rankings?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     year: number;
                     rank: number;
                 }> | null;
@@ -102215,7 +104317,6 @@ export type GetSavedSearchRunProfilesResponses = {
                     first_name?: string | null;
                     follower_count?: number | null;
                     headline?: string | null;
-                    industry_name?: string | null;
                     inferred_location?: {
                         street_address?: string | null;
                         neighborhood?: string | null;
@@ -102343,6 +104444,7 @@ export type GetSavedSearchRunProfilesResponses = {
                     } | null;
                     relevance_score?: number | null;
                     last_sort_key?: string | null;
+                    industry_name?: string | null;
                     last_updated_at?: string | null;
                     languages?: Array<{
                         name?: string | null;
@@ -102375,8 +104477,11 @@ export type GetSavedSearchRunProfilesResponses = {
                             linkedin_primary_slug?: string | null;
                             domains?: Array<string> | null;
                             preferred_name?: string | null;
+                            crunchbase_slug?: string | null;
+                            logo_url?: string | null;
+                            standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
+                            li_industries?: Array<string> | null;
                         } | null;
-                        crunchbase_slug?: string | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
                         company_name?: string | null;
@@ -102728,7 +104833,7 @@ export type GetSavedSearchRunCompaniesResponses = {
                     } | null;
                     facebook_urls?: Array<string> | null;
                     fortune_rankings?: Array<{
-                        list: 'fortune-500-usa';
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
                         year: number;
                         rank: number;
                     }> | null;
@@ -105478,7 +107583,7 @@ export type GetLatestSavedSearchRunResponses = {
                     } | null;
                     fortuneRankings?: {
                         anyOf?: Array<{
-                            list: 'fortune-500-usa';
+                            list: 'fortune-500-usa' | 'forbes-global-2000';
                             range: {
                                 low: number;
                                 high: number;
@@ -105569,6 +107674,7 @@ export type GetLatestSavedSearchRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                         allOf?: Array<{
                             jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -105651,6 +107757,7 @@ export type GetLatestSavedSearchRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                         noneOf?: Array<{
                             jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -105733,6 +107840,7 @@ export type GetLatestSavedSearchRunResponses = {
                             jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                             industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                            jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                         }> | null;
                     } | null;
                     jobPostingStats?: {
@@ -105823,6 +107931,22 @@ export type GetLatestSavedSearchRunResponses = {
                                 };
                             };
                         } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
                             rule: 'industry';
                             industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                             range: {
@@ -105926,6 +108050,22 @@ export type GetLatestSavedSearchRunResponses = {
                                 };
                             };
                         } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
                             rule: 'industry';
                             industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                             range: {
@@ -106015,6 +108155,22 @@ export type GetLatestSavedSearchRunResponses = {
                         } | {
                             rule: 'location-type';
                             locationType: 'On-site' | 'Remote' | 'Hybrid';
+                            range: {
+                                type: 'count-range';
+                                range: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            } | {
+                                type: 'percent-range';
+                                rangeInHundredths: {
+                                    lowerBound?: number | null;
+                                    upperBound?: number | null;
+                                };
+                            };
+                        } | {
+                            rule: 'modality';
+                            modality: 'On-site' | 'Remote' | 'Hybrid';
                             range: {
                                 type: 'count-range';
                                 range: {
@@ -115917,6 +118073,1058 @@ export type HotelPropertyResponses = {
 
 export type HotelPropertyResponse = HotelPropertyResponses[keyof HotelPropertyResponses];
 
+export type YelpSearchData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Categories or terms to search for (e.g. ['pizza', 'italian'] or ['coffee shop']). A business name ('Sushi Ran') also works as a term. Omit (or pass []) to browse all businesses in the location.
+         */
+        categories?: Array<string> | null;
+        /**
+         * Where to search. Accepts a city and state ('Austin, TX'), a full address ('706 Mission St, San Francisco, CA'), or a ZIP code ('94103').
+         */
+        location: string;
+        /**
+         * Sort criterion for results. 'relevance' ranks by overall match. 'highestRated' sorts by rating. 'mostReviewed' sorts by review count. Omit to sort by relevance.
+         */
+        sortBy?: 'relevance' | 'highestRated' | 'mostReviewed' | null;
+        /**
+         * Pagination token from a prior search response's `nextPageToken`. Omit (or pass null) to fetch the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/yelp/search';
+};
+
+export type YelpSearchErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type YelpSearchError = YelpSearchErrors[keyof YelpSearchErrors];
+
+export type YelpSearchResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Matching businesses.
+             */
+            businesses: Array<{
+                /**
+                 * Yelp business ID. Use with POST /v1/yelp/place and POST /v1/yelp/reviews.
+                 */
+                placeId: string;
+                /**
+                 * Business display name.
+                 */
+                name: string;
+                /**
+                 * yelp.com page for this business.
+                 */
+                url?: string | null;
+                /**
+                 * Average star rating from 0 to 5.
+                 */
+                rating?: number | null;
+                /**
+                 * Total review count.
+                 */
+                reviewCount?: number | null;
+                /**
+                 * Contact phone number normalized to E.164 format.
+                 */
+                phoneNumber?: string | null;
+                /**
+                 * Price level from 1 (least expensive) to 4 (most expensive), as classified on Yelp. Null when no price is shown.
+                 */
+                priceLevel?: number | null;
+                /**
+                 * Business categories (e.g. 'Coffee Roasteries').
+                 */
+                categories: Array<string>;
+                /**
+                 * Neighborhood the business is located in.
+                 */
+                neighborhood?: string | null;
+                /**
+                 * Thumbnail image URL for this business.
+                 */
+                thumbnailUrl?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type YelpSearchResponse = YelpSearchResponses[keyof YelpSearchResponses];
+
+export type YelpPlaceData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Yelp business ID, or the business slug from its yelp.com page (e.g. 'juniors-restaurant-new-york-9').
+         */
+        placeId: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/yelp/place';
+};
+
+export type YelpPlaceErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type YelpPlaceError = YelpPlaceErrors[keyof YelpPlaceErrors];
+
+export type YelpPlaceResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Detailed information about the Yelp business.
+             */
+            place: {
+                /**
+                 * Yelp business ID.
+                 */
+                placeId: string;
+                /**
+                 * Business slug from its yelp.com page.
+                 */
+                slug?: string | null;
+                /**
+                 * Business display name.
+                 */
+                name: string;
+                /**
+                 * yelp.com page for this business.
+                 */
+                url?: string | null;
+                /**
+                 * Average star rating from 0 to 5.
+                 */
+                rating?: number | null;
+                /**
+                 * Total review count.
+                 */
+                reviewCount?: number | null;
+                /**
+                 * True when the business owner has claimed the business page.
+                 */
+                isClaimed?: boolean | null;
+                /**
+                 * Price level from 1 (least expensive) to 4 (most expensive), as classified on Yelp. Null when no price is shown.
+                 */
+                priceLevel?: number | null;
+                /**
+                 * Contact phone number normalized to E.164 format.
+                 */
+                phoneNumber?: string | null;
+                /**
+                 * Street address of the business.
+                 */
+                address?: string | null;
+                /**
+                 * Business's own website URL, when available.
+                 */
+                websiteUrl?: string | null;
+                /**
+                 * URL with a map and directions to the business.
+                 */
+                directionsUrl?: string | null;
+                /**
+                 * Business categories (e.g. 'Bakeries').
+                 */
+                categories: Array<string>;
+                /**
+                 * Neighborhoods the business is located in.
+                 */
+                neighborhoods: Array<string>;
+                /**
+                 * ISO 3166-1 alpha-3 country code (e.g. 'USA').
+                 */
+                countryCode?: string | null;
+                /**
+                 * Opening hours by day of the week.
+                 */
+                openingHours: Array<{
+                    /**
+                     * Day of the week.
+                     */
+                    dayOfWeek: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+                    /**
+                     * Opening hours for the day, as displayed on the business page (e.g. '7:00 AM - 12:00 AM (Next day)').
+                     */
+                    hours: string;
+                }>;
+                /**
+                 * Services and features the business offers.
+                 */
+                services: Array<{
+                    /**
+                     * Service or feature name (e.g. 'Takes reservations').
+                     */
+                    name: string;
+                    /**
+                     * True when the business currently offers this service.
+                     */
+                    isActive: boolean;
+                }>;
+                /**
+                 * Photo URLs for this business.
+                 */
+                imageUrls: Array<string>;
+            };
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type YelpPlaceResponse = YelpPlaceResponses[keyof YelpPlaceResponses];
+
+export type YelpReviewsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Yelp business ID (e.g. 'U5hCNNyJmb7f3dmC1HTzSQ'). Obtain it from the `placeId` of a result returned by the Yelp search endpoint (`POST /v1/yelp/search`).
+         */
+        placeId: string;
+        /**
+         * Sort criterion for reviews. 'relevance' is the platform's default ranking. 'elitesFirst' puts reviews from elite reviewers first. Omit to sort by relevance.
+         */
+        sortBy?: 'relevance' | 'newestFirst' | 'oldestFirst' | 'highestRated' | 'lowestRated' | 'elitesFirst' | null;
+        /**
+         * Only return reviews with these star ratings (e.g. [5] for five-star reviews only, [5, 4] for five- and four-star reviews). Omit (or pass []) to include all ratings.
+         */
+        ratings?: Array<number> | null;
+        /**
+         * Only return reviews whose text matches these keywords (e.g. ['crust', 'delivery']). Omit (or pass []) to include all reviews.
+         */
+        keywords?: Array<string> | null;
+        /**
+         * Language for review text (e.g. 'en', 'es', 'fr'). Omit for English.
+         */
+        languageCode?: string | null;
+        /**
+         * Pagination token from a prior reviews response's `nextPageToken`. Omit (or pass null) to fetch the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/yelp/reviews';
+};
+
+export type YelpReviewsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type YelpReviewsError = YelpReviewsErrors[keyof YelpReviewsErrors];
+
+export type YelpReviewsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Reviews of the business.
+             */
+            reviews: Array<{
+                /**
+                 * Reviewer's display name.
+                 */
+                authorName?: string | null;
+                /**
+                 * Reviewer's location (e.g. 'Austin, TX').
+                 */
+                authorLocation?: string | null;
+                /**
+                 * True when the reviewer has elite status on Yelp.
+                 */
+                authorIsElite?: boolean | null;
+                /**
+                 * Star rating given by the reviewer, from 1 to 5.
+                 */
+                rating: number;
+                /**
+                 * Review date in ISO 8601 format.
+                 */
+                date?: string | null;
+                /**
+                 * Review text.
+                 */
+                text?: string | null;
+                /**
+                 * Language of the review text (e.g. 'en').
+                 */
+                languageCode?: string | null;
+                /**
+                 * Photo URLs attached to the review.
+                 */
+                photoUrls: Array<string>;
+                /**
+                 * Number of 'useful' votes the review received.
+                 */
+                usefulCount?: number | null;
+                /**
+                 * Number of 'funny' votes the review received.
+                 */
+                funnyCount?: number | null;
+                /**
+                 * Number of 'cool' votes the review received.
+                 */
+                coolCount?: number | null;
+            }>;
+            /**
+             * Total number of reviews for the business.
+             */
+            totalReviewCount?: number | null;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type YelpReviewsResponse = YelpReviewsResponses[keyof YelpReviewsResponses];
+
 export type FetchRealEstateListingsData = {
     body: {
         /**
@@ -121629,7 +124837,7 @@ export type CreateTrackerCompanyListData = {
             } | null;
             fortuneRankings?: {
                 anyOf?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     range: {
                         low: number;
                         high: number;
@@ -121720,6 +124928,7 @@ export type CreateTrackerCompanyListData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 allOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -121802,6 +125011,7 @@ export type CreateTrackerCompanyListData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 noneOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -121884,6 +125094,7 @@ export type CreateTrackerCompanyListData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
             } | null;
             jobPostingStats?: {
@@ -121974,6 +125185,22 @@ export type CreateTrackerCompanyListData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -122077,6 +125304,22 @@ export type CreateTrackerCompanyListData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -122166,6 +125409,22 @@ export type CreateTrackerCompanyListData = {
                 } | {
                     rule: 'location-type';
                     locationType: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
                     range: {
                         type: 'count-range';
                         range: {
@@ -127209,7 +130468,7 @@ export type CreateTrackerPersonListData = {
             } | null;
             fortuneRankings?: {
                 anyOf?: Array<{
-                    list: 'fortune-500-usa';
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
                     range: {
                         low: number;
                         high: number;
@@ -127300,6 +130559,7 @@ export type CreateTrackerPersonListData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 allOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -127382,6 +130642,7 @@ export type CreateTrackerPersonListData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
                 noneOf?: Array<{
                     jobPostingStatus?: 'active' | 'closed' | 'either' | null;
@@ -127464,6 +130725,7 @@ export type CreateTrackerPersonListData = {
                     jobFunction?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     industry?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                     jobLocationType?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
+                    jobModality?: Array<'On-site' | 'Remote' | 'Hybrid'> | null;
                 }> | null;
             } | null;
             jobPostingStats?: {
@@ -127554,6 +130816,22 @@ export type CreateTrackerPersonListData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -127657,6 +130935,22 @@ export type CreateTrackerPersonListData = {
                         };
                     };
                 } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
                     rule: 'industry';
                     industry: 'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital';
                     range: {
@@ -127746,6 +131040,22 @@ export type CreateTrackerPersonListData = {
                 } | {
                     rule: 'location-type';
                     locationType: 'On-site' | 'Remote' | 'Hybrid';
+                    range: {
+                        type: 'count-range';
+                        range: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    } | {
+                        type: 'percent-range';
+                        rangeInHundredths: {
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        };
+                    };
+                } | {
+                    rule: 'modality';
+                    modality: 'On-site' | 'Remote' | 'Hybrid';
                     range: {
                         type: 'count-range';
                         range: {
@@ -144917,6 +148227,10 @@ export type TrackerSignalDetectedWebhookPayload = {
              * Display name of the entity
              */
             name?: string | null;
+            /**
+             * The entity's public LinkedIn URL. Null or omitted when no URL is available for the entity.
+             */
+            linkedinUrl?: string | null;
         };
     };
     subscription: {
@@ -144982,6 +148296,86 @@ export type TrackerSignalDetectedWebhookPayload = {
 export type TrackerSignalDetectedWebhookRequest = {
     body: TrackerSignalDetectedWebhookPayload;
     key: 'tracker.signal_detected';
+    path?: never;
+    query?: never;
+};
+
+/**
+ * TrackerListRunCompletedPayload
+ *
+ * Payload delivered when a tracker list's scheduled refresh cycle runs. Signals detected during the refresh are delivered separately via tracker.signal_detected events.
+ */
+export type TrackerListRunCompletedWebhookPayload = {
+    success: true;
+    /**
+     * ID of the tracker list that refreshed.
+     */
+    listId: string;
+    /**
+     * Name of the tracker list.
+     */
+    listName: string;
+    /**
+     * Whether this list tracks companies or people.
+     */
+    entityType: 'company' | 'person';
+    /**
+     * Number of tracked entities included in this refresh cycle.
+     */
+    entityCount: number;
+    /**
+     * UTC timestamp when this refresh cycle ran.
+     */
+    refreshedAt: string;
+    /**
+     * UTC timestamp of the next scheduled refresh.
+     */
+    nextRefreshAt: string;
+    /**
+     * The list's configured refresh cadence, in days.
+     */
+    refreshIntervalDays: number;
+};
+
+export type TrackerListRunCompletedWebhookRequest = {
+    body: TrackerListRunCompletedWebhookPayload;
+    key: 'tracker.list_run_completed';
+    path?: never;
+    query?: never;
+};
+
+/**
+ * TrackerListRunUpcomingPayload
+ *
+ * Payload delivered about a day before a tracker list's scheduled refresh runs.
+ */
+export type TrackerListRunUpcomingWebhookPayload = {
+    success: true;
+    /**
+     * ID of the tracker list that is about to refresh.
+     */
+    listId: string;
+    /**
+     * Name of the tracker list.
+     */
+    listName: string;
+    /**
+     * Whether this list tracks companies or people.
+     */
+    entityType: 'company' | 'person';
+    /**
+     * Expected UTC timestamp of the upcoming scheduled refresh.
+     */
+    expectedRefreshAt: string;
+    /**
+     * The list's configured refresh cadence, in days.
+     */
+    refreshIntervalDays: number;
+};
+
+export type TrackerListRunUpcomingWebhookRequest = {
+    body: TrackerListRunUpcomingWebhookPayload;
+    key: 'tracker.list_run_upcoming';
     path?: never;
     query?: never;
 };
