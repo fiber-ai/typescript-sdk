@@ -3118,6 +3118,24 @@ export const zGetOrgCreditsResponse = z.object({
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
                 }).prefault({ levels: [{ limit: null, centiCreditCost: 100 }] }),
+                instantEmailReveal: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 100 }] }),
+                instantPhoneReveal: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 100 }] }),
                 allEmailReveal: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
@@ -113187,6 +113205,155 @@ export const zLiteContactRevealData = z.object({
  * Default Response
  */
 export const zLiteContactRevealResponse = z.object({
+    output: z.object({
+        profile: z.object({
+            emails: z.array(z.object({
+                emailAddress: z.optional(z.union([
+                    z.string().min(1),
+                    z.null()
+                ])),
+                type: z.optional(z.nullable(z.enum(['work', 'personal']))),
+                validationStatus: z.optional(z.nullable(z.enum([
+                    'valid',
+                    'risky',
+                    'unknown',
+                    'invalid'
+                ]))),
+                deliverabilityScore: z.optional(z.union([
+                    z.number().gte(0).lte(100),
+                    z.null()
+                ])),
+                isCatchAll: z.optional(z.union([
+                    z.boolean(),
+                    z.null()
+                ]))
+            })).prefault([]),
+            phoneNumbers: z.array(z.object({
+                phoneNumber: z.optional(z.union([
+                    z.string().min(1),
+                    z.null()
+                ])),
+                type: z.optional(z.nullable(z.enum([
+                    'mobile',
+                    'other',
+                    'unknown'
+                ])))
+            })).prefault([])
+        })
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zInstantContactRevealData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        input: z.union([
+            z.object({
+                mode: z.enum(['linkedin']),
+                linkedinIdentifier: z.string().min(1),
+                fullName: z.optional(z.union([
+                    z.string().min(1),
+                    z.null()
+                ]))
+            }),
+            z.object({
+                mode: z.enum(['name-domain']),
+                fullName: z.string().min(1),
+                companyDomain: z.string().min(1)
+            })
+        ]),
+        enrichmentType: z.optional(z.object({
+            getWorkEmails: z.optional(z.boolean()).prefault(true),
+            getPersonalEmails: z.optional(z.boolean()).prefault(false),
+            getPhoneNumbers: z.optional(z.boolean()).prefault(false)
+        })).prefault({
+            getWorkEmails: true,
+            getPersonalEmails: false,
+            getPhoneNumbers: false
+        })
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zInstantContactRevealResponse = z.object({
     output: z.object({
         profile: z.object({
             emails: z.array(z.object({

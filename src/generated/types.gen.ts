@@ -3485,6 +3485,18 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
+                instantEmailReveal: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                instantPhoneReveal: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
                 allEmailReveal: {
                     levels: Array<{
                         limit?: number | null;
@@ -57871,6 +57883,347 @@ export type LiteContactRevealResponses = {
 };
 
 export type LiteContactRevealResponse = LiteContactRevealResponses[keyof LiteContactRevealResponses];
+
+export type InstantContactRevealData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Person lookup parameters. Use mode 'linkedin' or 'name-domain'.
+         */
+        input: {
+            mode: 'linkedin';
+            /**
+             * LinkedIn profile identifier — a full URL, bare slug, or URN (e.g. 'williamhgates', 'https://www.linkedin.com/in/williamhgates').
+             */
+            linkedinIdentifier: string;
+            /**
+             * Full name of the person. Optional — improves match accuracy.
+             */
+            fullName?: string | null;
+        } | {
+            mode: 'name-domain';
+            /**
+             * Full name of the person.
+             */
+            fullName: string;
+            /**
+             * Company domain (e.g. 'gatesfoundation.org').
+             */
+            companyDomain: string;
+        };
+        /**
+         * Which email and phone types to look for.
+         */
+        enrichmentType?: {
+            getWorkEmails?: boolean;
+            getPersonalEmails?: boolean;
+            getPhoneNumbers?: boolean;
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/contact-details/instant';
+};
+
+export type InstantContactRevealErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type InstantContactRevealError = InstantContactRevealErrors[keyof InstantContactRevealErrors];
+
+export type InstantContactRevealResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            profile: {
+                /**
+                 * All emails found for this profile, ordered by priority.
+                 */
+                emails: Array<{
+                    /**
+                     * Email address for the person.
+                     */
+                    emailAddress?: string | null;
+                    /**
+                     * Classification of the email address.
+                     */
+                    type?: 'work' | 'personal' | null;
+                    /**
+                     * Email verification result.
+                     */
+                    validationStatus?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
+                    /**
+                     * Confidence score ranking deliverability for this email. Higher values indicate higher likelihood of delivery.
+                     */
+                    deliverabilityScore?: number | null;
+                    /**
+                     * Whether the domain accepts email to any address (catch-all). Catch-all domains make individual address verification unreliable — the address may appear valid but not actually be monitored.
+                     */
+                    isCatchAll?: boolean | null;
+                }>;
+                /**
+                 * All phone numbers found for this profile.
+                 */
+                phoneNumbers: Array<{
+                    /**
+                     * Phone number for the person.
+                     */
+                    phoneNumber?: string | null;
+                    /**
+                     * Classification of the phone number.
+                     */
+                    type?: 'mobile' | 'other' | 'unknown' | null;
+                }>;
+            };
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type InstantContactRevealResponse = InstantContactRevealResponses[keyof InstantContactRevealResponses];
 
 export type StartDepthChartData = {
     body: {
