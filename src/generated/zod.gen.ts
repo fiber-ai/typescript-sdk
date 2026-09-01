@@ -113048,7 +113048,13 @@ export const zSyncQuickContactRevealResponse = z.object({
             status: z.enum(['completed']),
             emails: z.array(z.object({
                 email: z.string(),
-                type: z.string()
+                type: z.string(),
+                status: z.optional(z.nullable(z.enum([
+                    'valid',
+                    'risky',
+                    'unknown',
+                    'invalid'
+                ])))
             })),
             phoneNumbers: z.array(z.object({
                 number: z.string(),

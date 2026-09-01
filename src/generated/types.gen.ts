@@ -57384,6 +57384,10 @@ export type SyncQuickContactRevealResponses = {
                 emails: Array<{
                     email: string;
                     type: string;
+                    /**
+                     * Email verification result. Only emails with `valid` have passed deliverability verification; `unknown` emails were returned without an affirmative verification and should be treated cautiously for outbound sending.
+                     */
+                    status?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
                 }>;
                 phoneNumbers: Array<{
                     number: string;
