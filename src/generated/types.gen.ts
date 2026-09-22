@@ -117,9 +117,13 @@ export type JobPostingWithKeyword = {
     type: 'job_posting_with_keyword';
     entityType: 'company';
     /**
-     * Alert when a job posting title contains any of these keywords
+     * Alert when a job posting contains any of these keywords in the selected search fields.
      */
     keywords: Array<string>;
+    /**
+     * Job posting fields to search for the keywords. Omit to search the title only.
+     */
+    searchFields?: Array<'title' | 'description'> | null;
     /**
      * Only alert for these seniority levels. Omit for any level.
      */
@@ -711,9 +715,13 @@ export type JobPostingWithKeywordResponse = {
     type: 'job_posting_with_keyword';
     entityType: 'company';
     /**
-     * Alert when a job posting title contains any of these keywords
+     * Alert when a job posting contains any of these keywords in the selected search fields.
      */
     keywords: Array<string>;
+    /**
+     * Job posting fields to search for the keywords. Omit to search the title only.
+     */
+    searchFields?: Array<'title' | 'description'> | null;
     /**
      * Only alert for these seniority levels. Omit for any level.
      */
@@ -1543,6 +1551,10 @@ export type LinkedInPostChange = {
      * Profile picture URL of the poster
      */
     posterProfilePicture?: string | null;
+    /**
+     * Keywords from your tracking rule that this post matched. Omitted for rules without keywords.
+     */
+    matchedKeywords?: Array<string> | null;
 };
 
 export type PersonExperienceChange = {
@@ -3461,6 +3473,12 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
+                basicWorkEmailReveal: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
                 personalEmailReveal: {
                     levels: Array<{
                         limit?: number | null;
@@ -4074,6 +4092,72 @@ export type GetOrgCreditsResponses = {
                     }>;
                 };
                 getCompanyFromRankingList: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                flightDeals: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                bookingSearch: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                bookingPropertyLookup: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                googleMapsPlace: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                googleMapsReviews: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                placeSearch: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                placePage: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                placeReviews: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                companyReviewSearch: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                companyReviewPage: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                companyReviews: {
                     levels: Array<{
                         limit?: number | null;
                         centiCreditCost: number;
@@ -7834,7 +7918,7 @@ export type ListApiRequestsData = {
          */
         apiKey: string;
         /**
-         * Only return requests received at or after this ISO 8601 timestamp. Logs are retained for 7 days, so earlier timestamps simply return nothing.
+         * Only return requests received at or after this ISO 8601 timestamp. Logs are retained for 14 days, so earlier timestamps simply return nothing.
          */
         from?: string | null;
         /**
@@ -8180,6 +8264,348 @@ export type ListApiRequestsResponses = {
 };
 
 export type ListApiRequestsResponse = ListApiRequestsResponses[keyof ListApiRequestsResponses];
+
+export type DownloadApiRequestsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Only return requests received at or after this ISO 8601 timestamp. Logs are retained for 14 days, so earlier timestamps simply return nothing.
+         */
+        from?: string | null;
+        /**
+         * Only return requests received strictly before this ISO 8601 timestamp.
+         */
+        to?: string | null;
+        /**
+         * Only return requests to this exact route template, e.g. "/v1/person/search".
+         */
+        routePath?: string | null;
+        /**
+         * Only return requests using this HTTP method, e.g. "POST".
+         */
+        method?: string | null;
+        /**
+         * Only return requests that returned this exact status code.
+         */
+        statusCode?: number | null;
+        /**
+         * Only return the request carrying this error correlation code.
+         */
+        errorCode?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/api-requests/download';
+};
+
+export type DownloadApiRequestsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type DownloadApiRequestsError = DownloadApiRequestsErrors[keyof DownloadApiRequestsErrors];
+
+export type DownloadApiRequestsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Your past API requests, newest first.
+             */
+            apiRequests: Array<{
+                /**
+                 * Unique id of this logged request. Quote it in support requests to identify a specific call.
+                 */
+                id: string;
+                /**
+                 * Your organization's id.
+                 */
+                organizationId: string;
+                /**
+                 * When the request was received, as an ISO 8601 timestamp.
+                 */
+                createdAt: string;
+                /**
+                 * HTTP method, e.g. "POST".
+                 */
+                method: string;
+                /**
+                 * The route template that handled the request, e.g. "/v1/person/search"
+                 */
+                routePath: string;
+                /**
+                 * HTTP status code returned to you.
+                 */
+                statusCode: number;
+                /**
+                 * How long the request took to process, in milliseconds, measured from receipt to just before the response was written.
+                 */
+                durationMs?: number | null;
+                /**
+                 * Correlation code included in the response body when a request fails. Quote it in support requests.
+                 */
+                errorCode?: string | null;
+                /**
+                 * The input you sent with this call.
+                 */
+                request?: unknown;
+            }>;
+            /**
+             * True when more than 5000 matching requests exist. Narrow `from`/`to` and retry.
+             */
+            truncated: boolean;
+            /**
+             * How many days of request history are retained. Requests older than this have been purged and cannot be returned.
+             */
+            retentionDays: number;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type DownloadApiRequestsResponse = DownloadApiRequestsResponses[keyof DownloadApiRequestsResponses];
 
 export type ListWebhookEventTypesData = {
     body?: never;
@@ -12587,6 +13013,14 @@ export type PollBatchLiveEnrichData = {
          * Number of results per page. Defaults to 100.
          */
         take?: number;
+        /**
+         * Whether to include deep details about each educational item, like the school's LinkedIn URL, website, location, etc. That'll be put in the detailedEducation array. This slows down the API call, so only enable this if you need it.
+         */
+        getDetailedEducation?: boolean | null;
+        /**
+         * Whether to include deep details about each work experience item, like the company's LinkedIn URL, website, location, etc. That'll be put in the detailedWorkExperience array. This slows down the API call, so only enable this if you need it.
+         */
+        getDetailedWorkExperience?: boolean | null;
     };
     path?: never;
     query?: never;
@@ -27000,6 +27434,15 @@ export type UpdateAudienceSearchParamsData = {
                     };
                     year: number;
                 }> | null;
+                noneOf?: Array<{
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
+                    range: {
+                        low: number;
+                        high: number;
+                        name?: string | null;
+                    };
+                    year: number;
+                }> | null;
             } | null;
             jobPostingsV2?: {
                 anyOf?: Array<{
@@ -27806,17 +28249,17 @@ export type UpdateAudienceSearchParamsData = {
             } | null;
             crunchbaseCategories?: {
                 anyOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 allOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 noneOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
@@ -28733,6 +29176,7 @@ export type UpdateAudienceSearchParamsData = {
                 anyOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -28744,6 +29188,7 @@ export type UpdateAudienceSearchParamsData = {
                 allOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -28755,6 +29200,7 @@ export type UpdateAudienceSearchParamsData = {
                 noneOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -31283,6 +31729,15 @@ export type CompanySearchData = {
                     };
                     year: number;
                 }> | null;
+                noneOf?: Array<{
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
+                    range: {
+                        low: number;
+                        high: number;
+                        name?: string | null;
+                    };
+                    year: number;
+                }> | null;
             } | null;
             jobPostingsV2?: {
                 anyOf?: Array<{
@@ -32089,17 +32544,17 @@ export type CompanySearchData = {
             } | null;
             crunchbaseCategories?: {
                 anyOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 allOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 noneOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
@@ -35059,6 +35514,15 @@ export type CompanyCountData = {
                     };
                     year: number;
                 }> | null;
+                noneOf?: Array<{
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
+                    range: {
+                        low: number;
+                        high: number;
+                        name?: string | null;
+                    };
+                    year: number;
+                }> | null;
             } | null;
             jobPostingsV2?: {
                 anyOf?: Array<{
@@ -35865,17 +36329,17 @@ export type CompanyCountData = {
             } | null;
             crunchbaseCategories?: {
                 anyOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 allOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 noneOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
@@ -37989,6 +38453,7 @@ export type PeopleSearchData = {
                 anyOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -38000,6 +38465,7 @@ export type PeopleSearchData = {
                 allOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -38011,6 +38477,7 @@ export type PeopleSearchData = {
                 noneOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -39872,6 +40339,7 @@ export type PeopleSearchCountData = {
                 anyOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -39883,6 +40351,7 @@ export type PeopleSearchCountData = {
                 allOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -39894,6 +40363,7 @@ export type PeopleSearchCountData = {
                 noneOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -41166,6 +41636,15 @@ export type PaginatedCombinedSearchData = {
                         };
                         year: number;
                     }> | null;
+                    noneOf?: Array<{
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
+                        range: {
+                            low: number;
+                            high: number;
+                            name?: string | null;
+                        };
+                        year: number;
+                    }> | null;
                 } | null;
                 jobPostingsV2?: {
                     anyOf?: Array<{
@@ -41972,17 +42451,17 @@ export type PaginatedCombinedSearchData = {
                 } | null;
                 crunchbaseCategories?: {
                     anyOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
                     allOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
                     noneOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
@@ -42910,6 +43389,7 @@ export type PaginatedCombinedSearchData = {
                     anyOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -42921,6 +43401,7 @@ export type PaginatedCombinedSearchData = {
                     allOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -42932,6 +43413,7 @@ export type PaginatedCombinedSearchData = {
                     noneOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -47392,6 +47874,15 @@ export type CombinedSearchCountData = {
                     };
                     year: number;
                 }> | null;
+                noneOf?: Array<{
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
+                    range: {
+                        low: number;
+                        high: number;
+                        name?: string | null;
+                    };
+                    year: number;
+                }> | null;
             } | null;
             jobPostingsV2?: {
                 anyOf?: Array<{
@@ -48198,17 +48689,17 @@ export type CombinedSearchCountData = {
             } | null;
             crunchbaseCategories?: {
                 anyOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 allOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 noneOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
@@ -49125,6 +49616,7 @@ export type CombinedSearchCountData = {
                 anyOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -49136,6 +49628,7 @@ export type CombinedSearchCountData = {
                 allOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -49147,6 +49640,7 @@ export type CombinedSearchCountData = {
                 noneOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -53987,6 +54481,7 @@ export type StealthFoundersSearchData = {
                 anyOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -53998,6 +54493,7 @@ export type StealthFoundersSearchData = {
                 allOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -54009,6 +54505,7 @@ export type StealthFoundersSearchData = {
                 noneOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -55704,6 +56201,7 @@ export type StealthFoundersCountData = {
                 anyOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -55715,6 +56213,7 @@ export type StealthFoundersCountData = {
                 allOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -55726,6 +56225,7 @@ export type StealthFoundersCountData = {
                 noneOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -56625,6 +57125,34 @@ export type SyncTurboContactEnrichmentData = {
          * How long to wait for email deliverability validation after a contact is found. Higher patience increases average response time but improves deliverability accuracy. MINIMUM is the least thorough bounce-detection option.
          */
         patience?: 'MINIMUM' | 'LOW' | 'MEDIUM' | 'HIGH' | 'EXTREME' | 'MAXIMUM' | null;
+        /**
+         * Optional current company of the person. When provided, work emails whose domain does not match this company are returned in unmatchedWorkEmails instead of emails. Set identifier to 'linkedinUrl', 'linkedinSlug', 'linkedinOrgId', or 'domain' and provide the corresponding value.
+         */
+        company?: {
+            identifier: 'linkedinUrl';
+            /**
+             * LinkedIn company URL (e.g. 'https://www.linkedin.com/company/openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinSlug';
+            /**
+             * LinkedIn company slug (e.g. 'openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinOrgId';
+            /**
+             * LinkedIn numeric organization ID (e.g. '11130470').
+             */
+            value: string;
+        } | {
+            identifier: 'domain';
+            /**
+             * Company website domain (e.g. 'openai.com').
+             */
+            value: string;
+        } | null;
     };
     path?: never;
     query?: never;
@@ -56769,6 +57297,14 @@ export type SyncTurboContactEnrichmentResponses = {
                 name?: string | null;
                 status: 'completed';
                 emails: Array<{
+                    email: string;
+                    type: string;
+                    status?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
+                }>;
+                /**
+                 * Work emails found for this person whose domain does not match the person's current company (or the company you specified). These are not included in emails. Present only when at least one such email was found.
+                 */
+                unmatchedWorkEmails?: Array<{
                     email: string;
                     type: string;
                     status?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
@@ -57250,6 +57786,34 @@ export type SyncQuickContactRevealData = {
          * @deprecated
          */
         validateEmails?: boolean | null;
+        /**
+         * Optional current company of the person. When provided, work emails whose domain does not match this company are returned in unmatchedWorkEmails instead of emails. Set identifier to 'linkedinUrl', 'linkedinSlug', 'linkedinOrgId', or 'domain' and provide the corresponding value.
+         */
+        company?: {
+            identifier: 'linkedinUrl';
+            /**
+             * LinkedIn company URL (e.g. 'https://www.linkedin.com/company/openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinSlug';
+            /**
+             * LinkedIn company slug (e.g. 'openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinOrgId';
+            /**
+             * LinkedIn numeric organization ID (e.g. '11130470').
+             */
+            value: string;
+        } | {
+            identifier: 'domain';
+            /**
+             * Company website domain (e.g. 'openai.com').
+             */
+            value: string;
+        } | null;
     };
     path?: never;
     query?: never;
@@ -57394,6 +57958,17 @@ export type SyncQuickContactRevealResponses = {
                 name?: string | null;
                 status: 'completed';
                 emails: Array<{
+                    email: string;
+                    type: string;
+                    /**
+                     * Email verification result. Only emails with `valid` have passed deliverability verification; `unknown` emails were returned without an affirmative verification and should be treated cautiously for outbound sending.
+                     */
+                    status?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
+                }>;
+                /**
+                 * Work emails found for this person whose domain does not match the person's current company (or the company you specified). These are not included in emails. Present only when at least one such email was found.
+                 */
+                unmatchedWorkEmails?: Array<{
                     email: string;
                     type: string;
                     /**
@@ -57578,6 +58153,34 @@ export type LiteContactRevealData = {
             getPhoneNumbers?: boolean;
         };
         /**
+         * Optional current company of the person. When provided, work emails whose domain does not match this company are returned in unmatchedWorkEmails instead of emails. Set identifier to 'linkedinUrl', 'linkedinSlug', 'linkedinOrgId', or 'domain' and provide the corresponding value.
+         */
+        company?: {
+            identifier: 'linkedinUrl';
+            /**
+             * LinkedIn company URL (e.g. 'https://www.linkedin.com/company/openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinSlug';
+            /**
+             * LinkedIn company slug (e.g. 'openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinOrgId';
+            /**
+             * LinkedIn numeric organization ID (e.g. '11130470').
+             */
+            value: string;
+        } | {
+            identifier: 'domain';
+            /**
+             * Company website domain (e.g. 'openai.com').
+             */
+            value: string;
+        } | null;
+        /**
          * How long to wait for email deliverability validation after a contact is found. Higher patience increases average response time but improves deliverability accuracy. MINIMUM is the least thorough bounce-detection option.
          */
         patience?: 'MINIMUM' | 'LOW' | 'MEDIUM' | 'HIGH' | 'EXTREME' | 'MAXIMUM' | null;
@@ -57745,6 +58348,31 @@ export type LiteContactRevealResponses = {
                     isCatchAll?: boolean | null;
                 }>;
                 /**
+                 * Work emails found for this person whose domain does not match the person's current company (or the company you specified). These are not included in emails. Present only when at least one such email was found.
+                 */
+                unmatchedWorkEmails?: Array<{
+                    /**
+                     * Email address for the person.
+                     */
+                    emailAddress?: string | null;
+                    /**
+                     * Classification of the email address.
+                     */
+                    type?: 'work' | 'personal' | null;
+                    /**
+                     * Email verification result.
+                     */
+                    validationStatus?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
+                    /**
+                     * Confidence score ranking deliverability for this email. Higher values indicate higher likelihood of delivery.
+                     */
+                    deliverabilityScore?: number | null;
+                    /**
+                     * Whether the domain accepts email to any address (catch-all). Catch-all domains make individual address verification unreliable — the address may appear valid but not actually be monitored.
+                     */
+                    isCatchAll?: boolean | null;
+                }>;
+                /**
                  * All phone numbers found for this profile.
                  */
                 phoneNumbers: Array<{
@@ -57884,6 +58512,360 @@ export type LiteContactRevealResponses = {
 
 export type LiteContactRevealResponse = LiteContactRevealResponses[keyof LiteContactRevealResponses];
 
+export type BasicWorkEmailRevealData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Person name. Provide a full name, or first and last name separately.
+         */
+        name: {
+            mode: 'fullName';
+            /**
+             * Full name of the person.
+             */
+            fullName: string;
+        } | {
+            mode: 'firstLast';
+            /**
+             * First name of the person.
+             */
+            firstName: string;
+            /**
+             * Last name of the person.
+             */
+            lastName: string;
+        };
+        /**
+         * Company to search. Provide a domain, or a company identifier.
+         */
+        company: {
+            mode: 'domain';
+            /**
+             * Company domain (e.g. 'acme.com').
+             */
+            domain: string;
+        } | {
+            mode: 'identifier';
+            /**
+             * Company identifier. Resolved to a website domain before lookup.
+             */
+            identifier: {
+                identifier: 'linkedinUrl';
+                /**
+                 * LinkedIn company URL (e.g. 'https://www.linkedin.com/company/openai').
+                 */
+                value: string;
+            } | {
+                identifier: 'linkedinSlug';
+                /**
+                 * LinkedIn company slug (e.g. 'openai').
+                 */
+                value: string;
+            } | {
+                identifier: 'linkedinOrgId';
+                /**
+                 * LinkedIn numeric organization ID (e.g. '11130470').
+                 */
+                value: string;
+            } | {
+                identifier: 'domain';
+                /**
+                 * Company website domain (e.g. 'openai.com').
+                 */
+                value: string;
+            };
+        };
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/contact-details/basic-work-email';
+};
+
+export type BasicWorkEmailRevealErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type BasicWorkEmailRevealError = BasicWorkEmailRevealErrors[keyof BasicWorkEmailRevealErrors];
+
+export type BasicWorkEmailRevealResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Work email found (at most one). Empty array if no email found.
+             */
+            emails: Array<{
+                /**
+                 * Email address for the person.
+                 */
+                emailAddress?: string | null;
+                /**
+                 * Classification of the email address.
+                 */
+                type?: 'work' | 'personal' | null;
+                /**
+                 * Email verification result.
+                 */
+                validationStatus?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
+                /**
+                 * Confidence score ranking deliverability for this email. Higher values indicate higher likelihood of delivery.
+                 */
+                deliverabilityScore?: number | null;
+                /**
+                 * Whether the domain accepts email to any address (catch-all). Catch-all domains make individual address verification unreliable — the address may appear valid but not actually be monitored.
+                 */
+                isCatchAll?: boolean | null;
+            }>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type BasicWorkEmailRevealResponse = BasicWorkEmailRevealResponses[keyof BasicWorkEmailRevealResponses];
+
 export type InstantContactRevealData = {
     body: {
         /**
@@ -57922,6 +58904,34 @@ export type InstantContactRevealData = {
             getPersonalEmails?: boolean;
             getPhoneNumbers?: boolean;
         };
+        /**
+         * Optional current company of the person. When provided, work emails whose domain does not match this company are returned in unmatchedWorkEmails instead of emails. Set identifier to 'linkedinUrl', 'linkedinSlug', 'linkedinOrgId', or 'domain' and provide the corresponding value.
+         */
+        company?: {
+            identifier: 'linkedinUrl';
+            /**
+             * LinkedIn company URL (e.g. 'https://www.linkedin.com/company/openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinSlug';
+            /**
+             * LinkedIn company slug (e.g. 'openai').
+             */
+            value: string;
+        } | {
+            identifier: 'linkedinOrgId';
+            /**
+             * LinkedIn numeric organization ID (e.g. '11130470').
+             */
+            value: string;
+        } | {
+            identifier: 'domain';
+            /**
+             * Company website domain (e.g. 'openai.com').
+             */
+            value: string;
+        } | null;
     };
     path?: never;
     query?: never;
@@ -58064,6 +59074,31 @@ export type InstantContactRevealResponses = {
                  * All emails found for this profile, ordered by priority.
                  */
                 emails: Array<{
+                    /**
+                     * Email address for the person.
+                     */
+                    emailAddress?: string | null;
+                    /**
+                     * Classification of the email address.
+                     */
+                    type?: 'work' | 'personal' | null;
+                    /**
+                     * Email verification result.
+                     */
+                    validationStatus?: 'valid' | 'risky' | 'unknown' | 'invalid' | null;
+                    /**
+                     * Confidence score ranking deliverability for this email. Higher values indicate higher likelihood of delivery.
+                     */
+                    deliverabilityScore?: number | null;
+                    /**
+                     * Whether the domain accepts email to any address (catch-all). Catch-all domains make individual address verification unreliable — the address may appear valid but not actually be monitored.
+                     */
+                    isCatchAll?: boolean | null;
+                }>;
+                /**
+                 * Work emails found for this person whose domain does not match the person's current company (or the company you specified). These are not included in emails. Present only when at least one such email was found.
+                 */
+                unmatchedWorkEmails?: Array<{
                     /**
                      * Email address for the person.
                      */
@@ -76832,6 +77867,15 @@ export type NlpSearchParseResponses = {
                             };
                             year: number;
                         }> | null;
+                        noneOf?: Array<{
+                            list: 'fortune-500-usa' | 'forbes-global-2000';
+                            range: {
+                                low: number;
+                                high: number;
+                                name?: string | null;
+                            };
+                            year: number;
+                        }> | null;
                     } | null;
                     jobPostingsV2?: {
                         anyOf?: Array<{
@@ -77638,17 +78682,17 @@ export type NlpSearchParseResponses = {
                     } | null;
                     crunchbaseCategories?: {
                         anyOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
                         allOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
                         noneOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
@@ -78565,6 +79609,7 @@ export type NlpSearchParseResponses = {
                         anyOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -78576,6 +79621,7 @@ export type NlpSearchParseResponses = {
                         allOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -78587,6 +79633,7 @@ export type NlpSearchParseResponses = {
                         noneOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -79936,6 +80983,15 @@ export type SlushieRunResponses = {
                             };
                             year: number;
                         }> | null;
+                        noneOf?: Array<{
+                            list: 'fortune-500-usa' | 'forbes-global-2000';
+                            range: {
+                                low: number;
+                                high: number;
+                                name?: string | null;
+                            };
+                            year: number;
+                        }> | null;
                     } | null;
                     jobPostingsV2?: {
                         anyOf?: Array<{
@@ -80742,17 +81798,17 @@ export type SlushieRunResponses = {
                     } | null;
                     crunchbaseCategories?: {
                         anyOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
                         allOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
                         noneOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
@@ -81669,6 +82725,7 @@ export type SlushieRunResponses = {
                         anyOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -81680,6 +82737,7 @@ export type SlushieRunResponses = {
                         allOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -81691,6 +82749,7 @@ export type SlushieRunResponses = {
                         noneOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -85246,6 +86305,15 @@ export type CreateSavedSearchData = {
                         };
                         year: number;
                     }> | null;
+                    noneOf?: Array<{
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
+                        range: {
+                            low: number;
+                            high: number;
+                            name?: string | null;
+                        };
+                        year: number;
+                    }> | null;
                 } | null;
                 jobPostingsV2?: {
                     anyOf?: Array<{
@@ -86052,17 +87120,17 @@ export type CreateSavedSearchData = {
                 } | null;
                 crunchbaseCategories?: {
                     anyOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
                     allOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
                     noneOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
@@ -86983,6 +88051,7 @@ export type CreateSavedSearchData = {
                     anyOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -86994,6 +88063,7 @@ export type CreateSavedSearchData = {
                     allOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -87005,6 +88075,7 @@ export type CreateSavedSearchData = {
                     noneOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -87979,6 +89050,15 @@ export type CreateSavedSearchData = {
                         };
                         year: number;
                     }> | null;
+                    noneOf?: Array<{
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
+                        range: {
+                            low: number;
+                            high: number;
+                            name?: string | null;
+                        };
+                        year: number;
+                    }> | null;
                 } | null;
                 jobPostingsV2?: {
                     anyOf?: Array<{
@@ -88785,17 +89865,17 @@ export type CreateSavedSearchData = {
                 } | null;
                 crunchbaseCategories?: {
                     anyOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
                     allOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
                     noneOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
@@ -89721,6 +90801,7 @@ export type CreateSavedSearchData = {
                     anyOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -89732,6 +90813,7 @@ export type CreateSavedSearchData = {
                     allOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -89743,6 +90825,7 @@ export type CreateSavedSearchData = {
                     noneOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -91163,6 +92246,15 @@ export type GetSavedSearchResponses = {
                         };
                         year: number;
                     }> | null;
+                    noneOf?: Array<{
+                        list: 'fortune-500-usa' | 'forbes-global-2000';
+                        range: {
+                            low: number;
+                            high: number;
+                            name?: string | null;
+                        };
+                        year: number;
+                    }> | null;
                 } | null;
                 jobPostingsV2?: {
                     anyOf?: Array<{
@@ -91969,17 +93061,17 @@ export type GetSavedSearchResponses = {
                 } | null;
                 crunchbaseCategories?: {
                     anyOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
                     allOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
                     noneOf?: Array<{
-                        group: string;
+                        group?: string | null;
                         category: string;
                         type: 'category';
                     }> | null;
@@ -92900,6 +93992,7 @@ export type GetSavedSearchResponses = {
                     anyOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -92911,6 +94004,7 @@ export type GetSavedSearchResponses = {
                     allOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -92922,6 +94016,7 @@ export type GetSavedSearchResponses = {
                     noneOf?: Array<{
                         type: 'plain';
                         term: string;
+                        exact?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -94238,6 +95333,15 @@ export type GetSavedSearchRunResponses = {
                             };
                             year: number;
                         }> | null;
+                        noneOf?: Array<{
+                            list: 'fortune-500-usa' | 'forbes-global-2000';
+                            range: {
+                                low: number;
+                                high: number;
+                                name?: string | null;
+                            };
+                            year: number;
+                        }> | null;
                     } | null;
                     jobPostingsV2?: {
                         anyOf?: Array<{
@@ -95044,17 +96148,17 @@ export type GetSavedSearchRunResponses = {
                     } | null;
                     crunchbaseCategories?: {
                         anyOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
                         allOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
                         noneOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
@@ -95971,6 +97075,7 @@ export type GetSavedSearchRunResponses = {
                         anyOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -95982,6 +97087,7 @@ export type GetSavedSearchRunResponses = {
                         allOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -95993,6 +97099,7 @@ export type GetSavedSearchRunResponses = {
                         noneOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -97946,6 +99053,15 @@ export type UpdateSavedSearchData = {
                     };
                     year: number;
                 }> | null;
+                noneOf?: Array<{
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
+                    range: {
+                        low: number;
+                        high: number;
+                        name?: string | null;
+                    };
+                    year: number;
+                }> | null;
             } | null;
             jobPostingsV2?: {
                 anyOf?: Array<{
@@ -98752,17 +99868,17 @@ export type UpdateSavedSearchData = {
             } | null;
             crunchbaseCategories?: {
                 anyOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 allOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 noneOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
@@ -99679,6 +100795,7 @@ export type UpdateSavedSearchData = {
                 anyOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -99690,6 +100807,7 @@ export type UpdateSavedSearchData = {
                 allOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -99701,6 +100819,7 @@ export type UpdateSavedSearchData = {
                 noneOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -107948,6 +109067,15 @@ export type GetLatestSavedSearchRunResponses = {
                             };
                             year: number;
                         }> | null;
+                        noneOf?: Array<{
+                            list: 'fortune-500-usa' | 'forbes-global-2000';
+                            range: {
+                                low: number;
+                                high: number;
+                                name?: string | null;
+                            };
+                            year: number;
+                        }> | null;
                     } | null;
                     jobPostingsV2?: {
                         anyOf?: Array<{
@@ -108754,17 +109882,17 @@ export type GetLatestSavedSearchRunResponses = {
                     } | null;
                     crunchbaseCategories?: {
                         anyOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
                         allOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
                         noneOf?: Array<{
-                            group: string;
+                            group?: string | null;
                             category: string;
                             type: 'category';
                         }> | null;
@@ -109681,6 +110809,7 @@ export type GetLatestSavedSearchRunResponses = {
                         anyOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -109692,6 +110821,7 @@ export type GetLatestSavedSearchRunResponses = {
                         allOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -109703,6 +110833,7 @@ export type GetLatestSavedSearchRunResponses = {
                         noneOf?: Array<{
                             type: 'plain';
                             term: string;
+                            exact?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -125202,6 +126333,15 @@ export type CreateTrackerCompanyListData = {
                     };
                     year: number;
                 }> | null;
+                noneOf?: Array<{
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
+                    range: {
+                        low: number;
+                        high: number;
+                        name?: string | null;
+                    };
+                    year: number;
+                }> | null;
             } | null;
             jobPostingsV2?: {
                 anyOf?: Array<{
@@ -126008,17 +127148,17 @@ export type CreateTrackerCompanyListData = {
             } | null;
             crunchbaseCategories?: {
                 anyOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 allOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 noneOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
@@ -129846,6 +130986,7 @@ export type CreateTrackerPersonListData = {
                 anyOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -129857,6 +130998,7 @@ export type CreateTrackerPersonListData = {
                 allOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -129868,6 +131010,7 @@ export type CreateTrackerPersonListData = {
                 noneOf?: Array<{
                     type: 'plain';
                     term: string;
+                    exact?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -130833,6 +131976,15 @@ export type CreateTrackerPersonListData = {
                     };
                     year: number;
                 }> | null;
+                noneOf?: Array<{
+                    list: 'fortune-500-usa' | 'forbes-global-2000';
+                    range: {
+                        low: number;
+                        high: number;
+                        name?: string | null;
+                    };
+                    year: number;
+                }> | null;
             } | null;
             jobPostingsV2?: {
                 anyOf?: Array<{
@@ -131639,17 +132791,17 @@ export type CreateTrackerPersonListData = {
             } | null;
             crunchbaseCategories?: {
                 anyOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 allOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
                 noneOf?: Array<{
-                    group: string;
+                    group?: string | null;
                     category: string;
                     type: 'category';
                 }> | null;
