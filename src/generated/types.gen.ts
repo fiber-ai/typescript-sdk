@@ -311,6 +311,10 @@ export type CompanyPostedWithKeyword = {
      */
     keywords?: Array<string> | null;
     /**
+     * Suppress posts containing any of these keywords. A post that matches an exclusion keyword never alerts, even when it also matches the rule's keywords. Omit for no exclusions.
+     */
+    excludedKeywords?: Array<string> | null;
+    /**
      * Only alert for posts with at least this many reactions. Omit for any.
      */
     minReactions?: number | null;
@@ -510,6 +514,26 @@ export type NewInvestor = {
      * Only alert when a new investor's name matches one of these (exact, case-insensitive). Omit for any new investor.
      */
     investorNames?: Array<string> | null;
+};
+
+/**
+ * Joined an accelerator
+ */
+export type JoinedAccelerator = {
+    /**
+     * Compare against a snapshot from approximately N days ago instead of the most recent prior snapshot. Omit for the default previous-snapshot comparison. Maximum 90 days.
+     */
+    lookbackDays?: number | null;
+    /**
+     * When true, this rule only fires via the fire-dummy endpoint and is skipped during normal pipeline runs.
+     */
+    isDummy?: boolean;
+    type: 'joined_accelerator';
+    entityType: 'company';
+    /**
+     * Only alert when the company joins one of these accelerators. Omit for any accelerator. There is no batch selection: companies always join the latest batch.
+     */
+    acceleratorNames?: Array<'a16z_speedrun' | 'accel_atoms' | 'ai2_incubator' | 'alchemist_accelerator' | 'alliance' | 'antler' | 'berkeley_skydeck' | 'founders_inc' | 'google_startups' | 'launch_accelerator' | 'neo' | 'pear_x' | 'plug_and_play' | 'sosv' | 'south_park_commons' | 'startx' | 'techstars' | 'the_mint' | 'ycombinator'> | null;
 };
 
 /**
@@ -941,6 +965,10 @@ export type CompanyPostedWithKeywordResponse = {
      */
     keywords?: Array<string> | null;
     /**
+     * Suppress posts containing any of these keywords. A post that matches an exclusion keyword never alerts, even when it also matches the rule's keywords. Omit for no exclusions.
+     */
+    excludedKeywords?: Array<string> | null;
+    /**
      * Only alert for posts with at least this many reactions. Omit for any.
      */
     minReactions?: number | null;
@@ -1183,6 +1211,30 @@ export type NewInvestorResponse = {
 };
 
 /**
+ * Joined an accelerator
+ */
+export type JoinedAcceleratorResponse = {
+    /**
+     * Compare against a snapshot from approximately N days ago instead of the most recent prior snapshot. Omit for the default previous-snapshot comparison. Maximum 90 days.
+     */
+    lookbackDays?: number | null;
+    /**
+     * When true, this rule only fires via the fire-dummy endpoint and is skipped during normal pipeline runs.
+     */
+    isDummy: boolean;
+    type: 'joined_accelerator';
+    entityType: 'company';
+    /**
+     * Only alert when the company joins one of these accelerators. Omit for any accelerator. There is no batch selection: companies always join the latest batch.
+     */
+    acceleratorNames?: Array<'a16z_speedrun' | 'accel_atoms' | 'ai2_incubator' | 'alchemist_accelerator' | 'alliance' | 'antler' | 'berkeley_skydeck' | 'founders_inc' | 'google_startups' | 'launch_accelerator' | 'neo' | 'pear_x' | 'plug_and_play' | 'sosv' | 'south_park_commons' | 'startx' | 'techstars' | 'the_mint' | 'ycombinator'> | null;
+    /**
+     * Unique rule ID. Use with removeRuleIds to delete a specific rule.
+     */
+    id: string;
+};
+
+/**
  * Recently hired with title
  */
 export type RecentlyHiredWithTitleResponse = {
@@ -1309,7 +1361,7 @@ export type TrackerSignalOutput = {
     /**
      * Array of objects describing what changed. Shape depends on signal type.
      */
-    changeData: Array<FundingStageChange | LocationDeltaChange | CompanyLocationChange | FundingRoundChange | JobPostingChange | NewsArticleChange | LinkedInPostChange | PromotionChange | DemotionChange | RoleTenureChange | CompanyTenureChange | LayoffEventChange | TrackedEmployeeChange | InvestorChange | AcquisitionChange | CertificationChange | DepartmentSizeChange | PersonReactionChange | PersonCommentChange | DepartedFromListChange | ScalarDeltaChange | PersonExperienceChange | TenureChange | NumericDeltaChange | NamedItemChange>;
+    changeData: Array<FundingStageChange | LocationDeltaChange | CompanyLocationChange | FundingRoundChange | JobPostingChange | NewsArticleChange | LinkedInPostChange | ContactUpdateChange | PromotionChange | DemotionChange | RoleTenureChange | CompanyTenureChange | LayoffEventChange | TrackedEmployeeChange | InvestorChange | AcquisitionChange | AcceleratorChange | CertificationChange | DepartmentSizeChange | PersonReactionChange | PersonCommentChange | DepartedFromListChange | ScalarDeltaChange | PersonExperienceChange | TenureChange | NumericDeltaChange | NamedItemChange>;
     /**
      * URLs providing proof or more information about this signal.
      */
@@ -1474,6 +1526,10 @@ export type JobPostingChange = {
      */
     postedAt?: string | null;
     /**
+     * When this posting was first detected as open. Can be later than postedAt when a posting becomes visible after it was published
+     */
+    firstDetectedAt?: string | null;
+    /**
      * Job posting status
      */
     status: 'active' | 'closed';
@@ -1536,25 +1592,83 @@ export type LinkedInPostChange = {
      */
     numShares?: number | null;
     /**
-     * Display name of the person who posted
+     * Display name of the author of the post. When the tracked person or company reposted someone else's post, this is the original author.
      */
     posterName?: string | null;
     /**
-     * LinkedIn slug of the poster (e.g. 'williamhgates')
+     * LinkedIn slug of the author of the post (e.g. 'williamhgates'). For a company author this can be the company's numeric LinkedIn id.
      */
     posterSlug?: string | null;
     /**
-     * Full LinkedIn profile URL of the poster
+     * Full LinkedIn URL of the author of the post. A company page URL when the author is a company.
      */
     posterUrl?: string | null;
     /**
-     * Profile picture URL of the poster
+     * Profile picture URL of the author of the post
      */
     posterProfilePicture?: string | null;
     /**
      * Keywords from your tracking rule that this post matched. Omitted for rules without keywords.
      */
     matchedKeywords?: Array<string> | null;
+    /**
+     * How the tracked person or company relates to this post. Null on signals created before repost detection was available.
+     */
+    postType?: 'original' | 'repost' | 'repost_with_commentary' | null;
+    /**
+     * The tracked person or company that reposted this post. Present only when the post was reposted without added commentary; the poster fields then describe the original author.
+     */
+    resharedBy?: LinkedInPostResharedBy | null;
+    /**
+     * The post being quoted. Present only when the tracked person or company reposted with their own commentary; the poster fields and caption then describe that commentary.
+     */
+    resharedPost?: LinkedInResharedPost | null;
+};
+
+export type LinkedInPostResharedBy = {
+    /**
+     * Display name of the tracked person or company that reposted the post
+     */
+    name?: string | null;
+    /**
+     * LinkedIn slug of the tracked person or company that reposted the post
+     */
+    linkedinSlug?: string | null;
+    /**
+     * Full LinkedIn URL of the tracked person or company that reposted the post
+     */
+    linkedinUrl?: string | null;
+};
+
+export type LinkedInResharedPost = {
+    /**
+     * URL to the post
+     */
+    postUrl?: string | null;
+    /**
+     * Post content
+     */
+    caption?: string | null;
+    /**
+     * ISO date when posted
+     */
+    postedAt?: string | null;
+    /**
+     * Display name of the author of the post. When the tracked person or company reposted someone else's post, this is the original author.
+     */
+    posterName?: string | null;
+    /**
+     * LinkedIn slug of the author of the post (e.g. 'williamhgates'). For a company author this can be the company's numeric LinkedIn id.
+     */
+    posterSlug?: string | null;
+    /**
+     * Full LinkedIn URL of the author of the post. A company page URL when the author is a company.
+     */
+    posterUrl?: string | null;
+    /**
+     * Profile picture URL of the author of the post
+     */
+    posterProfilePicture?: string | null;
 };
 
 export type PersonExperienceChange = {
@@ -1606,6 +1720,72 @@ export type PersonExperienceChange = {
      * Seniority level
      */
     seniority?: string | null;
+};
+
+export type ContactUpdateChange = {
+    /**
+     * LinkedIn company ID
+     */
+    linkedinCompanyId?: string | null;
+    /**
+     * Company name
+     */
+    companyName?: string | null;
+    /**
+     * Company LinkedIn URL
+     */
+    companyLinkedinUrl?: string | null;
+    /**
+     * LinkedIn company vanity slug
+     */
+    linkedinCompanySlug?: string | null;
+    /**
+     * Known company domains
+     */
+    companyDomains?: Array<string> | null;
+    /**
+     * Job title
+     */
+    title?: string | null;
+    /**
+     * Whether this is a current position
+     */
+    isCurrent?: boolean;
+    /**
+     * ISO start date
+     */
+    startDate?: string | null;
+    /**
+     * ISO end date
+     */
+    endDate?: string | null;
+    /**
+     * Position location
+     */
+    location?: string | null;
+    /**
+     * Employment type
+     */
+    employmentType?: string | null;
+    /**
+     * Seniority level
+     */
+    seniority?: string | null;
+    /**
+     * What triggered this update: a detected job change, or newly found contact info.
+     */
+    contactChangeKind: 'job_change' | 'new_contact_info';
+    /**
+     * Newly found work email addresses. On a job change item, only addresses at that item's company; addresses that can't be tied to a specific new position are delivered in a separate new contact info item. Null when none were found.
+     */
+    newEmails?: Array<RevealedEmail> | null;
+};
+
+export type RevealedEmail = {
+    /**
+     * Work email address
+     */
+    emailAddress: string;
 };
 
 export type PromotionChange = PersonExperienceChange & {
@@ -1762,6 +1942,21 @@ export type AcquisitionChange = {
      * ISO date of acquisition
      */
     acquisitionDate?: string | null;
+};
+
+export type AcceleratorChange = {
+    /**
+     * Name of the accelerator the company joined (e.g. "Y Combinator")
+     */
+    acceleratorName: string;
+    /**
+     * Batch or cohort the company went through, as labeled by the accelerator. Null when the accelerator does not publish one.
+     */
+    batch?: string | null;
+    /**
+     * Year of the batch. Null when unknown.
+     */
+    year?: number | null;
 };
 
 export type CertificationChange = {
@@ -2141,6 +2336,10 @@ export type PersonPostedWithKeyword = {
      */
     keywords?: Array<string> | null;
     /**
+     * Suppress posts containing any of these keywords. A post that matches an exclusion keyword never alerts, even when it also matches the rule's keywords. Omit for no exclusions.
+     */
+    excludedKeywords?: Array<string> | null;
+    /**
      * Only alert for posts with at least this many reactions. Omit for any.
      */
     minReactions?: number | null;
@@ -2491,6 +2690,74 @@ export type PersonTenureMilestone = {
 };
 
 /**
+ * Contact change
+ */
+export type PersonContactChange = {
+    /**
+     * Compare against a snapshot from approximately N days ago instead of the most recent prior snapshot. Omit for the default previous-snapshot comparison. Maximum 90 days.
+     */
+    lookbackDays?: number | null;
+    /**
+     * When true, this rule only fires via the fire-dummy endpoint and is skipped during normal pipeline runs.
+     */
+    isDummy?: boolean;
+    entityType: 'person';
+    /**
+     * Only alert if they moved TO one of these companies (domains or slugs). Omit for any.
+     */
+    toCompanies?: Array<string> | null;
+    /**
+     * Only alert if they moved FROM one of these companies. Omit for any.
+     */
+    fromCompanies?: Array<string> | null;
+    /**
+     * Only alert if their title at the new company contains one of these keywords.
+     */
+    toTitleKeywords?: Array<string> | null;
+    /**
+     * Only alert if their seniority at the new company is one of these levels.
+     */
+    toSeniorityLevels?: Array<'Internship' | 'Entry level' | 'Associate' | 'Mid-Senior level' | 'Director' | 'Executive'> | null;
+    /**
+     * Only alert for these employment types at the new company. Omit for any.
+     */
+    toEmploymentTypes?: Array<'Full-time' | 'Part-time' | 'Contract' | 'Internship' | 'Temporary' | 'Volunteer'> | null;
+    type: 'person_contact_change';
+};
+
+/**
+ * Added a role
+ */
+export type PersonAddedRole = {
+    /**
+     * Compare against a snapshot from approximately N days ago instead of the most recent prior snapshot. Omit for the default previous-snapshot comparison. Maximum 90 days.
+     */
+    lookbackDays?: number | null;
+    /**
+     * When true, this rule only fires via the fire-dummy endpoint and is skipped during normal pipeline runs.
+     */
+    isDummy?: boolean;
+    entityType: 'person';
+    /**
+     * Only alert if the new role is at one of these companies (domains or slugs). Omit for any.
+     */
+    toCompanies?: Array<string> | null;
+    /**
+     * Only alert if the new role's title contains one of these keywords.
+     */
+    toTitleKeywords?: Array<string> | null;
+    /**
+     * Only alert if the new role's seniority is one of these levels.
+     */
+    toSeniorityLevels?: Array<'Internship' | 'Entry level' | 'Associate' | 'Mid-Senior level' | 'Director' | 'Executive'> | null;
+    /**
+     * Only alert for these employment types on the new role. Omit for any.
+     */
+    toEmploymentTypes?: Array<'Full-time' | 'Part-time' | 'Contract' | 'Internship' | 'Temporary' | 'Volunteer'> | null;
+    type: 'person_added_role';
+};
+
+/**
  * Person changed company
  */
 export type PersonChangedCompanyResponse = {
@@ -2752,6 +3019,10 @@ export type PersonPostedWithKeywordResponse = {
      * Alert for posts matching these keywords.
      */
     keywords?: Array<string> | null;
+    /**
+     * Suppress posts containing any of these keywords. A post that matches an exclusion keyword never alerts, even when it also matches the rule's keywords. Omit for no exclusions.
+     */
+    excludedKeywords?: Array<string> | null;
     /**
      * Only alert for posts with at least this many reactions. Omit for any.
      */
@@ -3168,6 +3439,82 @@ export type PersonTenureMilestoneResponse = {
      * Alert when the person has been at their current company for at least this many months, regardless of role changes or promotions.
      */
     thresholdMonths: number;
+    /**
+     * Unique rule ID. Use with removeRuleIds to delete a specific rule.
+     */
+    id: string;
+};
+
+/**
+ * Contact change
+ */
+export type PersonContactChangeResponse = {
+    /**
+     * Compare against a snapshot from approximately N days ago instead of the most recent prior snapshot. Omit for the default previous-snapshot comparison. Maximum 90 days.
+     */
+    lookbackDays?: number | null;
+    /**
+     * When true, this rule only fires via the fire-dummy endpoint and is skipped during normal pipeline runs.
+     */
+    isDummy: boolean;
+    entityType: 'person';
+    /**
+     * Only alert if they moved TO one of these companies (domains or slugs). Omit for any.
+     */
+    toCompanies?: Array<string> | null;
+    /**
+     * Only alert if they moved FROM one of these companies. Omit for any.
+     */
+    fromCompanies?: Array<string> | null;
+    /**
+     * Only alert if their title at the new company contains one of these keywords.
+     */
+    toTitleKeywords?: Array<string> | null;
+    /**
+     * Only alert if their seniority at the new company is one of these levels.
+     */
+    toSeniorityLevels?: Array<'Internship' | 'Entry level' | 'Associate' | 'Mid-Senior level' | 'Director' | 'Executive'> | null;
+    /**
+     * Only alert for these employment types at the new company. Omit for any.
+     */
+    toEmploymentTypes?: Array<'Full-time' | 'Part-time' | 'Contract' | 'Internship' | 'Temporary' | 'Volunteer'> | null;
+    type: 'person_contact_change';
+    /**
+     * Unique rule ID. Use with removeRuleIds to delete a specific rule.
+     */
+    id: string;
+};
+
+/**
+ * Added a role
+ */
+export type PersonAddedRoleResponse = {
+    /**
+     * Compare against a snapshot from approximately N days ago instead of the most recent prior snapshot. Omit for the default previous-snapshot comparison. Maximum 90 days.
+     */
+    lookbackDays?: number | null;
+    /**
+     * When true, this rule only fires via the fire-dummy endpoint and is skipped during normal pipeline runs.
+     */
+    isDummy: boolean;
+    entityType: 'person';
+    /**
+     * Only alert if the new role is at one of these companies (domains or slugs). Omit for any.
+     */
+    toCompanies?: Array<string> | null;
+    /**
+     * Only alert if the new role's title contains one of these keywords.
+     */
+    toTitleKeywords?: Array<string> | null;
+    /**
+     * Only alert if the new role's seniority is one of these levels.
+     */
+    toSeniorityLevels?: Array<'Internship' | 'Entry level' | 'Associate' | 'Mid-Senior level' | 'Director' | 'Executive'> | null;
+    /**
+     * Only alert for these employment types on the new role. Omit for any.
+     */
+    toEmploymentTypes?: Array<'Full-time' | 'Part-time' | 'Contract' | 'Internship' | 'Temporary' | 'Volunteer'> | null;
+    type: 'person_added_role';
     /**
      * Unique rule ID. Use with removeRuleIds to delete a specific rule.
      */
@@ -4158,6 +4505,42 @@ export type GetOrgCreditsResponses = {
                     }>;
                 };
                 companyReviews: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                hemLookup: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                githubRepoContributors: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                githubOrgContributors: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                githubUserProfile: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                githubUserRepoActivity: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                githubRepoSearch: {
                     levels: Array<{
                         limit?: number | null;
                         centiCreditCost: number;
@@ -23942,7 +24325,7 @@ export type GetFlightRegionsResponses = {
                  */
                 airportIataCodes: Array<string>;
                 /**
-                 * Stable identifier for this metro. Also accepted as `departureAirports` / `arrivalAirports`.
+                 * Stable location identifier (Freebase ID) for this metro, beginning with '/m/' or '/g/' (e.g. '/m/02_286'). Also accepted as `departureAirports` / `arrivalAirports`.
                  */
                 freebaseId: string;
             }>;
@@ -27138,6 +27521,16 @@ export type UpdateAudienceSearchParamsData = {
                 lowerBoundExclusive?: number | null;
                 upperBoundInclusive?: number | null;
             } | null;
+            employeeCountRanges?: {
+                anyOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+            } | null;
             keywords?: {
                 containsAll?: Array<string> | null;
                 containsAny?: Array<string> | null;
@@ -28413,6 +28806,16 @@ export type UpdateAudienceSearchParamsData = {
                 lowerBound?: number | null;
                 upperBound?: number | null;
             } | null;
+            revenueRangesUSD?: {
+                anyOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+            } | null;
             employeeTrendsV2?: {
                 obeysAll?: Array<{
                     type: 'percent_change';
@@ -28465,6 +28868,9 @@ export type UpdateAudienceSearchParamsData = {
                 allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
             } | null;
+            /**
+             * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+             */
             linkedinIndustries?: {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
@@ -28592,6 +28998,10 @@ export type UpdateAudienceSearchParamsData = {
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
                 }> | null;
+            } | null;
+            jobFunction?: {
+                anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
             } | null;
             exactProfile?: {
                 anyOf?: Array<{
@@ -29177,6 +29587,8 @@ export type UpdateAudienceSearchParamsData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -29189,6 +29601,8 @@ export type UpdateAudienceSearchParamsData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -29201,6 +29615,8 @@ export type UpdateAudienceSearchParamsData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -29209,6 +29625,10 @@ export type UpdateAudienceSearchParamsData = {
                     type: 'cartesian';
                     keywordArrays: Array<Array<string>>;
                 }> | null;
+            } | null;
+            seniority?: {
+                anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
             } | null;
             openToWork?: boolean | null;
             isHiring?: boolean | null;
@@ -31433,6 +31853,16 @@ export type CompanySearchData = {
                 lowerBoundExclusive?: number | null;
                 upperBoundInclusive?: number | null;
             } | null;
+            employeeCountRanges?: {
+                anyOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+            } | null;
             keywords?: {
                 containsAll?: Array<string> | null;
                 containsAny?: Array<string> | null;
@@ -32708,6 +33138,16 @@ export type CompanySearchData = {
                 lowerBound?: number | null;
                 upperBound?: number | null;
             } | null;
+            revenueRangesUSD?: {
+                anyOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+            } | null;
             employeeTrendsV2?: {
                 obeysAll?: Array<{
                     type: 'percent_change';
@@ -32760,6 +33200,9 @@ export type CompanySearchData = {
                 allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
             } | null;
+            /**
+             * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+             */
             linkedinIndustries?: {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
@@ -35218,6 +35661,16 @@ export type CompanyCountData = {
                 lowerBoundExclusive?: number | null;
                 upperBoundInclusive?: number | null;
             } | null;
+            employeeCountRanges?: {
+                anyOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+            } | null;
             keywords?: {
                 containsAll?: Array<string> | null;
                 containsAny?: Array<string> | null;
@@ -36493,6 +36946,16 @@ export type CompanyCountData = {
                 lowerBound?: number | null;
                 upperBound?: number | null;
             } | null;
+            revenueRangesUSD?: {
+                anyOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+            } | null;
             employeeTrendsV2?: {
                 obeysAll?: Array<{
                     type: 'percent_change';
@@ -36545,6 +37008,9 @@ export type CompanyCountData = {
                 allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
             } | null;
+            /**
+             * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+             */
             linkedinIndustries?: {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
@@ -37870,6 +38336,10 @@ export type PeopleSearchData = {
                     keywords?: Array<string>;
                 }> | null;
             } | null;
+            jobFunction?: {
+                anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+            } | null;
             exactProfile?: {
                 anyOf?: Array<{
                     profile_id?: string | null;
@@ -38454,6 +38924,8 @@ export type PeopleSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -38466,6 +38938,8 @@ export type PeopleSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -38478,6 +38952,8 @@ export type PeopleSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -38486,6 +38962,10 @@ export type PeopleSearchData = {
                     type: 'cartesian';
                     keywordArrays: Array<Array<string>>;
                 }> | null;
+            } | null;
+            seniority?: {
+                anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
             } | null;
             openToWork?: boolean | null;
             isHiring?: boolean | null;
@@ -39505,7 +39985,7 @@ export type PeopleSearchResponses = {
              */
             estimatedCount?: number | null;
             /**
-             * The pagination cursor for the next page. Provide this in the next request to continue paginating.
+             * The pagination cursor for the next page. Provide this in the next request to continue paginating. Pages of one search are served from a fixed snapshot of results, so rows created while you paginate may not appear until you start a new search.
              */
             nextCursor?: string | null;
         };
@@ -39755,6 +40235,10 @@ export type PeopleSearchCountData = {
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
                 }> | null;
+            } | null;
+            jobFunction?: {
+                anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
             } | null;
             exactProfile?: {
                 anyOf?: Array<{
@@ -40340,6 +40824,8 @@ export type PeopleSearchCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -40352,6 +40838,8 @@ export type PeopleSearchCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -40364,6 +40852,8 @@ export type PeopleSearchCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -40372,6 +40862,10 @@ export type PeopleSearchCountData = {
                     type: 'cartesian';
                     keywordArrays: Array<Array<string>>;
                 }> | null;
+            } | null;
+            seniority?: {
+                anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
             } | null;
             openToWork?: boolean | null;
             isHiring?: boolean | null;
@@ -41339,6 +41833,16 @@ export type PaginatedCombinedSearchData = {
                 employeeCountV2?: {
                     lowerBoundExclusive?: number | null;
                     upperBoundInclusive?: number | null;
+                } | null;
+                employeeCountRanges?: {
+                    anyOf?: Array<{
+                        lowerBoundExclusive?: number | null;
+                        upperBoundInclusive?: number | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        lowerBoundExclusive?: number | null;
+                        upperBoundInclusive?: number | null;
+                    }> | null;
                 } | null;
                 keywords?: {
                     containsAll?: Array<string> | null;
@@ -42615,6 +43119,16 @@ export type PaginatedCombinedSearchData = {
                     lowerBound?: number | null;
                     upperBound?: number | null;
                 } | null;
+                revenueRangesUSD?: {
+                    anyOf?: Array<{
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    }> | null;
+                } | null;
                 employeeTrendsV2?: {
                     obeysAll?: Array<{
                         type: 'percent_change';
@@ -42667,6 +43181,9 @@ export type PaginatedCombinedSearchData = {
                     allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                     noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 } | null;
+                /**
+                 * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+                 */
                 linkedinIndustries?: {
                     anyOf?: Array<string> | null;
                     noneOf?: Array<string> | null;
@@ -42805,6 +43322,10 @@ export type PaginatedCombinedSearchData = {
                         groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                         keywords?: Array<string>;
                     }> | null;
+                } | null;
+                jobFunction?: {
+                    anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                    noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                 } | null;
                 exactProfile?: {
                     anyOf?: Array<{
@@ -43390,6 +43911,8 @@ export type PaginatedCombinedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -43402,6 +43925,8 @@ export type PaginatedCombinedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -43414,6 +43939,8 @@ export type PaginatedCombinedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -43422,6 +43949,10 @@ export type PaginatedCombinedSearchData = {
                         type: 'cartesian';
                         keywordArrays: Array<Array<string>>;
                     }> | null;
+                } | null;
+                seniority?: {
+                    anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                    noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
                 } | null;
                 openToWork?: boolean | null;
                 isHiring?: boolean | null;
@@ -47578,6 +48109,16 @@ export type CombinedSearchCountData = {
                 lowerBoundExclusive?: number | null;
                 upperBoundInclusive?: number | null;
             } | null;
+            employeeCountRanges?: {
+                anyOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+            } | null;
             keywords?: {
                 containsAll?: Array<string> | null;
                 containsAny?: Array<string> | null;
@@ -48853,6 +49394,16 @@ export type CombinedSearchCountData = {
                 lowerBound?: number | null;
                 upperBound?: number | null;
             } | null;
+            revenueRangesUSD?: {
+                anyOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+            } | null;
             employeeTrendsV2?: {
                 obeysAll?: Array<{
                     type: 'percent_change';
@@ -48905,6 +49456,9 @@ export type CombinedSearchCountData = {
                 allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
             } | null;
+            /**
+             * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+             */
             linkedinIndustries?: {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
@@ -49032,6 +49586,10 @@ export type CombinedSearchCountData = {
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
                 }> | null;
+            } | null;
+            jobFunction?: {
+                anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
             } | null;
             exactProfile?: {
                 anyOf?: Array<{
@@ -49617,6 +50175,8 @@ export type CombinedSearchCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -49629,6 +50189,8 @@ export type CombinedSearchCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -49641,6 +50203,8 @@ export type CombinedSearchCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -49649,6 +50213,10 @@ export type CombinedSearchCountData = {
                     type: 'cartesian';
                     keywordArrays: Array<Array<string>>;
                 }> | null;
+            } | null;
+            seniority?: {
+                anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
             } | null;
             openToWork?: boolean | null;
             isHiring?: boolean | null;
@@ -50402,6 +50970,10 @@ export type CombinedSearchCountResponses = {
         output: {
             numCompanies: number;
             numProfiles: number;
+            /**
+             * True when numProfiles is a statistical estimate (much faster, targeted at ±5% relative accuracy); false when the count is exact. Pass getFastEstimate: false to always get an exact count.
+             */
+            isEstimate: boolean;
         };
         chargeInfo: {
             method: 'charged-now';
@@ -54013,6 +54585,10 @@ export type StealthFoundersSearchData = {
                     keywords?: Array<string>;
                 }> | null;
             } | null;
+            jobFunction?: {
+                anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+            } | null;
             exactProfileV2?: {
                 anyOf?: Array<{
                     identifier: 'linkedin-slug';
@@ -54482,6 +55058,8 @@ export type StealthFoundersSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -54494,6 +55072,8 @@ export type StealthFoundersSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -54506,6 +55086,8 @@ export type StealthFoundersSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -54514,6 +55096,10 @@ export type StealthFoundersSearchData = {
                     type: 'cartesian';
                     keywordArrays: Array<Array<string>>;
                 }> | null;
+            } | null;
+            seniority?: {
+                anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
             } | null;
             openToWork?: boolean | null;
             isHiring?: boolean | null;
@@ -55733,6 +56319,10 @@ export type StealthFoundersCountData = {
                     keywords?: Array<string>;
                 }> | null;
             } | null;
+            jobFunction?: {
+                anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+            } | null;
             exactProfileV2?: {
                 anyOf?: Array<{
                     identifier: 'linkedin-slug';
@@ -56202,6 +56792,8 @@ export type StealthFoundersCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -56214,6 +56806,8 @@ export type StealthFoundersCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -56226,6 +56820,8 @@ export type StealthFoundersCountData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -56234,6 +56830,10 @@ export type StealthFoundersCountData = {
                     type: 'cartesian';
                     keywordArrays: Array<Array<string>>;
                 }> | null;
+            } | null;
+            seniority?: {
+                anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
             } | null;
             openToWork?: boolean | null;
             isHiring?: boolean | null;
@@ -64115,9 +64715,9 @@ export type ProfilePostsLiveFetchResponses = {
                     reactionsByType?: Array<{
                         numReactions?: number | null;
                         /**
-                         * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                         * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                          */
-                        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                     }> | null;
                 } | null;
                 imageUrls?: Array<string> | null;
@@ -64147,9 +64747,9 @@ export type ProfilePostsLiveFetchResponses = {
                         reactionsByType?: Array<{
                             numReactions?: number | null;
                             /**
-                             * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                             * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                              */
-                            reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                            reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                         }> | null;
                     } | null;
                     imageUrls?: Array<string> | null;
@@ -64160,6 +64760,15 @@ export type ProfilePostsLiveFetchResponses = {
                     } | null;
                     caption?: string | null;
                     subText?: string | null;
+                } | null;
+                /**
+                 * The profile or company page that reposted this post. Null when the post was published by the feed's owner rather than reposted.
+                 */
+                resharedBy?: {
+                    linkedinUrl?: string | null;
+                    name?: string | null;
+                    profilePicture?: string | null;
+                    linkedinSlug?: string | null;
                 } | null;
             }>;
             cursor?: string | null;
@@ -64459,9 +65068,9 @@ export type CompanyPostsLiveFetchResponses = {
                     reactionsByType?: Array<{
                         numReactions?: number | null;
                         /**
-                         * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                         * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                          */
-                        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                     }> | null;
                 } | null;
                 imageUrls?: Array<string> | null;
@@ -64491,9 +65100,9 @@ export type CompanyPostsLiveFetchResponses = {
                         reactionsByType?: Array<{
                             numReactions?: number | null;
                             /**
-                             * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                             * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                              */
-                            reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                            reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                         }> | null;
                     } | null;
                     imageUrls?: Array<string> | null;
@@ -64504,6 +65113,15 @@ export type CompanyPostsLiveFetchResponses = {
                     } | null;
                     caption?: string | null;
                     subText?: string | null;
+                } | null;
+                /**
+                 * The profile or company page that reposted this post. Null when the post was published by the feed's owner rather than reposted.
+                 */
+                resharedBy?: {
+                    linkedinUrl?: string | null;
+                    name?: string | null;
+                    profilePicture?: string | null;
+                    linkedinSlug?: string | null;
                 } | null;
             }>;
             cursor?: string | null;
@@ -64801,9 +65419,9 @@ export type PostCommentsLiveFetchResponses = {
                 reactionsByType?: Array<{
                     numReactions?: number | null;
                     /**
-                     * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                     * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                      */
-                    reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                    reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                 }> | null;
                 createdAt?: string | null;
                 taggedUsers?: Array<{
@@ -64827,9 +65445,9 @@ export type PostCommentsLiveFetchResponses = {
                     reactionsByType?: Array<{
                         numReactions?: number | null;
                         /**
-                         * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                         * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                          */
-                        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                     }> | null;
                     createdAt?: string | null;
                     taggedUsers?: Array<{
@@ -64982,7 +65600,7 @@ export type PostReactionsLiveFetchData = {
         /**
          * Type of reaction to fetch. If null, all reactions will be fetched.
          */
-        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
         /**
          * Pagination cursor for fetching additional pages of posts
          */
@@ -65126,9 +65744,9 @@ export type PostReactionsLiveFetchResponses = {
         output: {
             data: Array<{
                 /**
-                 * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                 * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                  */
-                reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                 reactor?: {
                     userId?: number | null;
                     entityUrn?: string | null;
@@ -65718,9 +66336,9 @@ export type ProfileReactionsLiveFetchResponses = {
             reactions?: Array<{
                 reactionId?: string | null;
                 /**
-                 * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                 * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                  */
-                type?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                type?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                 target?: string | null;
                 reactedAgo?: string | null;
                 reactedAt?: string | null;
@@ -65882,11 +66500,11 @@ export type PostSearchByKeywordsData = {
          */
         apiKey: string;
         /**
-         * Keywords to search for in LinkedIn posts (comma-separated)
+         * Boolean keyword query for LinkedIn posts. See the endpoint description for syntax.
          */
         keywords: string;
         /**
-         * Filter by post age. Options: Day, Week, Month, Quarter, HalfYear, Year. Defaults to all time if omitted.
+         * Filter posts by how recently they were published. Omit to search posts from any time. Windows longer than a month can return fewer posts per page.
          */
         recency?: 'Day' | 'Week' | 'Month' | 'Quarter' | 'HalfYear' | 'Year' | null;
         /**
@@ -66072,9 +66690,9 @@ export type PostSearchByKeywordsResponses = {
                     reactionsByType?: Array<{
                         numReactions?: number | null;
                         /**
-                         * One of LinkedIn's reaction types. These match the tooltips on each of LinkedIn's six reaction buttons; for instance, 'Like' is the blue thumbs-up.
+                         * One of LinkedIn's reaction types. These match the tooltips on LinkedIn's reaction buttons; for instance, 'Like' is the blue thumbs-up. CURIOUS is LinkedIn's retired 'Curious' reaction, still present on older posts.
                          */
-                        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | null;
+                        reactionType?: 'LIKE' | 'LOVE' | 'INSIGHTFUL' | 'CELEBRATE' | 'SUPPORT' | 'FUNNY' | 'CURIOUS' | null;
                     }> | null;
                 } | null;
             }>;
@@ -69061,17 +69679,21 @@ export type GoogleMapsSearchData = {
          */
         name?: string | null;
         /**
-         * The search query to run on Google Maps. Do not include a location info here. Examples: 'dominos pizza', 'real estate agent'.
+         * The search query to run on Google Maps. Do not include a location info here. Examples: 'dominos pizza', 'real estate agent'. Omit this when you pass a Google Maps URL instead.
          */
-        query: string;
+        query?: string | null;
+        /**
+         * A link to a Google Maps search, taken from the address bar after searching. The search term and the area to search are read from the link. The term is used exactly as it appears in the link, so it may name a location even though you should leave locations out of 'query' — the area to search comes from the link, not from the term. Omit this when you pass a query and strategy instead.
+         */
+        googleMapsUrl?: string | null;
         /**
          * The maximum number of Google Maps results to return.
          */
         maxResults?: number;
         /**
-         * The strategy for searching places.
+         * The strategy for searching places. Omit this when you pass a Google Maps URL instead.
          */
-        strategy: {
+        strategy?: {
             /**
              * Does a broad search across all cities in the United States. Not as exhaustive as, for example, a city-specific search.
              */
@@ -69143,7 +69765,7 @@ export type GoogleMapsSearchData = {
             };
             smallestCityTierID?: 'mega' | 'major' | 'large' | 'medium' | 'minor' | 'small' | 'tiny' | null;
             largestCityTierID?: 'mega' | 'major' | 'large' | 'medium' | 'minor' | 'small' | 'tiny' | null;
-        };
+        } | null;
     };
     path?: never;
     query?: never;
@@ -69577,7 +70199,7 @@ export type KitchenSinkProfileData = {
          */
         fuzzySearch?: boolean | null;
         /**
-         * Controls how thoroughly to search. Higher values recover more matches at the cost of additional latency; lower values return faster. Omit to use the recommended default.
+         * Controls how thoroughly to search. Higher values spend more time searching to recover more matches; lower values return faster. Omit to use the recommended default.
          */
         thoroughness?: 'low' | 'high' | null;
         /**
@@ -72624,7 +73246,7 @@ export type KitchenSinkBulkProfileData = {
          */
         fuzzySearch?: boolean | null;
         /**
-         * Controls how thoroughly to search across all profiles in the batch. Higher values recover more matches at the cost of additional per-row latency; lower values return faster. Omit to use the recommended default.
+         * Controls how thoroughly to search. Higher values spend more time searching to recover more matches; lower values return faster. Omit to use the recommended default.
          */
         thoroughness?: 'low' | 'high' | null;
         /**
@@ -77571,6 +78193,16 @@ export type NlpSearchParseResponses = {
                         lowerBoundExclusive?: number | null;
                         upperBoundInclusive?: number | null;
                     } | null;
+                    employeeCountRanges?: {
+                        anyOf?: Array<{
+                            lowerBoundExclusive?: number | null;
+                            upperBoundInclusive?: number | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            lowerBoundExclusive?: number | null;
+                            upperBoundInclusive?: number | null;
+                        }> | null;
+                    } | null;
                     keywords?: {
                         containsAll?: Array<string> | null;
                         containsAny?: Array<string> | null;
@@ -78846,6 +79478,16 @@ export type NlpSearchParseResponses = {
                         lowerBound?: number | null;
                         upperBound?: number | null;
                     } | null;
+                    revenueRangesUSD?: {
+                        anyOf?: Array<{
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        }> | null;
+                    } | null;
                     employeeTrendsV2?: {
                         obeysAll?: Array<{
                             type: 'percent_change';
@@ -78898,6 +79540,9 @@ export type NlpSearchParseResponses = {
                         allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                         noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                     } | null;
+                    /**
+                     * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+                     */
                     linkedinIndustries?: {
                         anyOf?: Array<string> | null;
                         noneOf?: Array<string> | null;
@@ -79025,6 +79670,10 @@ export type NlpSearchParseResponses = {
                             groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                             keywords: Array<string>;
                         }> | null;
+                    } | null;
+                    jobFunction?: {
+                        anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     } | null;
                     exactProfile?: {
                         anyOf?: Array<{
@@ -79610,6 +80259,8 @@ export type NlpSearchParseResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -79622,6 +80273,8 @@ export type NlpSearchParseResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -79634,6 +80287,8 @@ export type NlpSearchParseResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -79642,6 +80297,10 @@ export type NlpSearchParseResponses = {
                             type: 'cartesian';
                             keywordArrays: Array<Array<string>>;
                         }> | null;
+                    } | null;
+                    seniority?: {
+                        anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                        noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
                     } | null;
                     openToWork?: boolean | null;
                     isHiring?: boolean | null;
@@ -80687,6 +81346,16 @@ export type SlushieRunResponses = {
                         lowerBoundExclusive?: number | null;
                         upperBoundInclusive?: number | null;
                     } | null;
+                    employeeCountRanges?: {
+                        anyOf?: Array<{
+                            lowerBoundExclusive?: number | null;
+                            upperBoundInclusive?: number | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            lowerBoundExclusive?: number | null;
+                            upperBoundInclusive?: number | null;
+                        }> | null;
+                    } | null;
                     keywords?: {
                         containsAll?: Array<string> | null;
                         containsAny?: Array<string> | null;
@@ -81962,6 +82631,16 @@ export type SlushieRunResponses = {
                         lowerBound?: number | null;
                         upperBound?: number | null;
                     } | null;
+                    revenueRangesUSD?: {
+                        anyOf?: Array<{
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        }> | null;
+                    } | null;
                     employeeTrendsV2?: {
                         obeysAll?: Array<{
                             type: 'percent_change';
@@ -82014,6 +82693,9 @@ export type SlushieRunResponses = {
                         allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                         noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                     } | null;
+                    /**
+                     * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+                     */
                     linkedinIndustries?: {
                         anyOf?: Array<string> | null;
                         noneOf?: Array<string> | null;
@@ -82141,6 +82823,10 @@ export type SlushieRunResponses = {
                             groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                             keywords: Array<string>;
                         }> | null;
+                    } | null;
+                    jobFunction?: {
+                        anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     } | null;
                     exactProfile?: {
                         anyOf?: Array<{
@@ -82726,6 +83412,8 @@ export type SlushieRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -82738,6 +83426,8 @@ export type SlushieRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -82750,6 +83440,8 @@ export type SlushieRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -82758,6 +83450,10 @@ export type SlushieRunResponses = {
                             type: 'cartesian';
                             keywordArrays: Array<Array<string>>;
                         }> | null;
+                    } | null;
+                    seniority?: {
+                        anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                        noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
                     } | null;
                     openToWork?: boolean | null;
                     isHiring?: boolean | null;
@@ -86009,6 +86705,16 @@ export type CreateSavedSearchData = {
                     lowerBoundExclusive?: number | null;
                     upperBoundInclusive?: number | null;
                 } | null;
+                employeeCountRanges?: {
+                    anyOf?: Array<{
+                        lowerBoundExclusive?: number | null;
+                        upperBoundInclusive?: number | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        lowerBoundExclusive?: number | null;
+                        upperBoundInclusive?: number | null;
+                    }> | null;
+                } | null;
                 keywords?: {
                     containsAll?: Array<string> | null;
                     containsAny?: Array<string> | null;
@@ -87284,6 +87990,16 @@ export type CreateSavedSearchData = {
                     lowerBound?: number | null;
                     upperBound?: number | null;
                 } | null;
+                revenueRangesUSD?: {
+                    anyOf?: Array<{
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    }> | null;
+                } | null;
                 employeeTrendsV2?: {
                     obeysAll?: Array<{
                         type: 'percent_change';
@@ -87336,6 +88052,9 @@ export type CreateSavedSearchData = {
                     allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                     noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 } | null;
+                /**
+                 * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+                 */
                 linkedinIndustries?: {
                     anyOf?: Array<string> | null;
                     noneOf?: Array<string> | null;
@@ -87467,6 +88186,10 @@ export type CreateSavedSearchData = {
                         groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                         keywords?: Array<string>;
                     }> | null;
+                } | null;
+                jobFunction?: {
+                    anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                    noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                 } | null;
                 exactProfile?: {
                     anyOf?: Array<{
@@ -88052,6 +88775,8 @@ export type CreateSavedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -88064,6 +88789,8 @@ export type CreateSavedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -88076,6 +88803,8 @@ export type CreateSavedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -88084,6 +88813,10 @@ export type CreateSavedSearchData = {
                         type: 'cartesian';
                         keywordArrays: Array<Array<string>>;
                     }> | null;
+                } | null;
+                seniority?: {
+                    anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                    noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
                 } | null;
                 openToWork?: boolean | null;
                 isHiring?: boolean | null;
@@ -88754,6 +89487,16 @@ export type CreateSavedSearchData = {
                     lowerBoundExclusive?: number | null;
                     upperBoundInclusive?: number | null;
                 } | null;
+                employeeCountRanges?: {
+                    anyOf?: Array<{
+                        lowerBoundExclusive?: number | null;
+                        upperBoundInclusive?: number | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        lowerBoundExclusive?: number | null;
+                        upperBoundInclusive?: number | null;
+                    }> | null;
+                } | null;
                 keywords?: {
                     containsAll?: Array<string> | null;
                     containsAny?: Array<string> | null;
@@ -90029,6 +90772,16 @@ export type CreateSavedSearchData = {
                     lowerBound?: number | null;
                     upperBound?: number | null;
                 } | null;
+                revenueRangesUSD?: {
+                    anyOf?: Array<{
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    }> | null;
+                } | null;
                 employeeTrendsV2?: {
                     obeysAll?: Array<{
                         type: 'percent_change';
@@ -90081,6 +90834,9 @@ export type CreateSavedSearchData = {
                     allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                     noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 } | null;
+                /**
+                 * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+                 */
                 linkedinIndustries?: {
                     anyOf?: Array<string> | null;
                     noneOf?: Array<string> | null;
@@ -90217,6 +90973,10 @@ export type CreateSavedSearchData = {
                         groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                         keywords?: Array<string>;
                     }> | null;
+                } | null;
+                jobFunction?: {
+                    anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                    noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                 } | null;
                 exactProfile?: {
                     anyOf?: Array<{
@@ -90802,6 +91562,8 @@ export type CreateSavedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -90814,6 +91576,8 @@ export type CreateSavedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -90826,6 +91590,8 @@ export type CreateSavedSearchData = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -90834,6 +91600,10 @@ export type CreateSavedSearchData = {
                         type: 'cartesian';
                         keywordArrays: Array<Array<string>>;
                     }> | null;
+                } | null;
+                seniority?: {
+                    anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                    noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
                 } | null;
                 openToWork?: boolean | null;
                 isHiring?: boolean | null;
@@ -91950,6 +92720,16 @@ export type GetSavedSearchResponses = {
                     lowerBoundExclusive?: number | null;
                     upperBoundInclusive?: number | null;
                 } | null;
+                employeeCountRanges?: {
+                    anyOf?: Array<{
+                        lowerBoundExclusive?: number | null;
+                        upperBoundInclusive?: number | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        lowerBoundExclusive?: number | null;
+                        upperBoundInclusive?: number | null;
+                    }> | null;
+                } | null;
                 keywords?: {
                     containsAll?: Array<string> | null;
                     containsAny?: Array<string> | null;
@@ -93225,6 +94005,16 @@ export type GetSavedSearchResponses = {
                     lowerBound?: number | null;
                     upperBound?: number | null;
                 } | null;
+                revenueRangesUSD?: {
+                    anyOf?: Array<{
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    }> | null;
+                    noneOf?: Array<{
+                        lowerBound?: number | null;
+                        upperBound?: number | null;
+                    }> | null;
+                } | null;
                 employeeTrendsV2?: {
                     obeysAll?: Array<{
                         type: 'percent_change';
@@ -93277,6 +94067,9 @@ export type GetSavedSearchResponses = {
                     allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                     noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 } | null;
+                /**
+                 * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+                 */
                 linkedinIndustries?: {
                     anyOf?: Array<string> | null;
                     noneOf?: Array<string> | null;
@@ -93408,6 +94201,10 @@ export type GetSavedSearchResponses = {
                         groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                         keywords: Array<string>;
                     }> | null;
+                } | null;
+                jobFunction?: {
+                    anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                    noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                 } | null;
                 exactProfile?: {
                     anyOf?: Array<{
@@ -93993,6 +94790,8 @@ export type GetSavedSearchResponses = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -94005,6 +94804,8 @@ export type GetSavedSearchResponses = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -94017,6 +94818,8 @@ export type GetSavedSearchResponses = {
                         type: 'plain';
                         term: string;
                         exact?: boolean | null;
+                        mode?: 'normal' | 'prefix' | 'phrase' | null;
+                        stemming?: boolean | null;
                     } | {
                         type: 'functional';
                         keywords?: Array<string> | null;
@@ -94025,6 +94828,10 @@ export type GetSavedSearchResponses = {
                         type: 'cartesian';
                         keywordArrays: Array<Array<string>>;
                     }> | null;
+                } | null;
+                seniority?: {
+                    anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                    noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
                 } | null;
                 openToWork?: boolean | null;
                 isHiring?: boolean | null;
@@ -95036,6 +95843,16 @@ export type GetSavedSearchRunResponses = {
                     employeeCountV2?: {
                         lowerBoundExclusive?: number | null;
                         upperBoundInclusive?: number | null;
+                    } | null;
+                    employeeCountRanges?: {
+                        anyOf?: Array<{
+                            lowerBoundExclusive?: number | null;
+                            upperBoundInclusive?: number | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            lowerBoundExclusive?: number | null;
+                            upperBoundInclusive?: number | null;
+                        }> | null;
                     } | null;
                     keywords?: {
                         containsAll?: Array<string> | null;
@@ -96312,6 +97129,16 @@ export type GetSavedSearchRunResponses = {
                         lowerBound?: number | null;
                         upperBound?: number | null;
                     } | null;
+                    revenueRangesUSD?: {
+                        anyOf?: Array<{
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        }> | null;
+                    } | null;
                     employeeTrendsV2?: {
                         obeysAll?: Array<{
                             type: 'percent_change';
@@ -96364,6 +97191,9 @@ export type GetSavedSearchRunResponses = {
                         allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                         noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                     } | null;
+                    /**
+                     * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+                     */
                     linkedinIndustries?: {
                         anyOf?: Array<string> | null;
                         noneOf?: Array<string> | null;
@@ -96491,6 +97321,10 @@ export type GetSavedSearchRunResponses = {
                             groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                             keywords: Array<string>;
                         }> | null;
+                    } | null;
+                    jobFunction?: {
+                        anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     } | null;
                     exactProfile?: {
                         anyOf?: Array<{
@@ -97076,6 +97910,8 @@ export type GetSavedSearchRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -97088,6 +97924,8 @@ export type GetSavedSearchRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -97100,6 +97938,8 @@ export type GetSavedSearchRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -97108,6 +97948,10 @@ export type GetSavedSearchRunResponses = {
                             type: 'cartesian';
                             keywordArrays: Array<Array<string>>;
                         }> | null;
+                    } | null;
+                    seniority?: {
+                        anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                        noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
                     } | null;
                     openToWork?: boolean | null;
                     isHiring?: boolean | null;
@@ -98757,6 +99601,16 @@ export type UpdateSavedSearchData = {
                 lowerBoundExclusive?: number | null;
                 upperBoundInclusive?: number | null;
             } | null;
+            employeeCountRanges?: {
+                anyOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+            } | null;
             keywords?: {
                 containsAll?: Array<string> | null;
                 containsAny?: Array<string> | null;
@@ -100032,6 +100886,16 @@ export type UpdateSavedSearchData = {
                 lowerBound?: number | null;
                 upperBound?: number | null;
             } | null;
+            revenueRangesUSD?: {
+                anyOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+            } | null;
             employeeTrendsV2?: {
                 obeysAll?: Array<{
                     type: 'percent_change';
@@ -100084,6 +100948,9 @@ export type UpdateSavedSearchData = {
                 allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
             } | null;
+            /**
+             * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+             */
             linkedinIndustries?: {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
@@ -100211,6 +101078,10 @@ export type UpdateSavedSearchData = {
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
                 }> | null;
+            } | null;
+            jobFunction?: {
+                anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
             } | null;
             exactProfile?: {
                 anyOf?: Array<{
@@ -100796,6 +101667,8 @@ export type UpdateSavedSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -100808,6 +101681,8 @@ export type UpdateSavedSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -100820,6 +101695,8 @@ export type UpdateSavedSearchData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -100828,6 +101705,10 @@ export type UpdateSavedSearchData = {
                     type: 'cartesian';
                     keywordArrays: Array<Array<string>>;
                 }> | null;
+            } | null;
+            seniority?: {
+                anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
             } | null;
             openToWork?: boolean | null;
             isHiring?: boolean | null;
@@ -108771,6 +109652,16 @@ export type GetLatestSavedSearchRunResponses = {
                         lowerBoundExclusive?: number | null;
                         upperBoundInclusive?: number | null;
                     } | null;
+                    employeeCountRanges?: {
+                        anyOf?: Array<{
+                            lowerBoundExclusive?: number | null;
+                            upperBoundInclusive?: number | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            lowerBoundExclusive?: number | null;
+                            upperBoundInclusive?: number | null;
+                        }> | null;
+                    } | null;
                     keywords?: {
                         containsAll?: Array<string> | null;
                         containsAny?: Array<string> | null;
@@ -110046,6 +110937,16 @@ export type GetLatestSavedSearchRunResponses = {
                         lowerBound?: number | null;
                         upperBound?: number | null;
                     } | null;
+                    revenueRangesUSD?: {
+                        anyOf?: Array<{
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        }> | null;
+                        noneOf?: Array<{
+                            lowerBound?: number | null;
+                            upperBound?: number | null;
+                        }> | null;
+                    } | null;
                     employeeTrendsV2?: {
                         obeysAll?: Array<{
                             type: 'percent_change';
@@ -110098,6 +110999,9 @@ export type GetLatestSavedSearchRunResponses = {
                         allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                         noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                     } | null;
+                    /**
+                     * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+                     */
                     linkedinIndustries?: {
                         anyOf?: Array<string> | null;
                         noneOf?: Array<string> | null;
@@ -110225,6 +111129,10 @@ export type GetLatestSavedSearchRunResponses = {
                             groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                             keywords: Array<string>;
                         }> | null;
+                    } | null;
+                    jobFunction?: {
+                        anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                        noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
                     } | null;
                     exactProfile?: {
                         anyOf?: Array<{
@@ -110810,6 +111718,8 @@ export type GetLatestSavedSearchRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -110822,6 +111732,8 @@ export type GetLatestSavedSearchRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -110834,6 +111746,8 @@ export type GetLatestSavedSearchRunResponses = {
                             type: 'plain';
                             term: string;
                             exact?: boolean | null;
+                            mode?: 'normal' | 'prefix' | 'phrase' | null;
+                            stemming?: boolean | null;
                         } | {
                             type: 'functional';
                             keywords?: Array<string> | null;
@@ -110842,6 +111756,10 @@ export type GetLatestSavedSearchRunResponses = {
                             type: 'cartesian';
                             keywordArrays: Array<Array<string>>;
                         }> | null;
+                    } | null;
+                    seniority?: {
+                        anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                        noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
                     } | null;
                     openToWork?: boolean | null;
                     isHiring?: boolean | null;
@@ -118340,6 +119258,411 @@ export type FlightBookingOptionsResponses = {
 
 export type FlightBookingOptionsResponse = FlightBookingOptionsResponses[keyof FlightBookingOptionsResponses];
 
+export type FlightDealsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Where to find deals from. Accepts a single 3-letter IATA airport code (e.g. 'JFK'), an X- metro alias that covers every airport in a metro area (e.g. 'X-NYC' — call GET /v1/enums/flight-regions for the full list), or a Freebase ID — a stable location identifier beginning with '/m/' or '/g/' (e.g. '/m/02_286' for New York City), listed as `freebaseId` in GET /v1/enums/flight-regions. Comma-separated airport lists are not supported; use an X- alias instead. Case-insensitive except Freebase IDs.
+         */
+        departureAirports: string;
+        /**
+         * ISO 4217 currency code for prices in the response (e.g. 'EUR', 'GBP', 'CAD'). Case-insensitive. Defaults to USD.
+         */
+        currencyCode?: string;
+        /**
+         * Language for destination names and descriptions. Pass a BCP-47 language tag such as 'en', 'en-US', 'pt-BR', 'zh-CN', 'ja', 'ko', 'fr', 'de', 'es'. Does not change which deals are returned. Defaults to en.
+         */
+        languageCode?: string;
+        /**
+         * How to narrow the deals. Omit to return the cheapest round-trip deals from the departure location. Use the `freeText` mode to describe the kind of destinations you want in plain language (e.g. 'beaches and islands'); use the `filters` mode for precise constraints on price, stops, cabin class, or airline. Provide exactly one mode — they cannot be combined.
+         */
+        discovery?: {
+            mode: 'freeText';
+            /**
+             * Free-text description of the destinations to surface (e.g. 'beaches and islands', 'ski towns in the Alps').
+             */
+            freeText: string;
+        } | {
+            mode: 'filters';
+            /**
+             * Maximum round-trip price in the requested currency. Omit for no cap.
+             */
+            maxPrice?: number | null;
+            /**
+             * Maximum number of stops allowed. 0 = nonstop only, 1 = one stop or fewer, 2 = two stops or fewer. Omit to allow any number of stops.
+             */
+            maxStops?: number | null;
+            /**
+             * Preferred cabin class. Omit to consider flights across all cabin classes.
+             */
+            travelClass?: 'economy' | 'premiumEconomy' | 'business' | 'first' | null;
+            /**
+             * Filter by airline. By default all airlines are considered. If you pass 'include', only deals from those airlines are returned.
+             */
+            airlines?: {
+                /**
+                 * Only return deals operated or marketed by these airlines. Pass 2-letter IATA airline codes (e.g. 'UA' for United, 'AA' for American, 'DL' for Delta). Case-insensitive.
+                 */
+                include?: Array<string> | null;
+            } | null;
+        } | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/flights/deals';
+};
+
+export type FlightDealsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type FlightDealsError = FlightDealsErrors[keyof FlightDealsErrors];
+
+export type FlightDealsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Cheap round-trip deals from the departure location, ranked by savings versus the typical price. Empty when none match the request.
+             */
+            deals: Array<{
+                destination: {
+                    /**
+                     * Destination city or place name.
+                     */
+                    name: string;
+                    /**
+                     * Stable location identifier (Freebase ID) for this destination, beginning with '/m/' or '/g/' (e.g. '/m/0_vn7'). Pass as `departureAirports` or `arrivalAirports` in POST /v1/flights/search. Always present on returned deals.
+                     */
+                    freebaseId: string;
+                    /**
+                     * ISO 3166-1 alpha-3 country code (e.g. 'USA', 'GBR').
+                     */
+                    countryCode?: string | null;
+                    /**
+                     * IATA code of the destination airport (e.g. 'TYS').
+                     */
+                    iataCode?: string | null;
+                    /**
+                     * Short highlight of the destination.
+                     */
+                    tagline?: string | null;
+                    /**
+                     * Longer destination description.
+                     */
+                    description?: string | null;
+                    /**
+                     * Thumbnail image URL for the destination.
+                     */
+                    thumbnailUrl?: string | null;
+                };
+                /**
+                 * IATA code of the airport this deal departs from. When `departureAirports` covers a metro, this is the specific airport the deal uses.
+                 */
+                departureIataCode?: string | null;
+                /**
+                 * Outbound date of the cheapest itinerary (YYYY-MM-DD).
+                 */
+                outboundDate?: string | null;
+                /**
+                 * Return date of the cheapest itinerary (YYYY-MM-DD).
+                 */
+                returnDate?: string | null;
+                /**
+                 * Length of the trip in whole days.
+                 */
+                tripLengthDays?: number | null;
+                /**
+                 * Deal price in whole currency units.
+                 */
+                price: number;
+                /**
+                 * Typical price for a similar trip in whole currency units.
+                 */
+                typicalPrice?: number | null;
+                /**
+                 * Amount cheaper than the typical price, in whole currency units.
+                 */
+                savingsAmount?: number | null;
+                /**
+                 * Percent cheaper than the typical price, from 0 to 100.
+                 */
+                savingsPercentage?: number | null;
+                /**
+                 * Number of stops on the outbound itinerary.
+                 */
+                stopCount?: number | null;
+                /**
+                 * Total outbound flight duration in minutes.
+                 */
+                durationMinutes?: number | null;
+                /**
+                 * Airline operating the itinerary. Null when the itinerary has no single operating airline.
+                 */
+                airlineName?: string | null;
+                /**
+                 * IATA airline designator (e.g. 'UA').
+                 */
+                airlineCode?: string | null;
+                /**
+                 * URL to view and book this itinerary.
+                 */
+                bookingUrl?: string | null;
+            }>;
+            /**
+             * ISO 4217 currency code for prices in this response (e.g. 'USD', 'EUR', 'GBP').
+             */
+            currencyCode: string;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type FlightDealsResponse = FlightDealsResponses[keyof FlightDealsResponses];
+
 export type HotelSearchData = {
     body: {
         /**
@@ -119561,6 +120884,906 @@ export type HotelPropertyResponses = {
 
 export type HotelPropertyResponse = HotelPropertyResponses[keyof HotelPropertyResponses];
 
+export type BookingSearchData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Destination to search (city, region, or landmark). For example, 'Dubrovnik' or 'Rome, Italy'.
+         */
+        query: string;
+        /**
+         * Check-in date for the stay.
+         */
+        checkInDate: string;
+        /**
+         * Check-out date for the stay. Must be at least one calendar day after `checkInDate`.
+         */
+        checkOutDate: string;
+        /**
+         * Filter to specific hotel star classes. This is a list of exact classes, not a range: [3, 5] returns only 3- and 5-star properties and excludes 4-star, so list every class you want (e.g. [3, 4, 5]).
+         */
+        hotelStarClasses?: Array<number> | null;
+        /**
+         * Sort criterion for results. 'relevance' ranks by overall match. 'lowestPrice' sorts cheapest first. 'highestRating' sorts by guest review score. 'mostReviewed' uses Booking.com's top-reviewed ranking, which weighs review score by review volume. Omit to sort by relevance.
+         */
+        sortBy?: 'relevance' | 'lowestPrice' | 'highestRating' | 'mostReviewed' | null;
+        /**
+         * Opaque pagination token from a prior search response's `nextPageToken`. Send it with the same search parameters that produced it. Omit (or pass null) to fetch the first page.
+         */
+        nextPageToken?: string | null;
+        /**
+         * Number of adult guests (at least 1). Total guests (`adults` + `children`) must not exceed 30.
+         */
+        adults?: number;
+        /**
+         * Number of child guests. Total guests (`adults` + `children`) must not exceed 30.
+         */
+        children?: number;
+        /**
+         * Ages of each child guest. Must contain exactly `children` entries when `children` is greater than zero.
+         */
+        childrenAges?: Array<number>;
+        /**
+         * Number of rooms to search for. Defaults to 1.
+         */
+        rooms?: number;
+        /**
+         * ISO 4217 currency code for prices in the response (e.g. 'EUR', 'GBP', 'CAD'). Case-insensitive. Defaults to USD.
+         */
+        currencyCode?: string;
+        /**
+         * Language for property names, descriptions, and labels. Pass a BCP-47 language tag such as 'en', 'en-US', 'fr', 'de', or 'es'. Omit for English.
+         */
+        languageCode?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/booking/search';
+};
+
+export type BookingSearchErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type BookingSearchError = BookingSearchErrors[keyof BookingSearchErrors];
+
+export type BookingSearchResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Matching Booking.com properties.
+             */
+            properties: Array<{
+                /**
+                 * Booking.com property identifier.
+                 */
+                propertyId: string;
+                /**
+                 * Property display name.
+                 */
+                name: string;
+                /**
+                 * Full Booking.com property URL. Pass as `propertyUrl` in POST /v1/booking/property.
+                 */
+                propertyUrl: string;
+                /**
+                 * Street address.
+                 */
+                address?: string | null;
+                /**
+                 * City name.
+                 */
+                city?: string | null;
+                /**
+                 * District or neighborhood.
+                 */
+                district?: string | null;
+                /**
+                 * ISO 3166-1 alpha-3 country code (e.g. 'USA').
+                 */
+                countryCode?: string | null;
+                /**
+                 * Geographic coordinates of the property in decimal degrees.
+                 */
+                coordinates?: {
+                    /**
+                     * Latitude in decimal degrees.
+                     */
+                    latitude: number;
+                    /**
+                     * Longitude in decimal degrees.
+                     */
+                    longitude: number;
+                } | null;
+                /**
+                 * Hotel star class from 1 to 5, indicating how upscale the property is. This is a property classification, not a guest review score.
+                 */
+                hotelStarClass?: number | null;
+                /**
+                 * Guest review score from 0 to 10.
+                 */
+                reviewScore?: number | null;
+                /**
+                 * Total number of guest reviews.
+                 */
+                reviewCount?: number | null;
+                /**
+                 * Thumbnail image URL.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * True when the property belongs to Booking.com's Preferred Partner programme, which promotes it in Booking.com's own result ranking.
+                 */
+                isPreferred?: boolean | null;
+                /**
+                 * Total price for the requested stay. Null when Booking.com shows no rate for these dates, for example when the property is sold out.
+                 */
+                totalPrice?: {
+                    /**
+                     * ISO 4217 currency code for this amount (e.g. 'USD').
+                     */
+                    currencyCode: string;
+                    /**
+                     * Price amount in the specified currency.
+                     */
+                    amount: number;
+                } | null;
+                /**
+                 * Average nightly price for the requested stay.
+                 */
+                nightlyPrice?: {
+                    /**
+                     * ISO 4217 currency code for this amount (e.g. 'USD').
+                     */
+                    currencyCode: string;
+                    /**
+                     * Price amount in the specified currency.
+                     */
+                    amount: number;
+                } | null;
+                /**
+                 * List price before discounts, when a promotion applies.
+                 */
+                originalPrice?: {
+                    /**
+                     * ISO 4217 currency code for this amount (e.g. 'USD').
+                     */
+                    currencyCode: string;
+                    /**
+                     * Price amount in the specified currency.
+                     */
+                    amount: number;
+                } | null;
+                /**
+                 * True when the listed rate includes free cancellation.
+                 */
+                hasFreeCancellation?: boolean | null;
+                /**
+                 * True when the property has no remaining availability for the requested dates.
+                 */
+                isSoldOut?: boolean | null;
+                /**
+                 * Meal plan included with the listed rate, as Booking.com publishes it (e.g. 'Breakfast included').
+                 */
+                mealPlan?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if no more pages.
+             */
+            nextPageToken?: string | null;
+            /**
+             * ISO 4217 currency code for prices in this response (e.g. 'USD', 'EUR', 'GBP').
+             */
+            currencyCode?: string | null;
+            /**
+             * Summary information about the search results.
+             */
+            searchInformation?: {
+                /**
+                 * Approximate total number of matching properties.
+                 */
+                totalResultCount?: number | null;
+            } | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type BookingSearchResponse = BookingSearchResponses[keyof BookingSearchResponses];
+
+export type BookingPropertyData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Full Booking.com property URL (e.g. 'https://www.booking.com/hotel/hr/sumratin-dubrovnik.html'). Obtain it from a result returned by POST /v1/booking/search — pass the `propertyUrl`, not the `propertyId`.
+         */
+        propertyUrl: string;
+        /**
+         * Language for property names, descriptions, and labels. Pass a BCP-47 language tag such as 'en', 'en-US', 'fr', 'de', or 'es'. Omit for English.
+         */
+        languageCode?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/booking/property';
+};
+
+export type BookingPropertyErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type BookingPropertyError = BookingPropertyErrors[keyof BookingPropertyErrors];
+
+export type BookingPropertyResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Full property details including amenities, photos, and house rules.
+             */
+            property: {
+                /**
+                 * Booking.com property identifier.
+                 */
+                propertyId: string;
+                /**
+                 * Property display name.
+                 */
+                name: string;
+                /**
+                 * Full Booking.com property URL. Pass as `propertyUrl` in POST /v1/booking/property.
+                 */
+                propertyUrl: string;
+                /**
+                 * Street address.
+                 */
+                address?: string | null;
+                /**
+                 * City name.
+                 */
+                city?: string | null;
+                /**
+                 * District or neighborhood.
+                 */
+                district?: string | null;
+                /**
+                 * ISO 3166-1 alpha-3 country code (e.g. 'USA').
+                 */
+                countryCode?: string | null;
+                /**
+                 * Geographic coordinates of the property in decimal degrees.
+                 */
+                coordinates?: {
+                    /**
+                     * Latitude in decimal degrees.
+                     */
+                    latitude: number;
+                    /**
+                     * Longitude in decimal degrees.
+                     */
+                    longitude: number;
+                } | null;
+                /**
+                 * Hotel star class from 1 to 5, indicating how upscale the property is. This is a property classification, not a guest review score.
+                 */
+                hotelStarClass?: number | null;
+                /**
+                 * Guest review score from 0 to 10.
+                 */
+                reviewScore?: number | null;
+                /**
+                 * Total number of guest reviews.
+                 */
+                reviewCount?: number | null;
+                /**
+                 * Thumbnail image URL.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * True when the property belongs to Booking.com's Preferred Partner programme, which promotes it in Booking.com's own result ranking.
+                 */
+                isPreferred?: boolean | null;
+                /**
+                 * Property description.
+                 */
+                description?: string | null;
+                /**
+                 * Accommodation type (e.g. 'hotel', 'guestHouse').
+                 */
+                accommodationType?: string | null;
+                /**
+                 * Amenities offered by this property.
+                 */
+                amenities: Array<string>;
+                /**
+                 * Property photo URLs.
+                 */
+                photoUrls: Array<string>;
+                /**
+                 * BCP-47 language tags for the languages property staff speak (e.g. ['en', 'hr', 'pt-BR']).
+                 */
+                languagesSpoken: Array<string>;
+                /**
+                 * Check-in time in 24-hour `HH:mm` format, where `HH` is 00 through 23 (e.g. '15:00').
+                 */
+                checkInTime?: string | null;
+                /**
+                 * Check-out time in 24-hour `HH:mm` format, where `HH` is 00 through 23 (e.g. '11:00').
+                 */
+                checkOutTime?: string | null;
+                /**
+                 * Guest review scores by category, each from 0 to 10.
+                 */
+                scoreBreakdown?: {
+                    /**
+                     * Staff score from 0 to 10.
+                     */
+                    staff?: number | null;
+                    /**
+                     * Facilities score from 0 to 10.
+                     */
+                    facilities?: number | null;
+                    /**
+                     * Cleanliness score from 0 to 10.
+                     */
+                    cleanliness?: number | null;
+                    /**
+                     * Comfort score from 0 to 10.
+                     */
+                    comfort?: number | null;
+                    /**
+                     * Value-for-money score from 0 to 10.
+                     */
+                    value?: number | null;
+                    /**
+                     * Location score from 0 to 10.
+                     */
+                    location?: number | null;
+                    /**
+                     * Breakfast score from 0 to 10.
+                     */
+                    breakfast?: number | null;
+                    /**
+                     * Wi-Fi score from 0 to 10.
+                     */
+                    wifi?: number | null;
+                } | null;
+                /**
+                 * Published house rules for the property.
+                 */
+                houseRules?: {
+                    /**
+                     * Age restriction policy, when published.
+                     */
+                    ageRestriction?: string | null;
+                    /**
+                     * Children policy, when published.
+                     */
+                    childrenPolicy?: string | null;
+                    /**
+                     * Pets policy, when published.
+                     */
+                    petsPolicy?: string | null;
+                    /**
+                     * Smoking policy, when published.
+                     */
+                    smokingPolicy?: string | null;
+                    /**
+                     * Parties and events policy, when published.
+                     */
+                    partiesPolicy?: string | null;
+                    /**
+                     * Group booking policy, when published.
+                     */
+                    groupPolicy?: string | null;
+                    /**
+                     * Accepted payment methods.
+                     */
+                    paymentMethods: Array<string>;
+                    /**
+                     * True when the property accepts cash.
+                     */
+                    isCashAccepted?: boolean | null;
+                } | null;
+                /**
+                 * True when the property is marked as a sustainable stay.
+                 */
+                isSustainable?: boolean | null;
+            };
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type BookingPropertyResponse = BookingPropertyResponses[keyof BookingPropertyResponses];
+
 export type YelpSearchData = {
     body: {
         /**
@@ -120612,6 +122835,1099 @@ export type YelpReviewsResponses = {
 };
 
 export type YelpReviewsResponse = YelpReviewsResponses[keyof YelpReviewsResponses];
+
+export type GoogleMapsSearch2Data = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * What to search for (e.g. 'coffee shop' or 'The Modern'). A business name also works.
+         */
+        query: string;
+        /**
+         * Where to search. Accepts a city and state ('Brooklyn, NY'), a full address, or a ZIP code. Omit to search without a location bias.
+         */
+        location?: string | null;
+        /**
+         * Pagination token from a prior response's `nextPageToken`. Omit (or pass null) to fetch the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/google-maps/search';
+};
+
+export type GoogleMapsSearch2Errors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type GoogleMapsSearch2Error = GoogleMapsSearch2Errors[keyof GoogleMapsSearch2Errors];
+
+export type GoogleMapsSearch2Responses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Matching places. Google Maps indexes parks, transit stops and landmarks alongside businesses, so a result is not necessarily a business.
+             */
+            places: Array<{
+                /**
+                 * Google Maps place ID. Use with POST /v1/google-maps/place and POST /v1/google-maps/reviews.
+                 */
+                placeId: string;
+                /**
+                 * Place display name.
+                 */
+                name: string;
+                /**
+                 * Google Maps page for this place.
+                 */
+                url: string;
+                /**
+                 * Average star rating from 0 to 5.
+                 */
+                rating?: number | null;
+                /**
+                 * Total review count.
+                 */
+                reviewCount?: number | null;
+                /**
+                 * Contact phone number in E.164 format when the country can be determined, otherwise as listed on Google Maps.
+                 */
+                phoneNumber?: string | null;
+                /**
+                 * Website URL for this place.
+                 */
+                websiteUrl?: string | null;
+                /**
+                 * Street address of the place.
+                 */
+                address?: string | null;
+                /**
+                 * Categories this place belongs to (e.g. 'Coffee shop', 'Park', 'Subway station').
+                 */
+                categories: Array<string>;
+                /**
+                 * Opening hours by day of the week, when available.
+                 */
+                openingHours: Array<{
+                    /**
+                     * Day of the week.
+                     */
+                    dayOfWeek: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+                    /**
+                     * Opening hours for the day, as displayed on the Google Maps page for the place (e.g. '12–2:30 PM, 5–9 PM').
+                     */
+                    hours: string;
+                }>;
+                /**
+                 * Geographic coordinates of the place.
+                 */
+                coordinates?: {
+                    /**
+                     * The latitude of the point.
+                     */
+                    latitude: number;
+                    /**
+                     * The longitude of the point.
+                     */
+                    longitude: number;
+                } | null;
+                /**
+                 * Thumbnail image URL for this place.
+                 */
+                thumbnailUrl?: string | null;
+            }>;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type GoogleMapsSearch2Response = GoogleMapsSearch2Responses[keyof GoogleMapsSearch2Responses];
+
+export type GoogleMapsPlaceData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Google Maps place ID (e.g. 'ChIJN1t_tDeuEmsRUsoyG83frY4'). Obtain it from the `placeId` of a result returned by the Google Maps search endpoint (`POST /v1/google-maps/search`).
+         */
+        placeId: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/google-maps/place';
+};
+
+export type GoogleMapsPlaceErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type GoogleMapsPlaceError = GoogleMapsPlaceErrors[keyof GoogleMapsPlaceErrors];
+
+export type GoogleMapsPlaceResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Detailed information about the Google Maps place.
+             */
+            place: {
+                /**
+                 * Google Maps place ID. Use with POST /v1/google-maps/place and POST /v1/google-maps/reviews.
+                 */
+                placeId: string;
+                /**
+                 * Place display name.
+                 */
+                name: string;
+                /**
+                 * Google Maps page for this place.
+                 */
+                url: string;
+                /**
+                 * Average star rating from 0 to 5.
+                 */
+                rating?: number | null;
+                /**
+                 * Total review count.
+                 */
+                reviewCount?: number | null;
+                /**
+                 * Contact phone number in E.164 format when the country can be determined, otherwise as listed on Google Maps.
+                 */
+                phoneNumber?: string | null;
+                /**
+                 * Website URL for this place.
+                 */
+                websiteUrl?: string | null;
+                /**
+                 * Street address of the place.
+                 */
+                address?: string | null;
+                /**
+                 * Categories this place belongs to (e.g. 'Coffee shop', 'Park', 'Subway station').
+                 */
+                categories: Array<string>;
+                /**
+                 * Opening hours by day of the week, when available.
+                 */
+                openingHours: Array<{
+                    /**
+                     * Day of the week.
+                     */
+                    dayOfWeek: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+                    /**
+                     * Opening hours for the day, as displayed on the Google Maps page for the place (e.g. '12–2:30 PM, 5–9 PM').
+                     */
+                    hours: string;
+                }>;
+                /**
+                 * Geographic coordinates of the place.
+                 */
+                coordinates?: {
+                    /**
+                     * The latitude of the point.
+                     */
+                    latitude: number;
+                    /**
+                     * The longitude of the point.
+                     */
+                    longitude: number;
+                } | null;
+                /**
+                 * Thumbnail image URL for this place.
+                 */
+                thumbnailUrl?: string | null;
+                /**
+                 * Short description of the place.
+                 */
+                description?: string | null;
+                /**
+                 * Count of reviews per star rating, when available.
+                 */
+                ratingBreakdown: Array<{
+                    /**
+                     * Star rating this bucket represents, from 1 to 5.
+                     */
+                    stars: number;
+                    /**
+                     * Number of reviews with this star rating.
+                     */
+                    count: number;
+                }>;
+                /**
+                 * Grouped attributes such as service options, highlights, offerings, and accessibility.
+                 */
+                attributes: Array<{
+                    /**
+                     * Attribute group name (e.g. 'Service options', 'Highlights', 'Accessibility').
+                     */
+                    category: string;
+                    /**
+                     * Attribute values in this group (e.g. 'Dine-in', 'Delivery').
+                     */
+                    values: Array<string>;
+                }>;
+                /**
+                 * A sample of recent reviews included with the place. Use POST /v1/google-maps/reviews for the full paginated list.
+                 */
+                reviews: Array<{
+                    /**
+                     * Reviewer's display name.
+                     */
+                    authorName?: string | null;
+                    /**
+                     * True when the reviewer is a Google Local Guide.
+                     */
+                    authorIsLocalGuide?: boolean | null;
+                    /**
+                     * Star rating given by the reviewer, from 1 to 5.
+                     */
+                    rating?: number | null;
+                    /**
+                     * Review publication time in ISO 8601 format.
+                     */
+                    publishedAt?: string | null;
+                    /**
+                     * Review text.
+                     */
+                    text?: string | null;
+                    /**
+                     * Number of likes the review received.
+                     */
+                    likeCount?: number | null;
+                    /**
+                     * Photo URLs attached to the review.
+                     */
+                    photoUrls: Array<string>;
+                    /**
+                     * Public URL for this review.
+                     */
+                    reviewUrl?: string | null;
+                }>;
+            };
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type GoogleMapsPlaceResponse = GoogleMapsPlaceResponses[keyof GoogleMapsPlaceResponses];
+
+export type GoogleMapsReviewsData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * Google Maps place ID (e.g. 'ChIJN1t_tDeuEmsRUsoyG83frY4'). Obtain it from the `placeId` of a result returned by the Google Maps search endpoint (`POST /v1/google-maps/search`).
+         */
+        placeId: string;
+        /**
+         * Sort criterion for reviews. Applies to the first page only: later pages keep the sort the first page used, so changing it mid-pagination has no effect.
+         */
+        sortBy?: 'relevance' | 'newest';
+        /**
+         * Pagination token from a prior response's `nextPageToken`. Omit (or pass null) to fetch the first page.
+         */
+        nextPageToken?: string | null;
+    };
+    path?: never;
+    query?: never;
+    url: '/v1/google-maps/reviews';
+};
+
+export type GoogleMapsReviewsErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type GoogleMapsReviewsError = GoogleMapsReviewsErrors[keyof GoogleMapsReviewsErrors];
+
+export type GoogleMapsReviewsResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * Reviews of the place.
+             */
+            reviews: Array<{
+                /**
+                 * Reviewer's display name.
+                 */
+                authorName?: string | null;
+                /**
+                 * True when the reviewer is a Google Local Guide.
+                 */
+                authorIsLocalGuide?: boolean | null;
+                /**
+                 * Star rating given by the reviewer, from 1 to 5.
+                 */
+                rating?: number | null;
+                /**
+                 * Review publication time in ISO 8601 format.
+                 */
+                publishedAt?: string | null;
+                /**
+                 * Review text.
+                 */
+                text?: string | null;
+                /**
+                 * Number of likes the review received.
+                 */
+                likeCount?: number | null;
+                /**
+                 * Photo URLs attached to the review.
+                 */
+                photoUrls: Array<string>;
+                /**
+                 * Public URL for this review.
+                 */
+                reviewUrl?: string | null;
+            }>;
+            /**
+             * Total number of reviews for the place.
+             */
+            totalReviewCount?: number | null;
+            /**
+             * Token to retrieve the next page. Pass as `nextPageToken` in the next request. Null if no more pages.
+             */
+            nextPageToken?: string | null;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type GoogleMapsReviewsResponse = GoogleMapsReviewsResponses[keyof GoogleMapsReviewsResponses];
 
 export type FetchRealEstateListingsData = {
     body: {
@@ -125753,6 +129069,8 @@ export type ListTrackerCompanyListsResponses = {
                 } & AcquiredCompanyResponse) | ({
                     type: 'new_investor';
                 } & NewInvestorResponse) | ({
+                    type: 'joined_accelerator';
+                } & JoinedAcceleratorResponse) | ({
                     type: 'recently_hired_with_title';
                 } & RecentlyHiredWithTitleResponse) | ({
                     type: 'department_size_threshold';
@@ -125925,7 +129243,7 @@ export type CreateTrackerCompanyListData = {
          */
         refreshIntervalDays: number;
         /**
-         * Tracking rules to evaluate against this list's entities. Multiple rules can be active simultaneously.
+         * Tracking rules to evaluate against this list's entities. Multiple rules can be active simultaneously. Rules marked `isPremium` in GET /tracker/rules make the list bill at a minimum per-entity rate — see your plan's pricing for rates.
          */
         trackingRules?: Array<({
             type: 'headcount_crossed_threshold';
@@ -125972,6 +129290,8 @@ export type CreateTrackerCompanyListData = {
         } & AcquiredCompany) | ({
             type: 'new_investor';
         } & NewInvestor) | ({
+            type: 'joined_accelerator';
+        } & JoinedAccelerator) | ({
             type: 'recently_hired_with_title';
         } & RecentlyHiredWithTitle) | ({
             type: 'department_size_threshold';
@@ -126036,6 +129356,16 @@ export type CreateTrackerCompanyListData = {
             employeeCountV2?: {
                 lowerBoundExclusive?: number | null;
                 upperBoundInclusive?: number | null;
+            } | null;
+            employeeCountRanges?: {
+                anyOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
             } | null;
             keywords?: {
                 containsAll?: Array<string> | null;
@@ -127312,6 +130642,16 @@ export type CreateTrackerCompanyListData = {
                 lowerBound?: number | null;
                 upperBound?: number | null;
             } | null;
+            revenueRangesUSD?: {
+                anyOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+            } | null;
             employeeTrendsV2?: {
                 obeysAll?: Array<{
                     type: 'percent_change';
@@ -127364,6 +130704,9 @@ export type CreateTrackerCompanyListData = {
                 allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
             } | null;
+            /**
+             * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+             */
             linkedinIndustries?: {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
@@ -127577,6 +130920,8 @@ export type CreateTrackerCompanyListResponses = {
             } & AcquiredCompanyResponse) | ({
                 type: 'new_investor';
             } & NewInvestorResponse) | ({
+                type: 'joined_accelerator';
+            } & JoinedAcceleratorResponse) | ({
                 type: 'recently_hired_with_title';
             } & RecentlyHiredWithTitleResponse) | ({
                 type: 'department_size_threshold';
@@ -128231,6 +131576,8 @@ export type GetTrackerCompanyListResponses = {
             } & AcquiredCompanyResponse) | ({
                 type: 'new_investor';
             } & NewInvestorResponse) | ({
+                type: 'joined_accelerator';
+            } & JoinedAcceleratorResponse) | ({
                 type: 'recently_hired_with_title';
             } & RecentlyHiredWithTitleResponse) | ({
                 type: 'department_size_threshold';
@@ -128410,7 +131757,7 @@ export type UpdateTrackerCompanyListData = {
          */
         maxDynamicMembers?: number | null;
         /**
-         * Replace ALL existing rules with this set. Pass empty array to clear all rules. Omit to leave unchanged. Cannot be used with `addRules`/`removeRuleIds`.
+         * Replace ALL existing rules with this set. Pass empty array to clear all rules. Omit to leave unchanged. Cannot be used with `addRules`/`removeRuleIds`. Rules marked `isPremium` in GET /tracker/rules make the list bill at a minimum per-entity rate.
          */
         trackingRules?: Array<({
             type: 'headcount_crossed_threshold';
@@ -128457,6 +131804,8 @@ export type UpdateTrackerCompanyListData = {
         } & AcquiredCompany) | ({
             type: 'new_investor';
         } & NewInvestor) | ({
+            type: 'joined_accelerator';
+        } & JoinedAccelerator) | ({
             type: 'recently_hired_with_title';
         } & RecentlyHiredWithTitle) | ({
             type: 'department_size_threshold';
@@ -128511,6 +131860,8 @@ export type UpdateTrackerCompanyListData = {
         } & AcquiredCompany) | ({
             type: 'new_investor';
         } & NewInvestor) | ({
+            type: 'joined_accelerator';
+        } & JoinedAccelerator) | ({
             type: 'recently_hired_with_title';
         } & RecentlyHiredWithTitle) | ({
             type: 'department_size_threshold';
@@ -128745,6 +132096,8 @@ export type UpdateTrackerCompanyListResponses = {
             } & AcquiredCompanyResponse) | ({
                 type: 'new_investor';
             } & NewInvestorResponse) | ({
+                type: 'joined_accelerator';
+            } & JoinedAcceleratorResponse) | ({
                 type: 'recently_hired_with_title';
             } & RecentlyHiredWithTitleResponse) | ({
                 type: 'department_size_threshold';
@@ -130063,7 +133416,11 @@ export type ListTrackerPersonListsResponses = {
                     type: 'person_stuck_in_role';
                 } & PersonStuckInRoleResponse) | ({
                     type: 'person_tenure_milestone';
-                } & PersonTenureMilestoneResponse)> | null;
+                } & PersonTenureMilestoneResponse) | ({
+                    type: 'person_contact_change';
+                } & PersonContactChangeResponse) | ({
+                    type: 'person_added_role';
+                } & PersonAddedRoleResponse)> | null;
                 /**
                  * Whether the list is actively being checked.
                  */
@@ -130230,7 +133587,7 @@ export type CreateTrackerPersonListData = {
          */
         refreshIntervalDays: number;
         /**
-         * Tracking rules to evaluate against this list's entities. Multiple rules can be active simultaneously.
+         * Tracking rules to evaluate against this list's entities. Multiple rules can be active simultaneously. Rules marked `isPremium` in GET /tracker/rules make the list bill at a minimum per-entity rate — see your plan's pricing for rates.
          */
         trackingRules?: Array<({
             type: 'person_changed_company';
@@ -130286,7 +133643,11 @@ export type CreateTrackerPersonListData = {
             type: 'person_stuck_in_role';
         } & PersonStuckInRole) | ({
             type: 'person_tenure_milestone';
-        } & PersonTenureMilestone)> | null;
+        } & PersonTenureMilestone) | ({
+            type: 'person_contact_change';
+        } & PersonContactChange) | ({
+            type: 'person_added_role';
+        } & PersonAddedRole)> | null;
         /**
          * If provided, this list becomes DYNAMIC: rather than adding people manually, the list auto-populates with people matching these filters and refreshes over time (new matches are added; people who no longer match are dropped). Uses the same filters as the people search endpoint. Omit to create a static, manually-managed list.
          */
@@ -130402,6 +133763,10 @@ export type CreateTrackerPersonListData = {
                     groups: Array<'vp' | 'director' | 'management' | 'entry-level' | 'assistant' | 'intern'>;
                     keywords?: Array<string>;
                 }> | null;
+            } | null;
+            jobFunction?: {
+                anyOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
+                noneOf?: Array<'Arts and Design' | 'Business Development' | 'Community & Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Military & Protective Services' | 'Operations' | 'Program & Product Management' | 'Real Estate' | 'Sales' | 'Support' | 'Administrative' | 'Finance' | 'Marketing' | 'Purchasing' | 'Product Management' | 'Advertising' | 'Analyst' | 'Customer Service' | 'Distribution' | 'Design' | 'General Business' | 'Management' | 'Manufacturing' | 'Other' | 'Public Relations' | 'Project Management' | 'Production' | 'Quality Assurance' | 'Research' | 'Science' | 'Supply Chain' | 'Training' | 'Health Care Provider' | 'Accounting' | 'Art / Creative' | 'Strategy / Planning' | 'Writing / Editing'> | null;
             } | null;
             exactProfile?: {
                 anyOf?: Array<{
@@ -130987,6 +134352,8 @@ export type CreateTrackerPersonListData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -130999,6 +134366,8 @@ export type CreateTrackerPersonListData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -131011,6 +134380,8 @@ export type CreateTrackerPersonListData = {
                     type: 'plain';
                     term: string;
                     exact?: boolean | null;
+                    mode?: 'normal' | 'prefix' | 'phrase' | null;
+                    stemming?: boolean | null;
                 } | {
                     type: 'functional';
                     keywords?: Array<string> | null;
@@ -131019,6 +134390,10 @@ export type CreateTrackerPersonListData = {
                     type: 'cartesian';
                     keywordArrays: Array<Array<string>>;
                 }> | null;
+            } | null;
+            seniority?: {
+                anyOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
+                noneOf?: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'> | null;
             } | null;
             openToWork?: boolean | null;
             isHiring?: boolean | null;
@@ -131679,6 +135054,16 @@ export type CreateTrackerPersonListData = {
             employeeCountV2?: {
                 lowerBoundExclusive?: number | null;
                 upperBoundInclusive?: number | null;
+            } | null;
+            employeeCountRanges?: {
+                anyOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBoundExclusive?: number | null;
+                    upperBoundInclusive?: number | null;
+                }> | null;
             } | null;
             keywords?: {
                 containsAll?: Array<string> | null;
@@ -132955,6 +136340,16 @@ export type CreateTrackerPersonListData = {
                 lowerBound?: number | null;
                 upperBound?: number | null;
             } | null;
+            revenueRangesUSD?: {
+                anyOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+                noneOf?: Array<{
+                    lowerBound?: number | null;
+                    upperBound?: number | null;
+                }> | null;
+            } | null;
             employeeTrendsV2?: {
                 obeysAll?: Array<{
                     type: 'percent_change';
@@ -133007,6 +136402,9 @@ export type CreateTrackerPersonListData = {
                 allOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
                 noneOf?: Array<'raised-from-top-vc' | 'is-government' | 'is-school' | 'venture-backed-startup'> | null;
             } | null;
+            /**
+             * Filter companies by the industries they are tagged with on LinkedIn. To get the list of valid values, each with its company count, use the `getIndustries` endpoint (`GET /v1/enums/industries`), and hide values with very small counts from your filter UI, since a value with only a handful of companies behind it is a no-op filter. Values must match the enum exactly — a misspelled or retired value returns zero results with no error or warning. This filter matches LinkedIn's own industry tags, which are narrow and granular. For broader matching use `industriesV2` (Fiber's standardized categories, listed as `fiberIndustries` in the same response) or `crunchbaseCategories` / `crunchbaseCategoryGroups` for Crunchbase's taxonomy — the three are separate classifications and are not interchangeable.
+             */
             linkedinIndustries?: {
                 anyOf?: Array<string> | null;
                 noneOf?: Array<string> | null;
@@ -133229,7 +136627,11 @@ export type CreateTrackerPersonListResponses = {
                 type: 'person_stuck_in_role';
             } & PersonStuckInRoleResponse) | ({
                 type: 'person_tenure_milestone';
-            } & PersonTenureMilestoneResponse)> | null;
+            } & PersonTenureMilestoneResponse) | ({
+                type: 'person_contact_change';
+            } & PersonContactChangeResponse) | ({
+                type: 'person_added_role';
+            } & PersonAddedRoleResponse)> | null;
             /**
              * Whether the list is actively being checked.
              */
@@ -133887,7 +137289,11 @@ export type GetTrackerPersonListResponses = {
                 type: 'person_stuck_in_role';
             } & PersonStuckInRoleResponse) | ({
                 type: 'person_tenure_milestone';
-            } & PersonTenureMilestoneResponse)> | null;
+            } & PersonTenureMilestoneResponse) | ({
+                type: 'person_contact_change';
+            } & PersonContactChangeResponse) | ({
+                type: 'person_added_role';
+            } & PersonAddedRoleResponse)> | null;
             /**
              * Whether the list is actively being checked.
              */
@@ -134061,7 +137467,7 @@ export type UpdateTrackerPersonListData = {
          */
         maxDynamicMembers?: number | null;
         /**
-         * Replace ALL existing rules with this set. Pass empty array to clear all rules. Omit to leave unchanged. Cannot be used with `addRules`/`removeRuleIds`.
+         * Replace ALL existing rules with this set. Pass empty array to clear all rules. Omit to leave unchanged. Cannot be used with `addRules`/`removeRuleIds`. Rules marked `isPremium` in GET /tracker/rules make the list bill at a minimum per-entity rate.
          */
         trackingRules?: Array<({
             type: 'person_changed_company';
@@ -134117,7 +137523,11 @@ export type UpdateTrackerPersonListData = {
             type: 'person_stuck_in_role';
         } & PersonStuckInRole) | ({
             type: 'person_tenure_milestone';
-        } & PersonTenureMilestone)> | null;
+        } & PersonTenureMilestone) | ({
+            type: 'person_contact_change';
+        } & PersonContactChange) | ({
+            type: 'person_added_role';
+        } & PersonAddedRole)> | null;
         /**
          * Add rules to the existing set without removing others. The total active rules on the list (existing + added) must not exceed the per-list cap. Cannot be used with `trackingRules`.
          */
@@ -134175,7 +137585,11 @@ export type UpdateTrackerPersonListData = {
             type: 'person_stuck_in_role';
         } & PersonStuckInRole) | ({
             type: 'person_tenure_milestone';
-        } & PersonTenureMilestone)> | null;
+        } & PersonTenureMilestone) | ({
+            type: 'person_contact_change';
+        } & PersonContactChange) | ({
+            type: 'person_added_role';
+        } & PersonAddedRole)> | null;
         /**
          * Rule IDs to remove. Cannot be used with `trackingRules`.
          */
@@ -134413,7 +137827,11 @@ export type UpdateTrackerPersonListResponses = {
                 type: 'person_stuck_in_role';
             } & PersonStuckInRoleResponse) | ({
                 type: 'person_tenure_milestone';
-            } & PersonTenureMilestoneResponse)> | null;
+            } & PersonTenureMilestoneResponse) | ({
+                type: 'person_contact_change';
+            } & PersonContactChangeResponse) | ({
+                type: 'person_added_role';
+            } & PersonAddedRoleResponse)> | null;
             /**
              * Whether the list is actively being checked.
              */
@@ -135424,7 +138842,7 @@ export type GetTrackerOverviewResponses = {
                  */
                 nextRefreshAt: string | null;
                 /**
-                 * Credits charged for a full refresh of this list at the org's current pricing (entityCount × per-entity cost).
+                 * Credits charged for a full refresh of this list at the org's current pricing (entityCount × per-entity cost). Reflects premium-rule pricing when the list contains premium rules.
                  */
                 estimatedCreditsPerRefresh: number;
             }>;
@@ -135465,7 +138883,7 @@ export type GetTrackerOverviewResponses = {
                  */
                 nextRefreshAt: string | null;
                 /**
-                 * Credits charged for a full refresh of this list at the org's current pricing (entityCount × per-entity cost).
+                 * Credits charged for a full refresh of this list at the org's current pricing (entityCount × per-entity cost). Reflects premium-rule pricing when the list contains premium rules.
                  */
                 estimatedCreditsPerRefresh: number;
             }>;
@@ -135494,7 +138912,7 @@ export type GetTrackerOverviewResponses = {
                  */
                 entityCount: number;
                 /**
-                 * Credits that will be charged for this refresh.
+                 * Credits that will be charged for this refresh. Reflects premium-rule pricing when the list contains premium rules.
                  */
                 estimatedCredits: number;
             }>;
@@ -135985,6 +139403,8 @@ export type PreviewTrackerSignalData = {
         } & AcquiredCompany) | ({
             type: 'new_investor';
         } & NewInvestor) | ({
+            type: 'joined_accelerator';
+        } & JoinedAccelerator) | ({
             type: 'recently_hired_with_title';
         } & RecentlyHiredWithTitle) | ({
             type: 'department_size_threshold';
@@ -136044,7 +139464,11 @@ export type PreviewTrackerSignalData = {
             type: 'person_stuck_in_role';
         } & PersonStuckInRole) | ({
             type: 'person_tenure_milestone';
-        } & PersonTenureMilestone);
+        } & PersonTenureMilestone) | ({
+            type: 'person_contact_change';
+        } & PersonContactChange) | ({
+            type: 'person_added_role';
+        } & PersonAddedRole);
     };
     path?: never;
     query?: never;
@@ -136497,6 +139921,10 @@ export type ListAvailableTrackerRulesResponses = {
                  */
                 supportsInitialSignals: boolean;
                 /**
+                 * Whether this is a premium rule. Premium rules monitor additional sources (news coverage and LinkedIn activity) beyond the base profile; a list containing at least one premium rule is billed at a minimum rate per entity per refresh. See https://docs.fiber.ai/monitoring/tracker#premium-rules for details.
+                 */
+                isPremium: boolean;
+                /**
                  * Config schema and example for creating this rule type.
                  */
                 config: {
@@ -136559,6 +139987,10 @@ export type ListAvailableTrackerRulesResponses = {
                  * Whether this rule supports immediate initial signals on entity addition.
                  */
                 supportsInitialSignals: boolean;
+                /**
+                 * Whether this is a premium rule. Premium rules monitor additional sources (news coverage and LinkedIn activity) beyond the base profile; a list containing at least one premium rule is billed at a minimum rate per entity per refresh. See https://docs.fiber.ai/monitoring/tracker#premium-rules for details.
+                 */
+                isPremium: boolean;
                 /**
                  * Config schema and example for creating this rule type.
                  */
@@ -136877,7 +140309,7 @@ export type RefreshTrackerCompanyListResponses = {
              */
             entityCount: number;
             /**
-             * Estimated credit cost for this refresh. Actual cost may vary based on organization pricing or if tracked entities change before processing completes.
+             * Estimated credit cost for this refresh. Reflects premium-rule pricing when the list contains premium rules. Actual cost may vary based on organization pricing or if tracked entities change before processing completes.
              */
             estimatedCredits: number;
             /**
@@ -137163,7 +140595,7 @@ export type RefreshTrackerPersonListResponses = {
              */
             entityCount: number;
             /**
-             * Estimated credit cost for this refresh. Actual cost may vary based on organization pricing or if tracked entities change before processing completes.
+             * Estimated credit cost for this refresh. Reflects premium-rule pricing when the list contains premium rules. Actual cost may vary based on organization pricing or if tracked entities change before processing completes.
              */
             estimatedCredits: number;
             /**
@@ -137295,6 +140727,586 @@ export type RefreshTrackerPersonListResponses = {
 };
 
 export type RefreshTrackerPersonListResponse = RefreshTrackerPersonListResponses[keyof RefreshTrackerPersonListResponses];
+
+export type RescheduleTrackerCompanyListData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * The date (YYYY-MM-DD, UTC) on which the next scheduled refresh should run. Must be tomorrow (UTC) or later, and at most 360 days ahead. To refresh a list immediately, use the refresh endpoint instead. Subsequent refreshes continue at the list's regular interval, counted from this run.
+         */
+        nextRefreshDate: string;
+    };
+    path: {
+        /**
+         * The unique ID of the tracker list.
+         */
+        listId: string;
+    };
+    query?: never;
+    url: '/v1/tracker/company-lists/{listId}/reschedule';
+};
+
+export type RescheduleTrackerCompanyListErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type RescheduleTrackerCompanyListError = RescheduleTrackerCompanyListErrors[keyof RescheduleTrackerCompanyListErrors];
+
+export type RescheduleTrackerCompanyListResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * When the next refresh was scheduled before this call. Null if the list had no refresh scheduled yet.
+             */
+            previousNextRefreshAt?: string | null;
+            /**
+             * When the next refresh is now scheduled to run.
+             */
+            newNextRefreshAt: string;
+            /**
+             * Human-readable confirmation of the new schedule.
+             */
+            message: string;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type RescheduleTrackerCompanyListResponse = RescheduleTrackerCompanyListResponses[keyof RescheduleTrackerCompanyListResponses];
+
+export type RescheduleTrackerPersonListData = {
+    body: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+        /**
+         * The date (YYYY-MM-DD, UTC) on which the next scheduled refresh should run. Must be tomorrow (UTC) or later, and at most 360 days ahead. To refresh a list immediately, use the refresh endpoint instead. Subsequent refreshes continue at the list's regular interval, counted from this run.
+         */
+        nextRefreshDate: string;
+    };
+    path: {
+        /**
+         * The unique ID of the tracker list.
+         */
+        listId: string;
+    };
+    query?: never;
+    url: '/v1/tracker/person-lists/{listId}/reschedule';
+};
+
+export type RescheduleTrackerPersonListErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type RescheduleTrackerPersonListError = RescheduleTrackerPersonListErrors[keyof RescheduleTrackerPersonListErrors];
+
+export type RescheduleTrackerPersonListResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * When the next refresh was scheduled before this call. Null if the list had no refresh scheduled yet.
+             */
+            previousNextRefreshAt?: string | null;
+            /**
+             * When the next refresh is now scheduled to run.
+             */
+            newNextRefreshAt: string;
+            /**
+             * Human-readable confirmation of the new schedule.
+             */
+            message: string;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type RescheduleTrackerPersonListResponse = RescheduleTrackerPersonListResponses[keyof RescheduleTrackerPersonListResponses];
 
 export type TiktokProfileData = {
     body: {
@@ -143564,7 +147576,7 @@ export type RedditSearchData = {
          */
         query: string;
         /**
-         * Sort order for global Reddit post search.
+         * Sort order for global Reddit post search. Use `relevance` for research queries and `new` for monitoring a topic. `new` can include off-topic posts and posts outside `timeframe`, so check `publishedAt`.
          */
         sort?: 'relevance' | 'new' | 'top' | 'comment_count';
         /**
@@ -149772,7 +153784,7 @@ export type TrackerSignalDetectedWebhookPayload = {
         /**
          * Array of objects describing what changed. Shape depends on signal type.
          */
-        changeData: Array<FundingStageChange | LocationDeltaChange | CompanyLocationChange | FundingRoundChange | JobPostingChange | NewsArticleChange | LinkedInPostChange | PromotionChange | DemotionChange | RoleTenureChange | CompanyTenureChange | LayoffEventChange | TrackedEmployeeChange | InvestorChange | AcquisitionChange | CertificationChange | DepartmentSizeChange | PersonReactionChange | PersonCommentChange | DepartedFromListChange | ScalarDeltaChange | PersonExperienceChange | TenureChange | NumericDeltaChange | NamedItemChange>;
+        changeData: Array<FundingStageChange | LocationDeltaChange | CompanyLocationChange | FundingRoundChange | JobPostingChange | NewsArticleChange | LinkedInPostChange | ContactUpdateChange | PromotionChange | DemotionChange | RoleTenureChange | CompanyTenureChange | LayoffEventChange | TrackedEmployeeChange | InvestorChange | AcquisitionChange | AcceleratorChange | CertificationChange | DepartmentSizeChange | PersonReactionChange | PersonCommentChange | DepartedFromListChange | ScalarDeltaChange | PersonExperienceChange | TenureChange | NumericDeltaChange | NamedItemChange>;
         /**
          * URLs providing proof or more information about this signal.
          */

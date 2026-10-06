@@ -345,6 +345,10 @@ export const zCompanyPostedWithKeyword = z.object({
         z.array(z.string().min(1)).min(1),
         z.null()
     ])),
+    excludedKeywords: z.optional(z.union([
+        z.array(z.string().min(1)).max(20),
+        z.null()
+    ])),
     minReactions: z.optional(z.union([
         z.int().gte(0),
         z.null()
@@ -510,6 +514,43 @@ export const zNewInvestor = z.object({
     entityType: z.literal('company'),
     investorNames: z.optional(z.union([
         z.array(z.string().min(1)).min(1),
+        z.null()
+    ]))
+});
+
+/**
+ * Joined an accelerator
+ */
+export const zJoinedAccelerator = z.object({
+    lookbackDays: z.optional(z.union([
+        z.int().gte(1).lte(90),
+        z.null()
+    ])),
+    isDummy: z.optional(z.boolean()),
+    type: z.literal('joined_accelerator'),
+    entityType: z.literal('company'),
+    acceleratorNames: z.optional(z.union([
+        z.array(z.enum([
+            'a16z_speedrun',
+            'accel_atoms',
+            'ai2_incubator',
+            'alchemist_accelerator',
+            'alliance',
+            'antler',
+            'berkeley_skydeck',
+            'founders_inc',
+            'google_startups',
+            'launch_accelerator',
+            'neo',
+            'pear_x',
+            'plug_and_play',
+            'sosv',
+            'south_park_commons',
+            'startx',
+            'techstars',
+            'the_mint',
+            'ycombinator'
+        ])).min(1),
         z.null()
     ]))
 });
@@ -965,6 +1006,10 @@ export const zCompanyPostedWithKeywordResponse = z.object({
         z.array(z.string().min(1)).min(1),
         z.null()
     ])),
+    excludedKeywords: z.optional(z.union([
+        z.array(z.string().min(1)).max(20),
+        z.null()
+    ])),
     minReactions: z.optional(z.union([
         z.int().gte(0),
         z.null()
@@ -1139,6 +1184,44 @@ export const zNewInvestorResponse = z.object({
     entityType: z.literal('company'),
     investorNames: z.optional(z.union([
         z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    id: z.string()
+});
+
+/**
+ * Joined an accelerator
+ */
+export const zJoinedAcceleratorResponse = z.object({
+    lookbackDays: z.optional(z.union([
+        z.int().gte(1).lte(90),
+        z.null()
+    ])),
+    isDummy: z.boolean(),
+    type: z.literal('joined_accelerator'),
+    entityType: z.literal('company'),
+    acceleratorNames: z.optional(z.union([
+        z.array(z.enum([
+            'a16z_speedrun',
+            'accel_atoms',
+            'ai2_incubator',
+            'alchemist_accelerator',
+            'alliance',
+            'antler',
+            'berkeley_skydeck',
+            'founders_inc',
+            'google_startups',
+            'launch_accelerator',
+            'neo',
+            'pear_x',
+            'plug_and_play',
+            'sosv',
+            'south_park_commons',
+            'startx',
+            'techstars',
+            'the_mint',
+            'ycombinator'
+        ])).min(1),
         z.null()
     ])),
     id: z.string()
@@ -1368,6 +1451,10 @@ export const zJobPostingChange = z.object({
         z.string(),
         z.null()
     ])),
+    firstDetectedAt: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
     status: z.enum(['active', 'closed'])
 });
 
@@ -1391,6 +1478,52 @@ export const zNewsArticleChange = z.object({
         'negative',
         'neutral'
     ])))
+});
+
+export const zLinkedInPostResharedBy = z.object({
+    name: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    linkedinSlug: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    linkedinUrl: z.optional(z.union([
+        z.string(),
+        z.null()
+    ]))
+});
+
+export const zLinkedInResharedPost = z.object({
+    postUrl: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    caption: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    postedAt: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    posterName: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    posterSlug: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    posterUrl: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    posterProfilePicture: z.optional(z.union([
+        z.string(),
+        z.null()
+    ]))
 });
 
 export const zLinkedInPostChange = z.object({
@@ -1437,6 +1570,19 @@ export const zLinkedInPostChange = z.object({
     ])),
     matchedKeywords: z.optional(z.union([
         z.array(z.string()),
+        z.null()
+    ])),
+    postType: z.optional(z.nullable(z.enum([
+        'original',
+        'repost',
+        'repost_with_commentary'
+    ]))),
+    resharedBy: z.optional(z.union([
+        zLinkedInPostResharedBy,
+        z.null()
+    ])),
+    resharedPost: z.optional(z.union([
+        zLinkedInResharedPost,
         z.null()
     ]))
 });
@@ -1485,6 +1631,63 @@ export const zPersonExperienceChange = z.object({
     ])),
     seniority: z.optional(z.union([
         z.string(),
+        z.null()
+    ]))
+});
+
+export const zRevealedEmail = z.object({
+    emailAddress: z.string().min(1)
+});
+
+export const zContactUpdateChange = z.object({
+    linkedinCompanyId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    companyName: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    companyLinkedinUrl: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    linkedinCompanySlug: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    companyDomains: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ])),
+    title: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    isCurrent: z.optional(z.boolean()),
+    startDate: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    endDate: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    location: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    employmentType: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    seniority: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    contactChangeKind: z.enum(['job_change', 'new_contact_info']),
+    newEmails: z.optional(z.union([
+        z.array(zRevealedEmail),
         z.null()
     ]))
 });
@@ -1623,6 +1826,18 @@ export const zAcquisitionChange = z.object({
     ])),
     acquisitionDate: z.optional(z.union([
         z.string(),
+        z.null()
+    ]))
+});
+
+export const zAcceleratorChange = z.object({
+    acceleratorName: z.string(),
+    batch: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    year: z.optional(z.union([
+        z.int(),
         z.null()
     ]))
 });
@@ -1775,6 +1990,7 @@ export const zTrackerSignalOutput = z.object({
         zJobPostingChange,
         zNewsArticleChange,
         zLinkedInPostChange,
+        zContactUpdateChange,
         zPromotionChange,
         zDemotionChange,
         zRoleTenureChange,
@@ -1783,6 +1999,7 @@ export const zTrackerSignalOutput = z.object({
         zTrackedEmployeeChange,
         zInvestorChange,
         zAcquisitionChange,
+        zAcceleratorChange,
         zCertificationChange,
         zDepartmentSizeChange,
         zPersonReactionChange,
@@ -2036,6 +2253,10 @@ export const zPersonPostedWithKeyword = z.object({
     entityType: z.literal('person'),
     keywords: z.optional(z.union([
         z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    excludedKeywords: z.optional(z.union([
+        z.array(z.string().min(1)).max(20),
         z.null()
     ])),
     minReactions: z.optional(z.union([
@@ -2337,6 +2558,96 @@ export const zPersonTenureMilestone = z.object({
 });
 
 /**
+ * Contact change
+ */
+export const zPersonContactChange = z.object({
+    lookbackDays: z.optional(z.union([
+        z.int().gte(1).lte(90),
+        z.null()
+    ])),
+    isDummy: z.optional(z.boolean()),
+    entityType: z.literal('person'),
+    toCompanies: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    fromCompanies: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    toTitleKeywords: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    toSeniorityLevels: z.optional(z.union([
+        z.array(z.enum([
+            'Internship',
+            'Entry level',
+            'Associate',
+            'Mid-Senior level',
+            'Director',
+            'Executive'
+        ])).min(1),
+        z.null()
+    ])),
+    toEmploymentTypes: z.optional(z.union([
+        z.array(z.enum([
+            'Full-time',
+            'Part-time',
+            'Contract',
+            'Internship',
+            'Temporary',
+            'Volunteer'
+        ])).min(1),
+        z.null()
+    ])),
+    type: z.literal('person_contact_change')
+});
+
+/**
+ * Added a role
+ */
+export const zPersonAddedRole = z.object({
+    lookbackDays: z.optional(z.union([
+        z.int().gte(1).lte(90),
+        z.null()
+    ])),
+    isDummy: z.optional(z.boolean()),
+    entityType: z.literal('person'),
+    toCompanies: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    toTitleKeywords: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    toSeniorityLevels: z.optional(z.union([
+        z.array(z.enum([
+            'Internship',
+            'Entry level',
+            'Associate',
+            'Mid-Senior level',
+            'Director',
+            'Executive'
+        ])).min(1),
+        z.null()
+    ])),
+    toEmploymentTypes: z.optional(z.union([
+        z.array(z.enum([
+            'Full-time',
+            'Part-time',
+            'Contract',
+            'Internship',
+            'Temporary',
+            'Volunteer'
+        ])).min(1),
+        z.null()
+    ])),
+    type: z.literal('person_added_role')
+});
+
+/**
  * Person changed company
  */
 export const zPersonChangedCompanyResponse = z.object({
@@ -2576,6 +2887,10 @@ export const zPersonPostedWithKeywordResponse = z.object({
     entityType: z.literal('person'),
     keywords: z.optional(z.union([
         z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    excludedKeywords: z.optional(z.union([
+        z.array(z.string().min(1)).max(20),
         z.null()
     ])),
     minReactions: z.optional(z.union([
@@ -2891,6 +3206,98 @@ export const zPersonTenureMilestoneResponse = z.object({
     type: z.literal('person_tenure_milestone'),
     entityType: z.literal('person'),
     thresholdMonths: z.int().gte(1),
+    id: z.string()
+});
+
+/**
+ * Contact change
+ */
+export const zPersonContactChangeResponse = z.object({
+    lookbackDays: z.optional(z.union([
+        z.int().gte(1).lte(90),
+        z.null()
+    ])),
+    isDummy: z.boolean(),
+    entityType: z.literal('person'),
+    toCompanies: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    fromCompanies: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    toTitleKeywords: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    toSeniorityLevels: z.optional(z.union([
+        z.array(z.enum([
+            'Internship',
+            'Entry level',
+            'Associate',
+            'Mid-Senior level',
+            'Director',
+            'Executive'
+        ])).min(1),
+        z.null()
+    ])),
+    toEmploymentTypes: z.optional(z.union([
+        z.array(z.enum([
+            'Full-time',
+            'Part-time',
+            'Contract',
+            'Internship',
+            'Temporary',
+            'Volunteer'
+        ])).min(1),
+        z.null()
+    ])),
+    type: z.literal('person_contact_change'),
+    id: z.string()
+});
+
+/**
+ * Added a role
+ */
+export const zPersonAddedRoleResponse = z.object({
+    lookbackDays: z.optional(z.union([
+        z.int().gte(1).lte(90),
+        z.null()
+    ])),
+    isDummy: z.boolean(),
+    entityType: z.literal('person'),
+    toCompanies: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    toTitleKeywords: z.optional(z.union([
+        z.array(z.string().min(1)).min(1),
+        z.null()
+    ])),
+    toSeniorityLevels: z.optional(z.union([
+        z.array(z.enum([
+            'Internship',
+            'Entry level',
+            'Associate',
+            'Mid-Senior level',
+            'Director',
+            'Executive'
+        ])).min(1),
+        z.null()
+    ])),
+    toEmploymentTypes: z.optional(z.union([
+        z.array(z.enum([
+            'Full-time',
+            'Part-time',
+            'Contract',
+            'Internship',
+            'Temporary',
+            'Volunteer'
+        ])).min(1),
+        z.null()
+    ])),
+    type: z.literal('person_added_role'),
     id: z.string()
 });
 
@@ -4121,6 +4528,60 @@ export const zGetOrgCreditsResponse = z.object({
                     })).min(1)
                 }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
                 companyReviews: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                hemLookup: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                githubRepoContributors: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                githubOrgContributors: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 100 }] }),
+                githubUserProfile: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                githubUserRepoActivity: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
+                githubRepoSearch: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
                             z.number().gt(0),
@@ -15141,6 +15602,37 @@ export const zUpdateAudienceSearchParamsData = z.object({
                     }),
                     z.null()
                 ])),
+                employeeCountRanges: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
                 keywords: z.optional(z.union([
                     z.object({
                         containsAll: z.optional(z.union([
@@ -22135,6 +22627,37 @@ export const zUpdateAudienceSearchParamsData = z.object({
                     }),
                     z.null()
                 ])),
+                revenueRangesUSD: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
                 employeeTrendsV2: z.optional(z.union([
                     z.object({
                         obeysAll: z.optional(z.union([
@@ -23178,6 +23701,109 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     ])),
                                     keywords: z.optional(z.array(z.string())).prefault([])
                                 })
+                            ])),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                jobFunction: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Arts and Design',
+                                'Business Development',
+                                'Community & Social Services',
+                                'Consulting',
+                                'Education',
+                                'Engineering',
+                                'Entrepreneurship',
+                                'Healthcare Services',
+                                'Human Resources',
+                                'Information Technology',
+                                'Legal',
+                                'Military & Protective Services',
+                                'Operations',
+                                'Program & Product Management',
+                                'Real Estate',
+                                'Sales',
+                                'Support',
+                                'Administrative',
+                                'Finance',
+                                'Marketing',
+                                'Purchasing',
+                                'Product Management',
+                                'Advertising',
+                                'Analyst',
+                                'Customer Service',
+                                'Distribution',
+                                'Design',
+                                'General Business',
+                                'Management',
+                                'Manufacturing',
+                                'Other',
+                                'Public Relations',
+                                'Project Management',
+                                'Production',
+                                'Quality Assurance',
+                                'Research',
+                                'Science',
+                                'Supply Chain',
+                                'Training',
+                                'Health Care Provider',
+                                'Accounting',
+                                'Art / Creative',
+                                'Strategy / Planning',
+                                'Writing / Editing'
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Arts and Design',
+                                'Business Development',
+                                'Community & Social Services',
+                                'Consulting',
+                                'Education',
+                                'Engineering',
+                                'Entrepreneurship',
+                                'Healthcare Services',
+                                'Human Resources',
+                                'Information Technology',
+                                'Legal',
+                                'Military & Protective Services',
+                                'Operations',
+                                'Program & Product Management',
+                                'Real Estate',
+                                'Sales',
+                                'Support',
+                                'Administrative',
+                                'Finance',
+                                'Marketing',
+                                'Purchasing',
+                                'Product Management',
+                                'Advertising',
+                                'Analyst',
+                                'Customer Service',
+                                'Distribution',
+                                'Design',
+                                'General Business',
+                                'Management',
+                                'Manufacturing',
+                                'Other',
+                                'Public Relations',
+                                'Project Management',
+                                'Production',
+                                'Quality Assurance',
+                                'Research',
+                                'Science',
+                                'Supply Chain',
+                                'Training',
+                                'Health Care Provider',
+                                'Accounting',
+                                'Art / Creative',
+                                'Strategy / Planning',
+                                'Writing / Editing'
                             ])),
                             z.null()
                         ]))
@@ -26571,6 +27197,15 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     exact: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.object({
@@ -26605,6 +27240,15 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     type: z.enum(['plain']),
                                     term: z.string().min(1),
                                     exact: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
                                     ]))
@@ -26643,6 +27287,15 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     exact: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.object({
@@ -26668,6 +27321,33 @@ export const zUpdateAudienceSearchParamsData = z.object({
                                     type: z.enum(['cartesian']),
                                     keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                 })
+                            ])),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                seniority: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
                             ])),
                             z.null()
                         ]))
@@ -29959,6 +30639,37 @@ export const zCompanySearchData = z.object({
                     ])),
                     upperBoundInclusive: z.optional(z.union([
                         z.int().gte(0),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            employeeCountRanges: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBoundExclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ])),
+                            upperBoundInclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBoundExclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ])),
+                            upperBoundInclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ]))
+                        })),
                         z.null()
                     ]))
                 }),
@@ -36953,6 +37664,37 @@ export const zCompanySearchData = z.object({
                     ])),
                     upperBound: z.optional(z.union([
                         z.int(),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            revenueRangesUSD: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ])),
+                            upperBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ])),
+                            upperBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ]))
+                        })),
                         z.null()
                     ]))
                 }),
@@ -40985,6 +41727,37 @@ export const zCompanyCountData = z.object({
                 }),
                 z.null()
             ])),
+            employeeCountRanges: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBoundExclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ])),
+                            upperBoundInclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBoundExclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ])),
+                            upperBoundInclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             keywords: z.optional(z.union([
                 z.object({
                     containsAll: z.optional(z.union([
@@ -47979,6 +48752,37 @@ export const zCompanyCountData = z.object({
                 }),
                 z.null()
             ])),
+            revenueRangesUSD: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ])),
+                            upperBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ])),
+                            upperBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             employeeTrendsV2: z.optional(z.union([
                 z.object({
                     obeysAll: z.optional(z.union([
@@ -50749,6 +51553,109 @@ export const zPeopleSearchData = z.object({
                                 ])),
                                 keywords: z.optional(z.array(z.string())).prefault([])
                             })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            jobFunction: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
                         ])),
                         z.null()
                     ]))
@@ -54142,6 +55049,15 @@ export const zPeopleSearchData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -54176,6 +55092,15 @@ export const zPeopleSearchData = z.object({
                                 type: z.enum(['plain']),
                                 term: z.string().min(1),
                                 exact: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
                                 ]))
@@ -54214,6 +55139,15 @@ export const zPeopleSearchData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -54239,6 +55173,33 @@ export const zPeopleSearchData = z.object({
                                 type: z.enum(['cartesian']),
                                 keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                             })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            seniority: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
                         ])),
                         z.null()
                     ]))
@@ -58085,6 +59046,109 @@ export const zPeopleSearchCountData = z.object({
                 }),
                 z.null()
             ])),
+            jobFunction: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             exactProfile: z.optional(z.union([
                 z.object({
                     anyOf: z.optional(z.union([
@@ -61472,6 +62536,15 @@ export const zPeopleSearchCountData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -61506,6 +62579,15 @@ export const zPeopleSearchCountData = z.object({
                                 type: z.enum(['plain']),
                                 term: z.string().min(1),
                                 exact: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
                                 ]))
@@ -61544,6 +62626,15 @@ export const zPeopleSearchCountData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -61569,6 +62660,33 @@ export const zPeopleSearchCountData = z.object({
                                 type: z.enum(['cartesian']),
                                 keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                             })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            seniority: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
                         ])),
                         z.null()
                     ]))
@@ -64227,6 +65345,37 @@ export const zPaginatedCombinedSearchData = z.object({
                             ])),
                             upperBoundInclusive: z.optional(z.union([
                                 z.int().gte(0),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    employeeCountRanges: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
                                 z.null()
                             ]))
                         }),
@@ -71226,6 +72375,37 @@ export const zPaginatedCombinedSearchData = z.object({
                         }),
                         z.null()
                     ])),
+                    revenueRangesUSD: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     employeeTrendsV2: z.optional(z.union([
                         z.object({
                             obeysAll: z.optional(z.union([
@@ -72283,6 +73463,109 @@ export const zPaginatedCombinedSearchData = z.object({
                                         ])),
                                         keywords: z.optional(z.array(z.string())).prefault([])
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    jobFunction: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
                                 ])),
                                 z.null()
                             ]))
@@ -75676,6 +76959,15 @@ export const zPaginatedCombinedSearchData = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -75710,6 +77002,15 @@ export const zPaginatedCombinedSearchData = z.object({
                                         type: z.enum(['plain']),
                                         term: z.string().min(1),
                                         exact: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
                                         ]))
@@ -75748,6 +77049,15 @@ export const zPaginatedCombinedSearchData = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -75773,6 +77083,33 @@ export const zPaginatedCombinedSearchData = z.object({
                                         type: z.enum(['cartesian']),
                                         keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    seniority: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
                                 ])),
                                 z.null()
                             ]))
@@ -82789,6 +84126,37 @@ export const zCombinedSearchCountData = z.object({
                 }),
                 z.null()
             ])),
+            employeeCountRanges: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBoundExclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ])),
+                            upperBoundInclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBoundExclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ])),
+                            upperBoundInclusive: z.optional(z.union([
+                                z.int().gte(0),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             keywords: z.optional(z.union([
                 z.object({
                     containsAll: z.optional(z.union([
@@ -89783,6 +91151,37 @@ export const zCombinedSearchCountData = z.object({
                 }),
                 z.null()
             ])),
+            revenueRangesUSD: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ])),
+                            upperBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.object({
+                            lowerBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ])),
+                            upperBound: z.optional(z.union([
+                                z.int(),
+                                z.null()
+                            ]))
+                        })),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             employeeTrendsV2: z.optional(z.union([
                 z.object({
                     obeysAll: z.optional(z.union([
@@ -90823,6 +92222,109 @@ export const zCombinedSearchCountData = z.object({
                                 ])),
                                 keywords: z.optional(z.array(z.string())).prefault([])
                             })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            jobFunction: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
                         ])),
                         z.null()
                     ]))
@@ -94216,6 +95718,15 @@ export const zCombinedSearchCountData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -94250,6 +95761,15 @@ export const zCombinedSearchCountData = z.object({
                                 type: z.enum(['plain']),
                                 term: z.string().min(1),
                                 exact: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
                                 ]))
@@ -94288,6 +95808,15 @@ export const zCombinedSearchCountData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -94313,6 +95842,33 @@ export const zCombinedSearchCountData = z.object({
                                 type: z.enum(['cartesian']),
                                 keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                             })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            seniority: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
                         ])),
                         z.null()
                     ]))
@@ -96126,7 +97682,8 @@ export const zCombinedSearchCountData = z.object({
 export const zCombinedSearchCountResponse = z.object({
     output: z.object({
         numCompanies: z.number(),
-        numProfiles: z.number()
+        numProfiles: z.number(),
+        isEstimate: z.boolean()
     }),
     chargeInfo: z.union([
         z.object({
@@ -101647,6 +103204,109 @@ export const zStealthFoundersSearchData = z.object({
                 }),
                 z.null()
             ])),
+            jobFunction: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             exactProfileV2: z.optional(z.union([
                 z.object({
                     anyOf: z.optional(z.union([
@@ -104714,6 +106374,15 @@ export const zStealthFoundersSearchData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -104748,6 +106417,15 @@ export const zStealthFoundersSearchData = z.object({
                                 type: z.enum(['plain']),
                                 term: z.string().min(1),
                                 exact: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
                                 ]))
@@ -104786,6 +106464,15 @@ export const zStealthFoundersSearchData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -104811,6 +106498,33 @@ export const zStealthFoundersSearchData = z.object({
                                 type: z.enum(['cartesian']),
                                 keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                             })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            seniority: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
                         ])),
                         z.null()
                     ]))
@@ -108186,6 +109900,109 @@ export const zStealthFoundersCountData = z.object({
                 }),
                 z.null()
             ])),
+            jobFunction: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Arts and Design',
+                            'Business Development',
+                            'Community & Social Services',
+                            'Consulting',
+                            'Education',
+                            'Engineering',
+                            'Entrepreneurship',
+                            'Healthcare Services',
+                            'Human Resources',
+                            'Information Technology',
+                            'Legal',
+                            'Military & Protective Services',
+                            'Operations',
+                            'Program & Product Management',
+                            'Real Estate',
+                            'Sales',
+                            'Support',
+                            'Administrative',
+                            'Finance',
+                            'Marketing',
+                            'Purchasing',
+                            'Product Management',
+                            'Advertising',
+                            'Analyst',
+                            'Customer Service',
+                            'Distribution',
+                            'Design',
+                            'General Business',
+                            'Management',
+                            'Manufacturing',
+                            'Other',
+                            'Public Relations',
+                            'Project Management',
+                            'Production',
+                            'Quality Assurance',
+                            'Research',
+                            'Science',
+                            'Supply Chain',
+                            'Training',
+                            'Health Care Provider',
+                            'Accounting',
+                            'Art / Creative',
+                            'Strategy / Planning',
+                            'Writing / Editing'
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
             exactProfileV2: z.optional(z.union([
                 z.object({
                     anyOf: z.optional(z.union([
@@ -111253,6 +113070,15 @@ export const zStealthFoundersCountData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -111287,6 +113113,15 @@ export const zStealthFoundersCountData = z.object({
                                 type: z.enum(['plain']),
                                 term: z.string().min(1),
                                 exact: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
                                 ]))
@@ -111325,6 +113160,15 @@ export const zStealthFoundersCountData = z.object({
                                 exact: z.optional(z.union([
                                     z.boolean(),
                                     z.null()
+                                ])),
+                                mode: z.optional(z.nullable(z.enum([
+                                    'normal',
+                                    'prefix',
+                                    'phrase'
+                                ]))),
+                                stemming: z.optional(z.union([
+                                    z.boolean(),
+                                    z.null()
                                 ]))
                             }),
                             z.object({
@@ -111350,6 +113194,33 @@ export const zStealthFoundersCountData = z.object({
                                 type: z.enum(['cartesian']),
                                 keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                             })
+                        ])),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            seniority: z.optional(z.union([
+                z.object({
+                    anyOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
+                        ])),
+                        z.null()
+                    ])),
+                    noneOf: z.optional(z.union([
+                        z.array(z.enum([
+                            'Entry level',
+                            'Director',
+                            'Associate',
+                            'Mid-Senior level',
+                            'Internship',
+                            'Executive'
                         ])),
                         z.null()
                     ]))
@@ -117534,7 +119405,8 @@ export const zProfilePostsLiveFetchResponse = z.object({
                                 'INSIGHTFUL',
                                 'CELEBRATE',
                                 'SUPPORT',
-                                'FUNNY'
+                                'FUNNY',
+                                'CURIOUS'
                             ])))
                         })),
                         z.null()
@@ -117634,7 +119506,8 @@ export const zProfilePostsLiveFetchResponse = z.object({
                                         'INSIGHTFUL',
                                         'CELEBRATE',
                                         'SUPPORT',
-                                        'FUNNY'
+                                        'FUNNY',
+                                        'CURIOUS'
                                     ])))
                                 })),
                                 z.null()
@@ -117668,6 +119541,27 @@ export const zProfilePostsLiveFetchResponse = z.object({
                         z.null()
                     ])),
                     subText: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            resharedBy: z.optional(z.union([
+                z.object({
+                    linkedinUrl: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    profilePicture: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinSlug: z.optional(z.union([
                         z.string(),
                         z.null()
                     ]))
@@ -117837,7 +119731,8 @@ export const zCompanyPostsLiveFetchResponse = z.object({
                                 'INSIGHTFUL',
                                 'CELEBRATE',
                                 'SUPPORT',
-                                'FUNNY'
+                                'FUNNY',
+                                'CURIOUS'
                             ])))
                         })),
                         z.null()
@@ -117937,7 +119832,8 @@ export const zCompanyPostsLiveFetchResponse = z.object({
                                         'INSIGHTFUL',
                                         'CELEBRATE',
                                         'SUPPORT',
-                                        'FUNNY'
+                                        'FUNNY',
+                                        'CURIOUS'
                                     ])))
                                 })),
                                 z.null()
@@ -117971,6 +119867,27 @@ export const zCompanyPostsLiveFetchResponse = z.object({
                         z.null()
                     ])),
                     subText: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            resharedBy: z.optional(z.union([
+                z.object({
+                    linkedinUrl: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    name: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    profilePicture: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinSlug: z.optional(z.union([
                         z.string(),
                         z.null()
                     ]))
@@ -118128,7 +120045,8 @@ export const zPostCommentsLiveFetchResponse = z.object({
                         'INSIGHTFUL',
                         'CELEBRATE',
                         'SUPPORT',
-                        'FUNNY'
+                        'FUNNY',
+                        'CURIOUS'
                     ])))
                 })),
                 z.null()
@@ -118213,7 +120131,8 @@ export const zPostCommentsLiveFetchResponse = z.object({
                                 'INSIGHTFUL',
                                 'CELEBRATE',
                                 'SUPPORT',
-                                'FUNNY'
+                                'FUNNY',
+                                'CURIOUS'
                             ])))
                         })),
                         z.null()
@@ -118347,7 +120266,8 @@ export const zPostReactionsLiveFetchData = z.object({
             'INSIGHTFUL',
             'CELEBRATE',
             'SUPPORT',
-            'FUNNY'
+            'FUNNY',
+            'CURIOUS'
         ]))),
         cursor: z.optional(z.union([
             z.string(),
@@ -118370,7 +120290,8 @@ export const zPostReactionsLiveFetchResponse = z.object({
                 'INSIGHTFUL',
                 'CELEBRATE',
                 'SUPPORT',
-                'FUNNY'
+                'FUNNY',
+                'CURIOUS'
             ]))),
             reactor: z.optional(z.union([
                 z.object({
@@ -118686,7 +120607,8 @@ export const zProfileReactionsLiveFetchResponse = z.object({
                     'INSIGHTFUL',
                     'CELEBRATE',
                     'SUPPORT',
-                    'FUNNY'
+                    'FUNNY',
+                    'CURIOUS'
                 ]))),
                 target: z.optional(z.union([
                     z.string(),
@@ -119028,7 +120950,8 @@ export const zPostSearchByKeywordsResponse = z.object({
                                 'INSIGHTFUL',
                                 'CELEBRATE',
                                 'SUPPORT',
-                                'FUNNY'
+                                'FUNNY',
+                                'CURIOUS'
                             ])))
                         })),
                         z.null()
@@ -123593,9 +125516,16 @@ export const zGoogleMapsSearchData = z.object({
             z.string(),
             z.null()
         ])),
-        query: z.string().min(1),
+        query: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ])),
+        googleMapsUrl: z.optional(z.union([
+            z.url(),
+            z.null()
+        ])),
         maxResults: z.optional(z.int().gt(0).lte(10000)).prefault(100),
-        strategy: z.union([
+        strategy: z.optional(z.union([
             z.object({
                 strategy: z.enum(['whole-usa'])
             }),
@@ -124252,8 +126182,9 @@ export const zGoogleMapsSearchData = z.object({
                     'small',
                     'tiny'
                 ])))
-            })
-        ])
+            }),
+            z.null()
+        ]))
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
@@ -134681,6 +136612,37 @@ export const zNlpSearchParseResponse = z.object({
                             }),
                             z.null()
                         ])),
+                        employeeCountRanges: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        lowerBoundExclusive: z.optional(z.union([
+                                            z.int().gte(0),
+                                            z.null()
+                                        ])),
+                                        upperBoundInclusive: z.optional(z.union([
+                                            z.int().gte(0),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        lowerBoundExclusive: z.optional(z.union([
+                                            z.int().gte(0),
+                                            z.null()
+                                        ])),
+                                        upperBoundInclusive: z.optional(z.union([
+                                            z.int().gte(0),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
                         keywords: z.optional(z.union([
                             z.object({
                                 containsAll: z.optional(z.union([
@@ -141675,6 +143637,37 @@ export const zNlpSearchParseResponse = z.object({
                             }),
                             z.null()
                         ])),
+                        revenueRangesUSD: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        lowerBound: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        upperBound: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        lowerBound: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        upperBound: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
                         employeeTrendsV2: z.optional(z.union([
                             z.object({
                                 obeysAll: z.optional(z.union([
@@ -142718,6 +144711,109 @@ export const zNlpSearchParseResponse = z.object({
                                             ])),
                                             keywords: z.array(z.string()).prefault([])
                                         })
+                                    ])),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
+                        jobFunction: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Arts and Design',
+                                        'Business Development',
+                                        'Community & Social Services',
+                                        'Consulting',
+                                        'Education',
+                                        'Engineering',
+                                        'Entrepreneurship',
+                                        'Healthcare Services',
+                                        'Human Resources',
+                                        'Information Technology',
+                                        'Legal',
+                                        'Military & Protective Services',
+                                        'Operations',
+                                        'Program & Product Management',
+                                        'Real Estate',
+                                        'Sales',
+                                        'Support',
+                                        'Administrative',
+                                        'Finance',
+                                        'Marketing',
+                                        'Purchasing',
+                                        'Product Management',
+                                        'Advertising',
+                                        'Analyst',
+                                        'Customer Service',
+                                        'Distribution',
+                                        'Design',
+                                        'General Business',
+                                        'Management',
+                                        'Manufacturing',
+                                        'Other',
+                                        'Public Relations',
+                                        'Project Management',
+                                        'Production',
+                                        'Quality Assurance',
+                                        'Research',
+                                        'Science',
+                                        'Supply Chain',
+                                        'Training',
+                                        'Health Care Provider',
+                                        'Accounting',
+                                        'Art / Creative',
+                                        'Strategy / Planning',
+                                        'Writing / Editing'
+                                    ])),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Arts and Design',
+                                        'Business Development',
+                                        'Community & Social Services',
+                                        'Consulting',
+                                        'Education',
+                                        'Engineering',
+                                        'Entrepreneurship',
+                                        'Healthcare Services',
+                                        'Human Resources',
+                                        'Information Technology',
+                                        'Legal',
+                                        'Military & Protective Services',
+                                        'Operations',
+                                        'Program & Product Management',
+                                        'Real Estate',
+                                        'Sales',
+                                        'Support',
+                                        'Administrative',
+                                        'Finance',
+                                        'Marketing',
+                                        'Purchasing',
+                                        'Product Management',
+                                        'Advertising',
+                                        'Analyst',
+                                        'Customer Service',
+                                        'Distribution',
+                                        'Design',
+                                        'General Business',
+                                        'Management',
+                                        'Manufacturing',
+                                        'Other',
+                                        'Public Relations',
+                                        'Project Management',
+                                        'Production',
+                                        'Quality Assurance',
+                                        'Research',
+                                        'Science',
+                                        'Supply Chain',
+                                        'Training',
+                                        'Health Care Provider',
+                                        'Accounting',
+                                        'Art / Creative',
+                                        'Strategy / Planning',
+                                        'Writing / Editing'
                                     ])),
                                     z.null()
                                 ]))
@@ -146111,6 +148207,15 @@ export const zNlpSearchParseResponse = z.object({
                                             exact: z.optional(z.union([
                                                 z.boolean(),
                                                 z.null()
+                                            ])),
+                                            mode: z.optional(z.nullable(z.enum([
+                                                'normal',
+                                                'prefix',
+                                                'phrase'
+                                            ]))),
+                                            stemming: z.optional(z.union([
+                                                z.boolean(),
+                                                z.null()
                                             ]))
                                         }),
                                         z.object({
@@ -146145,6 +148250,15 @@ export const zNlpSearchParseResponse = z.object({
                                             type: z.enum(['plain']),
                                             term: z.string().min(1),
                                             exact: z.optional(z.union([
+                                                z.boolean(),
+                                                z.null()
+                                            ])),
+                                            mode: z.optional(z.nullable(z.enum([
+                                                'normal',
+                                                'prefix',
+                                                'phrase'
+                                            ]))),
+                                            stemming: z.optional(z.union([
                                                 z.boolean(),
                                                 z.null()
                                             ]))
@@ -146183,6 +148297,15 @@ export const zNlpSearchParseResponse = z.object({
                                             exact: z.optional(z.union([
                                                 z.boolean(),
                                                 z.null()
+                                            ])),
+                                            mode: z.optional(z.nullable(z.enum([
+                                                'normal',
+                                                'prefix',
+                                                'phrase'
+                                            ]))),
+                                            stemming: z.optional(z.union([
+                                                z.boolean(),
+                                                z.null()
                                             ]))
                                         }),
                                         z.object({
@@ -146208,6 +148331,33 @@ export const zNlpSearchParseResponse = z.object({
                                             type: z.enum(['cartesian']),
                                             keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                         })
+                                    ])),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
+                        seniority: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Entry level',
+                                        'Director',
+                                        'Associate',
+                                        'Mid-Senior level',
+                                        'Internship',
+                                        'Executive'
+                                    ])),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Entry level',
+                                        'Director',
+                                        'Associate',
+                                        'Mid-Senior level',
+                                        'Internship',
+                                        'Executive'
                                     ])),
                                     z.null()
                                 ]))
@@ -148947,6 +151097,37 @@ export const zSlushieRunResponse = z.object({
                             }),
                             z.null()
                         ])),
+                        employeeCountRanges: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        lowerBoundExclusive: z.optional(z.union([
+                                            z.int().gte(0),
+                                            z.null()
+                                        ])),
+                                        upperBoundInclusive: z.optional(z.union([
+                                            z.int().gte(0),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        lowerBoundExclusive: z.optional(z.union([
+                                            z.int().gte(0),
+                                            z.null()
+                                        ])),
+                                        upperBoundInclusive: z.optional(z.union([
+                                            z.int().gte(0),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
                         keywords: z.optional(z.union([
                             z.object({
                                 containsAll: z.optional(z.union([
@@ -155941,6 +158122,37 @@ export const zSlushieRunResponse = z.object({
                             }),
                             z.null()
                         ])),
+                        revenueRangesUSD: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        lowerBound: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        upperBound: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.object({
+                                        lowerBound: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        upperBound: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
                         employeeTrendsV2: z.optional(z.union([
                             z.object({
                                 obeysAll: z.optional(z.union([
@@ -156984,6 +159196,109 @@ export const zSlushieRunResponse = z.object({
                                             ])),
                                             keywords: z.array(z.string()).prefault([])
                                         })
+                                    ])),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
+                        jobFunction: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Arts and Design',
+                                        'Business Development',
+                                        'Community & Social Services',
+                                        'Consulting',
+                                        'Education',
+                                        'Engineering',
+                                        'Entrepreneurship',
+                                        'Healthcare Services',
+                                        'Human Resources',
+                                        'Information Technology',
+                                        'Legal',
+                                        'Military & Protective Services',
+                                        'Operations',
+                                        'Program & Product Management',
+                                        'Real Estate',
+                                        'Sales',
+                                        'Support',
+                                        'Administrative',
+                                        'Finance',
+                                        'Marketing',
+                                        'Purchasing',
+                                        'Product Management',
+                                        'Advertising',
+                                        'Analyst',
+                                        'Customer Service',
+                                        'Distribution',
+                                        'Design',
+                                        'General Business',
+                                        'Management',
+                                        'Manufacturing',
+                                        'Other',
+                                        'Public Relations',
+                                        'Project Management',
+                                        'Production',
+                                        'Quality Assurance',
+                                        'Research',
+                                        'Science',
+                                        'Supply Chain',
+                                        'Training',
+                                        'Health Care Provider',
+                                        'Accounting',
+                                        'Art / Creative',
+                                        'Strategy / Planning',
+                                        'Writing / Editing'
+                                    ])),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Arts and Design',
+                                        'Business Development',
+                                        'Community & Social Services',
+                                        'Consulting',
+                                        'Education',
+                                        'Engineering',
+                                        'Entrepreneurship',
+                                        'Healthcare Services',
+                                        'Human Resources',
+                                        'Information Technology',
+                                        'Legal',
+                                        'Military & Protective Services',
+                                        'Operations',
+                                        'Program & Product Management',
+                                        'Real Estate',
+                                        'Sales',
+                                        'Support',
+                                        'Administrative',
+                                        'Finance',
+                                        'Marketing',
+                                        'Purchasing',
+                                        'Product Management',
+                                        'Advertising',
+                                        'Analyst',
+                                        'Customer Service',
+                                        'Distribution',
+                                        'Design',
+                                        'General Business',
+                                        'Management',
+                                        'Manufacturing',
+                                        'Other',
+                                        'Public Relations',
+                                        'Project Management',
+                                        'Production',
+                                        'Quality Assurance',
+                                        'Research',
+                                        'Science',
+                                        'Supply Chain',
+                                        'Training',
+                                        'Health Care Provider',
+                                        'Accounting',
+                                        'Art / Creative',
+                                        'Strategy / Planning',
+                                        'Writing / Editing'
                                     ])),
                                     z.null()
                                 ]))
@@ -160377,6 +162692,15 @@ export const zSlushieRunResponse = z.object({
                                             exact: z.optional(z.union([
                                                 z.boolean(),
                                                 z.null()
+                                            ])),
+                                            mode: z.optional(z.nullable(z.enum([
+                                                'normal',
+                                                'prefix',
+                                                'phrase'
+                                            ]))),
+                                            stemming: z.optional(z.union([
+                                                z.boolean(),
+                                                z.null()
                                             ]))
                                         }),
                                         z.object({
@@ -160411,6 +162735,15 @@ export const zSlushieRunResponse = z.object({
                                             type: z.enum(['plain']),
                                             term: z.string().min(1),
                                             exact: z.optional(z.union([
+                                                z.boolean(),
+                                                z.null()
+                                            ])),
+                                            mode: z.optional(z.nullable(z.enum([
+                                                'normal',
+                                                'prefix',
+                                                'phrase'
+                                            ]))),
+                                            stemming: z.optional(z.union([
                                                 z.boolean(),
                                                 z.null()
                                             ]))
@@ -160449,6 +162782,15 @@ export const zSlushieRunResponse = z.object({
                                             exact: z.optional(z.union([
                                                 z.boolean(),
                                                 z.null()
+                                            ])),
+                                            mode: z.optional(z.nullable(z.enum([
+                                                'normal',
+                                                'prefix',
+                                                'phrase'
+                                            ]))),
+                                            stemming: z.optional(z.union([
+                                                z.boolean(),
+                                                z.null()
                                             ]))
                                         }),
                                         z.object({
@@ -160474,6 +162816,33 @@ export const zSlushieRunResponse = z.object({
                                             type: z.enum(['cartesian']),
                                             keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                         })
+                                    ])),
+                                    z.null()
+                                ]))
+                            }),
+                            z.null()
+                        ])),
+                        seniority: z.optional(z.union([
+                            z.object({
+                                anyOf: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Entry level',
+                                        'Director',
+                                        'Associate',
+                                        'Mid-Senior level',
+                                        'Internship',
+                                        'Executive'
+                                    ])),
+                                    z.null()
+                                ])),
+                                noneOf: z.optional(z.union([
+                                    z.array(z.enum([
+                                        'Entry level',
+                                        'Director',
+                                        'Associate',
+                                        'Mid-Senior level',
+                                        'Internship',
+                                        'Executive'
                                     ])),
                                     z.null()
                                 ]))
@@ -167265,6 +169634,37 @@ export const zCreateSavedSearchData = z.object({
                         }),
                         z.null()
                     ])),
+                    employeeCountRanges: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     keywords: z.optional(z.union([
                         z.object({
                             containsAll: z.optional(z.union([
@@ -174259,6 +176659,37 @@ export const zCreateSavedSearchData = z.object({
                         }),
                         z.null()
                     ])),
+                    revenueRangesUSD: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     employeeTrendsV2: z.optional(z.union([
                         z.object({
                             obeysAll: z.optional(z.union([
@@ -175300,6 +177731,109 @@ export const zCreateSavedSearchData = z.object({
                                         ])),
                                         keywords: z.optional(z.array(z.string())).prefault([])
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    jobFunction: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
                                 ])),
                                 z.null()
                             ]))
@@ -178693,6 +181227,15 @@ export const zCreateSavedSearchData = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -178727,6 +181270,15 @@ export const zCreateSavedSearchData = z.object({
                                         type: z.enum(['plain']),
                                         term: z.string().min(1),
                                         exact: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
                                         ]))
@@ -178765,6 +181317,15 @@ export const zCreateSavedSearchData = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -178790,6 +181351,33 @@ export const zCreateSavedSearchData = z.object({
                                         type: z.enum(['cartesian']),
                                         keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    seniority: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
                                 ])),
                                 z.null()
                             ]))
@@ -181330,6 +183918,37 @@ export const zCreateSavedSearchData = z.object({
                         }),
                         z.null()
                     ])),
+                    employeeCountRanges: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     keywords: z.optional(z.union([
                         z.object({
                             containsAll: z.optional(z.union([
@@ -188324,6 +190943,37 @@ export const zCreateSavedSearchData = z.object({
                         }),
                         z.null()
                     ])),
+                    revenueRangesUSD: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     employeeTrendsV2: z.optional(z.union([
                         z.object({
                             obeysAll: z.optional(z.union([
@@ -189368,6 +192018,109 @@ export const zCreateSavedSearchData = z.object({
                                         ])),
                                         keywords: z.optional(z.array(z.string())).prefault([])
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    jobFunction: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
                                 ])),
                                 z.null()
                             ]))
@@ -192761,6 +195514,15 @@ export const zCreateSavedSearchData = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -192795,6 +195557,15 @@ export const zCreateSavedSearchData = z.object({
                                         type: z.enum(['plain']),
                                         term: z.string().min(1),
                                         exact: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
                                         ]))
@@ -192833,6 +195604,15 @@ export const zCreateSavedSearchData = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -192858,6 +195638,33 @@ export const zCreateSavedSearchData = z.object({
                                         type: z.enum(['cartesian']),
                                         keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    seniority: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
                                 ])),
                                 z.null()
                             ]))
@@ -195518,6 +198325,37 @@ export const zGetSavedSearchResponse = z.object({
                         ])),
                         upperBoundInclusive: z.optional(z.union([
                             z.int().gte(0),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                employeeCountRanges: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
                             z.null()
                         ]))
                     }),
@@ -202517,6 +205355,37 @@ export const zGetSavedSearchResponse = z.object({
                     }),
                     z.null()
                 ])),
+                revenueRangesUSD: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
                 employeeTrendsV2: z.optional(z.union([
                     z.object({
                         obeysAll: z.optional(z.union([
@@ -203564,6 +206433,109 @@ export const zGetSavedSearchResponse = z.object({
                                     ])),
                                     keywords: z.array(z.string()).prefault([])
                                 })
+                            ])),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                jobFunction: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Arts and Design',
+                                'Business Development',
+                                'Community & Social Services',
+                                'Consulting',
+                                'Education',
+                                'Engineering',
+                                'Entrepreneurship',
+                                'Healthcare Services',
+                                'Human Resources',
+                                'Information Technology',
+                                'Legal',
+                                'Military & Protective Services',
+                                'Operations',
+                                'Program & Product Management',
+                                'Real Estate',
+                                'Sales',
+                                'Support',
+                                'Administrative',
+                                'Finance',
+                                'Marketing',
+                                'Purchasing',
+                                'Product Management',
+                                'Advertising',
+                                'Analyst',
+                                'Customer Service',
+                                'Distribution',
+                                'Design',
+                                'General Business',
+                                'Management',
+                                'Manufacturing',
+                                'Other',
+                                'Public Relations',
+                                'Project Management',
+                                'Production',
+                                'Quality Assurance',
+                                'Research',
+                                'Science',
+                                'Supply Chain',
+                                'Training',
+                                'Health Care Provider',
+                                'Accounting',
+                                'Art / Creative',
+                                'Strategy / Planning',
+                                'Writing / Editing'
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Arts and Design',
+                                'Business Development',
+                                'Community & Social Services',
+                                'Consulting',
+                                'Education',
+                                'Engineering',
+                                'Entrepreneurship',
+                                'Healthcare Services',
+                                'Human Resources',
+                                'Information Technology',
+                                'Legal',
+                                'Military & Protective Services',
+                                'Operations',
+                                'Program & Product Management',
+                                'Real Estate',
+                                'Sales',
+                                'Support',
+                                'Administrative',
+                                'Finance',
+                                'Marketing',
+                                'Purchasing',
+                                'Product Management',
+                                'Advertising',
+                                'Analyst',
+                                'Customer Service',
+                                'Distribution',
+                                'Design',
+                                'General Business',
+                                'Management',
+                                'Manufacturing',
+                                'Other',
+                                'Public Relations',
+                                'Project Management',
+                                'Production',
+                                'Quality Assurance',
+                                'Research',
+                                'Science',
+                                'Supply Chain',
+                                'Training',
+                                'Health Care Provider',
+                                'Accounting',
+                                'Art / Creative',
+                                'Strategy / Planning',
+                                'Writing / Editing'
                             ])),
                             z.null()
                         ]))
@@ -206957,6 +209929,15 @@ export const zGetSavedSearchResponse = z.object({
                                     exact: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.object({
@@ -206991,6 +209972,15 @@ export const zGetSavedSearchResponse = z.object({
                                     type: z.enum(['plain']),
                                     term: z.string().min(1),
                                     exact: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
                                     ]))
@@ -207029,6 +210019,15 @@ export const zGetSavedSearchResponse = z.object({
                                     exact: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.object({
@@ -207054,6 +210053,33 @@ export const zGetSavedSearchResponse = z.object({
                                     type: z.enum(['cartesian']),
                                     keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                 })
+                            ])),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                seniority: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
                             ])),
                             z.null()
                         ]))
@@ -209719,6 +212745,37 @@ export const zGetSavedSearchRunResponse = z.object({
                             ])),
                             upperBoundInclusive: z.optional(z.union([
                                 z.int().gte(0),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    employeeCountRanges: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
                                 z.null()
                             ]))
                         }),
@@ -216718,6 +219775,37 @@ export const zGetSavedSearchRunResponse = z.object({
                         }),
                         z.null()
                     ])),
+                    revenueRangesUSD: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     employeeTrendsV2: z.optional(z.union([
                         z.object({
                             obeysAll: z.optional(z.union([
@@ -217761,6 +220849,109 @@ export const zGetSavedSearchRunResponse = z.object({
                                         ])),
                                         keywords: z.array(z.string()).prefault([])
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    jobFunction: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
                                 ])),
                                 z.null()
                             ]))
@@ -221154,6 +224345,15 @@ export const zGetSavedSearchRunResponse = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -221188,6 +224388,15 @@ export const zGetSavedSearchRunResponse = z.object({
                                         type: z.enum(['plain']),
                                         term: z.string().min(1),
                                         exact: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
                                         ]))
@@ -221226,6 +224435,15 @@ export const zGetSavedSearchRunResponse = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -221251,6 +224469,33 @@ export const zGetSavedSearchRunResponse = z.object({
                                         type: z.enum(['cartesian']),
                                         keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    seniority: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
                                 ])),
                                 z.null()
                             ]))
@@ -224163,6 +227408,37 @@ export const zUpdateSavedSearchData = z.object({
                     }),
                     z.null()
                 ])),
+                employeeCountRanges: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
                 keywords: z.optional(z.union([
                     z.object({
                         containsAll: z.optional(z.union([
@@ -231157,6 +234433,37 @@ export const zUpdateSavedSearchData = z.object({
                     }),
                     z.null()
                 ])),
+                revenueRangesUSD: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
                 employeeTrendsV2: z.optional(z.union([
                     z.object({
                         obeysAll: z.optional(z.union([
@@ -232200,6 +235507,109 @@ export const zUpdateSavedSearchData = z.object({
                                     ])),
                                     keywords: z.optional(z.array(z.string())).prefault([])
                                 })
+                            ])),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                jobFunction: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Arts and Design',
+                                'Business Development',
+                                'Community & Social Services',
+                                'Consulting',
+                                'Education',
+                                'Engineering',
+                                'Entrepreneurship',
+                                'Healthcare Services',
+                                'Human Resources',
+                                'Information Technology',
+                                'Legal',
+                                'Military & Protective Services',
+                                'Operations',
+                                'Program & Product Management',
+                                'Real Estate',
+                                'Sales',
+                                'Support',
+                                'Administrative',
+                                'Finance',
+                                'Marketing',
+                                'Purchasing',
+                                'Product Management',
+                                'Advertising',
+                                'Analyst',
+                                'Customer Service',
+                                'Distribution',
+                                'Design',
+                                'General Business',
+                                'Management',
+                                'Manufacturing',
+                                'Other',
+                                'Public Relations',
+                                'Project Management',
+                                'Production',
+                                'Quality Assurance',
+                                'Research',
+                                'Science',
+                                'Supply Chain',
+                                'Training',
+                                'Health Care Provider',
+                                'Accounting',
+                                'Art / Creative',
+                                'Strategy / Planning',
+                                'Writing / Editing'
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Arts and Design',
+                                'Business Development',
+                                'Community & Social Services',
+                                'Consulting',
+                                'Education',
+                                'Engineering',
+                                'Entrepreneurship',
+                                'Healthcare Services',
+                                'Human Resources',
+                                'Information Technology',
+                                'Legal',
+                                'Military & Protective Services',
+                                'Operations',
+                                'Program & Product Management',
+                                'Real Estate',
+                                'Sales',
+                                'Support',
+                                'Administrative',
+                                'Finance',
+                                'Marketing',
+                                'Purchasing',
+                                'Product Management',
+                                'Advertising',
+                                'Analyst',
+                                'Customer Service',
+                                'Distribution',
+                                'Design',
+                                'General Business',
+                                'Management',
+                                'Manufacturing',
+                                'Other',
+                                'Public Relations',
+                                'Project Management',
+                                'Production',
+                                'Quality Assurance',
+                                'Research',
+                                'Science',
+                                'Supply Chain',
+                                'Training',
+                                'Health Care Provider',
+                                'Accounting',
+                                'Art / Creative',
+                                'Strategy / Planning',
+                                'Writing / Editing'
                             ])),
                             z.null()
                         ]))
@@ -235593,6 +239003,15 @@ export const zUpdateSavedSearchData = z.object({
                                     exact: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.object({
@@ -235627,6 +239046,15 @@ export const zUpdateSavedSearchData = z.object({
                                     type: z.enum(['plain']),
                                     term: z.string().min(1),
                                     exact: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
                                     ]))
@@ -235665,6 +239093,15 @@ export const zUpdateSavedSearchData = z.object({
                                     exact: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.object({
@@ -235690,6 +239127,33 @@ export const zUpdateSavedSearchData = z.object({
                                     type: z.enum(['cartesian']),
                                     keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                 })
+                            ])),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                seniority: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
                             ])),
                             z.null()
                         ]))
@@ -247265,6 +250729,37 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                         }),
                         z.null()
                     ])),
+                    employeeCountRanges: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBoundExclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ])),
+                                    upperBoundInclusive: z.optional(z.union([
+                                        z.int().gte(0),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     keywords: z.optional(z.union([
                         z.object({
                             containsAll: z.optional(z.union([
@@ -254259,6 +257754,37 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                         }),
                         z.null()
                     ])),
+                    revenueRangesUSD: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.object({
+                                    lowerBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    upperBound: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ]))
+                                })),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
                     employeeTrendsV2: z.optional(z.union([
                         z.object({
                             obeysAll: z.optional(z.union([
@@ -255302,6 +258828,109 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                         ])),
                                         keywords: z.array(z.string()).prefault([])
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    jobFunction: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Arts and Design',
+                                    'Business Development',
+                                    'Community & Social Services',
+                                    'Consulting',
+                                    'Education',
+                                    'Engineering',
+                                    'Entrepreneurship',
+                                    'Healthcare Services',
+                                    'Human Resources',
+                                    'Information Technology',
+                                    'Legal',
+                                    'Military & Protective Services',
+                                    'Operations',
+                                    'Program & Product Management',
+                                    'Real Estate',
+                                    'Sales',
+                                    'Support',
+                                    'Administrative',
+                                    'Finance',
+                                    'Marketing',
+                                    'Purchasing',
+                                    'Product Management',
+                                    'Advertising',
+                                    'Analyst',
+                                    'Customer Service',
+                                    'Distribution',
+                                    'Design',
+                                    'General Business',
+                                    'Management',
+                                    'Manufacturing',
+                                    'Other',
+                                    'Public Relations',
+                                    'Project Management',
+                                    'Production',
+                                    'Quality Assurance',
+                                    'Research',
+                                    'Science',
+                                    'Supply Chain',
+                                    'Training',
+                                    'Health Care Provider',
+                                    'Accounting',
+                                    'Art / Creative',
+                                    'Strategy / Planning',
+                                    'Writing / Editing'
                                 ])),
                                 z.null()
                             ]))
@@ -258695,6 +262324,15 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -258729,6 +262367,15 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                         type: z.enum(['plain']),
                                         term: z.string().min(1),
                                         exact: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
                                         ]))
@@ -258767,6 +262414,15 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                         exact: z.optional(z.union([
                                             z.boolean(),
                                             z.null()
+                                        ])),
+                                        mode: z.optional(z.nullable(z.enum([
+                                            'normal',
+                                            'prefix',
+                                            'phrase'
+                                        ]))),
+                                        stemming: z.optional(z.union([
+                                            z.boolean(),
+                                            z.null()
                                         ]))
                                     }),
                                     z.object({
@@ -258792,6 +262448,33 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                                         type: z.enum(['cartesian']),
                                         keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                     })
+                                ])),
+                                z.null()
+                            ]))
+                        }),
+                        z.null()
+                    ])),
+                    seniority: z.optional(z.union([
+                        z.object({
+                            anyOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
+                                ])),
+                                z.null()
+                            ])),
+                            noneOf: z.optional(z.union([
+                                z.array(z.enum([
+                                    'Entry level',
+                                    'Director',
+                                    'Associate',
+                                    'Mid-Senior level',
+                                    'Internship',
+                                    'Executive'
                                 ])),
                                 z.null()
                             ]))
@@ -263828,6 +267511,209 @@ export const zFlightBookingOptionsResponse = z.object({
     ]))
 });
 
+export const zFlightDealsData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        departureAirports: z.string(),
+        currencyCode: z.optional(z.string().regex(/^[A-Za-z]{3}$/)).prefault('USD'),
+        languageCode: z.optional(z.string().regex(/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/)).prefault('en'),
+        discovery: z.optional(z.union([
+            z.object({
+                mode: z.enum(['freeText']),
+                freeText: z.string().min(1).max(200)
+            }),
+            z.object({
+                mode: z.enum(['filters']),
+                maxPrice: z.optional(z.union([
+                    z.int().gte(1),
+                    z.null()
+                ])),
+                maxStops: z.optional(z.union([
+                    z.int().gte(0).lte(2),
+                    z.null()
+                ])),
+                travelClass: z.optional(z.nullable(z.enum([
+                    'economy',
+                    'premiumEconomy',
+                    'business',
+                    'first'
+                ]))),
+                airlines: z.optional(z.union([
+                    z.object({
+                        include: z.optional(z.union([
+                            z.array(z.string()),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ]))
+            }),
+            z.null()
+        ]))
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zFlightDealsResponse = z.object({
+    output: z.object({
+        deals: z.array(z.object({
+            destination: z.object({
+                name: z.string(),
+                freebaseId: z.string(),
+                countryCode: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
+                iataCode: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
+                tagline: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
+                description: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
+                thumbnailUrl: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ]))
+            }),
+            departureIataCode: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            outboundDate: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            returnDate: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            tripLengthDays: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            price: z.int(),
+            typicalPrice: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            savingsAmount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            savingsPercentage: z.optional(z.union([
+                z.int().gte(0).lte(100),
+                z.null()
+            ])),
+            stopCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            durationMinutes: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            airlineName: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            airlineCode: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            bookingUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ]))
+        })),
+        currencyCode: z.string().regex(/^[A-Z]{3}$/)
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zHotelSearchData = z.object({
     body: z.object({
         apiKey: z.string(),
@@ -264504,6 +268390,459 @@ export const zHotelPropertyResponse = z.object({
     ]))
 });
 
+export const zBookingSearchData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        query: z.string().min(1),
+        checkInDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        checkOutDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        hotelStarClasses: z.optional(z.union([
+            z.array(z.int().gte(1).lte(5)),
+            z.null()
+        ])),
+        sortBy: z.optional(z.nullable(z.enum([
+            'relevance',
+            'lowestPrice',
+            'highestRating',
+            'mostReviewed'
+        ]))),
+        nextPageToken: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        adults: z.optional(z.int().gte(1).lte(30)).prefault(2),
+        children: z.optional(z.int().gte(0).lte(29)).prefault(0),
+        childrenAges: z.optional(z.array(z.int().gte(0).lte(17))).prefault([]),
+        rooms: z.optional(z.int().gte(1).lte(8)).prefault(1),
+        currencyCode: z.optional(z.string().regex(/^[A-Za-z]{3}$/)).prefault('USD'),
+        languageCode: z.optional(z.union([
+            z.string().regex(/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/),
+            z.null()
+        ]))
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zBookingSearchResponse = z.object({
+    output: z.object({
+        properties: z.array(z.object({
+            propertyId: z.string(),
+            name: z.string(),
+            propertyUrl: z.string(),
+            address: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            city: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            district: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            countryCode: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            coordinates: z.optional(z.union([
+                z.object({
+                    latitude: z.number(),
+                    longitude: z.number()
+                }),
+                z.null()
+            ])),
+            hotelStarClass: z.optional(z.union([
+                z.int().gte(1).lte(5),
+                z.null()
+            ])),
+            reviewScore: z.optional(z.union([
+                z.number().gte(0).lte(10),
+                z.null()
+            ])),
+            reviewCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            thumbnailUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            isPreferred: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
+            totalPrice: z.optional(z.union([
+                z.object({
+                    currencyCode: z.string().regex(/^[A-Z]{3}$/),
+                    amount: z.number().gte(0)
+                }),
+                z.null()
+            ])),
+            nightlyPrice: z.optional(z.union([
+                z.object({
+                    currencyCode: z.string().regex(/^[A-Z]{3}$/),
+                    amount: z.number().gte(0)
+                }),
+                z.null()
+            ])),
+            originalPrice: z.optional(z.union([
+                z.object({
+                    currencyCode: z.string().regex(/^[A-Z]{3}$/),
+                    amount: z.number().gte(0)
+                }),
+                z.null()
+            ])),
+            hasFreeCancellation: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
+            isSoldOut: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
+            mealPlan: z.optional(z.union([
+                z.string(),
+                z.null()
+            ]))
+        })),
+        nextPageToken: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        currencyCode: z.optional(z.union([
+            z.string().regex(/^[A-Z]{3}$/),
+            z.null()
+        ])),
+        searchInformation: z.optional(z.union([
+            z.object({
+                totalResultCount: z.optional(z.union([
+                    z.int(),
+                    z.null()
+                ]))
+            }),
+            z.null()
+        ]))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zBookingPropertyData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        propertyUrl: z.string().regex(/^https?:\/\/(?:www\.)?booking\.com\/hotel\/(?:[a-z]{2})\/(?:[a-z0-9-]+)(?:\.[a-z]{2}(?:-[a-z]{2,4})?)?(?:\.html)?(?:[?#].*)?$/),
+        languageCode: z.optional(z.union([
+            z.string().regex(/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/),
+            z.null()
+        ]))
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zBookingPropertyResponse = z.object({
+    output: z.object({
+        property: z.object({
+            propertyId: z.string(),
+            name: z.string(),
+            propertyUrl: z.string(),
+            address: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            city: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            district: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            countryCode: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            coordinates: z.optional(z.union([
+                z.object({
+                    latitude: z.number(),
+                    longitude: z.number()
+                }),
+                z.null()
+            ])),
+            hotelStarClass: z.optional(z.union([
+                z.int().gte(1).lte(5),
+                z.null()
+            ])),
+            reviewScore: z.optional(z.union([
+                z.number().gte(0).lte(10),
+                z.null()
+            ])),
+            reviewCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            thumbnailUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            isPreferred: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
+            description: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            accommodationType: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            amenities: z.array(z.string()),
+            photoUrls: z.array(z.string()),
+            languagesSpoken: z.array(z.string()),
+            checkInTime: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            checkOutTime: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            scoreBreakdown: z.optional(z.union([
+                z.object({
+                    staff: z.optional(z.union([
+                        z.number().gte(0).lte(10),
+                        z.null()
+                    ])),
+                    facilities: z.optional(z.union([
+                        z.number().gte(0).lte(10),
+                        z.null()
+                    ])),
+                    cleanliness: z.optional(z.union([
+                        z.number().gte(0).lte(10),
+                        z.null()
+                    ])),
+                    comfort: z.optional(z.union([
+                        z.number().gte(0).lte(10),
+                        z.null()
+                    ])),
+                    value: z.optional(z.union([
+                        z.number().gte(0).lte(10),
+                        z.null()
+                    ])),
+                    location: z.optional(z.union([
+                        z.number().gte(0).lte(10),
+                        z.null()
+                    ])),
+                    breakfast: z.optional(z.union([
+                        z.number().gte(0).lte(10),
+                        z.null()
+                    ])),
+                    wifi: z.optional(z.union([
+                        z.number().gte(0).lte(10),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            houseRules: z.optional(z.union([
+                z.object({
+                    ageRestriction: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    childrenPolicy: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    petsPolicy: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    smokingPolicy: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    partiesPolicy: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    groupPolicy: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    paymentMethods: z.array(z.string()),
+                    isCashAccepted: z.optional(z.union([
+                        z.boolean(),
+                        z.null()
+                    ]))
+                }),
+                z.null()
+            ])),
+            isSustainable: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ]))
+        })
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zYelpSearchData = z.object({
     body: z.object({
         apiKey: z.string(),
@@ -264880,6 +269219,479 @@ export const zYelpReviewsResponse = z.object({
             ])),
             coolCount: z.optional(z.union([
                 z.int(),
+                z.null()
+            ]))
+        })),
+        totalReviewCount: z.optional(z.union([
+            z.int(),
+            z.null()
+        ])),
+        nextPageToken: z.optional(z.union([
+            z.string(),
+            z.null()
+        ]))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zGoogleMapsSearch2Data = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        query: z.string().min(1),
+        location: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ])),
+        nextPageToken: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ]))
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zGoogleMapsSearch2Response = z.object({
+    output: z.object({
+        places: z.array(z.object({
+            placeId: z.string(),
+            name: z.string(),
+            url: z.string(),
+            rating: z.optional(z.union([
+                z.number().gte(0).lte(5),
+                z.null()
+            ])),
+            reviewCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            phoneNumber: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            websiteUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            address: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            categories: z.array(z.string()),
+            openingHours: z.array(z.object({
+                dayOfWeek: z.enum([
+                    'monday',
+                    'tuesday',
+                    'wednesday',
+                    'thursday',
+                    'friday',
+                    'saturday',
+                    'sunday'
+                ]),
+                hours: z.string()
+            })),
+            coordinates: z.optional(z.union([
+                z.object({
+                    latitude: z.number().gte(-90).lte(90),
+                    longitude: z.number().gte(-180).lte(180)
+                }),
+                z.null()
+            ])),
+            thumbnailUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ]))
+        })),
+        nextPageToken: z.optional(z.union([
+            z.string(),
+            z.null()
+        ]))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zGoogleMapsPlaceData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        placeId: z.string().min(1)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zGoogleMapsPlaceResponse = z.object({
+    output: z.object({
+        place: z.object({
+            placeId: z.string(),
+            name: z.string(),
+            url: z.string(),
+            rating: z.optional(z.union([
+                z.number().gte(0).lte(5),
+                z.null()
+            ])),
+            reviewCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            phoneNumber: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            websiteUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            address: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            categories: z.array(z.string()),
+            openingHours: z.array(z.object({
+                dayOfWeek: z.enum([
+                    'monday',
+                    'tuesday',
+                    'wednesday',
+                    'thursday',
+                    'friday',
+                    'saturday',
+                    'sunday'
+                ]),
+                hours: z.string()
+            })),
+            coordinates: z.optional(z.union([
+                z.object({
+                    latitude: z.number().gte(-90).lte(90),
+                    longitude: z.number().gte(-180).lte(180)
+                }),
+                z.null()
+            ])),
+            thumbnailUrl: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            description: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            ratingBreakdown: z.array(z.object({
+                stars: z.int().gte(1).lte(5),
+                count: z.int().gte(0)
+            })),
+            attributes: z.array(z.object({
+                category: z.string(),
+                values: z.array(z.string())
+            })),
+            reviews: z.array(z.object({
+                authorName: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
+                authorIsLocalGuide: z.optional(z.union([
+                    z.boolean(),
+                    z.null()
+                ])),
+                rating: z.optional(z.union([
+                    z.int().gte(1).lte(5),
+                    z.null()
+                ])),
+                publishedAt: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
+                text: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ])),
+                likeCount: z.optional(z.union([
+                    z.int(),
+                    z.null()
+                ])),
+                photoUrls: z.array(z.string()),
+                reviewUrl: z.optional(z.union([
+                    z.string(),
+                    z.null()
+                ]))
+            }))
+        })
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zGoogleMapsReviewsData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        placeId: z.string().min(1),
+        sortBy: z.optional(z.enum(['relevance', 'newest'])),
+        nextPageToken: z.optional(z.union([
+            z.string().min(1),
+            z.null()
+        ]))
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zGoogleMapsReviewsResponse = z.object({
+    output: z.object({
+        reviews: z.array(z.object({
+            authorName: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            authorIsLocalGuide: z.optional(z.union([
+                z.boolean(),
+                z.null()
+            ])),
+            rating: z.optional(z.union([
+                z.int().gte(1).lte(5),
+                z.null()
+            ])),
+            publishedAt: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            text: z.optional(z.union([
+                z.string(),
+                z.null()
+            ])),
+            likeCount: z.optional(z.union([
+                z.int(),
+                z.null()
+            ])),
+            photoUrls: z.array(z.string()),
+            reviewUrl: z.optional(z.union([
+                z.string(),
                 z.null()
             ]))
         })),
@@ -267802,6 +272614,9 @@ export const zListTrackerCompanyListsResponse = z.object({
                         type: z.literal('new_investor')
                     }).and(zNewInvestorResponse),
                     z.object({
+                        type: z.literal('joined_accelerator')
+                    }).and(zJoinedAcceleratorResponse),
+                    z.object({
                         type: z.literal('recently_hired_with_title')
                     }).and(zRecentlyHiredWithTitleResponse),
                     z.object({
@@ -267905,7 +272720,7 @@ export const zCreateTrackerCompanyListData = z.object({
     body: z.object({
         apiKey: z.string(),
         name: z.string().min(1).max(200),
-        refreshIntervalDays: z.int().gte(1).lte(90),
+        refreshIntervalDays: z.int().gte(1).lte(180),
         trackingRules: z.optional(z.union([
             z.array(z.union([
                 z.object({
@@ -267974,6 +272789,9 @@ export const zCreateTrackerCompanyListData = z.object({
                 z.object({
                     type: z.literal('new_investor')
                 }).and(zNewInvestor),
+                z.object({
+                    type: z.literal('joined_accelerator')
+                }).and(zJoinedAccelerator),
                 z.object({
                     type: z.literal('recently_hired_with_title')
                 }).and(zRecentlyHiredWithTitle),
@@ -268725,6 +273543,37 @@ export const zCreateTrackerCompanyListData = z.object({
                         ])),
                         upperBoundInclusive: z.optional(z.union([
                             z.int().gte(0),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                employeeCountRanges: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
                             z.null()
                         ]))
                     }),
@@ -275724,6 +280573,37 @@ export const zCreateTrackerCompanyListData = z.object({
                     }),
                     z.null()
                 ])),
+                revenueRangesUSD: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
                 employeeTrendsV2: z.optional(z.union([
                     z.object({
                         obeysAll: z.optional(z.union([
@@ -276023,6 +280903,9 @@ export const zCreateTrackerCompanyListResponse = z.object({
                     type: z.literal('new_investor')
                 }).and(zNewInvestorResponse),
                 z.object({
+                    type: z.literal('joined_accelerator')
+                }).and(zJoinedAcceleratorResponse),
+                z.object({
                     type: z.literal('recently_hired_with_title')
                 }).and(zRecentlyHiredWithTitleResponse),
                 z.object({
@@ -276305,6 +281188,9 @@ export const zGetTrackerCompanyListResponse = z.object({
                     type: z.literal('new_investor')
                 }).and(zNewInvestorResponse),
                 z.object({
+                    type: z.literal('joined_accelerator')
+                }).and(zJoinedAcceleratorResponse),
+                z.object({
                     type: z.literal('recently_hired_with_title')
                 }).and(zRecentlyHiredWithTitleResponse),
                 z.object({
@@ -276411,7 +281297,7 @@ export const zUpdateTrackerCompanyListData = z.object({
             z.null()
         ])),
         refreshIntervalDays: z.optional(z.union([
-            z.int().gte(1).lte(90),
+            z.int().gte(1).lte(180),
             z.null()
         ])),
         isActive: z.optional(z.union([
@@ -276490,6 +281376,9 @@ export const zUpdateTrackerCompanyListData = z.object({
                 z.object({
                     type: z.literal('new_investor')
                 }).and(zNewInvestor),
+                z.object({
+                    type: z.literal('joined_accelerator')
+                }).and(zJoinedAccelerator),
                 z.object({
                     type: z.literal('recently_hired_with_title')
                 }).and(zRecentlyHiredWithTitle),
@@ -276570,6 +281459,9 @@ export const zUpdateTrackerCompanyListData = z.object({
                 z.object({
                     type: z.literal('new_investor')
                 }).and(zNewInvestor),
+                z.object({
+                    type: z.literal('joined_accelerator')
+                }).and(zJoinedAccelerator),
                 z.object({
                     type: z.literal('recently_hired_with_title')
                 }).and(zRecentlyHiredWithTitle),
@@ -276685,6 +281577,9 @@ export const zUpdateTrackerCompanyListResponse = z.object({
                 z.object({
                     type: z.literal('new_investor')
                 }).and(zNewInvestorResponse),
+                z.object({
+                    type: z.literal('joined_accelerator')
+                }).and(zJoinedAcceleratorResponse),
                 z.object({
                     type: z.literal('recently_hired_with_title')
                 }).and(zRecentlyHiredWithTitleResponse),
@@ -277248,7 +282143,13 @@ export const zListTrackerPersonListsResponse = z.object({
                     }).and(zPersonStuckInRoleResponse),
                     z.object({
                         type: z.literal('person_tenure_milestone')
-                    }).and(zPersonTenureMilestoneResponse)
+                    }).and(zPersonTenureMilestoneResponse),
+                    z.object({
+                        type: z.literal('person_contact_change')
+                    }).and(zPersonContactChangeResponse),
+                    z.object({
+                        type: z.literal('person_added_role')
+                    }).and(zPersonAddedRoleResponse)
                 ])),
                 z.null()
             ])),
@@ -277344,7 +282245,7 @@ export const zCreateTrackerPersonListData = z.object({
     body: z.object({
         apiKey: z.string(),
         name: z.string().min(1).max(200),
-        refreshIntervalDays: z.int().gte(1).lte(90),
+        refreshIntervalDays: z.int().gte(1).lte(180),
         trackingRules: z.optional(z.union([
             z.array(z.union([
                 z.object({
@@ -277427,7 +282328,13 @@ export const zCreateTrackerPersonListData = z.object({
                 }).and(zPersonStuckInRole),
                 z.object({
                     type: z.literal('person_tenure_milestone')
-                }).and(zPersonTenureMilestone)
+                }).and(zPersonTenureMilestone),
+                z.object({
+                    type: z.literal('person_contact_change')
+                }).and(zPersonContactChange),
+                z.object({
+                    type: z.literal('person_added_role')
+                }).and(zPersonAddedRole)
             ])).min(1).max(25),
             z.null()
         ])),
@@ -278261,6 +283168,109 @@ export const zCreateTrackerPersonListData = z.object({
                                     ])),
                                     keywords: z.optional(z.array(z.string())).prefault([])
                                 })
+                            ])),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                jobFunction: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Arts and Design',
+                                'Business Development',
+                                'Community & Social Services',
+                                'Consulting',
+                                'Education',
+                                'Engineering',
+                                'Entrepreneurship',
+                                'Healthcare Services',
+                                'Human Resources',
+                                'Information Technology',
+                                'Legal',
+                                'Military & Protective Services',
+                                'Operations',
+                                'Program & Product Management',
+                                'Real Estate',
+                                'Sales',
+                                'Support',
+                                'Administrative',
+                                'Finance',
+                                'Marketing',
+                                'Purchasing',
+                                'Product Management',
+                                'Advertising',
+                                'Analyst',
+                                'Customer Service',
+                                'Distribution',
+                                'Design',
+                                'General Business',
+                                'Management',
+                                'Manufacturing',
+                                'Other',
+                                'Public Relations',
+                                'Project Management',
+                                'Production',
+                                'Quality Assurance',
+                                'Research',
+                                'Science',
+                                'Supply Chain',
+                                'Training',
+                                'Health Care Provider',
+                                'Accounting',
+                                'Art / Creative',
+                                'Strategy / Planning',
+                                'Writing / Editing'
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Arts and Design',
+                                'Business Development',
+                                'Community & Social Services',
+                                'Consulting',
+                                'Education',
+                                'Engineering',
+                                'Entrepreneurship',
+                                'Healthcare Services',
+                                'Human Resources',
+                                'Information Technology',
+                                'Legal',
+                                'Military & Protective Services',
+                                'Operations',
+                                'Program & Product Management',
+                                'Real Estate',
+                                'Sales',
+                                'Support',
+                                'Administrative',
+                                'Finance',
+                                'Marketing',
+                                'Purchasing',
+                                'Product Management',
+                                'Advertising',
+                                'Analyst',
+                                'Customer Service',
+                                'Distribution',
+                                'Design',
+                                'General Business',
+                                'Management',
+                                'Manufacturing',
+                                'Other',
+                                'Public Relations',
+                                'Project Management',
+                                'Production',
+                                'Quality Assurance',
+                                'Research',
+                                'Science',
+                                'Supply Chain',
+                                'Training',
+                                'Health Care Provider',
+                                'Accounting',
+                                'Art / Creative',
+                                'Strategy / Planning',
+                                'Writing / Editing'
                             ])),
                             z.null()
                         ]))
@@ -281654,6 +286664,15 @@ export const zCreateTrackerPersonListData = z.object({
                                     exact: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.object({
@@ -281688,6 +286707,15 @@ export const zCreateTrackerPersonListData = z.object({
                                     type: z.enum(['plain']),
                                     term: z.string().min(1),
                                     exact: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
                                     ]))
@@ -281726,6 +286754,15 @@ export const zCreateTrackerPersonListData = z.object({
                                     exact: z.optional(z.union([
                                         z.boolean(),
                                         z.null()
+                                    ])),
+                                    mode: z.optional(z.nullable(z.enum([
+                                        'normal',
+                                        'prefix',
+                                        'phrase'
+                                    ]))),
+                                    stemming: z.optional(z.union([
+                                        z.boolean(),
+                                        z.null()
                                     ]))
                                 }),
                                 z.object({
@@ -281751,6 +286788,33 @@ export const zCreateTrackerPersonListData = z.object({
                                     type: z.enum(['cartesian']),
                                     keywordArrays: z.array(z.array(z.string().min(1)).min(1)).min(2)
                                 })
+                            ])),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                seniority: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
+                            ])),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.enum([
+                                'Entry level',
+                                'Director',
+                                'Associate',
+                                'Mid-Senior level',
+                                'Internship',
+                                'Executive'
                             ])),
                             z.null()
                         ]))
@@ -284285,6 +289349,37 @@ export const zCreateTrackerPersonListData = z.object({
                         ])),
                         upperBoundInclusive: z.optional(z.union([
                             z.int().gte(0),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
+                employeeCountRanges: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBoundExclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ])),
+                                upperBoundInclusive: z.optional(z.union([
+                                    z.int().gte(0),
+                                    z.null()
+                                ]))
+                            })),
                             z.null()
                         ]))
                     }),
@@ -291284,6 +296379,37 @@ export const zCreateTrackerPersonListData = z.object({
                     }),
                     z.null()
                 ])),
+                revenueRangesUSD: z.optional(z.union([
+                    z.object({
+                        anyOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ])),
+                        noneOf: z.optional(z.union([
+                            z.array(z.object({
+                                lowerBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ])),
+                                upperBound: z.optional(z.union([
+                                    z.int(),
+                                    z.null()
+                                ]))
+                            })),
+                            z.null()
+                        ]))
+                    }),
+                    z.null()
+                ])),
                 employeeTrendsV2: z.optional(z.union([
                     z.object({
                         obeysAll: z.optional(z.union([
@@ -291596,7 +296722,13 @@ export const zCreateTrackerPersonListResponse = z.object({
                 }).and(zPersonStuckInRoleResponse),
                 z.object({
                     type: z.literal('person_tenure_milestone')
-                }).and(zPersonTenureMilestoneResponse)
+                }).and(zPersonTenureMilestoneResponse),
+                z.object({
+                    type: z.literal('person_contact_change')
+                }).and(zPersonContactChangeResponse),
+                z.object({
+                    type: z.literal('person_added_role')
+                }).and(zPersonAddedRoleResponse)
             ])),
             z.null()
         ])),
@@ -291884,7 +297016,13 @@ export const zGetTrackerPersonListResponse = z.object({
                 }).and(zPersonStuckInRoleResponse),
                 z.object({
                     type: z.literal('person_tenure_milestone')
-                }).and(zPersonTenureMilestoneResponse)
+                }).and(zPersonTenureMilestoneResponse),
+                z.object({
+                    type: z.literal('person_contact_change')
+                }).and(zPersonContactChangeResponse),
+                z.object({
+                    type: z.literal('person_added_role')
+                }).and(zPersonAddedRoleResponse)
             ])),
             z.null()
         ])),
@@ -291983,7 +297121,7 @@ export const zUpdateTrackerPersonListData = z.object({
             z.null()
         ])),
         refreshIntervalDays: z.optional(z.union([
-            z.int().gte(1).lte(90),
+            z.int().gte(1).lte(180),
             z.null()
         ])),
         isActive: z.optional(z.union([
@@ -292076,7 +297214,13 @@ export const zUpdateTrackerPersonListData = z.object({
                 }).and(zPersonStuckInRole),
                 z.object({
                     type: z.literal('person_tenure_milestone')
-                }).and(zPersonTenureMilestone)
+                }).and(zPersonTenureMilestone),
+                z.object({
+                    type: z.literal('person_contact_change')
+                }).and(zPersonContactChange),
+                z.object({
+                    type: z.literal('person_added_role')
+                }).and(zPersonAddedRole)
             ])).min(0).max(25),
             z.null()
         ])),
@@ -292162,7 +297306,13 @@ export const zUpdateTrackerPersonListData = z.object({
                 }).and(zPersonStuckInRole),
                 z.object({
                     type: z.literal('person_tenure_milestone')
-                }).and(zPersonTenureMilestone)
+                }).and(zPersonTenureMilestone),
+                z.object({
+                    type: z.literal('person_contact_change')
+                }).and(zPersonContactChange),
+                z.object({
+                    type: z.literal('person_added_role')
+                }).and(zPersonAddedRole)
             ])).max(25),
             z.null()
         ])),
@@ -292283,7 +297433,13 @@ export const zUpdateTrackerPersonListResponse = z.object({
                 }).and(zPersonStuckInRoleResponse),
                 z.object({
                     type: z.literal('person_tenure_milestone')
-                }).and(zPersonTenureMilestoneResponse)
+                }).and(zPersonTenureMilestoneResponse),
+                z.object({
+                    type: z.literal('person_contact_change')
+                }).and(zPersonContactChangeResponse),
+                z.object({
+                    type: z.literal('person_added_role')
+                }).and(zPersonAddedRoleResponse)
             ])),
             z.null()
         ])),
@@ -292933,6 +298089,9 @@ export const zPreviewTrackerSignalData = z.object({
                 type: z.literal('new_investor')
             }).and(zNewInvestor),
             z.object({
+                type: z.literal('joined_accelerator')
+            }).and(zJoinedAccelerator),
+            z.object({
                 type: z.literal('recently_hired_with_title')
             }).and(zRecentlyHiredWithTitle),
             z.object({
@@ -293021,7 +298180,13 @@ export const zPreviewTrackerSignalData = z.object({
             }).and(zPersonStuckInRole),
             z.object({
                 type: z.literal('person_tenure_milestone')
-            }).and(zPersonTenureMilestone)
+            }).and(zPersonTenureMilestone),
+            z.object({
+                type: z.literal('person_contact_change')
+            }).and(zPersonContactChange),
+            z.object({
+                type: z.literal('person_added_role')
+            }).and(zPersonAddedRole)
         ])
     }),
     path: z.optional(z.never()),
@@ -293137,6 +298302,7 @@ export const zListAvailableTrackerRulesResponse = z.object({
             description: z.string(),
             useCase: z.string(),
             supportsInitialSignals: z.boolean(),
+            isPremium: z.boolean(),
             config: z.object({
                 schema: z.record(z.string(), z.unknown()),
                 example: z.record(z.string(), z.unknown())
@@ -293153,6 +298319,7 @@ export const zListAvailableTrackerRulesResponse = z.object({
             description: z.string(),
             useCase: z.string(),
             supportsInitialSignals: z.boolean(),
+            isPremium: z.boolean(),
             config: z.object({
                 schema: z.record(z.string(), z.unknown()),
                 example: z.record(z.string(), z.unknown())
@@ -293354,6 +298521,206 @@ export const zRefreshTrackerPersonListResponse = z.object({
     output: z.object({
         entityCount: z.int().gte(0),
         estimatedCredits: z.number().gte(0),
+        message: z.string()
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zRescheduleTrackerCompanyListData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        nextRefreshDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
+    }),
+    path: z.object({
+        listId: z.string().min(1)
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zRescheduleTrackerCompanyListResponse = z.object({
+    output: z.object({
+        previousNextRefreshAt: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        newNextRefreshAt: z.string(),
+        message: z.string()
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
+export const zRescheduleTrackerPersonListData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        nextRefreshDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
+    }),
+    path: z.object({
+        listId: z.string().min(1)
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zRescheduleTrackerPersonListResponse = z.object({
+    output: z.object({
+        previousNextRefreshAt: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        newNextRefreshAt: z.string(),
         message: z.string()
     }),
     chargeInfo: z.union([
@@ -299175,6 +304542,7 @@ export const zTrackerSignalDetectedWebhookRequest = z.object({
                 zJobPostingChange,
                 zNewsArticleChange,
                 zLinkedInPostChange,
+                zContactUpdateChange,
                 zPromotionChange,
                 zDemotionChange,
                 zRoleTenureChange,
@@ -299183,6 +304551,7 @@ export const zTrackerSignalDetectedWebhookRequest = z.object({
                 zTrackedEmployeeChange,
                 zInvestorChange,
                 zAcquisitionChange,
+                zAcceleratorChange,
                 zCertificationChange,
                 zDepartmentSizeChange,
                 zPersonReactionChange,
