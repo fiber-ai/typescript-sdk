@@ -7464,6 +7464,14 @@ export const zPollExhaustiveContactEnrichmentResultResponse = z.object({
                     ]))
                 })),
                 z.null()
+            ])),
+            foundOtherTypes: z.optional(z.union([
+                z.object({
+                    workEmails: z.int().gte(0),
+                    personalEmails: z.int().gte(0),
+                    phoneNumbers: z.int().gte(0)
+                }),
+                z.null()
             ]))
         }),
         done: z.boolean()

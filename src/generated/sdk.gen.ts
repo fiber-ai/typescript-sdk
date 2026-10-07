@@ -458,7 +458,7 @@ export const accountVerifyOtp = <ThrowOnError extends boolean = false>(options: 
 /**
  * Poll exhaustive contact details reveal result
  *
- * Polls the status of an exhaustive contact reveal task. Pass the task ID returned by /contact-details/exhaustive/start. This is intentionally slow (completion typically takes approximately 4–8 minutes), as we run multiple enrichment sources in parallel to maximize yield. Do NOT use this in time-sensitive applications -- try any of our other contact detail grabbing endpoints instead. Returns the current status and, once complete, the full set of discovered emails and phone numbers. Includes both high-quality emails and low-quality emails (risky/undeliverable). Low-quality emails failed our internal validation checks and should be filtered out before use, but are included for transparency.
+ * Polls the status of an exhaustive contact reveal task. Pass the task ID returned by /contact-details/exhaustive/start. Exhaustive reveal is our slowest, maximum-coverage endpoint — expect the full run to take roughly 2–3 minutes (most tasks finish sooner). Poll every 15–30 seconds until done is true. If you need fast results, use /contact-details/turbo/sync, /contact-details/single, or /contact-details/lite instead. Returns the current status and, once complete, the full set of discovered emails and phone numbers. Includes both high-quality emails and low-quality emails (risky/undeliverable). Low-quality emails failed our internal validation checks and should be filtered out before use, but are included for transparency.
  *
  * <span>⚡ <strong>Rate limit:</strong> 240 requests per 1 minute</span>
  */
@@ -1751,7 +1751,7 @@ export const startMosaic = <ThrowOnError extends boolean = false>(options: Optio
 /**
  * Start exhaustive contact details reveal
  *
- * Maximum-coverage contact reveal — runs all parallel enrichment branches to get the most comprehensive results. This is asynchronous: call this endpoint to start the task, then poll /contact-details/exhaustive/poll with the returned task ID. Results typically arrive within seconds to a few minutes; worst case can take up to about 4–8 minutes. Slower and more expensive than the synchronous endpoints, but returns more emails and phone numbers on average. For faster or lower-cost options, use /contact-details/turbo/sync (fastest), /contact-details/single (balanced), or /contact-details/lite (cheapest).
+ * Maximum-coverage contact reveal — runs multiple enrichment sources in parallel for the highest yield. This is our SLOWEST endpoint by design: expect to wait roughly 2–3 minutes for results. This is an asynchronous operation — call it to start the task, then poll /contact-details/exhaustive/poll with the returned task ID every 15–30 seconds. Do NOT use this endpoint in time-sensitive flows. If speed matters, use /contact-details/turbo/sync (fastest), /contact-details/single (balanced), or /contact-details/lite (cheapest) instead — exhaustive is for when maximum coverage is worth the wait.
  *
  * <span>⚡ <strong>Rate limit:</strong> 120 requests per 1 minute</span>
  *

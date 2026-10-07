@@ -12178,6 +12178,14 @@ export type PollExhaustiveContactEnrichmentResultResponses = {
                     type: 'work' | 'personal' | 'other' | 'unknown' | 'generic';
                     status?: 'valid' | 'risky' | 'unknown' | 'invalid';
                 }> | null;
+                /**
+                 * Counts of contact details discovered but not returned because they were not part of the requested enrichmentType set. Only present when at least one unrequested type was found; request the corresponding enrichment types and run the task again to receive them.
+                 */
+                foundOtherTypes?: {
+                    workEmails: number;
+                    personalEmails: number;
+                    phoneNumbers: number;
+                } | null;
             };
             /**
              * Whether the enrichment is completed or not.
