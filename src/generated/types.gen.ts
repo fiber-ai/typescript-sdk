@@ -13812,6 +13812,18 @@ export type PollBatchLiveEnrichResponses = {
                             logo_url?: string | null;
                             standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             li_industries?: Array<string> | null;
+                            employee_count_consensus?: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            } | null;
+                            revenue_estimate?: {
+                                sources?: Array<string> | null;
+                                fiscal_year?: number | null;
+                                value_usd: {
+                                    gte?: number | null;
+                                    lte?: number | null;
+                                };
+                            } | null;
                         } | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
@@ -39971,6 +39983,18 @@ export type PeopleSearchResponses = {
                         logo_url?: string | null;
                         standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         li_industries?: Array<string> | null;
+                        employee_count_consensus?: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        } | null;
+                        revenue_estimate?: {
+                            sources?: Array<string> | null;
+                            fiscal_year?: number | null;
+                            value_usd: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            };
+                        } | null;
                     } | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -47021,6 +47045,18 @@ export type PaginatedCombinedSearchResponses = {
                         logo_url?: string | null;
                         standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         li_industries?: Array<string> | null;
+                        employee_count_consensus?: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        } | null;
+                        revenue_estimate?: {
+                            sources?: Array<string> | null;
+                            fiscal_year?: number | null;
+                            value_usd: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            };
+                        } | null;
                     } | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -53908,6 +53944,18 @@ export type QuickPersonResolveResponses = {
                             logo_url?: string | null;
                             standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             li_industries?: Array<string> | null;
+                            employee_count_consensus?: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            } | null;
+                            revenue_estimate?: {
+                                sources?: Array<string> | null;
+                                fiscal_year?: number | null;
+                                value_usd: {
+                                    gte?: number | null;
+                                    lte?: number | null;
+                                };
+                            } | null;
                         } | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
@@ -63108,6 +63156,18 @@ export type ProfileLiveEnrichResponses = {
                         logo_url?: string | null;
                         standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         li_industries?: Array<string> | null;
+                        employee_count_consensus?: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        } | null;
+                        revenue_estimate?: {
+                            sources?: Array<string> | null;
+                            fiscal_year?: number | null;
+                            value_usd: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            };
+                        } | null;
                     } | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -68092,6 +68152,18 @@ export type ReverseEmailLookupResponses = {
                         logo_url?: string | null;
                         standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         li_industries?: Array<string> | null;
+                        employee_count_consensus?: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        } | null;
+                        revenue_estimate?: {
+                            sources?: Array<string> | null;
+                            fiscal_year?: number | null;
+                            value_usd: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            };
+                        } | null;
                     } | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -68923,6 +68995,18 @@ export type LiteReverseEmailLookupResponses = {
                         logo_url?: string | null;
                         standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         li_industries?: Array<string> | null;
+                        employee_count_consensus?: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        } | null;
+                        revenue_estimate?: {
+                            sources?: Array<string> | null;
+                            fiscal_year?: number | null;
+                            value_usd: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            };
+                        } | null;
                     } | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -69448,6 +69532,18 @@ export type ReversePhoneLookupResponses = {
                             logo_url?: string | null;
                             standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             li_industries?: Array<string> | null;
+                            employee_count_consensus?: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            } | null;
+                            revenue_estimate?: {
+                                sources?: Array<string> | null;
+                                fiscal_year?: number | null;
+                                value_usd: {
+                                    gte?: number | null;
+                                    lte?: number | null;
+                                };
+                            } | null;
                         } | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
@@ -70553,7 +70649,7 @@ export type KitchenSinkProfileData = {
          */
         getDetailedEducation?: boolean | null;
         /**
-         * When true, returns detailed_work_experiences[] with company_details (domains, preferred_name, linkedin_primary_slug, li_org_id) for each work experience. Use this to get company domains for a person.
+         * When true, returns detailed_work_experiences[] with company_details (domains, preferred_name, linkedin_primary_slug, li_org_id, employee_count_consensus, revenue_estimate) for each work experience. Use this to get company domains, size, and revenue for a person.
          */
         getDetailedWorkExperience?: boolean | null;
     };
@@ -70913,6 +71009,18 @@ export type KitchenSinkProfileResponses = {
                         logo_url?: string | null;
                         standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         li_industries?: Array<string> | null;
+                        employee_count_consensus?: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        } | null;
+                        revenue_estimate?: {
+                            sources?: Array<string> | null;
+                            fiscal_year?: number | null;
+                            value_usd: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            };
+                        } | null;
                     } | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -73600,7 +73708,7 @@ export type KitchenSinkBulkProfileData = {
          */
         getDetailedEducation?: boolean | null;
         /**
-         * When true, returns detailed_work_experiences[] with company_details (domains, preferred_name, linkedin_primary_slug, li_org_id) for each work experience. Use this to get company domains for a person.
+         * When true, returns detailed_work_experiences[] with company_details (domains, preferred_name, linkedin_primary_slug, li_org_id, employee_count_consensus, revenue_estimate) for each work experience. Use this to get company domains, size, and revenue for a person.
          */
         getDetailedWorkExperience?: boolean | null;
     };
@@ -73960,6 +74068,18 @@ export type KitchenSinkBulkProfileResponses = {
                         logo_url?: string | null;
                         standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         li_industries?: Array<string> | null;
+                        employee_count_consensus?: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        } | null;
+                        revenue_estimate?: {
+                            sources?: Array<string> | null;
+                            fiscal_year?: number | null;
+                            value_usd: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            };
+                        } | null;
                     } | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -86818,6 +86938,18 @@ export type SlushieRunResponses = {
                             logo_url?: string | null;
                             standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             li_industries?: Array<string> | null;
+                            employee_count_consensus?: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            } | null;
+                            revenue_estimate?: {
+                                sources?: Array<string> | null;
+                                fiscal_year?: number | null;
+                                value_usd: {
+                                    gte?: number | null;
+                                    lte?: number | null;
+                                };
+                            } | null;
                         } | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;
@@ -104263,6 +104395,18 @@ export type GetCurrentProfilesInSavedSearchResponses = {
                         logo_url?: string | null;
                         standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                         li_industries?: Array<string> | null;
+                        employee_count_consensus?: {
+                            gte?: number | null;
+                            lte?: number | null;
+                        } | null;
+                        revenue_estimate?: {
+                            sources?: Array<string> | null;
+                            fiscal_year?: number | null;
+                            value_usd: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            };
+                        } | null;
                     } | null;
                     linkedin_company_id?: string | null;
                     is_current?: boolean | null;
@@ -107184,6 +107328,18 @@ export type GetSavedSearchRunProfilesResponses = {
                             logo_url?: string | null;
                             standard_industries?: Array<'Administrative Services' | 'Aerospace & Military' | 'Artificial Intelligence' | 'Arts & Music' | 'Automotive' | 'Business Services' | 'Cloud' | 'Construction' | 'Consulting' | 'Consumer Goods' | 'Consumer Services' | 'Design' | 'Education' | 'Energy' | 'Entertainment' | 'Environmental' | 'Events' | 'Farming & Agriculture' | 'Finance' | 'Food & Beverage' | 'Gaming' | 'Government' | 'Hardware' | 'Healthcare' | 'Hospitality' | 'Industrials' | 'Information Technology' | 'Insurance' | 'Legal' | 'Life Sciences' | 'Logistics' | 'Manufacturing' | 'Marketing & Advertising' | 'Media' | 'Mining' | 'Nonprofit' | 'Publishing' | 'Real Estate' | 'Retail' | 'Science & Engineering' | 'Security' | 'Software' | 'Sports' | 'Telecom' | 'Trade' | 'Transportation' | 'Travel & Tourism' | 'Utilities' | 'Venture Capital'> | null;
                             li_industries?: Array<string> | null;
+                            employee_count_consensus?: {
+                                gte?: number | null;
+                                lte?: number | null;
+                            } | null;
+                            revenue_estimate?: {
+                                sources?: Array<string> | null;
+                                fiscal_year?: number | null;
+                                value_usd: {
+                                    gte?: number | null;
+                                    lte?: number | null;
+                                };
+                            } | null;
                         } | null;
                         linkedin_company_id?: string | null;
                         is_current?: boolean | null;

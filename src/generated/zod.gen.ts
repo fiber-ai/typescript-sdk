@@ -8999,6 +8999,42 @@ export const zPollBatchLiveEnrichResponse = z.object({
                                     li_industries: z.optional(z.union([
                                         z.array(z.string()),
                                         z.null()
+                                    ])),
+                                    employee_count_consensus: z.optional(z.union([
+                                        z.object({
+                                            gte: z.optional(z.union([
+                                                z.number(),
+                                                z.null()
+                                            ])),
+                                            lte: z.optional(z.union([
+                                                z.number(),
+                                                z.null()
+                                            ]))
+                                        }),
+                                        z.null()
+                                    ])),
+                                    revenue_estimate: z.optional(z.union([
+                                        z.object({
+                                            sources: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            fiscal_year: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            value_usd: z.object({
+                                                gte: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                lte: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.null()
                                     ]))
                                 }),
                                 z.null()
@@ -58005,6 +58041,42 @@ export const zPeopleSearchResponse = z.object({
                             li_industries: z.optional(z.union([
                                 z.array(z.string()),
                                 z.null()
+                            ])),
+                            employee_count_consensus: z.optional(z.union([
+                                z.object({
+                                    gte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    lte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            revenue_estimate: z.optional(z.union([
+                                z.object({
+                                    sources: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    fiscal_year: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    value_usd: z.object({
+                                        gte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })
+                                }),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -82853,6 +82925,42 @@ export const zPaginatedCombinedSearchResponse = z.object({
                             li_industries: z.optional(z.union([
                                 z.array(z.string()),
                                 z.null()
+                            ])),
+                            employee_count_consensus: z.optional(z.union([
+                                z.object({
+                                    gte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    lte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            revenue_estimate: z.optional(z.union([
+                                z.object({
+                                    sources: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    fiscal_year: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    value_usd: z.object({
+                                        gte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })
+                                }),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -101853,6 +101961,42 @@ export const zQuickPersonResolveResponse = z.object({
                                     li_industries: z.optional(z.union([
                                         z.array(z.string()),
                                         z.null()
+                                    ])),
+                                    employee_count_consensus: z.optional(z.union([
+                                        z.object({
+                                            gte: z.optional(z.union([
+                                                z.number(),
+                                                z.null()
+                                            ])),
+                                            lte: z.optional(z.union([
+                                                z.number(),
+                                                z.null()
+                                            ]))
+                                        }),
+                                        z.null()
+                                    ])),
+                                    revenue_estimate: z.optional(z.union([
+                                        z.object({
+                                            sources: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            fiscal_year: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            value_usd: z.object({
+                                                gte: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                lte: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
+                                        z.null()
                                     ]))
                                 }),
                                 z.null()
@@ -118215,6 +118359,42 @@ export const zProfileLiveEnrichResponse = z.object({
                                 li_industries: z.optional(z.union([
                                     z.array(z.string()),
                                     z.null()
+                                ])),
+                                employee_count_consensus: z.optional(z.union([
+                                    z.object({
+                                        gte: z.optional(z.union([
+                                            z.number(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.number(),
+                                            z.null()
+                                        ]))
+                                    }),
+                                    z.null()
+                                ])),
+                                revenue_estimate: z.optional(z.union([
+                                    z.object({
+                                        sources: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        fiscal_year: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        value_usd: z.object({
+                                            gte: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            lte: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
+                                    z.null()
                                 ]))
                             }),
                             z.null()
@@ -122443,6 +122623,42 @@ export const zReverseEmailLookupResponse = z.object({
                             li_industries: z.optional(z.union([
                                 z.array(z.string()),
                                 z.null()
+                            ])),
+                            employee_count_consensus: z.optional(z.union([
+                                z.object({
+                                    gte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    lte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            revenue_estimate: z.optional(z.union([
+                                z.object({
+                                    sources: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    fiscal_year: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    value_usd: z.object({
+                                        gte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })
+                                }),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -123742,6 +123958,42 @@ export const zLiteReverseEmailLookupResponse = z.object({
                             li_industries: z.optional(z.union([
                                 z.array(z.string()),
                                 z.null()
+                            ])),
+                            employee_count_consensus: z.optional(z.union([
+                                z.object({
+                                    gte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    lte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            revenue_estimate: z.optional(z.union([
+                                z.object({
+                                    sources: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    fiscal_year: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    value_usd: z.object({
+                                        gte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })
+                                }),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -124933,6 +125185,42 @@ export const zReversePhoneLookupResponse = z.object({
                                     ])),
                                     li_industries: z.optional(z.union([
                                         z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    employee_count_consensus: z.optional(z.union([
+                                        z.object({
+                                            gte: z.optional(z.union([
+                                                z.number(),
+                                                z.null()
+                                            ])),
+                                            lte: z.optional(z.union([
+                                                z.number(),
+                                                z.null()
+                                            ]))
+                                        }),
+                                        z.null()
+                                    ])),
+                                    revenue_estimate: z.optional(z.union([
+                                        z.object({
+                                            sources: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            fiscal_year: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            value_usd: z.object({
+                                                gte: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                lte: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
                                         z.null()
                                     ]))
                                 }),
@@ -127632,6 +127920,42 @@ export const zKitchenSinkProfileResponse = z.object({
                             ])),
                             li_industries: z.optional(z.union([
                                 z.array(z.string()),
+                                z.null()
+                            ])),
+                            employee_count_consensus: z.optional(z.union([
+                                z.object({
+                                    gte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    lte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            revenue_estimate: z.optional(z.union([
+                                z.object({
+                                    sources: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    fiscal_year: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    value_usd: z.object({
+                                        gte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })
+                                }),
                                 z.null()
                             ]))
                         }),
@@ -132013,6 +132337,42 @@ export const zKitchenSinkBulkProfileResponse = z.object({
                             ])),
                             li_industries: z.optional(z.union([
                                 z.array(z.string()),
+                                z.null()
+                            ])),
+                            employee_count_consensus: z.optional(z.union([
+                                z.object({
+                                    gte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    lte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            revenue_estimate: z.optional(z.union([
+                                z.object({
+                                    sources: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    fiscal_year: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    value_usd: z.object({
+                                        gte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })
+                                }),
                                 z.null()
                             ]))
                         }),
@@ -168885,6 +169245,42 @@ export const zSlushieRunResponse = z.object({
                                     ])),
                                     li_industries: z.optional(z.union([
                                         z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    employee_count_consensus: z.optional(z.union([
+                                        z.object({
+                                            gte: z.optional(z.union([
+                                                z.number(),
+                                                z.null()
+                                            ])),
+                                            lte: z.optional(z.union([
+                                                z.number(),
+                                                z.null()
+                                            ]))
+                                        }),
+                                        z.null()
+                                    ])),
+                                    revenue_estimate: z.optional(z.union([
+                                        z.object({
+                                            sources: z.optional(z.union([
+                                                z.array(z.string()),
+                                                z.null()
+                                            ])),
+                                            fiscal_year: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            value_usd: z.object({
+                                                gte: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ])),
+                                                lte: z.optional(z.union([
+                                                    z.int(),
+                                                    z.null()
+                                                ]))
+                                            })
+                                        }),
                                         z.null()
                                     ]))
                                 }),
@@ -242607,6 +243003,42 @@ export const zGetCurrentProfilesInSavedSearchResponse = z.object({
                             li_industries: z.optional(z.union([
                                 z.array(z.string()),
                                 z.null()
+                            ])),
+                            employee_count_consensus: z.optional(z.union([
+                                z.object({
+                                    gte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ])),
+                                    lte: z.optional(z.union([
+                                        z.number(),
+                                        z.null()
+                                    ]))
+                                }),
+                                z.null()
+                            ])),
+                            revenue_estimate: z.optional(z.union([
+                                z.object({
+                                    sources: z.optional(z.union([
+                                        z.array(z.string()),
+                                        z.null()
+                                    ])),
+                                    fiscal_year: z.optional(z.union([
+                                        z.int(),
+                                        z.null()
+                                    ])),
+                                    value_usd: z.object({
+                                        gte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ]))
+                                    })
+                                }),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -246880,6 +247312,42 @@ export const zGetSavedSearchRunProfilesResponse = z.object({
                                 ])),
                                 li_industries: z.optional(z.union([
                                     z.array(z.string()),
+                                    z.null()
+                                ])),
+                                employee_count_consensus: z.optional(z.union([
+                                    z.object({
+                                        gte: z.optional(z.union([
+                                            z.number(),
+                                            z.null()
+                                        ])),
+                                        lte: z.optional(z.union([
+                                            z.number(),
+                                            z.null()
+                                        ]))
+                                    }),
+                                    z.null()
+                                ])),
+                                revenue_estimate: z.optional(z.union([
+                                    z.object({
+                                        sources: z.optional(z.union([
+                                            z.array(z.string()),
+                                            z.null()
+                                        ])),
+                                        fiscal_year: z.optional(z.union([
+                                            z.int(),
+                                            z.null()
+                                        ])),
+                                        value_usd: z.object({
+                                            gte: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ])),
+                                            lte: z.optional(z.union([
+                                                z.int(),
+                                                z.null()
+                                            ]))
+                                        })
+                                    }),
                                     z.null()
                                 ]))
                             }),
