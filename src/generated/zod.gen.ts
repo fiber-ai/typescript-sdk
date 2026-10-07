@@ -122535,6 +122535,115 @@ export const zReverseEmailLookupResponse = z.object({
     ]))
 });
 
+export const zHemLookupData = z.object({
+    body: z.object({
+        apiKey: z.string(),
+        hashedEmails: z.array(z.string().max(64)).min(1).max(100)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Default Response
+ */
+export const zHemLookupResponse = z.object({
+    output: z.object({
+        data: z.array(z.union([z.object({
+                status: z.enum(['found']),
+                hashedEmail: z.string(),
+                originalEmail: z.string(),
+                linkedinUrl: z.union([
+                    z.string(),
+                    z.null()
+                ]),
+                linkedinUserID: z.union([
+                    z.string(),
+                    z.null()
+                ])
+            }), z.object({
+                status: z.enum(['not_found', 'rejected']),
+                hashedEmail: z.string(),
+                message: z.string()
+            })]))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zLiteReverseEmailLookupData = z.object({
     body: z.object({
         apiKey: z.string(),
