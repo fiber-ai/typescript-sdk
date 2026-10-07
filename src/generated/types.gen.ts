@@ -64711,6 +64711,8 @@ export type ProfilePostsLiveFetchResponses = {
                     name?: string | null;
                     profilePicture?: string | null;
                     linkedinSlug?: string | null;
+                    entityUrn?: string | null;
+                    linkedinId?: number | null;
                 } | null;
                 postedAt?: {
                     noLaterThan?: string | null;
@@ -64743,6 +64745,8 @@ export type ProfilePostsLiveFetchResponses = {
                         name?: string | null;
                         profilePicture?: string | null;
                         linkedinSlug?: string | null;
+                        entityUrn?: string | null;
+                        linkedinId?: number | null;
                     } | null;
                     postedAt?: {
                         noLaterThan?: string | null;
@@ -64777,6 +64781,8 @@ export type ProfilePostsLiveFetchResponses = {
                     name?: string | null;
                     profilePicture?: string | null;
                     linkedinSlug?: string | null;
+                    entityUrn?: string | null;
+                    linkedinId?: number | null;
                 } | null;
             }>;
             cursor?: string | null;
@@ -65064,6 +65070,8 @@ export type CompanyPostsLiveFetchResponses = {
                     name?: string | null;
                     profilePicture?: string | null;
                     linkedinSlug?: string | null;
+                    entityUrn?: string | null;
+                    linkedinId?: number | null;
                 } | null;
                 postedAt?: {
                     noLaterThan?: string | null;
@@ -65096,6 +65104,8 @@ export type CompanyPostsLiveFetchResponses = {
                         name?: string | null;
                         profilePicture?: string | null;
                         linkedinSlug?: string | null;
+                        entityUrn?: string | null;
+                        linkedinId?: number | null;
                     } | null;
                     postedAt?: {
                         noLaterThan?: string | null;
@@ -65130,6 +65140,8 @@ export type CompanyPostsLiveFetchResponses = {
                     name?: string | null;
                     profilePicture?: string | null;
                     linkedinSlug?: string | null;
+                    entityUrn?: string | null;
+                    linkedinId?: number | null;
                 } | null;
             }>;
             cursor?: string | null;
@@ -65421,6 +65433,8 @@ export type PostCommentsLiveFetchResponses = {
                     name?: string | null;
                     profilePicture?: string | null;
                     linkedinSlug?: string | null;
+                    entityUrn?: string | null;
+                    linkedinId?: number | null;
                 } | null;
                 numReactions?: number | null;
                 numComments?: number | null;
@@ -65439,6 +65453,7 @@ export type PostCommentsLiveFetchResponses = {
                     linkedinUrl?: string | null;
                     linkedinSlug?: string | null;
                     entityUrn?: string | null;
+                    linkedinId?: number | null;
                 }> | null;
                 comments?: Array<{
                     commentary?: string | null;
@@ -65447,6 +65462,8 @@ export type PostCommentsLiveFetchResponses = {
                         name?: string | null;
                         profilePicture?: string | null;
                         linkedinSlug?: string | null;
+                        entityUrn?: string | null;
+                        linkedinId?: number | null;
                     } | null;
                     numReactions?: number | null;
                     numComments?: number | null;
@@ -65465,6 +65482,7 @@ export type PostCommentsLiveFetchResponses = {
                         linkedinUrl?: string | null;
                         linkedinSlug?: string | null;
                         entityUrn?: string | null;
+                        linkedinId?: number | null;
                     }> | null;
                 }> | null;
             }>;
@@ -65758,6 +65776,8 @@ export type PostReactionsLiveFetchResponses = {
                 reactor?: {
                     userId?: number | null;
                     entityUrn?: string | null;
+                    linkedinUrl?: string | null;
+                    linkedinSlug?: string | null;
                     profilePicture?: string | null;
                     name?: string | null;
                     headline?: string | null;
@@ -66049,7 +66069,9 @@ export type ProfileCommentsLiveFetchResponses = {
                 commenter?: {
                     linkedinUrl?: string | null;
                     profilePicture?: string | null;
+                    linkedinSlug?: string | null;
                     entityUrn?: string | null;
+                    linkedinId?: number | null;
                     name?: string | null;
                 } | null;
                 post?: {
@@ -66058,7 +66080,9 @@ export type ProfileCommentsLiveFetchResponses = {
                     author?: {
                         name?: string | null;
                         linkedinUrl?: string | null;
+                        linkedinSlug?: string | null;
                         entityUrn?: string | null;
+                        linkedinId?: number | null;
                     } | null;
                     content?: string | null;
                 } | null;
@@ -66353,7 +66377,9 @@ export type ProfileReactionsLiveFetchResponses = {
                 reactor?: {
                     linkedinUrl?: string | null;
                     profilePicture?: string | null;
+                    linkedinSlug?: string | null;
                     entityUrn?: string | null;
+                    linkedinId?: number | null;
                 } | null;
                 post?: {
                     postUrn?: string | null;
@@ -66361,7 +66387,9 @@ export type ProfileReactionsLiveFetchResponses = {
                     author?: {
                         name?: string | null;
                         linkedinUrl?: string | null;
+                        linkedinSlug?: string | null;
                         entityUrn?: string | null;
+                        linkedinId?: number | null;
                     } | null;
                     content?: string | null;
                 } | null;
@@ -66370,7 +66398,9 @@ export type ProfileReactionsLiveFetchResponses = {
                     author?: {
                         name?: string | null;
                         linkedinUrl?: string | null;
+                        linkedinSlug?: string | null;
                         entityUrn?: string | null;
+                        linkedinId?: number | null;
                     } | null;
                 } | null;
             }> | null;

@@ -119370,6 +119370,14 @@ export const zProfilePostsLiveFetchResponse = z.object({
                     linkedinSlug: z.optional(z.union([
                         z.string(),
                         z.null()
+                    ])),
+                    entityUrn: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinId: z.optional(z.union([
+                        z.number(),
+                        z.null()
                     ]))
                 }),
                 z.null()
@@ -119471,6 +119479,14 @@ export const zProfilePostsLiveFetchResponse = z.object({
                             linkedinSlug: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            entityUrn: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            linkedinId: z.optional(z.union([
+                                z.number(),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -119571,6 +119587,14 @@ export const zProfilePostsLiveFetchResponse = z.object({
                     ])),
                     linkedinSlug: z.optional(z.union([
                         z.string(),
+                        z.null()
+                    ])),
+                    entityUrn: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinId: z.optional(z.union([
+                        z.number(),
                         z.null()
                     ]))
                 }),
@@ -119696,6 +119720,14 @@ export const zCompanyPostsLiveFetchResponse = z.object({
                     linkedinSlug: z.optional(z.union([
                         z.string(),
                         z.null()
+                    ])),
+                    entityUrn: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinId: z.optional(z.union([
+                        z.number(),
+                        z.null()
                     ]))
                 }),
                 z.null()
@@ -119797,6 +119829,14 @@ export const zCompanyPostsLiveFetchResponse = z.object({
                             linkedinSlug: z.optional(z.union([
                                 z.string(),
                                 z.null()
+                            ])),
+                            entityUrn: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            linkedinId: z.optional(z.union([
+                                z.number(),
+                                z.null()
                             ]))
                         }),
                         z.null()
@@ -119897,6 +119937,14 @@ export const zCompanyPostsLiveFetchResponse = z.object({
                     ])),
                     linkedinSlug: z.optional(z.union([
                         z.string(),
+                        z.null()
+                    ])),
+                    entityUrn: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinId: z.optional(z.union([
+                        z.number(),
                         z.null()
                     ]))
                 }),
@@ -120029,6 +120077,14 @@ export const zPostCommentsLiveFetchResponse = z.object({
                     linkedinSlug: z.optional(z.union([
                         z.string(),
                         z.null()
+                    ])),
+                    entityUrn: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinId: z.optional(z.union([
+                        z.number(),
+                        z.null()
                     ]))
                 }),
                 z.null()
@@ -120088,6 +120144,10 @@ export const zPostCommentsLiveFetchResponse = z.object({
                     entityUrn: z.optional(z.union([
                         z.string(),
                         z.null()
+                    ])),
+                    linkedinId: z.optional(z.union([
+                        z.number(),
+                        z.null()
                     ]))
                 })),
                 z.null()
@@ -120114,6 +120174,14 @@ export const zPostCommentsLiveFetchResponse = z.object({
                             ])),
                             linkedinSlug: z.optional(z.union([
                                 z.string(),
+                                z.null()
+                            ])),
+                            entityUrn: z.optional(z.union([
+                                z.string(),
+                                z.null()
+                            ])),
+                            linkedinId: z.optional(z.union([
+                                z.number(),
                                 z.null()
                             ]))
                         }),
@@ -120173,6 +120241,10 @@ export const zPostCommentsLiveFetchResponse = z.object({
                             ])),
                             entityUrn: z.optional(z.union([
                                 z.string(),
+                                z.null()
+                            ])),
+                            linkedinId: z.optional(z.union([
+                                z.number(),
                                 z.null()
                             ]))
                         })),
@@ -120308,6 +120380,14 @@ export const zPostReactionsLiveFetchResponse = z.object({
                         z.null()
                     ])),
                     entityUrn: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinUrl: z.optional(z.union([
+                        z.string(),
+                        z.null()
+                    ])),
+                    linkedinSlug: z.optional(z.union([
                         z.string(),
                         z.null()
                     ])),
@@ -120455,8 +120535,16 @@ export const zProfileCommentsLiveFetchResponse = z.object({
                             z.string(),
                             z.null()
                         ])),
+                        linkedinSlug: z.optional(z.union([
+                            z.string(),
+                            z.null()
+                        ])),
                         entityUrn: z.optional(z.union([
                             z.string(),
+                            z.null()
+                        ])),
+                        linkedinId: z.optional(z.union([
+                            z.number(),
                             z.null()
                         ])),
                         name: z.optional(z.union([
@@ -120486,8 +120574,16 @@ export const zProfileCommentsLiveFetchResponse = z.object({
                                     z.string(),
                                     z.null()
                                 ])),
+                                linkedinSlug: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
                                 entityUrn: z.optional(z.union([
                                     z.string(),
+                                    z.null()
+                                ])),
+                                linkedinId: z.optional(z.union([
+                                    z.number(),
                                     z.null()
                                 ]))
                             }),
@@ -120640,8 +120736,16 @@ export const zProfileReactionsLiveFetchResponse = z.object({
                             z.string(),
                             z.null()
                         ])),
+                        linkedinSlug: z.optional(z.union([
+                            z.string(),
+                            z.null()
+                        ])),
                         entityUrn: z.optional(z.union([
                             z.string(),
+                            z.null()
+                        ])),
+                        linkedinId: z.optional(z.union([
+                            z.number(),
                             z.null()
                         ]))
                     }),
@@ -120667,8 +120771,16 @@ export const zProfileReactionsLiveFetchResponse = z.object({
                                     z.string(),
                                     z.null()
                                 ])),
+                                linkedinSlug: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
                                 entityUrn: z.optional(z.union([
                                     z.string(),
+                                    z.null()
+                                ])),
+                                linkedinId: z.optional(z.union([
+                                    z.number(),
                                     z.null()
                                 ]))
                             }),
@@ -120697,8 +120809,16 @@ export const zProfileReactionsLiveFetchResponse = z.object({
                                     z.string(),
                                     z.null()
                                 ])),
+                                linkedinSlug: z.optional(z.union([
+                                    z.string(),
+                                    z.null()
+                                ])),
                                 entityUrn: z.optional(z.union([
                                     z.string(),
+                                    z.null()
+                                ])),
+                                linkedinId: z.optional(z.union([
+                                    z.number(),
                                     z.null()
                                 ]))
                             }),
