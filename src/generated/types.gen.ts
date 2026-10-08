@@ -66606,7 +66606,7 @@ export type PostSearchByKeywordsData = {
          */
         apiKey: string;
         /**
-         * Boolean keyword query for LinkedIn posts. See the endpoint description for syntax.
+         * Boolean keyword query for LinkedIn posts. Use at most 5 AND/OR/NOT operators in total; operators inside quoted phrases don't count. See the endpoint description for syntax.
          */
         keywords: string;
         /**
