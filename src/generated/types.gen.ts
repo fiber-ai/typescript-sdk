@@ -1693,6 +1693,10 @@ export type PersonExperienceChange = {
      */
     companyDomains?: Array<string> | null;
     /**
+     * Crunchbase organization slug — permalink https://www.crunchbase.com/organization/{slug}. Null when not known.
+     */
+    crunchbaseSlug?: string | null;
+    /**
      * Job title
      */
     title?: string | null;
@@ -1743,6 +1747,10 @@ export type ContactUpdateChange = {
      * Known company domains
      */
     companyDomains?: Array<string> | null;
+    /**
+     * Crunchbase organization slug — permalink https://www.crunchbase.com/organization/{slug}. Null when not known.
+     */
+    crunchbaseSlug?: string | null;
     /**
      * Job title
      */
@@ -154242,6 +154250,10 @@ export type TrackerSignalDetectedWebhookPayload = {
              * Company domain
              */
             domain?: string | null;
+            /**
+             * Crunchbase organization slug of the tracked company (companies) — permalink https://www.crunchbase.com/organization/{slug}. Null or omitted when not known, and always null for person entities.
+             */
+            crunchbaseSlug?: string | null;
             /**
              * User ID (people)
              */

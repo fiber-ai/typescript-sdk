@@ -1608,6 +1608,10 @@ export const zPersonExperienceChange = z.object({
         z.array(z.string()),
         z.null()
     ])),
+    crunchbaseSlug: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
     title: z.optional(z.union([
         z.string(),
         z.null()
@@ -1658,6 +1662,10 @@ export const zContactUpdateChange = z.object({
     ])),
     companyDomains: z.optional(z.union([
         z.array(z.string()),
+        z.null()
+    ])),
+    crunchbaseSlug: z.optional(z.union([
+        z.string(),
         z.null()
     ])),
     title: z.optional(z.union([
@@ -305213,6 +305221,10 @@ export const zTrackerSignalDetectedWebhookRequest = z.object({
                     z.null()
                 ])),
                 domain: z.optional(z.union([
+                    z.string().min(1),
+                    z.null()
+                ])),
+                crunchbaseSlug: z.optional(z.union([
                     z.string().min(1),
                     z.null()
                 ])),
