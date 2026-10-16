@@ -11,7 +11,10 @@ export default defineConfig({
   plugins: [
     "@hey-api/typescript", // Generate TypeScript types
     "@hey-api/sdk", // Generate SDK methods
-    "@hey-api/client-fetch", // Use native fetch as HTTP client (bundled since v0.73+)
+    {
+      name: "@hey-api/client-fetch", // Use native fetch as HTTP client (bundled since v0.73+)
+      runtimeConfigPath: "../client-config.js", // Imported verbatim, so relative to src/generated/
+    },
     "zod", // Generate Zod schemas for runtime validation
   ],
 });
