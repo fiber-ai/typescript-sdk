@@ -81592,7 +81592,7 @@ export type SlushieRunData = {
          */
         query?: string | null;
         /**
-         * Number of results per page (1-1000). Applied to whichever result type is returned.
+         * Number of results per page. Applied to whichever result type is returned.
          */
         pageSize?: number;
         /**
