@@ -4,7 +4,7 @@ export type ClientOptions = {
     baseUrl: 'https://api.fiber.ai' | (string & {});
 };
 
-export type Webhooks = RevealCompletedWebhookRequest | SavedSearchRunCompletedWebhookRequest | SavedSearchRunUpcomingWebhookRequest | JobChangedWebhookRequest | BatchLiveEnrichCompletedWebhookRequest | BatchContactEnrichCompletedWebhookRequest | BatchContactEnrichV1CompletedWebhookRequest | GithubToLinkedinCompletedWebhookRequest | GithubLookupCompletedWebhookRequest | GithubOrgContributorsCompletedWebhookRequest | DomainLookupCompletedWebhookRequest | SocialMediaLookupCompletedWebhookRequest | GoogleMapsSearchCompletedWebhookRequest | LocalBusinessSearchCompletedWebhookRequest | DepthChartCompletedWebhookRequest | AudienceEnrichmentCompletedWebhookRequest | AudienceProspectExportCompletedWebhookRequest | AudienceCompanyExportCompletedWebhookRequest | AudienceBuildCompletedWebhookRequest | CombinedSearchCompletedWebhookRequest | SalesNavScrapeCompletedWebhookRequest | SalesNavLiteScrapeCompletedWebhookRequest | JobChangesProfilesAddedWebhookRequest | TrackerSignalDetectedWebhookRequest | TrackerListRunCompletedWebhookRequest | TrackerListRunUpcomingWebhookRequest | MosaicCompletedWebhookRequest;
+export type Webhooks = RevealCompletedWebhookRequest | SavedSearchRunCompletedWebhookRequest | SavedSearchRunUpcomingWebhookRequest | JobChangedWebhookRequest | BatchLiveEnrichCompletedWebhookRequest | BatchContactEnrichCompletedWebhookRequest | BatchContactEnrichV1CompletedWebhookRequest | GithubToLinkedinCompletedWebhookRequest | GithubLookupCompletedWebhookRequest | GithubOrgContributorsCompletedWebhookRequest | DomainLookupCompletedWebhookRequest | SocialMediaLookupCompletedWebhookRequest | GoogleMapsSearchCompletedWebhookRequest | LocalBusinessSearchCompletedWebhookRequest | DepthChartCompletedWebhookRequest | AudienceEnrichmentCompletedWebhookRequest | AudienceProspectExportCompletedWebhookRequest | AudienceCompanyExportCompletedWebhookRequest | AudienceBuildCompletedWebhookRequest | CombinedSearchCompletedWebhookRequest | SalesNavScrapeCompletedWebhookRequest | SalesNavLiteScrapeCompletedWebhookRequest | JobChangesProfilesAddedWebhookRequest | TrackerSignalDetectedWebhookRequest | TrackerListRunCompletedWebhookRequest | TrackerListRunUpcomingWebhookRequest | TrackerListBaselineCompletedWebhookRequest | MosaicCompletedWebhookRequest;
 
 /**
  * Headcount crossed threshold
@@ -3973,6 +3973,12 @@ export type GetOrgCreditsResponses = {
                     }>;
                 };
                 githubLookupAgent: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                localBusinessSearch: {
                     levels: Array<{
                         limit?: number | null;
                         centiCreditCost: number;
@@ -9605,7 +9611,7 @@ export type CreateWebhookEndpointData = {
         /**
          * The event types to subscribe this endpoint to. Retrieve the full list of available event types from the webhook event types endpoint.
          */
-        eventTypes: Array<'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'github_org_contributors.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'mosaic.completed'>;
+        eventTypes: Array<'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'github_org_contributors.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'tracker.list_baseline_completed' | 'mosaic.completed'>;
         /**
          * An optional human-readable label for this endpoint.
          */
@@ -10502,7 +10508,7 @@ export type UpdateWebhookEndpointData = {
         /**
          * A new set of event types to subscribe this endpoint to.
          */
-        eventTypes?: Array<'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'github_org_contributors.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'mosaic.completed'> | null;
+        eventTypes?: Array<'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'github_org_contributors.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'tracker.list_baseline_completed' | 'mosaic.completed'> | null;
         /**
          * A new human-readable label for this endpoint.
          */
@@ -11098,7 +11104,7 @@ export type SendTestWebhookEventData = {
         /**
          * The event type to send an example payload for. Retrieve available event types from the webhook event types endpoint.
          */
-        eventType: 'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'github_org_contributors.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'mosaic.completed';
+        eventType: 'reveal.completed' | 'saved_search.run_completed' | 'saved_search.run_upcoming' | 'job.changed' | 'batch_live_enrich.completed' | 'batch_contact_enrich.completed' | 'batch_contact_enrich_v1.completed' | 'github_to_linkedin.completed' | 'github_lookup.completed' | 'github_org_contributors.completed' | 'domain_lookup.completed' | 'social_media_lookup.completed' | 'google_maps_search.completed' | 'local_business_search.completed' | 'depth_chart.completed' | 'audience.enrichment_completed' | 'audience.prospect_export_completed' | 'audience.company_export_completed' | 'audience.build_completed' | 'combined_search.completed' | 'sales_nav_scrape.completed' | 'sales_nav_lite_scrape.completed' | 'job_changes.profiles_added' | 'tracker.signal_detected' | 'tracker.list_run_completed' | 'tracker.list_run_upcoming' | 'tracker.list_baseline_completed' | 'mosaic.completed';
     };
     path: {
         /**
@@ -30237,6 +30243,7 @@ export type UpdateAudienceSearchParamsData = {
                     negate?: boolean;
                 }>;
                 options?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -30262,6 +30269,7 @@ export type UpdateAudienceSearchParamsData = {
                 } | null;
             } | null;
             keywordSearchOptions?: {
+                fieldSelectionMode?: 'default' | 'opt-in';
                 fieldsToSearchOver?: {
                     summary?: boolean;
                     headline?: boolean;
@@ -39745,6 +39753,7 @@ export type PeopleSearchData = {
                     negate?: boolean;
                 }>;
                 options?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -39770,6 +39779,7 @@ export type PeopleSearchData = {
                 } | null;
             } | null;
             keywordSearchOptions?: {
+                fieldSelectionMode?: 'default' | 'opt-in';
                 fieldsToSearchOver?: {
                     summary?: boolean;
                     headline?: boolean;
@@ -41812,6 +41822,7 @@ export type PeopleSearchCountData = {
                     negate?: boolean;
                 }>;
                 options?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -41837,6 +41848,7 @@ export type PeopleSearchCountData = {
                 } | null;
             } | null;
             keywordSearchOptions?: {
+                fieldSelectionMode?: 'default' | 'opt-in';
                 fieldsToSearchOver?: {
                     summary?: boolean;
                     headline?: boolean;
@@ -45026,6 +45038,7 @@ export type PaginatedCombinedSearchData = {
                         negate?: boolean;
                     }>;
                     options?: {
+                        fieldSelectionMode?: 'default' | 'opt-in';
                         fieldsToSearchOver?: {
                             summary?: boolean;
                             headline?: boolean;
@@ -45051,6 +45064,7 @@ export type PaginatedCombinedSearchData = {
                     } | null;
                 } | null;
                 keywordSearchOptions?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -51457,6 +51471,7 @@ export type CombinedSearchCountData = {
                     negate?: boolean;
                 }>;
                 options?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -51482,6 +51497,7 @@ export type CombinedSearchCountData = {
                 } | null;
             } | null;
             keywordSearchOptions?: {
+                fieldSelectionMode?: 'default' | 'opt-in';
                 fieldsToSearchOver?: {
                     summary?: boolean;
                     headline?: boolean;
@@ -56626,6 +56642,7 @@ export type StealthFoundersSearchData = {
                     negate?: boolean;
                 }>;
                 options?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -56651,6 +56668,7 @@ export type StealthFoundersSearchData = {
                 } | null;
             } | null;
             keywordSearchOptions?: {
+                fieldSelectionMode?: 'default' | 'opt-in';
                 fieldsToSearchOver?: {
                     summary?: boolean;
                     headline?: boolean;
@@ -58503,6 +58521,7 @@ export type StealthFoundersCountData = {
                     negate?: boolean;
                 }>;
                 options?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -58528,6 +58547,7 @@ export type StealthFoundersCountData = {
                 } | null;
             } | null;
             keywordSearchOptions?: {
+                fieldSelectionMode?: 'default' | 'opt-in';
                 fieldsToSearchOver?: {
                     summary?: boolean;
                     headline?: boolean;
@@ -83195,6 +83215,7 @@ export type NlpSearchParseResponses = {
                             negate: boolean;
                         }>;
                         options?: {
+                            fieldSelectionMode: 'default' | 'opt-in';
                             fieldsToSearchOver?: {
                                 summary: boolean;
                                 headline: boolean;
@@ -83220,6 +83241,7 @@ export type NlpSearchParseResponses = {
                         } | null;
                     } | null;
                     keywordSearchOptions?: {
+                        fieldSelectionMode: 'default' | 'opt-in';
                         fieldsToSearchOver?: {
                             summary: boolean;
                             headline: boolean;
@@ -86475,6 +86497,7 @@ export type SlushieRunResponses = {
                             negate: boolean;
                         }>;
                         options?: {
+                            fieldSelectionMode: 'default' | 'opt-in';
                             fieldsToSearchOver?: {
                                 summary: boolean;
                                 headline: boolean;
@@ -86500,6 +86523,7 @@ export type SlushieRunResponses = {
                         } | null;
                     } | null;
                     keywordSearchOptions?: {
+                        fieldSelectionMode: 'default' | 'opt-in';
                         fieldsToSearchOver?: {
                             summary: boolean;
                             headline: boolean;
@@ -92005,6 +92029,7 @@ export type CreateSavedSearchData = {
                         negate?: boolean;
                     }>;
                     options?: {
+                        fieldSelectionMode?: 'default' | 'opt-in';
                         fieldsToSearchOver?: {
                             summary?: boolean;
                             headline?: boolean;
@@ -92030,6 +92055,7 @@ export type CreateSavedSearchData = {
                     } | null;
                 } | null;
                 keywordSearchOptions?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -94919,6 +94945,7 @@ export type CreateSavedSearchData = {
                         negate?: boolean;
                     }>;
                     options?: {
+                        fieldSelectionMode?: 'default' | 'opt-in';
                         fieldsToSearchOver?: {
                             summary?: boolean;
                             headline?: boolean;
@@ -94944,6 +94971,7 @@ export type CreateSavedSearchData = {
                     } | null;
                 } | null;
                 keywordSearchOptions?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -98274,6 +98302,7 @@ export type GetSavedSearchResponses = {
                         negate: boolean;
                     }>;
                     options?: {
+                        fieldSelectionMode: 'default' | 'opt-in';
                         fieldsToSearchOver?: {
                             summary: boolean;
                             headline: boolean;
@@ -98299,6 +98328,7 @@ export type GetSavedSearchResponses = {
                     } | null;
                 } | null;
                 keywordSearchOptions?: {
+                    fieldSelectionMode: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary: boolean;
                         headline: boolean;
@@ -101521,6 +101551,7 @@ export type GetSavedSearchRunResponses = {
                             negate: boolean;
                         }>;
                         options?: {
+                            fieldSelectionMode: 'default' | 'opt-in';
                             fieldsToSearchOver?: {
                                 summary: boolean;
                                 headline: boolean;
@@ -101546,6 +101577,7 @@ export type GetSavedSearchRunResponses = {
                         } | null;
                     } | null;
                     keywordSearchOptions?: {
+                        fieldSelectionMode: 'default' | 'opt-in';
                         fieldsToSearchOver?: {
                             summary: boolean;
                             headline: boolean;
@@ -105405,6 +105437,7 @@ export type UpdateSavedSearchData = {
                     negate?: boolean;
                 }>;
                 options?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -105430,6 +105463,7 @@ export type UpdateSavedSearchData = {
                 } | null;
             } | null;
             keywordSearchOptions?: {
+                fieldSelectionMode?: 'default' | 'opt-in';
                 fieldsToSearchOver?: {
                     summary?: boolean;
                     headline?: boolean;
@@ -115663,6 +115697,7 @@ export type GetLatestSavedSearchRunResponses = {
                             negate: boolean;
                         }>;
                         options?: {
+                            fieldSelectionMode: 'default' | 'opt-in';
                             fieldsToSearchOver?: {
                                 summary: boolean;
                                 headline: boolean;
@@ -115688,6 +115723,7 @@ export type GetLatestSavedSearchRunResponses = {
                         } | null;
                     } | null;
                     keywordSearchOptions?: {
+                        fieldSelectionMode: 'default' | 'opt-in';
                         fieldsToSearchOver?: {
                             summary: boolean;
                             headline: boolean;
@@ -140705,6 +140741,10 @@ export type AddTrackerCompaniesResponses = {
             } | {
                 triggered: false;
             };
+            /**
+             * When the list is next scheduled to refresh — the first check that can produce signals for the entities you just added. Null for a list that has not been scheduled yet; its first check runs within about an hour and sets the schedule.
+             */
+            nextRefreshAt?: string | null;
         };
         chargeInfo: {
             method: 'charged-now';
@@ -141604,6 +141644,7 @@ export type CreateTrackerPersonListData = {
                     negate?: boolean;
                 }>;
                 options?: {
+                    fieldSelectionMode?: 'default' | 'opt-in';
                     fieldsToSearchOver?: {
                         summary?: boolean;
                         headline?: boolean;
@@ -141629,6 +141670,7 @@ export type CreateTrackerPersonListData = {
                 } | null;
             } | null;
             keywordSearchOptions?: {
+                fieldSelectionMode?: 'default' | 'opt-in';
                 fieldsToSearchOver?: {
                     summary?: boolean;
                     headline?: boolean;
@@ -146556,6 +146598,10 @@ export type AddTrackerPeopleResponses = {
             } | {
                 triggered: false;
             };
+            /**
+             * When the list is next scheduled to refresh — the first check that can produce signals for the entities you just added. Null for a list that has not been scheduled yet; its first check runs within about an hour and sets the schedule.
+             */
+            nextRefreshAt?: string | null;
         };
         chargeInfo: {
             method: 'charged-now';
@@ -162442,6 +162488,50 @@ export type TrackerListRunUpcomingWebhookPayload = {
 export type TrackerListRunUpcomingWebhookRequest = {
     body: TrackerListRunUpcomingWebhookPayload;
     key: 'tracker.list_run_upcoming';
+    path?: never;
+    query?: never;
+};
+
+/**
+ * TrackerListBaselineCompletedPayload
+ *
+ * Payload delivered after newly added entities on a tracker list receive their first snapshot. A baseline produces no signals; the first comparison happens at the next scheduled refresh.
+ */
+export type TrackerListBaselineCompletedWebhookPayload = {
+    success: true;
+    /**
+     * ID of the tracker list the entities were added to.
+     */
+    listId: string;
+    /**
+     * Name of the tracker list.
+     */
+    listName: string;
+    /**
+     * Whether this list tracks companies or people.
+     */
+    entityType: 'company' | 'person';
+    /**
+     * Number of entities whose first snapshot was taken in this pass.
+     */
+    entityCount: number;
+    /**
+     * UTC timestamp when the baseline pass ran.
+     */
+    baselinedAt: string;
+    /**
+     * UTC timestamp of the next scheduled refresh — the first check that can produce signals for these entities.
+     */
+    nextRefreshAt: string;
+    /**
+     * The list's configured refresh cadence, in days.
+     */
+    refreshIntervalDays: number;
+};
+
+export type TrackerListBaselineCompletedWebhookRequest = {
+    body: TrackerListBaselineCompletedWebhookPayload;
+    key: 'tracker.list_baseline_completed';
     path?: never;
     query?: never;
 };

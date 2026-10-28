@@ -3734,6 +3734,15 @@ export const zGetOrgCreditsResponse = z.object({
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
                 }).prefault({ levels: [{ limit: null, centiCreditCost: 300 }] }),
+                localBusinessSearch: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 200 }] }),
                 getLiProfileFromGithubUsername: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
@@ -6520,6 +6529,7 @@ export const zCreateWebhookEndpointData = z.object({
             'tracker.signal_detected',
             'tracker.list_run_completed',
             'tracker.list_run_upcoming',
+            'tracker.list_baseline_completed',
             'mosaic.completed'
         ])).min(1),
         description: z.optional(z.union([
@@ -6858,6 +6868,7 @@ export const zUpdateWebhookEndpointData = z.object({
                 'tracker.signal_detected',
                 'tracker.list_run_completed',
                 'tracker.list_run_upcoming',
+                'tracker.list_baseline_completed',
                 'mosaic.completed'
             ])).min(1),
             z.null()
@@ -7095,6 +7106,7 @@ export const zSendTestWebhookEventData = z.object({
             'tracker.signal_detected',
             'tracker.list_run_completed',
             'tracker.list_run_upcoming',
+            'tracker.list_baseline_completed',
             'mosaic.completed'
         ])
     }),
@@ -24889,6 +24901,7 @@ export const zUpdateAudienceSearchParamsData = z.object({
                         })).min(1),
                         options: z.optional(z.union([
                             z.object({
+                                fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                                 fieldsToSearchOver: z.optional(z.union([
                                     z.object({
                                         summary: z.optional(z.boolean()).prefault(true),
@@ -24922,6 +24935,7 @@ export const zUpdateAudienceSearchParamsData = z.object({
                 ])),
                 keywordSearchOptions: z.optional(z.union([
                     z.object({
+                        fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                         fieldsToSearchOver: z.optional(z.union([
                             z.object({
                                 summary: z.optional(z.boolean()).prefault(true),
@@ -55942,6 +55956,7 @@ export const zPeopleSearchData = z.object({
                     })).min(1),
                     options: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.optional(z.boolean()).prefault(true),
@@ -55975,6 +55990,7 @@ export const zPeopleSearchData = z.object({
             ])),
             keywordSearchOptions: z.optional(z.union([
                 z.object({
+                    fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                     fieldsToSearchOver: z.optional(z.union([
                         z.object({
                             summary: z.optional(z.boolean()).prefault(true),
@@ -66320,6 +66336,7 @@ export const zPeopleSearchCountData = z.object({
                     })).min(1),
                     options: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.optional(z.boolean()).prefault(true),
@@ -66353,6 +66370,7 @@ export const zPeopleSearchCountData = z.object({
             ])),
             keywordSearchOptions: z.optional(z.union([
                 z.object({
+                    fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                     fieldsToSearchOver: z.optional(z.union([
                         z.object({
                             summary: z.optional(z.boolean()).prefault(true),
@@ -82967,6 +82985,7 @@ export const zPaginatedCombinedSearchData = z.object({
                             })).min(1),
                             options: z.optional(z.union([
                                 z.object({
+                                    fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                                     fieldsToSearchOver: z.optional(z.union([
                                         z.object({
                                             summary: z.optional(z.boolean()).prefault(true),
@@ -83000,6 +83019,7 @@ export const zPaginatedCombinedSearchData = z.object({
                     ])),
                     keywordSearchOptions: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.optional(z.boolean()).prefault(true),
@@ -104617,6 +104637,7 @@ export const zCombinedSearchCountData = z.object({
                     })).min(1),
                     options: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.optional(z.boolean()).prefault(true),
@@ -104650,6 +104671,7 @@ export const zCombinedSearchCountData = z.object({
             ])),
             keywordSearchOptions: z.optional(z.union([
                 z.object({
+                    fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                     fieldsToSearchOver: z.optional(z.union([
                         z.object({
                             summary: z.optional(z.boolean()).prefault(true),
@@ -118485,6 +118507,7 @@ export const zStealthFoundersSearchData = z.object({
                     })).min(1),
                     options: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.optional(z.boolean()).prefault(true),
@@ -118518,6 +118541,7 @@ export const zStealthFoundersSearchData = z.object({
             ])),
             keywordSearchOptions: z.optional(z.union([
                 z.object({
+                    fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                     fieldsToSearchOver: z.optional(z.union([
                         z.object({
                             summary: z.optional(z.boolean()).prefault(true),
@@ -127815,6 +127839,7 @@ export const zStealthFoundersCountData = z.object({
                     })).min(1),
                     options: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.optional(z.boolean()).prefault(true),
@@ -127848,6 +127873,7 @@ export const zStealthFoundersCountData = z.object({
             ])),
             keywordSearchOptions: z.optional(z.union([
                 z.object({
+                    fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                     fieldsToSearchOver: z.optional(z.union([
                         z.object({
                             summary: z.optional(z.boolean()).prefault(true),
@@ -169352,6 +169378,7 @@ export const zNlpSearchParseResponse = z.object({
                                 })).min(1),
                                 options: z.optional(z.union([
                                     z.object({
+                                        fieldSelectionMode: z.enum(['default', 'opt-in']),
                                         fieldsToSearchOver: z.optional(z.union([
                                             z.object({
                                                 summary: z.boolean().prefault(true),
@@ -169385,6 +169412,7 @@ export const zNlpSearchParseResponse = z.object({
                         ])),
                         keywordSearchOptions: z.optional(z.union([
                             z.object({
+                                fieldSelectionMode: z.enum(['default', 'opt-in']),
                                 fieldsToSearchOver: z.optional(z.union([
                                     z.object({
                                         summary: z.boolean().prefault(true),
@@ -186061,6 +186089,7 @@ export const zSlushieRunResponse = z.object({
                                 })).min(1),
                                 options: z.optional(z.union([
                                     z.object({
+                                        fieldSelectionMode: z.enum(['default', 'opt-in']),
                                         fieldsToSearchOver: z.optional(z.union([
                                             z.object({
                                                 summary: z.boolean().prefault(true),
@@ -186094,6 +186123,7 @@ export const zSlushieRunResponse = z.object({
                         ])),
                         keywordSearchOptions: z.optional(z.union([
                             z.object({
+                                fieldSelectionMode: z.enum(['default', 'opt-in']),
                                 fieldsToSearchOver: z.optional(z.union([
                                     z.object({
                                         summary: z.boolean().prefault(true),
@@ -207487,6 +207517,7 @@ export const zCreateSavedSearchData = z.object({
                             })).min(1),
                             options: z.optional(z.union([
                                 z.object({
+                                    fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                                     fieldsToSearchOver: z.optional(z.union([
                                         z.object({
                                             summary: z.optional(z.boolean()).prefault(true),
@@ -207520,6 +207551,7 @@ export const zCreateSavedSearchData = z.object({
                     ])),
                     keywordSearchOptions: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.optional(z.boolean()).prefault(true),
@@ -223998,6 +224030,7 @@ export const zCreateSavedSearchData = z.object({
                             })).min(1),
                             options: z.optional(z.union([
                                 z.object({
+                                    fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                                     fieldsToSearchOver: z.optional(z.union([
                                         z.object({
                                             summary: z.optional(z.boolean()).prefault(true),
@@ -224031,6 +224064,7 @@ export const zCreateSavedSearchData = z.object({
                     ])),
                     keywordSearchOptions: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.optional(z.boolean()).prefault(true),
@@ -240637,6 +240671,7 @@ export const zGetSavedSearchResponse = z.object({
                         })).min(1),
                         options: z.optional(z.union([
                             z.object({
+                                fieldSelectionMode: z.enum(['default', 'opt-in']),
                                 fieldsToSearchOver: z.optional(z.union([
                                     z.object({
                                         summary: z.boolean().prefault(true),
@@ -240670,6 +240705,7 @@ export const zGetSavedSearchResponse = z.object({
                 ])),
                 keywordSearchOptions: z.optional(z.union([
                     z.object({
+                        fieldSelectionMode: z.enum(['default', 'opt-in']),
                         fieldsToSearchOver: z.optional(z.union([
                             z.object({
                                 summary: z.boolean().prefault(true),
@@ -257277,6 +257313,7 @@ export const zGetSavedSearchRunResponse = z.object({
                             })).min(1),
                             options: z.optional(z.union([
                                 z.object({
+                                    fieldSelectionMode: z.enum(['default', 'opt-in']),
                                     fieldsToSearchOver: z.optional(z.union([
                                         z.object({
                                             summary: z.boolean().prefault(true),
@@ -257310,6 +257347,7 @@ export const zGetSavedSearchRunResponse = z.object({
                     ])),
                     keywordSearchOptions: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.enum(['default', 'opt-in']),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.boolean().prefault(true),
@@ -274159,6 +274197,7 @@ export const zUpdateSavedSearchData = z.object({
                         })).min(1),
                         options: z.optional(z.union([
                             z.object({
+                                fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                                 fieldsToSearchOver: z.optional(z.union([
                                     z.object({
                                         summary: z.optional(z.boolean()).prefault(true),
@@ -274192,6 +274231,7 @@ export const zUpdateSavedSearchData = z.object({
                 ])),
                 keywordSearchOptions: z.optional(z.union([
                     z.object({
+                        fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                         fieldsToSearchOver: z.optional(z.union([
                             z.object({
                                 summary: z.optional(z.boolean()).prefault(true),
@@ -301038,6 +301078,7 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                             })).min(1),
                             options: z.optional(z.union([
                                 z.object({
+                                    fieldSelectionMode: z.enum(['default', 'opt-in']),
                                     fieldsToSearchOver: z.optional(z.union([
                                         z.object({
                                             summary: z.boolean().prefault(true),
@@ -301071,6 +301112,7 @@ export const zGetLatestSavedSearchRunResponse = z.object({
                     ])),
                     keywordSearchOptions: z.optional(z.union([
                         z.object({
+                            fieldSelectionMode: z.enum(['default', 'opt-in']),
                             fieldsToSearchOver: z.optional(z.union([
                                 z.object({
                                     summary: z.boolean().prefault(true),
@@ -334759,7 +334801,11 @@ export const zAddTrackerCompaniesResponse = z.object({
             z.object({
                 triggered: z.literal(false)
             })
-        ])
+        ]),
+        nextRefreshAt: z.optional(z.union([
+            z.iso.datetime(),
+            z.null()
+        ]))
     }),
     chargeInfo: z.union([
         z.object({
@@ -335927,6 +335973,7 @@ export const zCreateTrackerPersonListData = z.object({
                         })).min(1),
                         options: z.optional(z.union([
                             z.object({
+                                fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                                 fieldsToSearchOver: z.optional(z.union([
                                     z.object({
                                         summary: z.optional(z.boolean()).prefault(true),
@@ -335960,6 +336007,7 @@ export const zCreateTrackerPersonListData = z.object({
                 ])),
                 keywordSearchOptions: z.optional(z.union([
                     z.object({
+                        fieldSelectionMode: z.optional(z.enum(['default', 'opt-in'])),
                         fieldsToSearchOver: z.optional(z.union([
                             z.object({
                                 summary: z.optional(z.boolean()).prefault(true),
@@ -352827,7 +352875,11 @@ export const zAddTrackerPeopleResponse = z.object({
             z.object({
                 triggered: z.literal(false)
             })
-        ])
+        ]),
+        nextRefreshAt: z.optional(z.union([
+            z.iso.datetime(),
+            z.null()
+        ]))
     }),
     chargeInfo: z.union([
         z.object({
@@ -359953,6 +360005,21 @@ export const zTrackerListRunUpcomingWebhookRequest = z.object({
         listName: z.string().min(1),
         entityType: z.enum(['company', 'person']),
         expectedRefreshAt: z.iso.datetime(),
+        refreshIntervalDays: z.int().gte(1)
+    }),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export const zTrackerListBaselineCompletedWebhookRequest = z.object({
+    body: z.object({
+        success: z.literal(true),
+        listId: z.string().min(1),
+        listName: z.string().min(1),
+        entityType: z.enum(['company', 'person']),
+        entityCount: z.int().gte(1),
+        baselinedAt: z.iso.datetime(),
+        nextRefreshAt: z.iso.datetime(),
         refreshIntervalDays: z.int().gte(1)
     }),
     path: z.optional(z.never()),
