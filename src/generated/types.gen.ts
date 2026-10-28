@@ -23455,6 +23455,289 @@ export type GetIndustriesResponses = {
 
 export type GetIndustriesResponse = GetIndustriesResponses[keyof GetIndustriesResponses];
 
+export type GetJobCategoriesData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Your Fiber API key
+         */
+        apiKey: string;
+    };
+    url: '/v1/enums/job-categories';
+};
+
+export type GetJobCategoriesErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    402: {
+        /**
+         * The error message.
+         */
+        message: string;
+        /**
+         * Present on 402 responses. Contains a link to get more credits.
+         */
+        outOfCreditsAlert?: {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null;
+        [key: string]: unknown | string | {
+            /**
+             * URL to top up credits or restart billing cycle to get fresh credits.
+             */
+            getMoreCreditsUrl: string;
+            /**
+             * Human-readable credits warning.
+             */
+            message: string;
+            /**
+             * Number of credits remaining in the current billing period.
+             */
+            availableCredits: number;
+        } | null | undefined;
+    };
+    /**
+     * Default Response
+     */
+    403: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    404: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    422: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    429: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    500: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+    /**
+     * Default Response
+     */
+    503: {
+        /**
+         * The error message.
+         */
+        message: string;
+        [key: string]: unknown | string;
+    };
+};
+
+export type GetJobCategoriesError = GetJobCategoriesErrors[keyof GetJobCategoriesErrors];
+
+export type GetJobCategoriesResponses = {
+    /**
+     * Default Response
+     */
+    200: {
+        output: {
+            /**
+             * All job functions with their specialties nested under them — the full two-tier taxonomy behind the `jobCategories` people-search filter.
+             */
+            jobFunctions: Array<{
+                function: 'Accounting' | 'Administrative' | 'Arts and Design' | 'Business Development' | 'Community and Social Services' | 'Consulting' | 'Education' | 'Engineering' | 'Entrepreneurship' | 'Finance' | 'Healthcare Services' | 'Human Resources' | 'Information Technology' | 'Legal' | 'Marketing' | 'Media and Communication' | 'Military and Protective Services' | 'Operations' | 'Product Management' | 'Program and Project Management' | 'Purchasing' | 'Quality Assurance' | 'Real Estate' | 'Research' | 'Sales' | 'Customer Success and Support' | 'Other';
+                /**
+                 * Every specialty under this function, in taxonomy order. Use as `{ "type": "specialty", "value": "..." }` in the `jobCategories` filter.
+                 */
+                specialties: Array<'Bookkeeping & Payroll' | 'Audit & Internal Controls' | 'Tax Accounting' | 'General Accounting' | 'Executive Assistance' | 'Office Management' | 'Reception & Front Office' | 'Clerical & Data Entry' | 'General Administrative' | 'Graphic & Visual Design' | 'UX & Product Design' | 'Creative & Art Direction' | 'Interior & Architectural Design' | 'Fashion & Industrial Design' | 'General Arts and Design' | 'Partnerships & Alliances' | 'Channel & Reseller Development' | 'Market Expansion & New Ventures' | 'General Business Development' | 'Social Work & Case Management' | 'Community Outreach & Program Coordination' | 'Ministry & Religious Services' | 'Fundraising & Nonprofit Development' | 'General Community and Social Services' | 'Management & Strategy Consulting' | 'Technology & IT Consulting' | 'Financial Advisory Consulting' | 'Implementation & Solutions Consulting' | 'Independent & Freelance Consulting' | 'Advisors & Board Advisory' | 'General Consulting' | 'K-12 Teaching' | 'Higher Education Faculty' | 'Early Childhood & Teaching Assistants' | 'School & Academic Administration' | 'Curriculum & Instructional Design' | 'Tutoring & Coaching' | 'Students' | 'General Education' | 'Mechanical Engineering' | 'Electrical & Electronics Engineering' | 'Civil & Structural Engineering' | 'Chemical & Process Engineering' | 'Industrial & Manufacturing Engineering' | 'Field Service & Technicians' | 'Engineering Management' | 'General Engineering' | 'Founders' | 'Business Ownership' | 'General Entrepreneurship' | 'FP&A & Corporate Finance' | 'Investment Banking & Capital Markets' | 'Investment & Wealth Management' | 'Banking & Lending' | 'Insurance & Underwriting' | 'Risk Management' | 'General Finance' | 'Nursing' | 'Physicians & Advanced Practice' | 'Pharmacy' | 'Therapy & Rehabilitation' | 'Behavioral & Mental Health' | 'Allied Health & Medical Technicians' | 'Healthcare Administration' | 'Fitness & Wellness' | 'General Healthcare Services' | 'Recruiting & Talent Acquisition' | 'HR Business Partner & Generalist' | 'Compensation & Benefits' | 'Learning & Development' | 'HR Operations & HRIS' | 'People Analytics & Workforce Planning' | 'Employee Relations & DEI' | 'General Human Resources' | 'Software Engineering' | 'Data & ML Engineering' | 'Data Science & Analytics' | 'DevOps & Site Reliability' | 'Security & Cybersecurity' | 'IT Systems & Network Administration' | 'Enterprise & Technical Architecture' | 'General Information Technology' | 'Attorneys & Counsel' | 'Paralegal & Legal Support' | 'Compliance & Regulatory' | 'Judiciary & Clerkships' | 'General Legal' | 'Brand & Marketing Communications' | 'Digital & Performance Marketing' | 'Content & Social Media' | 'Product Marketing' | 'Demand Generation & Growth' | 'Marketing Operations & Analytics' | 'Events & Field Marketing' | 'General Marketing' | 'Editorial & Journalism' | 'PR & Corporate Communications' | 'Media Production & Broadcasting' | 'Writing & Editing' | 'General Media and Communication' | 'Military & Defense' | 'Law Enforcement & Security' | 'Emergency Services' | 'General Military and Protective Services' | 'Executive & General Management' | 'Business Operations & Strategy' | 'Operations Management' | 'Supply Chain & Logistics' | 'Manufacturing & Production' | 'Construction & Field Operations' | 'Retail & Hospitality Operations' | 'Facilities & Property Management' | 'Quality & Safety' | 'Agriculture & Forestry' | 'General Operations' | 'Product Strategy & Roadmapping' | 'Technical Product Management' | 'Product Ownership & Agile' | 'General Product Management' | 'Program Management' | 'Project Management' | 'Technical Program Management' | 'PMO & Project Coordination' | 'General Program and Project Management' | 'Procurement & Sourcing' | 'Supplier & Vendor Management' | 'General Purchasing' | 'Software Testing & QA Engineering' | 'General Quality Assurance' | 'Realty Sales & Brokerage' | 'Property Management' | 'Commercial & Investment Real Estate' | 'General Real Estate' | 'Academic Research' | 'Scientific & Laboratory Research' | 'Clinical Research' | 'Market & User Research' | 'General Research' | 'Account Executive' | 'Sales Development' | 'Account Management' | 'Sales Engineering & Presales' | 'Sales Operations & Enablement' | 'Sales Management' | 'Retail & Consumer Sales' | 'Insurance Sales' | 'General Sales' | 'Customer Support & Contact Center' | 'Technical Support & Help Desk' | 'Customer Success' | 'Food & Beverage Service' | 'Front Desk & Guest Services' | 'Retail & Cashier' | 'Personal Care Services' | 'General Customer Success and Support' | 'Other'>;
+            }>;
+            /**
+             * Every value the `seniority` people-search filter accepts.
+             */
+            seniorities: Array<'Entry level' | 'Director' | 'Associate' | 'Mid-Senior level' | 'Internship' | 'Executive'>;
+        };
+        chargeInfo: {
+            method: 'charged-now';
+            creditsCharged: number;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charging-later';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'charged-for-async-process';
+            creditsCharged: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'free';
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        } | {
+            method: 'credits-refunded';
+            creditsRefunded: number;
+            message: string;
+            /**
+             * Contains a link to get more credits, a warning message, and the remaining credit count.
+             */
+            lowCreditAlert?: {
+                /**
+                 * URL to top up credits or restart billing cycle to get fresh credits.
+                 */
+                getMoreCreditsUrl: string;
+                /**
+                 * Human-readable credits warning.
+                 */
+                message: string;
+                /**
+                 * Number of credits remaining in the current billing period.
+                 */
+                availableCredits: number;
+            } | null;
+        };
+        /**
+         * Warnings about extraneous fields in request
+         */
+        warnings?: Array<{
+            /**
+             * Full path to extraneous field (e.g., 'searchParams.ExtraField')
+             */
+            field: string;
+            /**
+             * Warning message
+             */
+            message: string;
+        }> | null;
+        /**
+         * Tips, recommendations, and suggestions for using this API effectively.
+         */
+        advice?: Array<string> | null;
+    };
+};
+
+export type GetJobCategoriesResponse = GetJobCategoriesResponses[keyof GetJobCategoriesResponses];
+
 export type GetTagsData = {
     body?: never;
     path?: never;

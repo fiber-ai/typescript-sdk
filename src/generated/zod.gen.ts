@@ -14002,6 +14002,294 @@ export const zGetIndustriesResponse = z.object({
     ]))
 });
 
+export const zGetJobCategoriesData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.object({
+        apiKey: z.string()
+    })
+});
+
+/**
+ * Default Response
+ */
+export const zGetJobCategoriesResponse = z.object({
+    output: z.object({
+        jobFunctions: z.array(z.object({
+            function: z.enum([
+                'Accounting',
+                'Administrative',
+                'Arts and Design',
+                'Business Development',
+                'Community and Social Services',
+                'Consulting',
+                'Education',
+                'Engineering',
+                'Entrepreneurship',
+                'Finance',
+                'Healthcare Services',
+                'Human Resources',
+                'Information Technology',
+                'Legal',
+                'Marketing',
+                'Media and Communication',
+                'Military and Protective Services',
+                'Operations',
+                'Product Management',
+                'Program and Project Management',
+                'Purchasing',
+                'Quality Assurance',
+                'Real Estate',
+                'Research',
+                'Sales',
+                'Customer Success and Support',
+                'Other'
+            ]),
+            specialties: z.array(z.enum([
+                'Bookkeeping & Payroll',
+                'Audit & Internal Controls',
+                'Tax Accounting',
+                'General Accounting',
+                'Executive Assistance',
+                'Office Management',
+                'Reception & Front Office',
+                'Clerical & Data Entry',
+                'General Administrative',
+                'Graphic & Visual Design',
+                'UX & Product Design',
+                'Creative & Art Direction',
+                'Interior & Architectural Design',
+                'Fashion & Industrial Design',
+                'General Arts and Design',
+                'Partnerships & Alliances',
+                'Channel & Reseller Development',
+                'Market Expansion & New Ventures',
+                'General Business Development',
+                'Social Work & Case Management',
+                'Community Outreach & Program Coordination',
+                'Ministry & Religious Services',
+                'Fundraising & Nonprofit Development',
+                'General Community and Social Services',
+                'Management & Strategy Consulting',
+                'Technology & IT Consulting',
+                'Financial Advisory Consulting',
+                'Implementation & Solutions Consulting',
+                'Independent & Freelance Consulting',
+                'Advisors & Board Advisory',
+                'General Consulting',
+                'K-12 Teaching',
+                'Higher Education Faculty',
+                'Early Childhood & Teaching Assistants',
+                'School & Academic Administration',
+                'Curriculum & Instructional Design',
+                'Tutoring & Coaching',
+                'Students',
+                'General Education',
+                'Mechanical Engineering',
+                'Electrical & Electronics Engineering',
+                'Civil & Structural Engineering',
+                'Chemical & Process Engineering',
+                'Industrial & Manufacturing Engineering',
+                'Field Service & Technicians',
+                'Engineering Management',
+                'General Engineering',
+                'Founders',
+                'Business Ownership',
+                'General Entrepreneurship',
+                'FP&A & Corporate Finance',
+                'Investment Banking & Capital Markets',
+                'Investment & Wealth Management',
+                'Banking & Lending',
+                'Insurance & Underwriting',
+                'Risk Management',
+                'General Finance',
+                'Nursing',
+                'Physicians & Advanced Practice',
+                'Pharmacy',
+                'Therapy & Rehabilitation',
+                'Behavioral & Mental Health',
+                'Allied Health & Medical Technicians',
+                'Healthcare Administration',
+                'Fitness & Wellness',
+                'General Healthcare Services',
+                'Recruiting & Talent Acquisition',
+                'HR Business Partner & Generalist',
+                'Compensation & Benefits',
+                'Learning & Development',
+                'HR Operations & HRIS',
+                'People Analytics & Workforce Planning',
+                'Employee Relations & DEI',
+                'General Human Resources',
+                'Software Engineering',
+                'Data & ML Engineering',
+                'Data Science & Analytics',
+                'DevOps & Site Reliability',
+                'Security & Cybersecurity',
+                'IT Systems & Network Administration',
+                'Enterprise & Technical Architecture',
+                'General Information Technology',
+                'Attorneys & Counsel',
+                'Paralegal & Legal Support',
+                'Compliance & Regulatory',
+                'Judiciary & Clerkships',
+                'General Legal',
+                'Brand & Marketing Communications',
+                'Digital & Performance Marketing',
+                'Content & Social Media',
+                'Product Marketing',
+                'Demand Generation & Growth',
+                'Marketing Operations & Analytics',
+                'Events & Field Marketing',
+                'General Marketing',
+                'Editorial & Journalism',
+                'PR & Corporate Communications',
+                'Media Production & Broadcasting',
+                'Writing & Editing',
+                'General Media and Communication',
+                'Military & Defense',
+                'Law Enforcement & Security',
+                'Emergency Services',
+                'General Military and Protective Services',
+                'Executive & General Management',
+                'Business Operations & Strategy',
+                'Operations Management',
+                'Supply Chain & Logistics',
+                'Manufacturing & Production',
+                'Construction & Field Operations',
+                'Retail & Hospitality Operations',
+                'Facilities & Property Management',
+                'Quality & Safety',
+                'Agriculture & Forestry',
+                'General Operations',
+                'Product Strategy & Roadmapping',
+                'Technical Product Management',
+                'Product Ownership & Agile',
+                'General Product Management',
+                'Program Management',
+                'Project Management',
+                'Technical Program Management',
+                'PMO & Project Coordination',
+                'General Program and Project Management',
+                'Procurement & Sourcing',
+                'Supplier & Vendor Management',
+                'General Purchasing',
+                'Software Testing & QA Engineering',
+                'General Quality Assurance',
+                'Realty Sales & Brokerage',
+                'Property Management',
+                'Commercial & Investment Real Estate',
+                'General Real Estate',
+                'Academic Research',
+                'Scientific & Laboratory Research',
+                'Clinical Research',
+                'Market & User Research',
+                'General Research',
+                'Account Executive',
+                'Sales Development',
+                'Account Management',
+                'Sales Engineering & Presales',
+                'Sales Operations & Enablement',
+                'Sales Management',
+                'Retail & Consumer Sales',
+                'Insurance Sales',
+                'General Sales',
+                'Customer Support & Contact Center',
+                'Technical Support & Help Desk',
+                'Customer Success',
+                'Food & Beverage Service',
+                'Front Desk & Guest Services',
+                'Retail & Cashier',
+                'Personal Care Services',
+                'General Customer Success and Support',
+                'Other'
+            ]))
+        })),
+        seniorities: z.array(z.enum([
+            'Entry level',
+            'Director',
+            'Associate',
+            'Mid-Senior level',
+            'Internship',
+            'Executive'
+        ]))
+    }),
+    chargeInfo: z.union([
+        z.object({
+            method: z.enum(['charged-now']),
+            creditsCharged: z.number(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charging-later']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['charged-for-async-process']),
+            creditsCharged: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['free']),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        }),
+        z.object({
+            method: z.enum(['credits-refunded']),
+            creditsRefunded: z.number(),
+            message: z.string(),
+            lowCreditAlert: z.optional(z.union([
+                z.object({
+                    getMoreCreditsUrl: z.url(),
+                    message: z.string(),
+                    availableCredits: z.number()
+                }),
+                z.null()
+            ]))
+        })
+    ]),
+    warnings: z.optional(z.union([
+        z.array(z.object({
+            field: z.string(),
+            message: z.string()
+        })),
+        z.null()
+    ])),
+    advice: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ]))
+});
+
 export const zGetTagsData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),
