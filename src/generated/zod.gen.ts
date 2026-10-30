@@ -3401,6 +3401,24 @@ export const zGetOrgCreditsResponse = z.object({
                         centiCreditCost: z.number().gte(0)
                     })).min(1)
                 }).prefault({ levels: [{ limit: null, centiCreditCost: 100 }] }),
+                previewPersonFromDb: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 10 }] }),
+                previewCompanyFromDb: z.object({
+                    levels: z.array(z.object({
+                        limit: z.optional(z.union([
+                            z.number().gt(0),
+                            z.null()
+                        ])),
+                        centiCreditCost: z.number().gte(0)
+                    })).min(1)
+                }).prefault({ levels: [{ limit: null, centiCreditCost: 10 }] }),
                 getInvestorFromDb: z.object({
                     levels: z.array(z.object({
                         limit: z.optional(z.union([
@@ -5265,6 +5283,30 @@ export const zGetAllApiKeysResponse = z.object({
                 z.null()
             ]),
             creditsUsed: z.number().gte(0),
+            dailyMaxCredits: z.union([
+                z.number().gte(0),
+                z.null()
+            ]),
+            weeklyMaxCredits: z.union([
+                z.number().gte(0),
+                z.null()
+            ]),
+            dailyCreditsUsed: z.union([
+                z.number().gte(0),
+                z.null()
+            ]),
+            weeklyCreditsUsed: z.union([
+                z.number().gte(0),
+                z.null()
+            ]),
+            dailyResetsAt: z.union([
+                z.iso.datetime(),
+                z.null()
+            ]),
+            weeklyResetsAt: z.union([
+                z.iso.datetime(),
+                z.null()
+            ]),
             createdAt: z.iso.datetime(),
             isRevoked: z.boolean()
         }))
@@ -5376,6 +5418,30 @@ export const zGetCurrentApiKeyResponse = z.object({
             z.null()
         ]),
         creditsUsed: z.number().gte(0),
+        dailyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
+        weeklyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
         createdAt: z.iso.datetime(),
         isRevoked: z.boolean()
     }),
@@ -5500,6 +5566,30 @@ export const zUpdateApiKeyExpirationResponse = z.object({
             z.null()
         ]),
         creditsUsed: z.number().gte(0),
+        dailyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
+        weeklyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
         createdAt: z.iso.datetime(),
         isRevoked: z.boolean()
     }),
@@ -5686,6 +5776,11 @@ export const zUpdateApiKeyLimitData = z.object({
             z.string().min(1),
             z.null()
         ])),
+        window: z.optional(z.enum([
+            'lifetime',
+            'day',
+            'week'
+        ])),
         operation: z.enum([
             'set',
             'increase',
@@ -5724,6 +5819,30 @@ export const zUpdateApiKeyLimitResponse = z.object({
             z.null()
         ]),
         creditsUsed: z.number().gte(0),
+        dailyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
+        weeklyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
         createdAt: z.iso.datetime(),
         isRevoked: z.boolean()
     }),
@@ -5834,6 +5953,30 @@ export const zResetApiKeyUsageResponse = z.object({
             z.null()
         ]),
         creditsUsed: z.number().gte(0),
+        dailyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
+        weeklyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
         createdAt: z.iso.datetime(),
         isRevoked: z.boolean()
     }),
@@ -5940,6 +6083,30 @@ export const zCreateSandboxApiKeyResponse = z.object({
             z.null()
         ]),
         creditsUsed: z.number().gte(0),
+        dailyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyMaxCredits: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        weeklyCreditsUsed: z.union([
+            z.number().gte(0),
+            z.null()
+        ]),
+        dailyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
+        weeklyResetsAt: z.union([
+            z.iso.datetime(),
+            z.null()
+        ]),
         createdAt: z.iso.datetime(),
         isRevoked: z.boolean(),
         apiKey: z.string()

@@ -3756,6 +3756,18 @@ export type GetOrgCreditsResponses = {
                         centiCreditCost: number;
                     }>;
                 };
+                previewPersonFromDb: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
+                previewCompanyFromDb: {
+                    levels: Array<{
+                        limit?: number | null;
+                        centiCreditCost: number;
+                    }>;
+                };
                 getInvestorFromDb: {
                     levels: Array<{
                         limit?: number | null;
@@ -6320,6 +6332,30 @@ export type GetAllApiKeysResponses = {
                  */
                 creditsUsed: number;
                 /**
+                 * The daily credit limit for this key. Resets at midnight UTC. Null implies no daily limit.
+                 */
+                dailyMaxCredits: number | null;
+                /**
+                 * The weekly credit limit for this key. Resets Monday at midnight UTC. Null implies no weekly limit.
+                 */
+                weeklyMaxCredits: number | null;
+                /**
+                 * Credits consumed by this key so far today (UTC). Null when the key has no daily limit.
+                 */
+                dailyCreditsUsed: number | null;
+                /**
+                 * Credits consumed by this key so far this week (Monday to Sunday, UTC). Null when the key has no weekly limit.
+                 */
+                weeklyCreditsUsed: number | null;
+                /**
+                 * When daily usage next resets, as an ISO 8601 timestamp. Null when the key has no daily limit.
+                 */
+                dailyResetsAt: string | null;
+                /**
+                 * When weekly usage next resets, as an ISO 8601 timestamp. Null when the key has no weekly limit.
+                 */
+                weeklyResetsAt: string | null;
+                /**
                  * When the key was created, as an ISO 8601 timestamp.
                  */
                 createdAt: string;
@@ -6629,6 +6665,30 @@ export type GetCurrentApiKeyResponses = {
              * Credits consumed by this key so far over its lifetime.
              */
             creditsUsed: number;
+            /**
+             * The daily credit limit for this key. Resets at midnight UTC. Null implies no daily limit.
+             */
+            dailyMaxCredits: number | null;
+            /**
+             * The weekly credit limit for this key. Resets Monday at midnight UTC. Null implies no weekly limit.
+             */
+            weeklyMaxCredits: number | null;
+            /**
+             * Credits consumed by this key so far today (UTC). Null when the key has no daily limit.
+             */
+            dailyCreditsUsed: number | null;
+            /**
+             * Credits consumed by this key so far this week (Monday to Sunday, UTC). Null when the key has no weekly limit.
+             */
+            weeklyCreditsUsed: number | null;
+            /**
+             * When daily usage next resets, as an ISO 8601 timestamp. Null when the key has no daily limit.
+             */
+            dailyResetsAt: string | null;
+            /**
+             * When weekly usage next resets, as an ISO 8601 timestamp. Null when the key has no weekly limit.
+             */
+            weeklyResetsAt: string | null;
             /**
              * When the key was created, as an ISO 8601 timestamp.
              */
@@ -6950,6 +7010,30 @@ export type UpdateApiKeyExpirationResponses = {
              * Credits consumed by this key so far over its lifetime.
              */
             creditsUsed: number;
+            /**
+             * The daily credit limit for this key. Resets at midnight UTC. Null implies no daily limit.
+             */
+            dailyMaxCredits: number | null;
+            /**
+             * The weekly credit limit for this key. Resets Monday at midnight UTC. Null implies no weekly limit.
+             */
+            weeklyMaxCredits: number | null;
+            /**
+             * Credits consumed by this key so far today (UTC). Null when the key has no daily limit.
+             */
+            dailyCreditsUsed: number | null;
+            /**
+             * Credits consumed by this key so far this week (Monday to Sunday, UTC). Null when the key has no weekly limit.
+             */
+            weeklyCreditsUsed: number | null;
+            /**
+             * When daily usage next resets, as an ISO 8601 timestamp. Null when the key has no daily limit.
+             */
+            dailyResetsAt: string | null;
+            /**
+             * When weekly usage next resets, as an ISO 8601 timestamp. Null when the key has no weekly limit.
+             */
+            weeklyResetsAt: string | null;
             /**
              * When the key was created, as an ISO 8601 timestamp.
              */
@@ -7384,7 +7468,11 @@ export type UpdateApiKeyLimitData = {
          */
         targetApiKey?: string | null;
         /**
-         * set: pin an absolute credit ceiling. increase/decrease: adjust the current ceiling by a number of credits. multiply/divide: scale the current ceiling by a factor. remove: make the key unlimited. increase, decrease, multiply, and divide have no effect on an already-unlimited key; use set to establish a ceiling first.
+         * Which limit to change. lifetime: the key's total ceiling, which never resets. day: a daily limit that resets at midnight UTC. week: a weekly limit that resets Monday at midnight UTC. Each is independent; a request is blocked once any of them is reached. Defaults to lifetime.
+         */
+        window?: 'lifetime' | 'day' | 'week';
+        /**
+         * set: pin an absolute credit limit. increase/decrease: adjust the current limit by a number of credits. multiply/divide: scale the current limit by a factor. remove: remove the limit. increase, decrease, multiply, and divide have no effect when there is no limit; use set to establish one first. Applies to the limit chosen by window.
          */
         operation: 'set' | 'increase' | 'decrease' | 'multiply' | 'divide' | 'remove';
         /**
@@ -7556,6 +7644,30 @@ export type UpdateApiKeyLimitResponses = {
              * Credits consumed by this key so far over its lifetime.
              */
             creditsUsed: number;
+            /**
+             * The daily credit limit for this key. Resets at midnight UTC. Null implies no daily limit.
+             */
+            dailyMaxCredits: number | null;
+            /**
+             * The weekly credit limit for this key. Resets Monday at midnight UTC. Null implies no weekly limit.
+             */
+            weeklyMaxCredits: number | null;
+            /**
+             * Credits consumed by this key so far today (UTC). Null when the key has no daily limit.
+             */
+            dailyCreditsUsed: number | null;
+            /**
+             * Credits consumed by this key so far this week (Monday to Sunday, UTC). Null when the key has no weekly limit.
+             */
+            weeklyCreditsUsed: number | null;
+            /**
+             * When daily usage next resets, as an ISO 8601 timestamp. Null when the key has no daily limit.
+             */
+            dailyResetsAt: string | null;
+            /**
+             * When weekly usage next resets, as an ISO 8601 timestamp. Null when the key has no weekly limit.
+             */
+            weeklyResetsAt: string | null;
             /**
              * When the key was created, as an ISO 8601 timestamp.
              */
@@ -7866,6 +7978,30 @@ export type ResetApiKeyUsageResponses = {
              */
             creditsUsed: number;
             /**
+             * The daily credit limit for this key. Resets at midnight UTC. Null implies no daily limit.
+             */
+            dailyMaxCredits: number | null;
+            /**
+             * The weekly credit limit for this key. Resets Monday at midnight UTC. Null implies no weekly limit.
+             */
+            weeklyMaxCredits: number | null;
+            /**
+             * Credits consumed by this key so far today (UTC). Null when the key has no daily limit.
+             */
+            dailyCreditsUsed: number | null;
+            /**
+             * Credits consumed by this key so far this week (Monday to Sunday, UTC). Null when the key has no weekly limit.
+             */
+            weeklyCreditsUsed: number | null;
+            /**
+             * When daily usage next resets, as an ISO 8601 timestamp. Null when the key has no daily limit.
+             */
+            dailyResetsAt: string | null;
+            /**
+             * When weekly usage next resets, as an ISO 8601 timestamp. Null when the key has no weekly limit.
+             */
+            weeklyResetsAt: string | null;
+            /**
              * When the key was created, as an ISO 8601 timestamp.
              */
             createdAt: string;
@@ -8170,6 +8306,30 @@ export type CreateSandboxApiKeyResponses = {
              * Credits consumed by this key so far over its lifetime.
              */
             creditsUsed: number;
+            /**
+             * The daily credit limit for this key. Resets at midnight UTC. Null implies no daily limit.
+             */
+            dailyMaxCredits: number | null;
+            /**
+             * The weekly credit limit for this key. Resets Monday at midnight UTC. Null implies no weekly limit.
+             */
+            weeklyMaxCredits: number | null;
+            /**
+             * Credits consumed by this key so far today (UTC). Null when the key has no daily limit.
+             */
+            dailyCreditsUsed: number | null;
+            /**
+             * Credits consumed by this key so far this week (Monday to Sunday, UTC). Null when the key has no weekly limit.
+             */
+            weeklyCreditsUsed: number | null;
+            /**
+             * When daily usage next resets, as an ISO 8601 timestamp. Null when the key has no daily limit.
+             */
+            dailyResetsAt: string | null;
+            /**
+             * When weekly usage next resets, as an ISO 8601 timestamp. Null when the key has no weekly limit.
+             */
+            weeklyResetsAt: string | null;
             /**
              * When the key was created, as an ISO 8601 timestamp.
              */
